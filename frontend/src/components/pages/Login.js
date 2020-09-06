@@ -5,10 +5,13 @@ class Login extends Component {
         super(props);
         this.state = { 
             username: '',
-            password: ''
+            password: '',
+            isLoaded: false,
+            error: false,
+            users: []
         }
     }
-
+    
     setInputValueChange( key, val ) {
         this.setState({
             [key] : val
@@ -18,6 +21,13 @@ class Login extends Component {
     onSubmit(e) {
         e.preventDefault()
     }
+
+    async componentDidMount() {
+        const url = 'http://localhost/auction-web/backend/users.php';
+        const response = await fetch ( url );
+        const data = await response.json();
+        console.log( data );
+      }
 
     render() { 
         const { username, password } = this.state
