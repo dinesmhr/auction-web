@@ -3,7 +3,7 @@
  * Generated users listings json file
  * 
  */
-require_once 'function.php';
+require_once 'functions.php';
 
 if( is_db_connected() ) {
     extract( $GLOBALS );
