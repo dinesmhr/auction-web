@@ -3,6 +3,7 @@
  * Generated users listings json file
  * 
  */
+header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 
 if( is_db_connected() ) {
@@ -28,5 +29,4 @@ if( is_db_connected() ) {
     $structure['status'] = false;
     $structure['message'] = 'error';
 }
-
 echo json_encode( $structure );

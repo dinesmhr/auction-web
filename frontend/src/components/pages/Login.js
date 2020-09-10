@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const axios = require('axios');
 
 class Login extends Component {
     constructor(props) {
@@ -23,11 +24,18 @@ class Login extends Component {
     }
 
     async componentDidMount() {
-        const url = 'http://localhost/auction-web/backend/users.php';
-        const response = await fetch ( url );
-        const data = await response.json();
-        console.log( data );
-      }
+        const url = 'http://localhost/auction-web/api/users.php'
+        axios.get(url)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .then(function () {
+            console.log( "Request Completed" )
+        });
+    }
 
     render() { 
         const { username, password } = this.state
