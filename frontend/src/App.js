@@ -7,7 +7,44 @@ import Shop from './components/pages/Shop'
 import Login from './components/pages/Login'
 import './styles/App.css'
 
+const axios = require('axios');
+
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      users: [],
+      isLoaded: true,
+      error: false,
+      errorMessage: ''
+    }
+  }
+
+  async componentDidMount() {
+    let _this = this
+    const url = 'http://localhost/auction-web/api/users.php'
+    axios.get(url)
+    .then(function (response) {
+        if( response.status === 200 ) {
+            _this.setState({ 
+              users : response.data.data,
+              isLoaded: true,
+              error: false
+            })
+        }
+    })
+    .catch(function (error) {
+        _this.setState({ 
+          isLoaded: false,
+          error: true,
+          errorMessage: error
+        })
+    })
+    .then(function () {
+        console.log( "Request Completed" )
+    });
+}
+
   render() { 
     return (
       <BrowserRouter>
@@ -16,7 +53,7 @@ class App extends Component {
             <Switch>
               <Route path="/" exact component={Home}></Route>
               <Route path="/shop" component={Shop}></Route>
-              <Route path="/login" component={Login}></Route>
+              <Route path="/login" component={() => <Login users={ this.state.users } />}></Route>
             </Switch>
           <Footer />
         </div>

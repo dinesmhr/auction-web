@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-const axios = require('axios');
 
 class Login extends Component {
     constructor(props) {
-        super(props);
+        super( props )
         this.state = { 
             username: '',
             password: '',
-            isLoaded: false,
-            error: false,
-            users: []
+            emptyField: false,
+            emptyMessage: ''
         }
     }
     
@@ -21,34 +19,48 @@ class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-    }
-
-    async componentDidMount() {
-        const url = 'http://localhost/auction-web/api/users.php'
-        axios.get(url)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .then(function () {
-            console.log( "Request Completed" )
-        });
+        const { username, password } = this.state
+        const { users } = this.props
+        if( '' === username && '' === password ) {
+            this.setState({
+                emptyField: true,
+                emptyMessage: 'Fields are empty!'
+            })
+        } else if ( '' === username ) {
+            this.setState({
+                emptyField: true,
+                emptyMessage: 'username field is empty!'
+            })
+        } else if ( '' === password ) {
+            this.setState({
+                emptyField: true,
+                emptyMessage: 'password field is empty!'
+            })
+        } else {
+            this.setState({
+                emptyField: false,
+                emptyMessage: ''
+            })
+        }
     }
 
     render() { 
-        const { username, password } = this.state
+        const { username, password, emptyField, emptyMessage } = this.state
         return ( 
             <div id="auction-web-login" className="page--login main-wrapper">
                 <form id="aweb-login-form">
+                    { emptyField &&
+                        <div className="aweb-red-note">
+                            { emptyMessage }
+                        </div>
+                    }
                     <div className="aweb-username">
                         <label>Username</label>
-                        <input type="text" name="username" onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>  
+                        <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>  
                     </div>
                     <div className="aweb-password">
                         <label>Password</label>
-                        <input type="password" name="password" onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                        <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
                     </div>
                     <div className="aweb-submit">
                         <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
