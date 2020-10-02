@@ -16,7 +16,8 @@ class App extends Component {
       users: [],
       isLoaded: true,
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      isLoggedin: false
     }
   }
 
