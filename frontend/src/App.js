@@ -12,13 +12,31 @@ const axios = require('axios');
 class App extends Component {
   constructor(props) {
     super(props)
+    let userLoggedin
+    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+      userLoggedin = true
+    } else {
+      userLoggedin = false
+    }
     this.state = {
       users: [],
       isLoaded: true,
       error: false,
       errorMessage: '',
-      isLoggedin: false
+      isLoggedin: userLoggedin
     }
+  }
+
+  updateLoggedState() {
+    let userLoggedin
+    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+      userLoggedin = true
+    } else {
+      userLoggedin = false
+    }
+    this.setState({
+      isLoggedin: userLoggedin
+    })
   }
 
   async componentDidMount() {
@@ -50,11 +68,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div id="auction-web">
-          <Header />
+          <Header userLoggedIn = { this.state.isLoggedin }/>
             <Switch>
               <Route path="/" exact component={Home}></Route>
               <Route path="/shop" component={Shop}></Route>
-              <Route path="/login" component={() => <Login users={ this.state.users } />}></Route>
+              <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
             </Switch>
           <Footer />
         </div>

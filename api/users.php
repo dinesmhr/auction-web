@@ -8,11 +8,15 @@ require_once 'functions.php';
 
 if( is_db_connected() ) {
     extract( $GLOBALS );
-    $users_sql = 'SELECT * FROM users WHERE 1';
+    if( isset( $_GET['username'] ) ) {
+        $username = $_GET['username'];
+        $users_sql = 'SELECT * FROM users WHERE username="'.$username.'"';
+    } else {
+        $users_sql = 'SELECT * FROM users WHERE 1';
+    }
     $datas = $CONNECTION->query( $users_sql );
     if( $datas ) {
         if( $datas->num_rows == 0 ) {
-            var_dump( $datas );
             $structure['status'] = false;
             $structure['message'] = 'Empty table';
         } else {

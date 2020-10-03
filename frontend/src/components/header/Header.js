@@ -6,7 +6,7 @@ class Header extends Component {
         return ( 
             <header id="aweb-header">
                 <h1 className="aweb-site-title">Auction Web</h1>
-                <MainNavigation />
+                <MainNavigation userLoggedIn = {this.props.userLoggedIn}/>
             </header>
         );
     }

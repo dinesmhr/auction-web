@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
+const axios = require('axios');
+
 class Login extends Component {
     constructor(props) {
         super( props )
         this.state = { 
             username: '',
             password: '',
-            emptyField: false,
-            emptyMessage: ''
+            errorField: false,
+            errorMessage: ''
         }
     }
     
@@ -17,41 +19,110 @@ class Login extends Component {
         })
     }
 
+    getCurrentUser() {
+        let _this = this
+        const { username, password } = _this.state
+        const { updateLoggedState } = _this.props
+        const url = 'http://localhost/auction-web/api/users.php'
+        axios.get( url, {
+            params: {
+                username: username
+            }
+        })
+        .then(function (response) {
+            if( response.status === 200 ) {
+                if( response.data.status === true ) {
+                    _this.setState({
+                        errorField: false
+                    })
+                    if( password !== response.data.data[0].password ) {
+                        _this.setState({
+                            errorField: true,
+                            errorMessage: 'Username or password incorrect!'
+                        })
+                    } else {
+                        _this.setState({
+                            errorField: false,
+                            errorMessage: 'User authenticated'
+                        })
+                        sessionStorage.clear()
+                        sessionStorage.setItem( 'auctionWebSessionUserLogged', true )
+                        sessionStorage.setItem( 'auctionWebSessionUserId', response.data.data[0].id )
+                        updateLoggedState()
+                    }
+                } else {
+                    _this.setState({
+                        errorField: true,
+                        errorMessage: 'Username not exists!'
+                    })
+                }
+            }
+        })
+        .catch(function (error) {
+            _this.setState({
+                errorField: true,
+                errorMessage: error
+            })
+        })
+        .then(function () {
+            console.log( "Request Completed" )
+        });
+    }
+
     onSubmit(e) {
         e.preventDefault()
         const { username, password } = this.state
-        const { users } = this.props
         if( '' === username && '' === password ) {
             this.setState({
-                emptyField: true,
-                emptyMessage: 'Fields are empty!'
+                errorField: true,
+                errorMessage: 'Fields are empty!'
             })
         } else if ( '' === username ) {
             this.setState({
-                emptyField: true,
-                emptyMessage: 'username field is empty!'
+                errorField: true,
+                errorMessage: 'username field is empty!'
             })
         } else if ( '' === password ) {
             this.setState({
-                emptyField: true,
-                emptyMessage: 'password field is empty!'
+                errorField: true,
+                errorMessage: 'password field is empty!'
             })
         } else {
             this.setState({
-                emptyField: false,
-                emptyMessage: ''
+                errorField: false,
+                errorMessage: ''
             })
+            this.getCurrentUser()
         }
     }
 
+    userLoggedOutAction() {
+        let _this = this
+        const { updateLoggedState } = _this.props
+        sessionStorage.clear()
+        sessionStorage.setItem( 'auctionWebSessionUserLogged', false )
+        updateLoggedState()
+    }
+
     render() { 
-        const { username, password, emptyField, emptyMessage } = this.state
+        const { username, password, errorField, errorMessage } = this.state
+        const { isLoggedIn } = this.props
+        if( isLoggedIn === true ) {
+            return ( 
+                <div id="auction-web-login" className="page--login main-wrapper">
+                    <div className="aweb-logout-note">Logged out of auction web?</div>
+                    <button onClick={ this.userLoggedOutAction.bind(this) }>
+                        Logout now                        
+                    </button>
+                </div>
+            )
+        }
         return ( 
             <div id="auction-web-login" className="page--login main-wrapper">
                 <form id="aweb-login-form">
-                    { emptyField &&
+                    { errorField &&
                         <div className="aweb-red-note">
-                            { emptyMessage }
+                            { errorMessage }
                         </div>
                     }
                     <div className="aweb-username">

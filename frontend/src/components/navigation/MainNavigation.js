@@ -8,7 +8,16 @@ class MainNavigation extends Component {
                 <ul className="nav-wrap">
                     <Link to="/"><li>Home</li></Link>
                     <Link to="/shop"><li>Shop</li></Link>
-                    <Link to="/login"><li>Login</li></Link>
+                    <Link to="/login">
+                        <li>
+                            { this.props.userLoggedIn && 
+                                'Logout'
+                            }
+                            { !this.props.userLoggedIn && 
+                                'Login'
+                            }
+                        </li>
+                    </Link>
                 </ul>
             </nav>
         );
