@@ -71,7 +71,7 @@ class App extends Component {
           <Header userLoggedIn = { this.state.isLoggedin }/>
             <Switch>
               <Route path="/" exact component={Home}></Route>
-              <Route path="/shop" component={Shop}></Route>
+              <Route path="/shop" component={Shop}></Route> 
               <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
             </Switch>
           <Footer />
