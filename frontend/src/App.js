@@ -69,7 +69,7 @@ class App extends Component {
       <BrowserRouter>
         <div id="auction-web">
           <Header userLoggedIn = { this.state.isLoggedin }/>
-            <Switch>
+            <Switch>           
               <Route path="/" exact component={Home}></Route>
               <Route path="/shop" component={Shop}></Route> 
               <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
