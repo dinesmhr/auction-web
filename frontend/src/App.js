@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import AdminDashboard from './components/admin/pages/dashboard'
-import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import Home from './components/pages/Home'
 import Shop from './components/pages/Shop'
@@ -69,11 +68,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div id="auction-web">
-          <Header userLoggedIn = { this.state.isLoggedin }/>
             <Switch>
-              <Route path="/aweb-admin" component={AdminDashboard}></Route>
-              <Route path="/" exact component={Home}></Route>
-              <Route path="/shop" component={Shop}></Route> 
+              <Route path="/aweb-admin" component={() => <AdminDashboard />}></Route>
+              <Route path="/" exact component={() => <Home isLoggedIn = {this.state.isLoggedin} />}></Route>
+              <Route path="/shop" component={() => <Shop isLoggedIn = {this.state.isLoggedin} />}></Route> 
               <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
             </Switch>
           <Footer />
