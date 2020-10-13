@@ -9,18 +9,12 @@ class Shop extends Component {
     render() { 
         const { isLoggedIn } = this.props
         return ( 
-<<<<<<< HEAD
-            <div id="auction-web-shop" className="page--shop-main-wrapper">
-                This is shop page
-            </div>
-=======
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
                 <div id="auction-web-shop" className="page--shop main-wrapper">
                     This is shop page
                 </div>
             </Fragment>
->>>>>>> 8759ddd576951e0c27784732e2f14dc56d3a1d04
         );
     }
 }

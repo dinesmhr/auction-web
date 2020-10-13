@@ -9,18 +9,12 @@ class Home extends Component {
     render() { 
         const { isLoggedIn } = this.props
         return ( 
-<<<<<<< HEAD
-            <div id="auction-web-home" className="page--home-main-wrapper">
-                This is home page
-            </div>
-=======
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
                 <div id="auction-web-home" className="page--home main-wrapper">
                     This is home page
                 </div>
             </Fragment>
->>>>>>> 8759ddd576951e0c27784732e2f14dc56d3a1d04
         );
     }
 }
