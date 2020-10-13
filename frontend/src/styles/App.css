@@ -35,13 +35,16 @@ body {
 	height: 90px;
 	width: 100%;	
 }
-.aweb-site-title{
+.aweb-site-title a{
 	color: white;
-	font-size: 35px;
+	font-size: 30px;
 	line-height: 80px;
 	padding: 0 100px;
 	font-weight: bold;
 	text-shadow: 0px 2px 2px rgba(255,255,255, 0.4); 
+}
+.aweb-site-title a:hover{
+	font-size: 2rem;
 }
 .nav-wrap{
 	float: right;
@@ -69,7 +72,7 @@ a.active_name li{
  *
  */
 @media(max-width: 790px){
-	 .aweb-site-title{
+	 .aweb-site-title a{
 	 	padding-left: 20px;
 	 	font-size: 20px;
 	 	margin-top: -10px;
@@ -82,7 +85,7 @@ a.active_name li{
 	 	position: fixed;
 	 	flex-direction: column;
 	 	width: 100%;
-	 	top: 50px;
+	 	top: 60px;
 	 	background: #2c3e50;
 	 	float: none;
 	 	margin-right: -20px;
@@ -97,6 +100,9 @@ a.active_name li{
 	 .nav-wrap ul li{
 		margin-top: 10px;
 	 }
+	 .aweb-site-title a:hover{
+	font-size: 1.4rem;
+}
 	
 }
 
