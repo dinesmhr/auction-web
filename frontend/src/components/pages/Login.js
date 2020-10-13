@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import Header from '../header/Header'
 
 const axios = require('axios');
 
@@ -109,35 +110,41 @@ class Login extends Component {
         const { isLoggedIn } = this.props
         if( isLoggedIn === true ) {
             return ( 
-                <div id="auction-web-login" className="page--login main-wrapper">
-                    <div className="aweb-logout-note">Logged out of auction web?</div>
-                    <button onClick={ this.userLoggedOutAction.bind(this) }>
-                        Logout now                        
-                    </button>
-                </div>
+                <Fragment>
+                    <Header userLoggedIn = { isLoggedIn }/>
+                    <div id="auction-web-login" className="page--login main-wrapper">
+                        <div className="aweb-logout-note">Logged out of auction web?</div>
+                        <button onClick={ this.userLoggedOutAction.bind(this) }>
+                            Logout now                        
+                        </button>
+                    </div>
+                </Fragment>
             )
         }
-        return ( 
-            <div id="auction-web-login" className="page--login-main-wrapper">
-                <form id="aweb-login-form">
-                    { errorField &&
-                        <div className="aweb-red-note">
-                            { errorMessage }
+        return (
+            <Fragment>
+                <Header userLoggedIn = { isLoggedIn }/>
+                <div id="auction-web-login" className="page--login main-wrapper">
+                    <form id="aweb-login-form">
+                        { errorField &&
+                            <div className="aweb-red-note">
+                                { errorMessage }
+                            </div>
+                        }
+                        <div className="aweb-username">
+                            <label>Username</label>
+                            <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
                         </div>
-                    }
-                    <div className="aweb-username">
-                        <label>Username</label>
-                        <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>  
-                    </div>
-                    <div className="aweb-password">
-                        <label>Password</label>
-                        <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
-                    </div>
-                    <div className="aweb-submit">
-                        <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
-                    </div>
-                </form>
-            </div>
+                        <div className="aweb-password">
+                            <label>Password</label>
+                            <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                        </div>
+                        <div className="aweb-submit">
+                            <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
+                        </div>
+                    </form>
+                </div>
+            </Fragment>
         );
     }
 }
