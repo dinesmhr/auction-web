@@ -8,16 +8,7 @@ class Header extends Component {
     }
     render() { 
         const { userLoggedIn } = this.props
-        return (         	
-<<<<<<< HEAD
-            <header> 
-            <nav id="aweb-main-navigation">
-            		<div className="aweb-header">              	
-                						<div className="aweb-site-title">Auction Web</div> 
-            		</div>
-                <MainNavigation userLoggedIn = {this.props.userLoggedIn}/>
-                </nav> 
-=======
+        return (
             <header>
                 { userLoggedIn &&
                     <AdminNavigation />
@@ -26,7 +17,6 @@ class Header extends Component {
                     <h1 className="aweb-site-title"><a href="/">Auction Web</a></h1>
                     <MainNavigation userLoggedIn = { userLoggedIn } />
                 </div>
->>>>>>> 8759ddd576951e0c27784732e2f14dc56d3a1d04
             </header>
         );
     }
