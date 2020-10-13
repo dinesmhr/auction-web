@@ -7,7 +7,7 @@ class Home extends Component {
     // }
     render() { 
         return ( 
-            <div id="auction-web-home" className="page--home main-wrapper">
+            <div id="auction-web-home" className="page--home-main-wrapper">
                 This is home page
             </div>
         );

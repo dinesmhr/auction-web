@@ -118,7 +118,7 @@ class Login extends Component {
             )
         }
         return ( 
-            <div id="auction-web-login" className="page--login main-wrapper">
+            <div id="auction-web-login" className="page--login-main-wrapper">
                 <form id="aweb-login-form">
                     { errorField &&
                         <div className="aweb-red-note">

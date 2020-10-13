@@ -7,7 +7,7 @@ class Shop extends Component {
     // }
     render() { 
         return ( 
-            <div id="auction-web-shop" className="page--shop main-wrapper">
+            <div id="auction-web-shop" className="page--shop-main-wrapper">
                 This is shop page
             </div>
         );

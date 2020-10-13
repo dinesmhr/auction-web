@@ -5,11 +5,13 @@ import MainNavigation from '../navigation/MainNavigation'
 class Header extends Component {
     render() { 
         return (         	
-            <header>           
-            <div className="aweb-header">
-                <h1 className="aweb-site-title">Auction Web</h1>
+            <header> 
+            <nav id="aweb-main-navigation">
+            		<div className="aweb-header">              	
+                						<div className="aweb-site-title">Auction Web</div> 
+            		</div>
                 <MainNavigation userLoggedIn = {this.props.userLoggedIn}/>
-                </div>
+                </nav> 
             </header>
         );
     }
