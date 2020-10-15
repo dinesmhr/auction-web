@@ -33,7 +33,11 @@ body {
 .aweb-header{
 	background: #170A6C;
 	height: 90px;
-	width: 100%;	
+	width: 100%;
+	position: fixed;
+	top: 0;
+	
+
 }
 .aweb-site-title a{
 	color: white;
@@ -75,7 +79,7 @@ a.active_name li{
 	 .aweb-site-title a{
 	 	padding-left: 20px;
 	 	font-size: 20px;
-	 	margin-top: -10px;
+	 	margin-top: -15px;
 	 	line-height: 55px;	 	
 	 }
 	 .aweb-header{
@@ -106,11 +110,136 @@ a.active_name li{
 	
 }
 
+/**
+ * 
+ *Main-Wrapper/Login/home/Shop
+ *
+ */
+.main-wrapper{
+	margin-top: 90px;
+}
+
+/**
+ * 
+ *Login-Form
+ *
+ */
+#aweb-login-form{
+	background-image: linear-gradient(to bottom right, #3423eb , #9823eb);
+	min-height: 81.9vh;
+
+}
+.aweb-login-form-wrapper{
+	background-image: linear-gradient(to bottom right,#6c2185, #3722d4);
+	opacity: 0.8;	
+	width: 35%;
+	padding-left:60px;
+	padding-right:60px;
+	padding-bottom: 200px;
+	border-radius: 20px;
+	margin: auto;	
+}
+.aweb-login-form-wrapper h1{
+	text-align: center;
+	color: white;
+	font-size: 30px;
+	font-weight: bold;
+	margin: 20px;
+	padding-top: 20px;
+}
+.aweb-red-note{
+	color: #c90202;
+	font-weight: bold;
+	text-align: center;
+	font-size: 25px;
+}
+.input-wrapper label{
+	font-weight: bold;
+	font-size: 25px;
+	color: white;
+}
+.input-wrapper input{
+	width: 100%;
+	margin-bottom: 20px;
+	border: none;
+ 	border-bottom: 1px solid #fff;
+ 	background: transparent;
+ 	outline: none;
+ 	height: 40px;
+ 	color: #fff;
+ 	font-size: 16px;
+}
+
+.aweb-submit input{
+	border: none;
+ 	outline: none;
+ 	height: 50px;
+ 	background: #1c8adb;
+ 	color: #fff;
+ 	font-size: 18px;
+ 	border-radius: 20px;
+ 	width: 75%;
+ 	margin: 20px 50px;
+ }
+.aweb-submit input{
+	border: none;
+ 	outline: none;
+ 	height: 50px;
+ 	background: #1c8adb;
+ 	color: #fff;
+ 	font-size: 18px;
+ 	border-radius: 20px;
+ 	width: 75%;
+ 	margin: 20px 50px;
+}
+.aweb-submit input:hover{
+	cursor: pointer;
+	background: #39dc79;
+ 	color: #000;
+}
+/**
+ * 
+ *Login-Form-responsive
+ *
+ */
+
+@media(max-width: 790px){
+	#aweb-login-form{
+	 background: none;
+
+	}
+	.aweb-login-form-wrapper{
+	    min-width: 80%;
+        padding-bottom: unset;
+    	margin-top: 230px;
+
+	}
+}
 
 
 
 
-	
+
+
+
+
+
+
+/**
+ * 
+ *footer
+ *
+ */
+.aweb-main-footer-wrap{
+	background-color: #404040; 
+	color: white;
+	text-align: center;
+	padding: 10px 20px;
+	font-size: 16px;
+	max-height: 30px;
+	position: relative;
+	line-height: 9px;
+}	
 
 
 
