@@ -7,7 +7,7 @@ class AdminDashboard extends Component {
             <header>           
                 <div className="aweb-admin-top-header">
                     <h1 className="aweb-admin-site-title">Auction Web</h1>
-                    <AdminMainNavigation userLoggedIn = {this.props.userLoggedIn}/>
+                    <AdminMainNavigation userLoggedIn = { this.props.userLoggedIn }/>
                 </div>
             </header>
         );
