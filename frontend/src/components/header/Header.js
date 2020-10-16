@@ -8,7 +8,7 @@ class Header extends Component {
     }
     render() { 
         const { userLoggedIn } = this.props
-        return (         	
+        return (
             <header>
                 { userLoggedIn &&
                     <AdminNavigation />

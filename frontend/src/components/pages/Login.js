@@ -121,26 +121,31 @@ class Login extends Component {
                 </Fragment>
             )
         }
-        return ( 
+        return (
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
                 <div id="auction-web-login" className="page--login main-wrapper">
-                    <form id="aweb-login-form">
+                    <form id="aweb-login-form">                    
+                    <div className= "aweb-login-form-wrapper">
                         { errorField &&
                             <div className="aweb-red-note">
                                 { errorMessage }
                             </div>
                         }
-                        <div className="aweb-username">
+                        <h1>LOGIN</h1>
+                        <div className="input-wrapper">
+                          <div className="aweb-username">
                             <label>Username</label>
-                            <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>  
-                        </div>
-                        <div className="aweb-password">
+                            <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
+                          </div>
+                          <div className="aweb-password">
                             <label>Password</label>
                             <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                          </div>
                         </div>
                         <div className="aweb-submit">
                             <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
+                        </div>
                         </div>
                     </form>
                 </div>
