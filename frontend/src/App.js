@@ -70,6 +70,7 @@ class App extends Component {
         <div id="auction-web">
             <Switch>
               <Route path="/aweb-admin" component={() => <AdminDashboard />}></Route>
+              <Route path="/aweb-users" component={() => <AdminUsers />}></Route>
               <Route path="/" exact component={() => <Home isLoggedIn = {this.state.isLoggedin} />}></Route>
               <Route path="/shop" component={() => <Shop isLoggedIn = {this.state.isLoggedin} />}></Route> 
               <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
