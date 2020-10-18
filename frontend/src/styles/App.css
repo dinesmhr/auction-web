@@ -36,6 +36,7 @@ body {
 	width: 100%;
 	position: fixed;
 	top: 0;
+	overflow: auto;
 	
 
 }
@@ -243,6 +244,11 @@ a.active_name li{
 
 
 
-
+.MuiTabs-root{
+	overflow: auto;
+	float: bottom;
+	clear: both;
+	margin-top: 200px;
+}
 
 
