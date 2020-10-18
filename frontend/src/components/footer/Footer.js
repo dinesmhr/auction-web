@@ -10,7 +10,7 @@ class Footer extends Component {
         return ( 
             <footer id="aweb-footer">
                 <div className="aweb-main-footer-wrap">
-                    Copyright@auction@gmail.com
+                   <p> Copyright@auction@gmail.com</p>
                 </div>{ /* .aweb-main-footer-wrap */ }
             </footer>
         );

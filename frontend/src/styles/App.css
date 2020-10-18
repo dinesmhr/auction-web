@@ -1,0 +1,254 @@
+/**
+ * Styling - generic app styles
+ *
+ *
+ */
+
+/**
+ * 
+ *Default
+ *
+ */
+*{
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	list-style: none;
+	box-sizing: border-box;
+}
+body {
+	font-family: montserrat;
+	position:absolute;
+	min-width:100%;
+	min-height:100%;
+}
+
+
+/**
+ * 
+ *aweb-Header
+ *
+ */
+
+.aweb-header{
+	background: #170A6C;
+	height: 90px;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	overflow: auto;
+	
+
+}
+.aweb-site-title a{
+	color: white;
+	font-size: 30px;
+	line-height: 80px;
+	padding: 0 100px;
+	font-weight: bold;
+	text-shadow: 0px 2px 2px rgba(255,255,255, 0.4); 
+}
+.aweb-site-title a:hover{
+	font-size: 2rem;
+}
+.nav-wrap{
+	float: right;
+	margin-right: 20px;
+	margin-top: -75px;
+}
+
+.nav-wrap li{
+	display: inline-block;
+	line-height:60px;
+	margin: 0 40px;
+	color: white;
+	text-transform: uppercase;
+	font-size: 20px;
+	color: white;
+}
+a.active_name li{
+  font-size: 1.5rem;
+  border-bottom: 1px solid white;
+}
+
+/**
+ * 
+ *header-responsive
+ *
+ */
+@media(max-width: 790px){
+	 .aweb-site-title a{
+	 	padding-left: 20px;
+	 	font-size: 20px;
+	 	margin-top: -15px;
+	 	line-height: 55px;	 	
+	 }
+	 .aweb-header{
+	 	max-height: 50px;
+	 }
+	 .nav-wrap{
+	 	position: fixed;
+	 	flex-direction: column;
+	 	width: 100%;
+	 	top: 60px;
+	 	background: #2c3e50;
+	 	float: none;
+	 	margin-right: -20px;
+	 	margin-top: -10px;
+	 	min-height: 15px;
+	 	opacity: 0.9;
+	 }
+	 .nav-wrap ul{
+	 	font-size: 8px;
+	 	text-align: center;	 
+	 }
+	 .nav-wrap ul li{
+		margin-top: 10px;
+	 }
+	 .aweb-site-title a:hover{
+	font-size: 1.4rem;
+}
+	
+}
+
+/**
+ * 
+ *Main-Wrapper/Login/home/Shop
+ *
+ */
+.main-wrapper{
+	margin-top: 90px;
+}
+
+/**
+ * 
+ *Login-Form
+ *
+ */
+#aweb-login-form{
+	background-image: linear-gradient(to bottom right, #3423eb , #9823eb);
+	min-height: 81.9vh;
+
+}
+.aweb-login-form-wrapper{
+	background-image: linear-gradient(to bottom right,#6c2185, #3722d4);
+	opacity: 0.8;	
+	width: 35%;
+	padding-left:60px;
+	padding-right:60px;
+	padding-bottom: 200px;
+	border-radius: 20px;
+	margin: auto;	
+}
+.aweb-login-form-wrapper h1{
+	text-align: center;
+	color: white;
+	font-size: 30px;
+	font-weight: bold;
+	margin: 20px;
+	padding-top: 20px;
+}
+.aweb-red-note{
+	color: #c90202;
+	font-weight: bold;
+	text-align: center;
+	font-size: 25px;
+}
+.input-wrapper label{
+	font-weight: bold;
+	font-size: 25px;
+	color: white;
+}
+.input-wrapper input{
+	width: 100%;
+	margin-bottom: 20px;
+	border: none;
+ 	border-bottom: 1px solid #fff;
+ 	background: transparent;
+ 	outline: none;
+ 	height: 40px;
+ 	color: #fff;
+ 	font-size: 16px;
+}
+
+.aweb-submit input{
+	border: none;
+ 	outline: none;
+ 	height: 50px;
+ 	background: #1c8adb;
+ 	color: #fff;
+ 	font-size: 18px;
+ 	border-radius: 20px;
+ 	width: 75%;
+ 	margin: 20px 50px;
+ }
+.aweb-submit input{
+	border: none;
+ 	outline: none;
+ 	height: 50px;
+ 	background: #1c8adb;
+ 	color: #fff;
+ 	font-size: 18px;
+ 	border-radius: 20px;
+ 	width: 75%;
+ 	margin: 20px 50px;
+}
+.aweb-submit input:hover{
+	cursor: pointer;
+	background: #39dc79;
+ 	color: #000;
+}
+/**
+ * 
+ *Login-Form-responsive
+ *
+ */
+
+@media(max-width: 790px){
+	#aweb-login-form{
+	 background: none;
+
+	}
+	.aweb-login-form-wrapper{
+	    min-width: 80%;
+        padding-bottom: unset;
+    	margin-top: 230px;
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ * 
+ *footer
+ *
+ */
+.aweb-main-footer-wrap{
+	background-color: #404040; 
+	color: white;
+	text-align: center;
+	padding: 10px 20px;
+	font-size: 16px;
+	max-height: 30px;
+	position: relative;
+	line-height: 9px;
+}	
+
+
+
+.MuiTabs-root{
+	overflow: auto;
+	float: bottom;
+	clear: both;
+	margin-top: 200px;
+}
+
+

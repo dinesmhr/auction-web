@@ -1,22 +1,80 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Header from './components/header/Header'
+import AdminDashboard from './components/admin/pages/dashboard'
+import AdminUsers from './components/admin/pages/users'
 import Footer from './components/footer/Footer'
 import Home from './components/pages/Home'
 import Shop from './components/pages/Shop'
 import Login from './components/pages/Login'
 import './styles/App.css'
 
+const axios = require('axios');
+
 class App extends Component {
+  constructor(props) {
+    super(props)
+    let userLoggedin
+    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+      userLoggedin = true
+    } else {
+      userLoggedin = false
+    }
+    this.state = {
+      users: [],
+      isLoaded: true,
+      error: false,
+      errorMessage: '',
+      isLoggedin: userLoggedin
+    }
+  }
+
+  updateLoggedState() {
+    let userLoggedin
+    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+      userLoggedin = true
+    } else {
+      userLoggedin = false
+    }
+    this.setState({
+      isLoggedin: userLoggedin
+    })
+  }
+
+  async componentDidMount() {
+    let _this = this
+    const url = 'http://localhost/auction-web/api/users.php'
+    axios.get(url)
+    .then(function (response) {
+        if( response.status === 200 ) {
+            _this.setState({ 
+              users : response.data.data,
+              isLoaded: true,
+              error: false
+            })
+        }
+    })
+    .catch(function (error) {
+        _this.setState({ 
+          isLoaded: false,
+          error: true,
+          errorMessage: error
+        })
+    })
+    .then(function () {
+        console.log( "Request Completed" )
+    });
+}
+
   render() { 
     return (
       <BrowserRouter>
         <div id="auction-web">
-          <Header />
             <Switch>
-              <Route path="/" exact component={Home}></Route>
-              <Route path="/shop" component={Shop}></Route>
-              <Route path="/login" component={Login}></Route>
+              <Route path="/aweb-admin" component={() => <AdminDashboard isLoggedIn = {this.state.isLoggedin} />}></Route>
+              <Route path="/aweb-users" component={() => <AdminUsers isLoggedIn = {this.state.isLoggedin} />}></Route>
+              <Route path="/" exact component={() => <Home isLoggedIn = {this.state.isLoggedin} />}></Route>
+              <Route path="/shop" component={() => <Shop isLoggedIn = {this.state.isLoggedin} />}></Route> 
+              <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
             </Switch>
           <Footer />
         </div>

@@ -1,16 +1,27 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import React, { Component} from 'react';
+import { NavLink } from 'react-router-dom';
+
 
 class MainNavigation extends Component {
+
     render() { 
-        return ( 
-            <nav id="aweb-main-navigation">
-                <ul className="nav-wrap">
-                    <Link to="/"><li>Home</li></Link>
-                    <Link to="/shop"><li>Shop</li></Link>
-                    <Link to="/login"><li>Login</li></Link>
-                </ul>
-            </nav>
+        return (   
+        		<div className="nav-wrap">        
+                 <ul>                 	                  
+                     <NavLink exact activeClassName="active_name" to="/"><li>Home</li></NavLink>     				 
+                     <NavLink activeClassName="active_name" to="/shop"><li>Shop</li></NavLink>
+                     <NavLink activeClassName="active_name" to="/login">
+                        	<li>
+                            	{ this.props.userLoggedIn && 
+                                		'Logout'
+                            	}
+                            	{ !this.props.userLoggedIn && 
+                                		'Login'
+                            	}
+                        	</li>
+                    	</NavLink>
+                 </ul>
+                </div>                                    
         );
     }
 }
