@@ -10,6 +10,7 @@ class AdminMainNavigation extends Component {
                  <ul className="admin-front-nav-wrap">
                  	<Tabs>
                         <NavLink to="/aweb-admin"><li><Tab label="Dashboard"/></li></NavLink>
+                        <NavLink to="/aweb-users"><li><Tab label="Users"/></li></NavLink>
                   	</Tabs>
                  </ul>
             </nav>
