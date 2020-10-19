@@ -18,10 +18,10 @@ const AdminUsers =(props) =>{
 			const res = await axios.get(`http://localhost/auction-web/api/users.php`) 
 		
 
-		//	setID(res.data.data[0].id);
-		//	setUsername(res.data.data[0].username);
-		//	setPassword(res.data.data[0].password);
-		//	setEmail(res.data.data[0].email);
+			setID(res.data.data[0].id);
+			setUsername(res.data.data[0].username);
+			setPassword(res.data.data[0].password);
+			setEmail(res.data.data[0].email);
 		}
 		getData();
 	})
@@ -44,13 +44,13 @@ const AdminUsers =(props) =>{
 								    <th>Email</th>
 								  </tr>
 							</thead>
-							<tbody>	  
-								  <tr>
+							<tbody>
+								<tr>
 								    <td>{id}</td>
 								    <td>S{username}</td>
 								    <td>{password}</td>
 								    <td>{email}</td>
-								  </tr>								 
+								  </tr>								  					 
 							</tbody>	  
 					</table>					
                 </div>
