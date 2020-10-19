@@ -2,6 +2,7 @@
 /**
  * Generated users listings json file
  * 
+ * @package Auction Web
  */
 header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
