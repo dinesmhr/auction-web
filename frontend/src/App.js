@@ -44,7 +44,7 @@ class App extends Component {
     let _this = this
     const url = 'http://localhost/auction-web/api/users.php'
     axios.get(url)
-    .then(function (response) {
+    .then(function ( response ) {
         if( response.status === 200 ) {
             _this.setState({ 
               users : response.data.data,
@@ -71,7 +71,7 @@ class App extends Component {
         <div id="auction-web">
             <Switch>
               <Route path="/aweb-admin" component={() => <AdminDashboard isLoggedIn = {this.state.isLoggedin} />}></Route>
-              <Route path="/aweb-users" component={() => <AdminUsers isLoggedIn = {this.state.isLoggedin} users = { this.state.users } />}></Route>
+              <Route path="/aweb-users" component={() => <AdminUsers users = {this.state.users} />}></Route>
               <Route path="/" exact component={() => <Home isLoggedIn = {this.state.isLoggedin} />}></Route>
               <Route path="/shop" component={() => <Shop isLoggedIn = {this.state.isLoggedin} />}></Route> 
               <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
