@@ -235,14 +235,22 @@ a.active_name li{
  * Shop-Products
  *
  */
-
- .auction-web-shop-products{
- 	width: 100%;
+.product-wrap{
+	width: 100%;
  	display: flex;
  	justify-content: space-around;
  	flex-wrap: wrap;
- 	margin: 15px 0; 	
- }
+ 	margin: 15px 0; 
+}
+
+/*.auction-web-shop-products{
+		width: 100%;
+ 	display: flex;
+ 	justify-content: space-around;
+ 	flex-wrap: wrap;
+ 	margin: 15px 0; 
+}*/
+
  .product-card{
  	max-width: 380px;
  	width: 100%;
@@ -288,12 +296,11 @@ a.active_name li{
 	cursor: pointer;
 	text-transform: uppercase;
 	letter-spacing: 2px;
-
-
 }
 
-
-
+.product-box button:hover{
+	background: #191f16;
+}
 
 
 
