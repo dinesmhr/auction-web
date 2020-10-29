@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import Header from '../header/Header';
 
-
 const Card=()=>{
     return(
-            <>                        		
+        <>
             <div className="product-card">
                 <a href="/">
                     <img src="https://images.pexels.com/photos/2113994/pexels-photo-2113994.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt=""/>
                 </a>
-                  <div className="product-box">                       
+                  <div className="product-box">
                       <h3 title="watch">
                         <a href="/">watch product 1</a>
                       </h3>
@@ -18,19 +17,15 @@ const Card=()=>{
                          <button>Bid Item</button>
                   </div>
             </div>
-            </>                 
-
-        );
+        </>
+    );
 }
-
-
 
 class Shop extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {}
     }
-
 
     render() {      
         const { isLoggedIn } = this.props
@@ -49,6 +44,4 @@ class Shop extends Component {
         );
     }
 }
-
-
 export default Shop;

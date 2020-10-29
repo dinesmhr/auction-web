@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React from 'react';
 import AdminMainNavigation from '../navigation/AdminMainNavigation'
 
 const AdminUsers =(props) => {
@@ -20,44 +20,41 @@ const AdminUsers =(props) => {
 	//  })
 
 	return (
-		<Fragment>
+		<>
 		 	<header>           
                 <div className="aweb-admin-top-header">
                     <h1 className="aweb-admin-site-title">Auction Web</h1>
                     <AdminMainNavigation userLoggedIn = {props.userLoggedIn}/> 
-                    	<table style={{width:"100%"}}>
-                    		<thead>
-								  <tr>
-								    <th>Username</th>
-								    <th>Email</th>
-									<th>Role</th>
-									<th>Actions</th>
-								  </tr>
-							</thead>
-							<tbody>
-								{
-									users.map( ( user, index )  => {
-										return (	 
-											<tr key={ index }>
-												<td>{user.username}</td>
-												<td>{user.email}</td>
-												<td>{`Adminstrator`}</td>
-												<td>
-													<button>{`Edit`}</button>
-													<button>{`Delete`}</button>
-												</td>
-											</tr>
-										)
-									})
-								}
-							</tbody>
-							 
-								  				 
-								  
+                    <table style={{width:"100%"}}>
+						<thead>
+							<tr>
+								<th>Username</th>
+								<th>Email</th>
+								<th>Role</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								users.map( ( user, index )  => {
+									return (	 
+										<tr key={ index }>
+											<td>{user.username}</td>
+											<td>{user.email}</td>
+											<td>{`Adminstrator`}</td>
+											<td>
+												<button>{`Edit`}</button>
+												<button>{`Delete`}</button>
+											</td>
+										</tr>
+									)
+								})
+							}
+						</tbody>
 					</table>					
                 </div>
             </header>
-		</Fragment>
+		</>
 	)
 }
 export default AdminUsers;

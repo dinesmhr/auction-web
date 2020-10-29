@@ -124,24 +124,23 @@ class Login extends Component {
         return (
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
-                <div id="auction-web-login" className="page--login main-wrapper">
+                <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
                     <form id="aweb-login-form">                    
-                    <div className= "aweb-login-form-wrapper">
+                    <div className="aweb-login-form-wrapper">
                         { errorField &&
                             <div className="aweb-red-note">
                                 { errorMessage }
                             </div>
                         }
-                        <h1>LOGIN</h1>
                         <div className="input-wrapper">
-                          <div className="aweb-username">
-                            <label>Username</label>
-                            <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
-                          </div>
-                          <div className="aweb-password">
-                            <label>Password</label>
-                            <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
-                          </div>
+                            <div className="aweb-username">
+                                <label>Username</label>
+                                <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
+                            </div>
+                            <div className="aweb-password">
+                                <label>Password</label>
+                                <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                            </div>
                         </div>
                         <div className="aweb-submit">
                             <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>

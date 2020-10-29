@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-
 
 class AdminMainNavigation extends Component {
     render() { 
         return ( 
-            <nav id="aweb-admin-front-navigation">
-                 <ul className="admin-front-nav-wrap">     
-                        <NavLink to="/aweb-admin"><li>Dashboard</li></NavLink>
-                        <NavLink to="/aweb-users"><li>Users</li></NavLink>                  	
-                 </ul>
+            <nav id="aweb-admin-navigation">
+                <ul className="admin-nav-wrap">
+                    <li><a href="/aweb-admin">Dashboard</a></li>
+                    <li><a href="/aweb-users">Users</a></li>            	
+                </ul>
             </nav>
         );
     }
