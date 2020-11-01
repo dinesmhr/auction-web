@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom'
 import { AdminRoutes } from './components/routes/adminRoutes'
 import { PublicRoutes } from './components/routes/publicRoutes'
 import Footer from './components/footer/Footer'
@@ -23,18 +22,6 @@ class App extends Component {
       errorMessage: '',
       isLoggedin: userLoggedin
     }
-  }
-
-  updateLoggedState() {
-    let userLoggedin
-    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
-      userLoggedin = true
-    } else {
-      userLoggedin = false
-    }
-    this.setState({
-      isLoggedin: userLoggedin
-    })
   }
 
   async componentDidMount() {
@@ -64,15 +51,11 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div id="auction-web">
-            <Switch>
-              <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
-              <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
-            </Switch>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <div id="auction-web">
+            <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
+            <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
+        <Footer />
+      </div>
     );
   }
 }
