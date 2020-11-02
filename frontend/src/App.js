@@ -47,13 +47,24 @@ class App extends Component {
     .then(function () {
         console.log( "Request Completed" )
     });
-}
+  }
+
+  updateLoggedState() {
+      let userLoggedin = false
+      if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+          userLoggedin = true
+      } else {
+          userLoggedin = false
+      }
+      this.setState({ isLoggedin: userLoggedin })
+  }
 
   render() {
+    let _this = this
     return (
       <div id="auction-web">
             <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
-            <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
+            <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } updateLoggedState = { this.updateLoggedState.bind(this) } />
         <Footer />
       </div>
     );

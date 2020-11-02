@@ -13,7 +13,7 @@ class Login extends Component {
             errorMessage: ''
         }
     }
-    
+
     setInputValueChange( key, val ) {
         this.setState({
             [key] : val
@@ -23,7 +23,7 @@ class Login extends Component {
     getCurrentUser() {
         let _this = this
         const { username, password } = _this.state
-        const { updateLoggedState } = _this.props
+        const { updateLoggedState } = this.props
         const url = 'http://localhost/auction-web/api/users.php'
         axios.get( url, {
             params: {
@@ -98,8 +98,7 @@ class Login extends Component {
     }
 
     userLoggedOutAction() {
-        let _this = this
-        const { updateLoggedState } = _this.props
+        const { updateLoggedState } = this.props
         sessionStorage.clear()
         sessionStorage.setItem( 'auctionWebSessionUserLogged', false )
         updateLoggedState()
