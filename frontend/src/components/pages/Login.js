@@ -7,7 +7,9 @@ class Login extends Component {
     constructor(props) {
         super( props )
         this.state = { 
+            fullname: '',
             username: '',
+            email: '',
             password: '',
             errorField: false,
             errorMessage: ''
@@ -124,26 +126,59 @@ class Login extends Component {
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
                 <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
-                    <form id="aweb-login-form">                    
-                    <div className="aweb-login-form-wrapper">
-                        { errorField &&
-                            <div className="aweb-red-note">
-                                { errorMessage }
+                    <form id="aweb-login-form">
+                        <div className="aweb-login-form-wrapper">
+                            { errorField &&
+                                <div className="aweb-red-note">
+                                    { errorMessage }
+                                </div>
+                            }
+                            <div className="input-wrapper">
+                                <div className="aweb-username">
+                                    <label>Username</label>
+                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
+                                </div>
+                                <div className="aweb-password">
+                                    <label>Password</label>
+                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                                </div>
                             </div>
-                        }
-                        <div className="input-wrapper">
-                            <div className="aweb-username">
-                                <label>Username</label>
-                                <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
-                            </div>
-                            <div className="aweb-password">
-                                <label>Password</label>
-                                <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                            <div className="aweb-submit">
+                                <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
                             </div>
                         </div>
-                        <div className="aweb-submit">
-                            <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
-                        </div>
+                    </form>
+                    <form id="aweb-signup-form">
+                        <div className="aweb-signup-form-wrapper">
+                            { errorField &&
+                                <div className="aweb-red-note">
+                                    { errorMessage }
+                                </div>
+                            }
+                            <div className="input-wrapper">
+                                <div className="form-heading">
+                                    <h2>Do Not Have Account? Please Sign Up!</h2>
+                                </div>
+                                <div className="aweb-fullname">
+                                    <label>Fullname</label>
+                                    <input type="text" name="fullname" required onChange={ (e) => this.setInputValueChange( 'fullname', e.target.value) } defaultValue={ username }/>
+                                </div>
+                                <div className="aweb-username">
+                                    <label>Username</label>
+                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
+                                </div>
+                                <div className="aweb-email">
+                                    <label>Email Address</label>
+                                    <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
+                                </div>
+                                <div className="aweb-password">
+                                    <label>Password</label>
+                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                                </div>
+                            </div>
+                            <div className="aweb-submit">
+                                <input type="submit" name="submit" onClick= { (e) => this.onSignup(e) } value="Sign Up"/>
+                            </div>
                         </div>
                     </form>
                 </div>
