@@ -60,7 +60,6 @@ class App extends Component {
   }
 
   render() {
-    let _this = this
     return (
       <div id="auction-web">
             <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
