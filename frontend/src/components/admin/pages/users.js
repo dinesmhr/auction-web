@@ -32,6 +32,7 @@ const AdminUsers =(props) => {
 								<th>Email</th>
 								<th>Role</th>
 								<th>Actions</th>
+								<th>Status</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,11 +42,12 @@ const AdminUsers =(props) => {
 										<tr key={ index }>
 											<td>{user.username}</td>
 											<td>{user.email}</td>
-											<td>{`Adminstrator`}</td>
+											<td>{user.role}</td>
 											<td>
 												<button>{`Edit`}</button>
 												<button>{`Delete`}</button>
 											</td>
+											<td>{user.status}</td>
 										</tr>
 									)
 								})
