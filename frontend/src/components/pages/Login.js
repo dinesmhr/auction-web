@@ -145,6 +145,17 @@ class Login extends Component {
                                 su_password_errorMessage: 'Field is required!'
                             }
             })
+        } else if ( '' === su_username && '' === su_email && '' === su_password ) {
+            this.setState({
+                signupDetail: {
+                                su_username_errorField: true,
+                                su_username_errorMessage: 'Field is required!',
+                                su_email_errorField: true,
+                                su_email_errorMessage: 'Field is required!',
+                                su_password_errorField: true,
+                                su_password_errorMessage: 'Field is required!'
+                            }
+            })
         } else if ( '' === su_fullname ) {
             this.setState({
                 signupDetail : {
@@ -269,6 +280,7 @@ class Login extends Component {
                                     { su_email_errorField &&
                                         <div className="aweb-red-note">
                                             { su_email_errorMessage }
+                                            { su_email_errorField }
                                         </div>
                                     }
                                     <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'signupDetail', 'su_email', e.target.value) } defaultValue={ su_email }/>
