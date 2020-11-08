@@ -1,6 +1,6 @@
 <?php
 /**
- * Generated users list json file
+ * Generated products list json file
  * 
  * @package Auction Web
  */
@@ -9,11 +9,12 @@ header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 
 if( is_db_connected() ) {
-    if( isset( $_GET['username'] ) ) {
-        $username = $_GET['username'];
-        $users_sql = 'SELECT * FROM users WHERE username="'.$username.'"';
+    extract( $GLOBALS );
+    if( isset( $_GET['product_id'] ) ) {
+        $product_id = $_GET['product_id'];
+        $users_sql = 'SELECT * FROM products WHERE id="'.$product_id.'"';
     } else {
-        $users_sql = 'SELECT * FROM users WHERE 1';
+        $users_sql = 'SELECT * FROM products WHERE 1';
     }
     $datas = $CONNECTION->query( $users_sql );
     if( $datas ) {

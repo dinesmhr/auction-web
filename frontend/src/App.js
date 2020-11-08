@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import AdminDashboard from './components/admin/pages/dashboard'
-import AdminUsers from './components/admin/pages/users'
+import { AdminRoutes } from './components/routes/adminRoutes'
+import { PublicRoutes } from './components/routes/publicRoutes'
 import Footer from './components/footer/Footer'
-import Home from './components/pages/Home'
-import Shop from './components/pages/Shop'
-import Login from './components/pages/Login'
 import './styles/App.css'
 
 const axios = require('axios');
@@ -26,18 +22,6 @@ class App extends Component {
       errorMessage: '',
       isLoggedin: userLoggedin
     }
-  }
-
-  updateLoggedState() {
-    let userLoggedin
-    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
-      userLoggedin = true
-    } else {
-      userLoggedin = false
-    }
-    this.setState({
-      isLoggedin: userLoggedin
-    })
   }
 
   async componentDidMount() {
@@ -63,22 +47,25 @@ class App extends Component {
     .then(function () {
         console.log( "Request Completed" )
     });
-}
+  }
 
-  render() { 
+  updateLoggedState() {
+      let userLoggedin = false
+      if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+          userLoggedin = true
+      } else {
+          userLoggedin = false
+      }
+      this.setState({ isLoggedin: userLoggedin })
+  }
+
+  render() {
     return (
-      <BrowserRouter>
-        <div id="auction-web">
-            <Switch>
-              <Route path="/aweb-admin" component={() => <AdminDashboard isLoggedIn = {this.state.isLoggedin} />}></Route>
-              <Route path="/aweb-users" component={() => <AdminUsers users = {this.state.users} />}></Route>
-              <Route path="/" exact component={() => <Home isLoggedIn = {this.state.isLoggedin} />}></Route>
-              <Route path="/shop" component={() => <Shop isLoggedIn = {this.state.isLoggedin} />}></Route> 
-              <Route path="/login" component={() => <Login updateLoggedState={ this.updateLoggedState.bind(this) } isLoggedIn = {this.state.isLoggedin} />}></Route>
-            </Switch>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <div id="auction-web">
+            <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
+            <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } updateLoggedState = { this.updateLoggedState.bind(this) } />
+        <Footer />
+      </div>
     );
   }
 }
