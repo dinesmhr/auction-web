@@ -4,79 +4,101 @@
  *
  */
 
-/**
- * 
- *Default
- *
- */
+/*******************************************
+ 				General Css
+********************************************/
 *{
-	padding: 0;
 	margin: 0;
 	text-decoration: none;
 	list-style: none;
 	box-sizing: border-box;
 }
+
 body {
-	font-family: montserrat;
+	font-family: Arial, Helvetica, sans-serif;
 	position:absolute;
 	min-width:100%;
 	min-height:100%;
 }
 
+/*******************************************
+ 				Ends General Css
+********************************************/
 
-/**
- * 
- *aweb-Header
- *
- */
+/*********************************************
+		Admin Menu cs
+*********************************************/
+#aweb-admin-front-navigation {
+	height: 25px;
+	background-color: #000;
+}
 
+ul.admin-front-nav-wrap{
+	padding: 2px 15px;
+	font-size: 15px;
+}
+
+ul.admin-front-nav-wrap li a{
+	color: #fff;
+}
+ul.admin-front-nav-wrap li a:hover{
+	text-decoration: underline;
+}
+/*******************************************
+ 				Header Css
+********************************************/
 .aweb-header{
-	background: #170A6C;
-	height: 90px;
+	background: #2c2557;
+	height: 55px;
 	width: 100%;
-	position: fixed;
 	top: 0;
-	overflow: auto;
-	
+}
 
-}
 .aweb-site-title a{
-	color: white;
+	color: #fff;
+	line-height: 55px;
 	font-size: 30px;
-	line-height: 80px;
 	padding: 0 100px;
-	font-weight: bold;
-	text-shadow: 0px 2px 2px rgba(255,255,255, 0.4); 
 }
+
+.aweb-site-title a span{
+	font-size: 15px;
+	font-style: italic;
+}
+
 .aweb-site-title a:hover{
 	font-size: 2rem;
 }
-.nav-wrap{
+
+.nav-wrap {
 	float: right;
-	margin-right: 20px;
-	margin-top: -75px;
+	margin-right: 120px;
+	margin-top: -60px;
 }
 
-.nav-wrap li{
+.nav-wrap ul li a {
+	color: #fff;
+}
+.nav-wrap li {
 	display: inline-block;
 	line-height:60px;
-	margin: 0 40px;
-	color: white;
-	text-transform: uppercase;
-	font-size: 20px;
-	color: white;
+	padding: 0 15px;
+	text-transform: capitalize;
+	font-size: 15px;
 }
-a.active_name li{
-  font-size: 1.5rem;
+a.active_name {
+  font-size: 16px;
   border-bottom: 1px solid white;
 }
 
-/**
- * 
- *header-responsive
- *
- */
-@media(max-width: 790px){
+/*******************************************
+ 			Ends Header Css
+********************************************/
+
+/*******************************************
+ 			Header Responsive  Css
+********************************************/
+@media(max-width: 790px) {
 	 .aweb-site-title a{
 	 	padding-left: 20px;
 	 	font-size: 20px;
@@ -106,68 +128,58 @@ a.active_name li{
 		margin-top: 10px;
 	 }
 	 .aweb-site-title a:hover{
-	font-size: 1.4rem;
+		font-size: 1.4rem;
+	}
 }
-	
-}
+/*******************************************
+ 			Ends Header Responsive  Css
+********************************************/
 
-/**
- * 
- *Main-Wrapper/Login/home/Shop
- *
- */
-.main-wrapper{
+/*******************************************
+ 			Main Wrapper Css
+********************************************/
+.aweb-clearfix {
+	clear: both;
+}
+/* .main-wrapper{
 	margin-top: 90px;
-}
+} */
 
-/**
- * 
- *Login-Form
- *
- */
-#aweb-login-form{
-	background-image: linear-gradient(to bottom right, #3423eb , #9823eb);
-	min-height: 81.9vh;
+/*******************************************
+ 			Ends Main Wrapper Css
+********************************************/
 
-}
+/*******************************************
+ 			Login Form Css
+********************************************/
 .aweb-login-form-wrapper{
-	background-image: linear-gradient(to bottom right,#6c2185, #3722d4);
-	opacity: 0.8;	
+	border: 1px solid#000;
 	width: 35%;
 	padding-left:60px;
 	padding-right:60px;
 	padding-bottom: 200px;
-	border-radius: 20px;
 	margin: auto;	
 }
-.aweb-login-form-wrapper h1{
-	text-align: center;
-	color: white;
-	font-size: 30px;
-	font-weight: bold;
-	margin: 20px;
+.aweb-login-form-wrapper .input-wrapper {
 	padding-top: 20px;
 }
 .aweb-red-note{
 	color: #c90202;
 	font-weight: bold;
 	text-align: center;
-	font-size: 25px;
+	font-size: 10px;
 }
 .input-wrapper label{
-	font-weight: bold;
-	font-size: 25px;
-	color: white;
+	font-size: 18px;
 }
 .input-wrapper input{
 	width: 100%;
-	margin-bottom: 20px;
 	border: none;
- 	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #000;
+	margin-bottom: 20px;
  	background: transparent;
  	outline: none;
  	height: 40px;
- 	color: #fff;
  	font-size: 16px;
 }
 
@@ -198,12 +210,14 @@ a.active_name li{
 	background: #39dc79;
  	color: #000;
 }
-/**
- * 
- *Login-Form-responsive
- *
- */
 
+/*******************************************
+ 			Ends Login Form Css
+********************************************/
+
+/*******************************************
+ 			Login Form Responsive Css
+********************************************/
 @media(max-width: 790px){
 	#aweb-login-form{
 	 background: none;
@@ -216,11 +230,13 @@ a.active_name li{
 
 	}
 }
-/**
- * 
- *Dashboard
- *
- */
+/*******************************************
+ 		Ends Login Form Responsive Css
+********************************************/
+
+/*******************************************
+ 			Dashboard Css
+********************************************/
 .MuiTabs-root{
 	overflow: auto;
 	float: bottom;
@@ -228,13 +244,13 @@ a.active_name li{
 	margin-top: 200px;
 }
 
+/*******************************************
+ 			Ends Dashboard Css
+********************************************/
 
-
-
-/**
- * Shop-Products
- *
- */
+/*******************************************
+ 			Shop Page Css
+********************************************/
 .product-wrap{
 	width: 100%;
  	display: flex;
@@ -243,15 +259,7 @@ a.active_name li{
  	margin: 15px 0; 
 }
 
-/*.auction-web-shop-products{
-		width: 100%;
- 	display: flex;
- 	justify-content: space-around;
- 	flex-wrap: wrap;
- 	margin: 15px 0; 
-}*/
-
- .product-card{
+.product-card{
  	max-width: 380px;
  	width: 100%;
  	overflow: hidden;
@@ -261,6 +269,7 @@ a.active_name li{
  	margin: 15px 0;
  	cursor: pointer;
 }
+
 .product-card img{
 	width: 100%;
 	height: 100%;
@@ -302,39 +311,19 @@ a.active_name li{
 	background: #191f16;
 }
 
+/*******************************************
+ 		Ends Shop Page Css
+********************************************/
 
-
-
-
-
-
-
-
-
-
-/**
- * 
- *footer
- *
- */
-.aweb-main-footer-wrap{
-	background-color: #404040; 
-	color: white;
-	text-align: center;
+/*******************************************
+ 			Footer Css
+********************************************/
+#aweb-footer {
+	margin-bottom: 0;
+	border-top: 1px dotted #000;
 	padding: 10px 20px;
-	font-size: 16px;
-	max-height: 30px;
-	position: relative;
-	line-height: 9px;
-}	
-
-
-
-.MuiTabs-root{
-	overflow: auto;
-	float: bottom;
-	clear: both;
-	margin-top: 200px;
+	height: 40px;
 }
-
-
+/*******************************************
+ 			Ends Footer Css
+********************************************/
