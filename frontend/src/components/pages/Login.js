@@ -7,38 +7,54 @@ class Login extends Component {
     constructor(props) {
         super( props )
         this.state = { 
-            loginDetail : {
-                            username: '',
-                            password: '',
-                            errorField: false,
-                            errorMessage: ''
-                        },
-            signupDetail : {
-                            su_fullname: '',
-                            su_fullname_errorField: false,
-                            su_fullname_errorMessage: '',
-                            su_username: '',
-                            su_username_errorField: false,
-                            su_username_errorMessage: '',
-                            su_email: '',
-                            su_email_errorField: false,
-                            su_email_errorMessage: '',
-                            su_password: '',
-                            su_password_errorField: false,
-                            su_password_errorMessage: '',
-                        }
+            username: '',
+            password: '',
+            errorField: false,
+            errorMessage: '',
+            su_fullname: '',
+            su_fullname_errorField: false,
+            su_fullname_errorMessage: '',
+            su_username: '',
+            su_username_errorField: false,
+            su_username_errorMessage: '',
+            su_email: '',
+            su_email_errorField: false,
+            su_email_errorMessage: '',
+            su_password: '',
+            su_password_errorField: false,
+            su_password_errorMessage: '',
+            su_confirm_password: '',
+            su_confirm_password_errorField: false,
+            su_confirm_password_errorMessage: '',
+            su_status: false,
+            su_message: ''
         }
     }
 
-    setInputValueChange( parentKey, key, val ) {
+    setInputValueChange( key, val ) {
         this.setState({
-            [parentKey]: { [key] : val }
+            [key] : val
         })
+    }
+
+    checkUsernameAlreadyExists( val ) {
+        const { users } = this.props
+        let status = false
+        users.map( ( user, index ) => {
+            if( user.username === val ) {
+                this.setState({
+                    su_username_errorField: true,
+                    su_username_errorMessage: 'Username unavailable'
+                })
+                status = true
+            }
+        })
+        return status
     }
 
     getCurrentUser() {
         let _this = this
-        const { username, password } = _this.state.loginDetail
+        const { username, password } = _this.state
         const { updateLoggedState } = this.props
         const url = 'http://localhost/auction-web/api/users.php'
         axios.get( url, {
@@ -49,22 +65,18 @@ class Login extends Component {
         .then(function (response) {
             if( response.status === 200 ) {
                 if( response.data.status === true ) {
-                    _this.setState({
-                        loginDetail: { errorField: false }
+                    _this.setState({ 
+                        errorField: false 
                     })
                     if( password !== response.data.data[0].password ) {
                         _this.setState({
-                            loginDetail: {
-                                            errorField: true,
-                                            errorMessage: 'Username or password incorrect!'
-                                        }
+                            errorField: true,
+                            errorMessage: 'Username or password incorrect!'
                         })
                     } else {
                         _this.setState({
-                            loginDetail: {
-                                            errorField: false,
-                                            errorMessage: 'User authenticated'
-                                        }
+                            errorField: false,
+                            errorMessage: 'User authenticated'
                         })
                         sessionStorage.clear()
                         sessionStorage.setItem( 'auctionWebSessionUserLogged', true )
@@ -73,20 +85,16 @@ class Login extends Component {
                     }
                 } else {
                     _this.setState({
-                        loginDetail: {
-                                        errorField: true,
-                                        errorMessage: 'Username not exists!'
-                                    }
+                        errorField: true,
+                        errorMessage: 'Username not exists!'
                     })
                 }
             }
         })
         .catch(function (error) {
             _this.setState({
-                loginDetail : { 
-                                errorField: true,
-                                errorMessage: error
-                            }
+                errorField: true,
+                errorMessage: error
             })
         })
         .then(function () {
@@ -94,36 +102,63 @@ class Login extends Component {
         });
     }
 
+    registerUser() {
+        let _this = this
+        const { su_fullname, su_username, su_email, su_password } = this.state
+        const url = 'http://localhost/auction-web/api/edit-table/edit-users.php'
+        axios.get( url, {
+            params: {
+                fullname: su_fullname,
+                username: su_username,
+                email: su_email,
+                password: su_password,
+                submit: true
+            }
+        })
+        .then(function(response) {
+            if( response.data.status ) {
+                _this.setState({
+                    su_status: true,
+                    su_message: 'User signed up succesfully!!',
+                    su_fullname: '',
+                    su_fullname_errorField: false,
+                    su_fullname_errorMessage: '',
+                    su_username: '',
+                    su_username_errorField: false,
+                    su_username_errorMessage: '',
+                    su_email: '',
+                    su_email_errorField: false,
+                    su_email_errorMessage: '',
+                    su_password: '',
+                    su_password_errorField: false,
+                    su_password_errorMessage: ''
+                })
+            }
+        })
+    }
+
     onSubmit(e) {
         e.preventDefault()
-        const { username, password } = this.state.loginDetail
+        const { username, password } = this.state
         if( '' === username && '' === password ) {
             this.setState({
-                loginDetail: {
-                                errorField: true,
-                                errorMessage: 'Fields are empty!'
-                            }
+                errorField: true,
+                errorMessage: 'Fields are empty!'
             })
         } else if ( '' === username ) {
             this.setState({
-                loginDetail : {
-                                errorField: true,
-                                errorMessage: 'username field is empty!'
-                            }
+                errorField: true,
+                errorMessage: 'username field is empty!'
             })
         } else if ( '' === password ) {
             this.setState({
-                loginDetail : {
-                                errorField: true,
-                                errorMessage: 'password field is empty!'
-                            }
+                errorField: true,
+                errorMessage: 'password field is empty!'
             })
         } else {
             this.setState({
-                loginDetail : {
-                                errorField: false,
-                                errorMessage: ''
-                            }
+                errorField: false,
+                errorMessage: ''
             })
             this.getCurrentUser()
         }
@@ -131,72 +166,106 @@ class Login extends Component {
 
     onSignup(e) {
         e.preventDefault();
-        const { su_fullname, su_username, su_email, su_password } = this.state.signupDetail
-        if( '' === su_fullname && '' === su_username && '' === su_email && '' === su_password ) {
+        const { su_fullname, su_username, su_email, su_password, su_confirm_password } = this.state
+        if( '' === su_fullname ) {
             this.setState({
-                signupDetail: {
-                                su_fullname_errorField: true,
-                                su_fullname_errorMessage: 'Field is required!',
-                                su_username_errorField: true,
-                                su_username_errorMessage: 'Field is required!',
-                                su_email_errorField: true,
-                                su_email_errorMessage: 'Field is required!',
-                                su_password_errorField: true,
-                                su_password_errorMessage: 'Field is required!'
-                            }
+                su_fullname_errorField: true,
+                su_fullname_errorMessage: 'Field is required!',
+                su_username_errorField: false,
+                su_username_errorMessage: '',
+                su_email_errorField: false,
+                su_email_errorMessage: '',
+                su_password_errorField: false,
+                su_password_errorMessage: '',
+                su_confirm_password_errorField: false,
+                su_confirm_password_errorMessage: ''
             })
-        } else if ( '' === su_username && '' === su_email && '' === su_password ) {
+        } else if( '' === su_username ) {
             this.setState({
-                signupDetail: {
-                                su_username_errorField: true,
-                                su_username_errorMessage: 'Field is required!',
-                                su_email_errorField: true,
-                                su_email_errorMessage: 'Field is required!',
-                                su_password_errorField: true,
-                                su_password_errorMessage: 'Field is required!'
-                            }
+                su_fullname_errorField: false,
+                su_fullname_errorMessage: '',
+                su_username_errorField: true,
+                su_username_errorMessage: 'Field is required!',
+                su_email_errorField: false,
+                su_email_errorMessage: '',
+                su_password_errorField: false,
+                su_password_errorMessage: '',
+                su_confirm_password_errorField: false,
+                su_confirm_password_errorMessage: ''
             })
-        } else if ( '' === su_fullname ) {
+        } else if( '' === su_email ) {
             this.setState({
-                signupDetail : {
-                                    su_fullname_errorField: true,
-                                    su_fullname_errorMessage: 'Field is required!'
-                                }
+                su_fullname_errorField: false,
+                su_fullname_errorMessage: '',
+                su_username_errorField: false,
+                su_username_errorMessage: '',
+                su_email_errorField: true,
+                su_email_errorMessage: 'Field is required!',
+                su_password_errorField: false,
+                su_password_errorMessage: '',
+                su_confirm_password_errorField: false,
+                su_confirm_password_errorMessage: ''
             })
-        } else if ( '' === su_username ) {
+        } else if( '' === su_password ) {
             this.setState({
-                signupDetail : {
-                                    su_username_errorField: true,
-                                    su_username_errorMessage: 'Field is required!'
-                                }
+                su_fullname_errorField: false,
+                su_fullname_errorMessage: '',
+                su_username_errorField: false,
+                su_username_errorMessage: '',
+                su_email_errorField: false,
+                su_email_errorMessage: '',
+                su_password_errorField: true,
+                su_password_errorMessage: 'Field is required!',
+                su_confirm_password_errorField: false,
+                su_confirm_password_errorMessage: ''
             })
-        } else if ( '' === su_email ) {
+        } else if( '' === su_confirm_password ) {
             this.setState({
-                signupDetail : {
-                                su_email_errorField: true,
-                                su_email_errorMessage: 'Field is required!'
-                            }
+                su_fullname_errorField: false,
+                su_fullname_errorMessage: '',
+                su_username_errorField: false,
+                su_username_errorMessage: '',
+                su_email_errorField: false,
+                su_email_errorMessage: '',
+                su_password_errorField: false,
+                su_password_errorMessage: '',
+                su_confirm_password_errorField: true,
+                su_confirm_password_errorMessage: 'Field is required!'
             })
-        } else if ( '' === su_password ) {
+        } else if( su_password != su_confirm_password ) {
             this.setState({
-                signupDetail : {
-                                su_password_errorField: true,
-                                su_password_errorMessage: 'Field is required!'
-                            }
+                su_fullname_errorField: false,
+                su_fullname_errorMessage: '',
+                su_username_errorField: false,
+                su_username_errorMessage: '',
+                su_email_errorField: false,
+                su_email_errorMessage: '',
+                su_password_errorField: false,
+                su_password_errorMessage: '',
+                su_confirm_password_errorField: true,
+                su_confirm_password_errorMessage: 'Password must me same'
             })
         } else {
             this.setState({
-                signupDetail : {
-                                su_fullname_errorField: false,
-                                su_fullname_errorMessage: '',
-                                su_username_errorField: false,
-                                su_username_errorMessage: '',
-                                su_email_errorField: false,
-                                su_email_errorMessage: '',
-                                su_password_errorField: false,
-                                su_password_errorMessage: ''
-                            }
+                su_fullname_errorField: false,
+                su_fullname_errorMessage: '',
+                su_username_errorField: false,
+                su_username_errorMessage: '',
+                su_email_errorField: false,
+                su_email_errorMessage: '',
+                su_password_errorField: false,
+                su_password_errorMessage: '',
+                su_confirm_password_errorField: false,
+                su_confirm_password_errorMessage: ''
             })
+            if( this.checkUsernameAlreadyExists( su_username ) ) {
+                this.setState({
+                    su_status: true,
+                    su_message: 'Some field are invalid!!'
+                })
+            } else {
+                this.registerUser();
+            }
         }
     }
 
@@ -208,9 +277,7 @@ class Login extends Component {
     }
 
     render() { 
-        const { username, password, errorField, errorMessage } = this.state.loginDetail
-        const { su_fullname, su_username, su_email, su_password } = this.state.signupDetail
-        const { su_fullname_errorField, su_fullname_errorMessage, su_username_errorField, su_username_errorMessage, su_email_errorField,  su_email_errorMessage, su_password_errorField, su_password_errorMessage } = this.state.signupDetail
+        const { username, password, errorField, errorMessage, su_fullname, su_username, su_email, su_password, su_fullname_errorField, su_fullname_errorMessage, su_username_errorField, su_username_errorMessage, su_email_errorField,  su_email_errorMessage, su_password_errorField, su_password_errorMessage, su_confirm_password, su_confirm_password_errorField, su_confirm_password_errorMessage, su_status, su_message } = this.state
         const { isLoggedIn } = this.props
         if( isLoggedIn === true ) {
             return ( 
@@ -239,11 +306,11 @@ class Login extends Component {
                             <div className="input-wrapper">
                                 <div className="aweb-username">
                                     <label>Username</label>
-                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'loginDetail', 'username', e.target.value) } defaultValue={ username }/>
+                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
                                 </div>
                                 <div className="aweb-password">
                                     <label>Password</label>
-                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'loginDetail', 'password', e.target.value) } defaultValue={ password }/>
+                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
                                 </div>
                             </div>
                             <div className="aweb-submit">
@@ -264,7 +331,7 @@ class Login extends Component {
                                             { su_fullname_errorMessage }
                                         </div>
                                     }
-                                    <input type="text" name="fullname" required onChange={ (e) => this.setInputValueChange( 'signupDetail', 'su_fullname', e.target.value) } defaultValue={ su_fullname }/>
+                                    <input type="text" name="fullname" required onChange={ (e) => this.setInputValueChange( 'su_fullname', e.target.value) } defaultValue={ su_fullname }/>
                                 </div>
                                 <div className="aweb-username">
                                     <label>Username</label>
@@ -273,7 +340,7 @@ class Login extends Component {
                                             { su_username_errorMessage }
                                         </div>
                                     }
-                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'signupDetail', 'su_username', e.target.value) } defaultValue={ su_username }/>
+                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'su_username', e.target.value) } defaultValue={ su_username }/>
                                 </div>
                                 <div className="aweb-email">
                                     <label>Email Address</label>
@@ -283,7 +350,7 @@ class Login extends Component {
                                             { su_email_errorField }
                                         </div>
                                     }
-                                    <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'signupDetail', 'su_email', e.target.value) } defaultValue={ su_email }/>
+                                    <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'su_email', e.target.value) } defaultValue={ su_email }/>
                                 </div>
                                 <div className="aweb-password">
                                     <label>Password</label>
@@ -292,12 +359,26 @@ class Login extends Component {
                                             { su_password_errorMessage }
                                         </div>
                                     }
-                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'signupDetail', 'su_password', e.target.value) } defaultValue={ su_password }/>
+                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'su_password', e.target.value) } defaultValue={ su_password }/>
+                                </div>
+                                <div className="aweb-password">
+                                    <label>Confirm Password</label>
+                                    { su_confirm_password_errorField &&
+                                        <div className="aweb-red-note">
+                                            { su_confirm_password_errorMessage }
+                                        </div>
+                                    }
+                                    <input type="password" name="su_confirm_password" required onChange={ (e) => this.setInputValueChange( 'su_confirm_password', e.target.value) } defaultValue={ su_confirm_password }/>
                                 </div>
                             </div>
                             <div className="aweb-submit">
                                 <input type="submit" name="submit" onClick= { (e) => this.onSignup(e) } value="Sign Up"/>
                             </div>
+                            { su_status && 
+                                <div className="aweb-success-note">
+                                    { su_message }
+                                </div>
+                            }
                         </div>
                     </form>
                 </div>

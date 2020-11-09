@@ -12,7 +12,7 @@ export const PublicRoutes = (props) => {
         <Switch>
             <Route path="/" exact component={() => <Home isLoggedIn = {isLoggedin} />}></Route>
             <Route path="/shop" component={() => <Shop isLoggedIn = {isLoggedin} />}></Route> 
-            <Route path="/login" component={() => <Login isLoggedIn = {isLoggedin} updateLoggedState = { updateLoggedState } />}></Route>
+            <Route path="/login" component={() => <Login isLoggedIn = {isLoggedin} users = { props.users } updateLoggedState = { updateLoggedState } />}></Route>
         </Switch>
         </BrowserRouter>
     )
