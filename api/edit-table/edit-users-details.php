@@ -4,7 +4,9 @@
  * 
  * @package Auction Web
  */
-header("Access-Control-Allow-Origin: *");
+header( "Access-Control-Allow-Origin: *" );
+echo json_encode( $_GET );
+return;
 if( !isset( $_GET['submit'] ) ) {
     $structure['status'] = false;
     $structure['message'] = 'Insufficient parameters';

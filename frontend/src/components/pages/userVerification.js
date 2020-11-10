@@ -29,7 +29,8 @@ class UserVerification extends Component {
             documentImageOne : [],
             documentImageTwo : [],
             errorStatus: false,
-            errorMessage: ''
+            errorMessage: '',
+            tempFile: ''
         }
     }
     
@@ -39,11 +40,18 @@ class UserVerification extends Component {
         })
     }
 
+    encodeFileToDataUrl( file ) {
+        let tempFile, reader = new FileReader();
+        reader.readAsDataURL(file[0]);
+        reader.onload = (e) => {
+            tempFile = e.target.result
+        }
+        return tempFile
+    }
+
     onVerify(e) {
         e.preventDefault()
-        let _this = this
         const { fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, pphoto, documentType, documentImageOne, documentImageTwo } = this.state
-        const { isLoggedin } = this.props
         const url = 'http://localhost/auction-web/api/edit-table/edit-users-details.php'
         axios.get( url, {
             params: {
@@ -55,10 +63,10 @@ class UserVerification extends Component {
                 birth_date : birthDate,
                 current_address : currentAddress,
                 permanent_address : permanentAddress,
-                pphoto : pphoto,
+                pphoto : this.encodeFileToDataUrl( pphoto ),
                 document_type : documentType,
-                document_image_one : documentImageOne,
-                document_image_two : documentImageTwo,
+                document_image_one : this.encodeFileToDataUrl( documentImageOne ),
+                document_image_two : this.encodeFileToDataUrl( documentImageTwo ),
                 submit: true
             }
         })
