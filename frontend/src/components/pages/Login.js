@@ -309,6 +309,7 @@ class Login extends Component {
                                 </div>
                             }
                             <div className="input-wrapper">
+                            	<div className="aweb-login-note">Login</div>
                                 <div className="aweb-username">
                                     <label>Username</label>
                                     <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
@@ -327,7 +328,7 @@ class Login extends Component {
                         <div className="aweb-signup-form-wrapper">
                             <div className="input-wrapper">
                                 <div className="form-heading">
-                                    <h2>Do Not Have Account? Please Sign Up!</h2>
+                                    <h2>Do Not Have Account? Please <span>Sign Up!</span></h2>
                                 </div>
                                 <div className="aweb-fullname">
                                     <label>Fullname</label>

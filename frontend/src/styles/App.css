@@ -3,6 +3,16 @@
  *
  *
  */
+/*******************************************
+ 				Fonts Css
+********************************************/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+/*******************************************
+ 				Ends fonts
+********************************************/
+
 
 /*******************************************
  				General Css
@@ -109,14 +119,14 @@ a.active_name {
 	 	max-height: 50px;
 	 }
 	 .nav-wrap{
-	 	position: fixed;
+	 	position: sticky;
 	 	flex-direction: column;
 	 	width: 100%;
 	 	top: 60px;
 	 	background: #2c3e50;
 	 	float: none;
 	 	margin-right: -20px;
-	 	margin-top: -10px;
+	 	margin-top: -6px;
 	 	min-height: 15px;
 	 	opacity: 0.9;
 	 }
@@ -159,6 +169,7 @@ a.active_name {
 	padding-right:60px;
 	padding-bottom: 200px;
 	margin: auto;	
+	border-radius: 10px;
 }
 .aweb-login-form-wrapper .input-wrapper {
 	padding-top: 20px;
@@ -167,7 +178,8 @@ a.active_name {
 	color: #c90202;
 	font-weight: bold;
 	text-align: center;
-	font-size: 10px;
+	font-size: 19px;
+	font-family: 'Open Sans', sans-serif;
 }
 .input-wrapper label{
 	font-size: 18px;
@@ -210,6 +222,13 @@ a.active_name {
 	background: #39dc79;
  	color: #000;
 }
+.aweb-login-form-wrapper .input-wrapper .aweb-login-note{
+	font-weight: bold;
+	font-size: 35px;
+	color: #1a1261;
+	text-align: center;
+	margin-bottom: 5px;
+}
 
 /*******************************************
  			Ends Login Form Css
@@ -232,6 +251,60 @@ a.active_name {
 }
 /*******************************************
  		Ends Login Form Responsive Css
+********************************************/
+
+
+/*******************************************
+ 			Signup Form Css
+********************************************/
+
+.aweb-signup-form-wrapper{
+	border: 1px solid#000;
+	width: 35%;
+	padding-left:60px;
+	padding-right:60px;
+	padding-bottom: 200px;
+	margin: auto;	
+	border-radius: 10px;
+	margin-top: 10px;
+}
+.input-wrapper .form-heading{
+	color: #1d184d;
+	margin: 15px auto;
+}
+.input-wrapper .form-heading h2 span{
+	font-weight: bold;
+	font-size: 35px;
+	color: #1a1261;
+}
+/*******************************************
+ 			Ends Login Form Css
+********************************************/
+
+/*******************************************
+ 			Signup Form Responsive Css
+********************************************/
+@media(max-width: 790px){
+	#aweb-signup-form{
+	 background: none;
+
+	}
+	.aweb-signup-form-wrapper{
+	    min-width: 80%;
+        padding-bottom: unset;
+
+
+	}
+}
+
+
+
+
+
+
+
+/*******************************************
+ 			Ends Signup Form Responsive Css
 ********************************************/
 
 /*******************************************
