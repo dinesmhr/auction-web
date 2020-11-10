@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 import Header from '../header/Header';
-import axios from 'axios';
+import ImageUploader from 'react-images-upload';
 
 
 const ProductForm =()=>{
 
-const [ selectedFile, newSelectedFile ] = useState(null);
+const [fileState, setFileState] = useState([]);
 
-const fileSelectedHandler =(event)=>{
-	newSelectedFile({event.target.file[0]});
-}
-
-const fileUploadHandler =()=>{
-	axios.post('')
-}
+ const handleFileUpload = e => {
+    setFileState(e.target.files[0]);
+  };
 
 	return {
 		<>
 			<form id="aweb-Product-form">
             <div className="aweb-Product-form-wrapper">
             	<div className="aweb-Product-form-header">Enter the Details </div>   
-            	 <div className="aweb-Product-Image">    	
- 					 <input type="file" id="myFile" required name="filename" onChange ={fileSelectedHandler} />
- 					 <button onClick={fileUploadHandler}>Upload</button>
-				</div>	
+            	 	<div className="aweb-Product-Image">
+            	 	<label>Enter Product Image</label>    	
+ 					 <ImageUploader
+                                        withIcon={false}
+                                        buttonText={ 'Choose document image one' }
+                                        onChange={handleFileUpload}
+                                        imgExtension={['.jpg', '.png']}
+                                        maxFileSize={5242880}
+                                        singleImage={true}
+                                        withPreview = {true}
+                                    />
+ 					 <button>Upload</button>
+					</div>	
  				<div className="aweb-Product-Name">
 					<label for="Pname">Product Name</label>
   					<input type="text" id="Pname" name="Pname" required/>	
@@ -31,32 +36,26 @@ const fileUploadHandler =()=>{
 
  				<div className="aweb-Product-Description">
 					<label for="PDescription">Product Description</label>
-					<textarea id="w3review" name="w3review" rows="8" cols="50" required>
+					<textarea id="PDec" name="PDec" rows="8" cols="50" required>
   					Enter description
   					</textarea>
  				</div>
 
  				<div className="aweb-Product-Address">
- 					<label for="Pname">Product Name</label>
-  					<input type="text" id="Pname" name="Pname" required/>	
+ 					<label for="Paddres">Product Address</label>
+  					<input type="text" id="Paddress" name="Paddress" required/>	
  				</div>
 
  				<div className="aweb-Product-Email">
-					 <label for="emails">Enter email addresses:</label>
-  					<input type="email" id="emails" name="emails" required/>
+					 <label for="email">Enter email addresses:</label>
+  					<input type="email" id="email" name="email" required/>
  				</div>
  				<div className="aweb-Product-Phone">
- 					 <label for="phone">Enter a phone number:</label><br><br>
+ 					 <label for="phone">Enter a phone number:</label>
  					 <input type="tel" id="phone" name="phone" required/>
  				</div>
- 				<div className="aweb-Product-Legal-Documents">
- 						<div className="aweb-Product-Legal-Documents">    	
- 					 <input type="file" id="myFile" name="filename" required/>
- 					 <button>Upload</button>
-				</div>	
- 				</div>
-
-
+ 				
+ 			</div>
             </div>
         </form>
         <>
