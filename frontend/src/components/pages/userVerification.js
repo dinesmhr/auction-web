@@ -11,6 +11,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ImageUploader from 'react-images-upload';
 
+const axios = require('axios');
+
 class UserVerification extends Component {
     constructor(props) {
         super(props)
@@ -26,6 +28,8 @@ class UserVerification extends Component {
             documentType : 'citizenship',
             documentImageOne : [],
             documentImageTwo : [],
+            errorStatus: false,
+            errorMessage: ''
         }
     }
     
@@ -37,13 +41,53 @@ class UserVerification extends Component {
 
     onVerify(e) {
         e.preventDefault()
-        console.log( this.state )
+        let _this = this
+        const { fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, pphoto, documentType, documentImageOne, documentImageTwo } = this.state
+        const { isLoggedin } = this.props
+        const url = 'http://localhost/auction-web/api/edit-table/edit-users-details.php'
+        axios.get( url, {
+            params: {
+                id : sessionStorage.auctionWebSessionUserId,
+                fullname : fullname,
+                parent_name : parentName,
+                profession : professionName,
+                contact_number : contactNumber,
+                birth_date : birthDate,
+                current_address : currentAddress,
+                permanent_address : permanentAddress,
+                pphoto : pphoto,
+                document_type : documentType,
+                document_image_one : documentImageOne,
+                document_image_two : documentImageTwo,
+                submit: true
+            }
+        })
+        .then(function(response) {
+            if( response.data.status ) {
+                this.setState({
+                    errorStatus : false,
+                    errorMessage : response.data.message
+                })  
+            }
+        })
     }
 
     render() {
         const { isLoggedin } = this.props
-        const { fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress } = this.state
+        const { fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, errorMessage } = this.state
         let loggedUserName = sessionStorage.auctionWebSessionUserName
+        if( errorMessage ) {
+            return(
+                <>
+                    <Header userLoggedIn = { isLoggedin }/> 
+                    <div id="auction-web-user-verification">
+                        <div className="aweb-note">
+                            { errorMessage }
+                        </div>
+                    </div>
+                </>
+            )
+        }
         return(
             <>
                 <Header userLoggedIn = { isLoggedin }/> 

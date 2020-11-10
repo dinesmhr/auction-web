@@ -5,7 +5,7 @@
  * @package Auction Web
  */
 header("Access-Control-Allow-Origin: *");
-if( !isset( $_POST['submit'] ) ) {
+if( !isset( $_GET['submit'] ) ) {
     $structure['status'] = false;
     $structure['message'] = 'Insufficient parameters';
     echo json_encode( $structure );
@@ -14,12 +14,12 @@ if( !isset( $_POST['submit'] ) ) {
 
 require_once 'functions.php';
 if( is_db_connected() ) {
-    $fullname = isset( $_POST['fullname'] ) ? $_POST['fullname'] : 'Dummy';
-    $username = isset( $_POST['username'] ) ? $_POST['username'] : 'dummy';
-    $email    = isset( $_POST['email'] ) ? $_POST['email'] : 'dummy@gmail.com';
-    $password = isset( $_POST['password'] ) ? $_POST['password'] : 'dummy';
-    $role     = isset( $_POST['role'] ) ? $_POST['role'] : 'subscriber';
-    $status   = isset( $_POST['status'] ) ? $_POST['status'] : 'not-verified';
+    $fullname = isset( $_GET['fullname'] ) ? $_GET['fullname'] : 'Dummy';
+    $username = isset( $_GET['username'] ) ? $_GET['username'] : 'dummy';
+    $email    = isset( $_GET['email'] ) ? $_GET['email'] : 'dummy@gmail.com';
+    $password = isset( $_GET['password'] ) ? $_GET['password'] : 'dummy';
+    $role     = isset( $_GET['role'] ) ? $_GET['role'] : 'subscriber';
+    $status   = isset( $_GET['status'] ) ? $_GET['status'] : 'not-verified';
     $users_sql = 'INSERT INTO users ( fullname, username, email, password, role, status ) VALUES( $fullname, $username, $email, $password, $role, $status )';
     if ( $CONNECTION->query( $users_sql ) === TRUE ) {
         $structure['status'] = false;
