@@ -81,6 +81,8 @@ class Login extends Component {
                         sessionStorage.clear()
                         sessionStorage.setItem( 'auctionWebSessionUserLogged', true )
                         sessionStorage.setItem( 'auctionWebSessionUserId', response.data.data[0].id )
+                        sessionStorage.setItem( 'auctionWebSessionUserName', response.data.data[0].fullname )
+                        sessionStorage.setItem( 'auctionWebSessionUserStatus', response.data.data[0].status )
                         updateLoggedState()
                     }
                 } else {
@@ -131,7 +133,10 @@ class Login extends Component {
                     su_email_errorMessage: '',
                     su_password: '',
                     su_password_errorField: false,
-                    su_password_errorMessage: ''
+                    su_password_errorMessage: '',
+                    su_confirm_password: '',
+                    su_confirm_password_errorField: false,
+                    su_confirm_password_errorMessage: ''
                 })
             }
         })
@@ -232,7 +237,7 @@ class Login extends Component {
                 su_confirm_password_errorField: true,
                 su_confirm_password_errorMessage: 'Field is required!'
             })
-        } else if( su_password != su_confirm_password ) {
+        } else if( su_password !== su_confirm_password ) {
             this.setState({
                 su_fullname_errorField: false,
                 su_fullname_errorMessage: '',
@@ -310,7 +315,7 @@ class Login extends Component {
                                 </div>
                                 <div className="aweb-password">
                                     <label>Password</label>
-                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } defaultValue={ password }/>
+                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } value={ password }/>
                                 </div>
                             </div>
                             <div className="aweb-submit">
@@ -331,7 +336,7 @@ class Login extends Component {
                                             { su_fullname_errorMessage }
                                         </div>
                                     }
-                                    <input type="text" name="fullname" required onChange={ (e) => this.setInputValueChange( 'su_fullname', e.target.value) } defaultValue={ su_fullname }/>
+                                    <input type="text" name="fullname" required onChange={ (e) => this.setInputValueChange( 'su_fullname', e.target.value) } value={ su_fullname }/>
                                 </div>
                                 <div className="aweb-username">
                                     <label>Username</label>
@@ -340,7 +345,7 @@ class Login extends Component {
                                             { su_username_errorMessage }
                                         </div>
                                     }
-                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'su_username', e.target.value) } defaultValue={ su_username }/>
+                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'su_username', e.target.value) } value={ su_username }/>
                                 </div>
                                 <div className="aweb-email">
                                     <label>Email Address</label>
@@ -350,7 +355,7 @@ class Login extends Component {
                                             { su_email_errorField }
                                         </div>
                                     }
-                                    <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'su_email', e.target.value) } defaultValue={ su_email }/>
+                                    <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'su_email', e.target.value) } value={ su_email }/>
                                 </div>
                                 <div className="aweb-password">
                                     <label>Password</label>
@@ -359,7 +364,7 @@ class Login extends Component {
                                             { su_password_errorMessage }
                                         </div>
                                     }
-                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'su_password', e.target.value) } defaultValue={ su_password }/>
+                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'su_password', e.target.value) } value={ su_password }/>
                                 </div>
                                 <div className="aweb-password">
                                     <label>Confirm Password</label>
@@ -368,7 +373,7 @@ class Login extends Component {
                                             { su_confirm_password_errorMessage }
                                         </div>
                                     }
-                                    <input type="password" name="su_confirm_password" required onChange={ (e) => this.setInputValueChange( 'su_confirm_password', e.target.value) } defaultValue={ su_confirm_password }/>
+                                    <input type="password" name="su_confirm_password" required onChange={ (e) => this.setInputValueChange( 'su_confirm_password', e.target.value) } value={ su_confirm_password }/>
                                 </div>
                             </div>
                             <div className="aweb-submit">
