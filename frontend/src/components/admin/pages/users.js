@@ -29,7 +29,7 @@ class AdminUsers extends Component {
 												<td>{user.email}</td>
 												<td>{user.role}</td>
 												<td>
-													<button><a href={ `?id=${user.id}` }>{`Edit`}</a></button>
+													<button><a href={ `/aweb-users/${user.id}` }>{`Edit`}</a></button>
 													<button>{`Delete`}</button>
 												</td>
 												<td>{user.status}</td>

@@ -9,9 +9,9 @@ header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 
 if( is_db_connected() ) {
-    if( isset( $_GET['username'] ) ) {
-        $username = $_GET['username'];
-        $users_sql = 'SELECT * FROM users WHERE username="'.$username.'"';
+    if( isset( $_GET['id'] ) ) {
+        $id = $_GET['id'];
+        $users_sql = 'SELECT * FROM users WHERE id="'.$id.'"';
     } else {
         $users_sql = 'SELECT * FROM users WHERE 1';
     }
