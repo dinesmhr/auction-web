@@ -6,7 +6,7 @@ class AdminNavigation extends Component {
         return ( 
             <nav id="aweb-admin-front-navigation">
                 <ul className="admin-front-nav-wrap">
-                    <li><NavLink to="/aweb-admin">View Dashboard</NavLink></li>
+                    <li><NavLink to="/aweb-admin" target="_blank">View Dashboard</NavLink></li>
                 </ul>
             </nav>
         );

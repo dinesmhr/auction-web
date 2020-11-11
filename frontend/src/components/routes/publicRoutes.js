@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Shop from '../pages/Shop'
 import Login from '../pages/Login'
 import UserVerification from '../pages/userVerification'
+import { ProductSubmitForm } from '../pages/ProductSubmitForm'
 
 export const PublicRoutes = (props) => {
     const { isLoggedin, updateLoggedState } = props
@@ -16,6 +17,7 @@ export const PublicRoutes = (props) => {
             { isLoggedin && 
                 <Route path="/user-verification" component={() => <UserVerification isLoggedin= { isLoggedin } /> }></Route>
             }
+            <Route path="/user-submit-product" component={() => <ProductSubmitForm isLoggedin= { isLoggedin } /> }></Route>
         </Switch>
         </BrowserRouter>
     )

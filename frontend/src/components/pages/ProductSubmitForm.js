@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Header from '../header/Header';
 import ImageUploader from 'react-images-upload';
 
-const ProductForm = () => {
+export const ProductSubmitForm = (props) => {
 	const [fileState, setFileState] = useState([]);
 
  	const handleFileUpload = e => {
     	setFileState(e.target.files[0]);
-  	}
+	}
 
+	const { isLoggedin } = props
 	return (
 		<>
 			<Header userLoggedIn = { isLoggedin }/> 
@@ -54,11 +55,9 @@ const ProductForm = () => {
 							<label for="phone">Enter a phone number:</label>
 							<input type="tel" id="phone" name="phone" required/>
 						</div>
-						
-					</div>
 					</div>
 				</form>
 			</div>
-        <>
+        </>
 	)
 }

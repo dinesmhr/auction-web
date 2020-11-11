@@ -46,12 +46,17 @@ class AdminEditUser extends Component {
                                 <div key={ index } >
                                     
                                     <h2 className="user-fullname">
-                                        { element.fullname }
+                                        Fullname: { element.fullname }
                                     </h2>
+                                    <div className="user-fullname">
+                                        Username: { element.username }
+                                    </div>
                                 </div>
                             )
                         })
                     }
+                    <button>Verify this user</button>
+                    <button>Remove this User</button>
                 </div>
             </>
         )
