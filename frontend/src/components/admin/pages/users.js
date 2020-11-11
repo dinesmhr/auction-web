@@ -13,7 +13,7 @@ class AdminUsers extends Component {
 						<table style={{width:"100%"}}>
 							<thead>
 								<tr>
-									<th>Username</th>
+									<th>Fullname</th>
 									<th>Email</th>
 									<th>Role</th>
 									<th>Actions</th>
@@ -25,12 +25,11 @@ class AdminUsers extends Component {
 									users.map( ( user, index )  => {
 										return (	 
 											<tr key={ index }>
-												<td>{user.username}</td>
+												<td>{user.fullname}</td>
 												<td>{user.email}</td>
 												<td>{user.role}</td>
 												<td>
 													<button><a href={ `/aweb-users/${user.id}` }>{`Edit`}</a></button>
-													<button>{`Delete`}</button>
 												</td>
 												<td>{user.status}</td>
 											</tr>
