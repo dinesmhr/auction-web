@@ -46,6 +46,10 @@ export const ProductSubmitForm = (props) => {
 							<label for="Paddres">Product Address</label>
 							<input type="text" id="Paddress" name="Paddress" required/>	
 						</div>
+						<div className="aweb-Product-Price">
+							<label for="Pprice">Product Starting Price</label>
+							<input type="number" id="Pprice" name="Pprice" required/>	
+						</div>
 
 						<div className="aweb-Product-Email">
 							<label for="email">Enter email addresses:</label>
@@ -54,6 +58,9 @@ export const ProductSubmitForm = (props) => {
 						<div className="aweb-Product-Phone">
 							<label for="phone">Enter a phone number:</label>
 							<input type="tel" id="phone" name="phone" required/>
+						</div>
+						<div className="aweb-Product-form-button">
+						<button>Submit</button>
 						</div>
 					</div>
 				</form>
