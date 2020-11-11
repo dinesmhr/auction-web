@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     let userLoggedin
-    if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+    if( localStorage.auctionWebSessionUserLogged === 'true' ) {
       userLoggedin = true
     } else {
       userLoggedin = false
@@ -51,7 +51,7 @@ class App extends Component {
 
   updateLoggedState() {
       let userLoggedin = false
-      if( sessionStorage.auctionWebSessionUserLogged === 'true' ) {
+      if( localStorage.auctionWebSessionUserLogged === 'true' ) {
           userLoggedin = true
       } else {
           userLoggedin = false

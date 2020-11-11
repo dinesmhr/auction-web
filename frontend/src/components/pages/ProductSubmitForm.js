@@ -10,6 +10,20 @@ export const ProductSubmitForm = (props) => {
 	}
 
 	const { isLoggedin } = props
+	if( !isLoggedin ) {
+		return (
+			<>
+				<Header userLoggedIn = { isLoggedin }/> 
+				<div id="auction-web-product-submit-page">
+					{ 'You must be logged in to submit your product' }
+					<div className="aweb-redirect-button">
+						<a href="/login" target="_blank">{ 'Proceed to login page' }</a>
+					</div>
+				</div>
+			</>
+		)
+	}
+
 	return (
 		<>
 			<Header userLoggedIn = { isLoggedin }/> 
@@ -18,7 +32,7 @@ export const ProductSubmitForm = (props) => {
 					<div className="aweb-Product-form-wrapper">
 						<div className="aweb-Product-form-header">Enter the Details </div>   
 							<div className="aweb-Product-Image">
-							<label>Enter Product Image</label>    	
+							<label>Enter Product Image</label>
 							<ImageUploader
 								withIcon={false}
 								buttonText={ 'Choose document image one' }
