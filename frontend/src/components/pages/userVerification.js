@@ -91,7 +91,6 @@ class UserVerification extends Component {
             }
         })
         .then(function(response) {
-            console.log( response )
             if( response.data.status ) {
                 this.setState({
                     errorStatus : false,

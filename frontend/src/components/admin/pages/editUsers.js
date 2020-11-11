@@ -6,31 +6,53 @@ const axios = require('axios');
 class AdminEditUser extends Component {
     constructor(props) {
         super(props)
+        const { match: {params} } = props;
         this.state = {
-            user: []
+            user: [],
+            userStatus: ''
         }
     }
 
     componentDidMount() {
         const { match: {params} } = this.props;
         let _this = this
-        const url = 'http://localhost/auction-web/api/users.php'
+        const url = 'http://localhost/auction-web/api/single-users.php'
         axios.get( url, {
             params: {
                 id: params.id
             }
         })
         .then(function(response) {
-            if( response.status === 200 ) {
+            if( response.data.status === true ) {
                 _this.setState({ 
-                  user : response.data.data
+                  user : response.data.data,
+                  userStatus: response.data.data[0].status
+                })
+            }
+        })
+    }
+
+    verifyUser() {
+        const { match: {params} } = this.props;
+        let _this = this
+        const url = 'http://localhost/auction-web/api/edit-table/update-user-status.php'
+        axios.get( url, {
+            params: {
+                id: params.id,
+                status: 'verified'
+            }
+        })
+        .then(function(response) {
+            if( response.data.status === true ) {
+                _this.setState({
+                    userStatus: 'verified'
                 })
             }
         })
     }
 
     render() {
-        const { user } = this.state
+        const { user, userStatus } = this.state
         return (
             <>
                 <header>           
@@ -45,18 +67,44 @@ class AdminEditUser extends Component {
                             return(
                                 <div key={ index } >
                                     
-                                    <h2 className="user-fullname">
-                                        Fullname: { element.fullname }
-                                    </h2>
-                                    <div className="user-fullname">
-                                        Username: { element.username }
+                                    <div className="admin-single-user-field">
+                                        <strong>Fullname :</strong> { element.fullname }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Username :</strong> { element.username }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Birth Date :</strong> { element.birth_date }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Email Address :</strong> { element.email }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Profession :</strong> { element.profession }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Contact Number :</strong> { element.contact_number }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Current Address :</strong> { element.current_address }
+                                    </div>
+                                    <div className="admin-single-user-field">
+                                        <strong>Permanent Address :</strong> { element.permanent_address }
                                     </div>
                                 </div>
                             )
                         })
                     }
-                    <button>Verify this user</button>
-                    <button>Remove this User</button>
+                    { ( userStatus === 'under-verification' ) &&
+                            <button onClick = { (e) => this.verifyUser() }>Verify the user</button>
+                    }
+                    { ( userStatus === 'not-verified' ) &&
+                            <button>Not submitted document for verification</button>
+                    }
+                    { ( userStatus === 'verified' ) &&
+                            <button>Verified User</button>
+                    }
+                    <button>Delete the User</button>
                 </div>
             </>
         )
