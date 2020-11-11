@@ -5,9 +5,9 @@ class MainNavigation extends Component {
     constructor(props) {
         super( props )
         this.state = {
-                userId: sessionStorage.auctionWebSessionUserId,
-                userloggedin: sessionStorage.auctionWebSessionUserLogged,
-                userVerified: sessionStorage.auctionWebSessionUserStatus
+                userId: localStorage.auctionWebSessionUserId,
+                userloggedin: localStorage.auctionWebSessionUserLogged,
+                userVerified: localStorage.auctionWebSessionUserStatus
             }
     }
 
@@ -28,7 +28,7 @@ class MainNavigation extends Component {
                             }
                         </NavLink>
                     </li>
-                    { userloggedin && ( userVerified === 'verified' ) && 
+                    { userloggedin && ( userVerified !== 'verified' ) && 
                         <li><NavLink activeClassName="active_name" to="/user-verification">Verify Account</NavLink></li>
                     }
                     <li><NavLink activeClassName="active_name" to="/user-submit-product">Submit Product</NavLink></li>

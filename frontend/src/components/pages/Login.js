@@ -78,11 +78,11 @@ class Login extends Component {
                             errorField: false,
                             errorMessage: 'User authenticated'
                         })
-                        sessionStorage.clear()
-                        sessionStorage.setItem( 'auctionWebSessionUserLogged', true )
-                        sessionStorage.setItem( 'auctionWebSessionUserId', response.data.data[0].id )
-                        sessionStorage.setItem( 'auctionWebSessionUserName', response.data.data[0].fullname )
-                        sessionStorage.setItem( 'auctionWebSessionUserStatus', response.data.data[0].status )
+                        localStorage.clear()
+                        localStorage.setItem( 'auctionWebSessionUserLogged', true )
+                        localStorage.setItem( 'auctionWebSessionUserId', response.data.data[0].id )
+                        localStorage.setItem( 'auctionWebSessionUserName', response.data.data[0].fullname )
+                        localStorage.setItem( 'auctionWebSessionUserStatus', response.data.data[0].status )
                         updateLoggedState()
                     }
                 } else {
@@ -276,8 +276,8 @@ class Login extends Component {
 
     userLoggedOutAction() {
         const { updateLoggedState } = this.props
-        sessionStorage.clear()
-        sessionStorage.setItem( 'auctionWebSessionUserLogged', false )
+        localStorage.clear()
+        localStorage.setItem( 'auctionWebSessionUserLogged', false )
         updateLoggedState()
     }
 

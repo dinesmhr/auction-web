@@ -17,6 +17,8 @@ class UserVerification extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            userId: localStorage.auctionWebSessionUserId,
+            userStatus: '',
             fullname : '',
             parentName : '',
             professionName : '',
@@ -29,11 +31,28 @@ class UserVerification extends Component {
             documentImageOne : [],
             documentImageTwo : [],
             errorStatus: false,
-            errorMessage: '',
-            tempFile: ''
+            errorMessage: ''
         }
     }
     
+    getUserStatus() {
+        let _this = this
+        const { userId } = this.state
+        const url = 'http://localhost/auction-web/api/users.php'
+        axios.get( url, {
+            params: {
+                id: userId
+            }
+        })
+        .then(function(response) {
+            if( response.status === 200 ) {
+                _this.setState({ 
+                    userStatus : response.data.data[0].status
+                })
+            }
+        })
+    }
+
     onInputChange( key, value ) {
         this.setState({
           [key] : value
@@ -41,21 +60,22 @@ class UserVerification extends Component {
     }
 
     encodeFileToDataUrl( file ) {
-        let tempFile, reader = new FileReader();
+        let reader = new FileReader();
         reader.readAsDataURL(file[0]);
         reader.onload = (e) => {
-            tempFile = e.target.result
+            localStorage.setItem( 'auctionWebSessionUserVerificationTempfile', e.target.result )
         }
-        return tempFile
+        return( localStorage.auctionWebSessionUserVerificationTempfile )
     }
 
     onVerify(e) {
         e.preventDefault()
-        const { fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, pphoto, documentType, documentImageOne, documentImageTwo } = this.state
+        let _this = this
+        const { userId, fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, pphoto, documentType, documentImageOne, documentImageTwo } = this.state
         const url = 'http://localhost/auction-web/api/edit-table/edit-users-details.php'
-        axios.get( url, {
+        axios.post( url, {
             params: {
-                id : sessionStorage.auctionWebSessionUserId,
+                id : userId,
                 fullname : fullname,
                 parent_name : parentName,
                 profession : professionName,
@@ -71,19 +91,39 @@ class UserVerification extends Component {
             }
         })
         .then(function(response) {
+            console.log( response )
             if( response.data.status ) {
                 this.setState({
                     errorStatus : false,
                     errorMessage : response.data.message
-                })  
+                })
+                _this.getUserStatus()
             }
         })
     }
 
+    componentDidMount() {
+        this.getUserStatus()
+    }
+
     render() {
         const { isLoggedin } = this.props
-        const { fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, errorMessage } = this.state
-        let loggedUserName = sessionStorage.auctionWebSessionUserName
+        const { userStatus, fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, errorMessage } = this.state
+        let loggedUserName = localStorage.auctionWebSessionUserName
+
+        if( userStatus === 'under-verification' ) {
+            return (
+                <>
+                    <Header userLoggedIn = { isLoggedin }/> 
+                    <div id="auction-web-user-verification">
+                        <div className="aweb-heading">
+                            { `You are logged in as ${loggedUserName}. Your account is currently under verification process. Thank you for your patience!!` }
+                        </div>
+                    </div>
+                </>
+            )
+        }
+
         if( errorMessage ) {
             return(
                 <>
