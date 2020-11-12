@@ -421,11 +421,11 @@ a.active_name {
  	height: 25px;
  	font-size: 14px;
 }
-.
-.aweb-Product-Description #PDec {
+#PDec{
 	 resize: none;
-
-
+}
+#PSpec{
+	 resize: none;
 }
 .aweb-product-submit-button{
 	width: 50%;
@@ -531,11 +531,17 @@ a.active_name {
  			Footer Css
 ********************************************/
 #aweb-footer {
-	margin-bottom: 0;
-	border-top: 1px dotted #000;
-	padding: 10px 20px;
-	height: 40px;
+	background-color: #0a183d;
+	height: 32px;
+	width: 100%;
 }
+#aweb-footer p{
+	color: #fff;
+	text-align: center;
+	text-transform: capitalize;
+	font-family: 'Open Sans', sans-serif;
+	padding-top: 3px;
+}	
 /*******************************************
  			Ends Footer Css
 ********************************************/
