@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import Header from '../header/Header';
-import ImageUploader from 'react-images-upload';
+import MultiImageInput from 'react-multiple-image-input';
+import DatePicker from "react-datepicker";
+import TimezoneSelect from 'react-timezone-select';
 
 export const ProductSubmitForm = (props) => {
-	const [fileState, setFileState] = useState([]);
+	const [ImageFiles, setImageFiles] = useState([]);
+    const [startDate, setStartDate] = useState(new Date());
+     const [selectedTimezone, setSelectedTimezone] = useState({})
 
- 	const handleFileUpload = e => {
-    	setFileState(e.target.files[0]);
-	}
+const crop = {
+    unit: '%',
+    aspect: 4 / 3,
+    width: '100'
+  };
+
+
+
+
+
 
 	const { isLoggedin } = props
 	if( !isLoggedin ) {
@@ -31,19 +42,14 @@ export const ProductSubmitForm = (props) => {
 				<form id="aweb-Product-form">
 					<div className="aweb-Product-form-wrapper">
 						<div className="aweb-Product-form-header">Enter the Details</div>						
-							<div className="aweb-Product-Image">
-								<label>Enter Product Image:</label>    	
-							<label>Enter Product Image</label>
-							<ImageUploader
-								withIcon={false}
-								buttonText={ 'Choose document image one' }
-								onChange={handleFileUpload}
-								imgExtension={['.jpg', '.png']}
-								maxFileSize={5242880}
-								singleImage={true}
-								withPreview = {true}
-							/>
-							<button>Upload</button>
+							<div className="aweb-Product-Image">  	
+							<label>Enter Product Images:</label>
+							<MultiImageInput
+      							images={ImageFiles}
+     					 		setImages={setImageFiles}
+     					 		max={5}
+      							cropConfig={{ crop, ruleOfThirds: true }}
+   							 />
 							</div>	
 						<div className="aweb-Product-Name">
 							<label for="Pname">Product Name:</label>
@@ -55,7 +61,65 @@ export const ProductSubmitForm = (props) => {
 							<textarea id="PDec" name="PDec" rows="8" cols="50" required placeholder="Enter Description">
 							</textarea>
 						</div>
-
+						<div className="aweb-Product-Specification">
+							<label for="PSpec">Product Specification/Feature</label><br/>
+							<textarea name="Text1" cols="40" rows="5"></textarea>
+						</div>
+						<div className="aweb-Product-Category">
+							<label for="PCat">Product Category:</label>
+						 <select name="Category" id="PCat" name="PCat" required>	
+							<option value="">Appliances</option> 
+							<option value="">Apps & Games</option>
+							<option value="">Arts, Crafts, & Sewing</option>
+							<option value="">Automotive Parts & Accessories</option>
+							<option value="">Baby</option>
+							<option value="">Beauty & Personal Care</option>
+							<option value="">Books</option>
+							<option value="">CDs & Vinyl</option>
+							<option value="">Cell Phones & Accessories</option>
+							<option value="">Clothing, Shoes and Jewelry</option>
+							<option value="">Collectibles & Fine Art</option>
+							<option value="">Computers</option>
+							<option value="">Electronics</option>
+							<option value="">Garden & Outdoor</option>
+							<option value="">Grocery & Gourmet Food</option>
+							<option value="">Handmade</option>
+							<option value="">Health, Household & Baby Care</option>
+							<option value="">Home & Kitchen</option>
+							<option value="">Industrial & Scientific</option>
+							<option value="">Real Estate</option>
+							<option value="">Luggage & Travel Gear</option>
+							<option value="">Movies & TV</option>
+							<option value="">Musical Instruments</option>
+							<option value="">Office Products</option>
+							<option value="">Pet Supplies</option>
+							<option value="">Premium Beauty</option>
+							<option value="">Sports & Outdoors</option>
+							<option value="">Tools & Home Improvement</option>
+							<option value="">Toys & Games</option>
+							<option value="">Video Games</option>
+ 						 </select>
+						</div>
+						<div className="aweb-Product-Tag">
+							<label for="PCat">Product Tag:</label>
+							<input type="text" id="Ptag" name="PTag" placeholder="Example: #book #harrypotter"/>	
+						</div>
+						<div className="aweb-Product-Deadline">
+							<label for="PDead">Product Bid Deadline:</label>
+							 <DatePicker required selected={startDate} onChange={date => setStartDate(date)}/>	
+						</div>
+						<div className="aweb-Product-Time">
+							<label for="PDt">Product Deadline Time:</label>
+							<input type="time" id="P" name="pDt" required/>	
+						</div>
+							<div className="aweb-Product-timezone">
+							<label for="PTz">enter your Timezone:</label>
+							<TimezoneSelect
+          							value={selectedTimezone}
+         							 onChange={setSelectedTimezone}
+         							 required
+       						/>
+						</div>
 						<div className="aweb-Product-Address">
 							<label for="Paddres">Product Address:</label>
 							<input type="text" id="Paddress" name="Paddress" required/>	
@@ -65,11 +129,11 @@ export const ProductSubmitForm = (props) => {
 							<input type="number" id="Pprice" name="Pprice" required/>	
 						</div>
 						<div className="aweb-Product-Email">
-							<label for="email">Enter email addresses:</label>
+							<label for="email">Enter your email addresses:</label>
 							<input type="email" id="email" name="email" required/>
 						</div>
 						<div className="aweb-Product-Phone">
-							<label for="phone">Enter a phone number:</label>
+							<label for="phone">Enter Your phone number:</label>
 							<input type="tel" id="phone" name="phone" required/>
 						</div>
 							<div className="aweb-Product-form-button">

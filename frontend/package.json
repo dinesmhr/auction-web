@@ -11,8 +11,10 @@
     "react-datepicker": "^3.3.0",
     "react-dom": "^16.13.1",
     "react-images-upload": "^1.2.8",
+    "react-multiple-image-input": "^1.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-timezone-select": "^0.9.7",
     "universal-cookie": "^4.0.4"
   },
   "scripts": {

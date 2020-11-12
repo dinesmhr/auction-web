@@ -387,7 +387,7 @@ a.active_name {
 ********************************************/
 
 .aweb-Product-form-wrapper{
-	height: 100vh;
+	height: auto;
 	width: 70vw;
 	border: 1px solid#000;
 	padding-left:60px;
@@ -412,7 +412,7 @@ a.active_name {
 	width: 100%;
 	border: none;
 	border-bottom: 1px solid #000;
-	margin-bottom: 5px;
+	margin-bottom: 30px;
  	background: transparent;
  	outline: none;
  	height: 25px;
@@ -446,7 +446,9 @@ a.active_name {
 	background: #39dc79;
  	color: #000;
  }
-
+/*******************************************
+ 			Ends Product form Css 
+********************************************/
 
 
 
