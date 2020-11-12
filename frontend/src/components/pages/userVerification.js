@@ -143,7 +143,7 @@ class UserVerification extends Component {
                             { `You are logged in as ${loggedUserName}. Please verify your account here.` }
                         </div>
                         <div className="input-wrapper">
-                            <div className="aweb-heading">
+                            <div className="aweb-heading-personal-details">
                                 { 'Personal Details' }
                             </div>
                             <div className="aweb-fullname">

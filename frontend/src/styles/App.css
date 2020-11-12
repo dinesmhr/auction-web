@@ -162,12 +162,15 @@ a.active_name {
 /*******************************************
  			Login Form Css
 ********************************************/
+
+
+
 .aweb-login-form-wrapper{
 	border: 1px solid#000;
 	width: 35%;
 	padding-left:60px;
 	padding-right:60px;
-	padding-bottom: 200px;
+	padding-bottom: 100px;
 	margin: auto;	
 	border-radius: 10px;
 }
@@ -263,7 +266,7 @@ a.active_name {
 	width: 35%;
 	padding-left:60px;
 	padding-right:60px;
-	padding-bottom: 200px;
+	padding-bottom: 100px;
 	margin: auto;	
 	border-radius: 10px;
 	margin-top: 10px;
@@ -449,6 +452,65 @@ a.active_name {
 /*******************************************
  			Ends Product form Css 
 ********************************************/
+
+/*******************************************
+ 			Product Form Responsive Css
+********************************************/
+@media(max-width: 790px){
+	.aweb-Product-form-wrapper{
+		margin-top: 150px;
+	}
+}
+/*******************************************
+ 		Ends Product Form Responsive Css
+********************************************/
+
+/*******************************************
+ 			User Account Verification Css
+********************************************/
+#auction-web-user-verification{
+	height: auto;
+	width: 70vw;
+	border: 1px solid#000;
+	padding-left:60px;
+	padding-right:60px;
+	padding-bottom: 200px;
+	margin: auto;	
+	border-radius: 10px;
+	margin-top: 10px;
+}
+#auction-web-user-verification .aweb-heading{
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+}
+#auction-web-user-verification .aweb-heading-personal-details{
+	margin: 5px 0;
+	color: #c90202;
+	font-weight: bold;
+	font-size: 19px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#auction-web-user-verification .aweb-submit{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/*******************************************
+ 		Ends User Account Verification Css
+********************************************/
+
+/*******************************************
+ 	User Account Verification Responsive Css
+********************************************/
+@media(max-width: 790px){
+	#auction-web-user-verification{
+		margin-top: 150px;
+	}
+}
+/*************************************************
+ 	Ends User Account Verification Responsive Css
+**************************************************/
 
 
 

@@ -7,15 +7,13 @@ import TimezoneSelect from 'react-timezone-select';
 export const ProductSubmitForm = (props) => {
 	const [ImageFiles, setImageFiles] = useState([]);
     const [startDate, setStartDate] = useState(new Date());
-     const [selectedTimezone, setSelectedTimezone] = useState({})
+    const [selectedTimezone, setSelectedTimezone] = useState({});
 
 const crop = {
     unit: '%',
     aspect: 4 / 3,
     width: '100'
   };
-
-
 
 
 

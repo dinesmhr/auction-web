@@ -300,7 +300,8 @@ class Login extends Component {
         return (
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
-                <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
+                <div className="aweb-login-signup-wrapper">
+                 <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
                     <form id="aweb-login-form">
                         <div className="aweb-login-form-wrapper">
                             { errorField &&
@@ -388,6 +389,7 @@ class Login extends Component {
                         </div>
                     </form>
                 </div>
+               </div>
             </Fragment>
         );
     }
