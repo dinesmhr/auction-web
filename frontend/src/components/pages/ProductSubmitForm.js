@@ -32,11 +32,8 @@ export const ProductSubmitForm = (props) => {
 					<div className="aweb-Product-form-wrapper">
 						<div className="aweb-Product-form-header">Enter the Details</div>						
 							<div className="aweb-Product-Image">
-<<<<<<< HEAD
 								<label>Enter Product Image:</label>    	
-=======
 							<label>Enter Product Image</label>
->>>>>>> 53a3505532b5a8dac9422ea1d0e3f2f5de17aff9
 							<ImageUploader
 								withIcon={false}
 								buttonText={ 'Choose document image one' }
