@@ -5,29 +5,49 @@
  * @package Auction Web
  */
 header("Access-Control-Allow-Origin: *");
-if( !isset( $_GET['submit'] ) ) {
+header("Content-Type: multipart/form-data");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+// get posted input data
+$decoded_data = json_decode(file_get_contents("php://input") );
+$data = $decoded_data->params;
+if( empty( $data->submit ) ) {
     $structure['status'] = false;
     $structure['message'] = 'Insufficient parameters';
     echo json_encode( $structure );
     return;
 }
 
-require_once 'functions.php';
+require_once '../functions.php';
 if( is_db_connected() ) {
-    $fullname = isset( $_GET['fullname'] ) ? $_GET['fullname'] : 'Dummy';
-    $username = isset( $_GET['username'] ) ? $_GET['username'] : 'dummy';
-    $email    = isset( $_GET['email'] ) ? $_GET['email'] : 'dummy@gmail.com';
-    $password = isset( $_GET['password'] ) ? $_GET['password'] : 'dummy';
-    $role     = isset( $_GET['role'] ) ? $_GET['role'] : 'subscriber';
-    $status   = isset( $_GET['status'] ) ? $_GET['status'] : 'not-verified';
-    $users_sql = 'INSERT INTO users ( fullname, username, email, password, role, status ) VALUES( $fullname, $username, $email, $password, $role, $status )';
-    if ( $CONNECTION->query( $users_sql ) === TRUE ) {
-        $structure['status'] = false;
-        $structure['message'] = 'New record created successfully';
-      } else {
-        $structure['status'] = false;
-        $structure['message'] = 'Error in creating new record';
-      }
+  $images = !empty( $data->images ) ? serialize( json_encode( $data->images ) ) : '';
+  $name = !empty( $data->name ) ? $data->name : '';
+  $slug = str_replace(' ', '-', strtolower($name));
+  $status = 'under-verification';
+  $description = !empty( $data->description ) ? $data->description : '';
+  $specification  = !empty( $data->specification ) ? $data->specification : '';
+  $initial_price = !empty( $data->initial_price ) ? $data->initial_price : '';
+  $email     = !empty( $data->email ) ? $data->email : '';
+  $contact_number   = !empty( $data->contact_number ) ? $data->contact_number : '';
+  $seller_id   = !empty( $data->seller_id ) ? $data->seller_id : '';
+  $category_ids   = !empty( $data->category_ids ) ? serialize( json_encode( $data->category_ids ) ) : '';
+  $tags   = !empty( $data->tags ) ? $data->tags : '';
+  $bid_deadline   = !empty( $data->bid_deadline ) ? $data->bid_deadline : '';
+  $address   = !empty( $data->address ) ? $data->address : '';
+  $product_sql = 'INSERT INTO products ( name, slug, images, description, specification, status, initial_price, email, contact_number, address, seller_id, category_ids, tags, bid_deadline ) VALUES( "' .$name. '", "' .$slug. '", "' .$images. '", "' .$description. '", "' .$specification. '", "' .$status. '", "' .$initial_price. '", "' .$email. '", "' .$contact_number. '", "' .$address. '", "' .$seller_id. '", "' .$category_ids. '", "' .$tags. '", "' .$bid_deadline. '" )';
+  if( !$CONNECTION->query( $product_sql ) ) {
+    var_dump( mysqli_error( $CONNECTION ) );
+    return;
+  }
+  if ( $CONNECTION->query( $product_sql ) === TRUE ) {
+    $structure['status'] = false;
+    $structure['message'] = 'Your product form is submitted. Your product is under verification!! Thank you for your patience';
+  } else {
+    $structure['status'] = false;
+    $structure['message'] = 'Error in creating new record';
+  }
 } else {
     $structure['status'] = false;
     $structure['message'] = 'Database connection error';
