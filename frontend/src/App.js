@@ -30,7 +30,7 @@ class App extends Component {
     axios.get(url)
     .then(function ( response ) {
         if( response.status === 200 ) {
-            _this.setState({ 
+            _this.setState({
               users : response.data.data,
               isLoaded: true,
               error: false

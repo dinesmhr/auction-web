@@ -1,6 +1,6 @@
 <?php
 /**
- * Generated products list json file
+ * Generated products details list joining two table record "products" and "products details" json file
  * 
  * @package Auction Web
  */
@@ -9,10 +9,15 @@ header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 
 if( is_db_connected() ) {
-    extract( $GLOBALS );
-    if( isset( $_GET['product_id'] ) ) {
-        $product_id = $_GET['product_id'];
-        $products_sql = 'SELECT * FROM products WHERE id="'.$product_id.'"';
+    if( isset( $_GET['id'] ) ) {
+        $id = $_GET['id'];
+        $user_status_sql = 'SELECT status from products WHERE id = "' .$id. '"';
+        if( $CONNECTION->query( $user_status_sql ) ) {
+            $user_status_datas = $CONNECTION->query( $user_status_sql );
+            $user_status = $user_status_datas->fetch_all(MYSQLI_ASSOC);
+            $user_status = $user_status[0]['status'];
+        }
+        $products_sql = 'SELECT * FROM products WHERE id="' .$id. '"';
     } else {
         $products_sql = 'SELECT * FROM products WHERE 1';
     }
@@ -29,7 +34,7 @@ if( is_db_connected() ) {
         }
     } else {
         $structure['status'] = false;
-        $structure['message'] = mysql_error();
+        $structure['message'] = mysqli_error($CONNECTION);
     }
 } else {
     $structure['status'] = false;

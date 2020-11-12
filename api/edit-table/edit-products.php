@@ -22,7 +22,7 @@ if( empty( $data->submit ) ) {
 
 require_once '../functions.php';
 if( is_db_connected() ) {
-  $images = !empty( $data->images ) ? serialize( json_encode( $data->images ) ) : '';
+  $images = !empty( $data->images ) ? htmlspecialchars( serialize( $data->images ) ) : '';
   $name = !empty( $data->name ) ? $data->name : '';
   $slug = str_replace(' ', '-', strtolower($name));
   $status = 'under-verification';
@@ -32,15 +32,11 @@ if( is_db_connected() ) {
   $email     = !empty( $data->email ) ? $data->email : '';
   $contact_number   = !empty( $data->contact_number ) ? $data->contact_number : '';
   $seller_id   = !empty( $data->seller_id ) ? $data->seller_id : '';
-  $category_ids   = !empty( $data->category_ids ) ? serialize( json_encode( $data->category_ids ) ) : '';
+  $category_ids   = !empty( $data->category_ids ) ? htmlspecialchars( serialize( $data->category_ids ) ) : '';
   $tags   = !empty( $data->tags ) ? $data->tags : '';
   $bid_deadline   = !empty( $data->bid_deadline ) ? $data->bid_deadline : '';
   $address   = !empty( $data->address ) ? $data->address : '';
   $product_sql = 'INSERT INTO products ( name, slug, images, description, specification, status, initial_price, email, contact_number, address, seller_id, category_ids, tags, bid_deadline ) VALUES( "' .$name. '", "' .$slug. '", "' .$images. '", "' .$description. '", "' .$specification. '", "' .$status. '", "' .$initial_price. '", "' .$email. '", "' .$contact_number. '", "' .$address. '", "' .$seller_id. '", "' .$category_ids. '", "' .$tags. '", "' .$bid_deadline. '" )';
-  if( !$CONNECTION->query( $product_sql ) ) {
-    var_dump( mysqli_error( $CONNECTION ) );
-    return;
-  }
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
     $structure['status'] = false;
     $structure['message'] = 'Your product form is submitted. Your product is under verification!! Thank you for your patience';

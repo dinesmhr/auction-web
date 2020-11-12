@@ -4,6 +4,7 @@ import AdminDashboard from '../admin/pages/dashboard'
 import AdminUsers from '../admin/pages/users'
 import AdminProducts from '../admin/pages/products'
 import AdminEditUser from '../admin/pages/editUsers'
+import AdminEditProduct from '../admin/pages/editUsers'
 
 export const AdminRoutes = (props) => {
     const { isLoggedin, users } = props
@@ -34,6 +35,7 @@ export const AdminRoutes = (props) => {
                 <Route path="/aweb-users" exact component={() => <AdminUsers users = {users} userLoggedIn = { isLoggedin } />}></Route>
                 <Route path="/aweb-products" component={() => <AdminProducts />}></Route>
                 <Route path="/aweb-users/:id" component={(props) => <AdminEditUser {...props}/>}></Route>
+                <Route path="/aweb-products/:id" component={(props) => <AdminEditProduct {...props}/>}></Route>
             </Switch>
         </BrowserRouter>
     )

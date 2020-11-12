@@ -28,7 +28,35 @@ export const ProductSubmitForm = (props) => {
 
 	const options =  [
 		{ name: 'Appliances', id: 1},
-		{ name: 'Apps & Games', id: 2}
+		{ name: 'Apps & Games', id: 2},
+		{ name: 'Arts, Crafts & Sewing', id: 3},
+		{ name: 'Automotive Parts & Accessories', id: 4},
+		{ name: 'Babies', id: 5},
+		{ name: 'Beauty & Personal Care', id: 6},
+		{ name: 'Books', id: 7},
+		{ name: 'CDs & Vinyl', id: 8},
+		{ name: 'Cell Phones & Accessories', id: 9},
+		{ name: 'Clothing, Shoes & Jwelleries', id: 10},
+		{ name: 'Collectibles & Fine Arts', id: 11},
+		{ name: 'Computers', id: 12},
+		{ name: 'Electronics', id: 13},
+		{ name: 'Garden & Outdoor', id: 14},
+		{ name: 'Grocery & Gourmet Food', id: 15},
+		{ name: 'Handmade', id: 16},
+		{ name: 'Health, Household & Baby Care', id: 17},
+		{ name: 'Home & Kitchen', id: 18},
+		{ name: 'Industrial & Scientific', id: 19},
+		{ name: 'Real Estate', id: 20},
+		{ name: 'Luggage & Travel Gear', id: 21},
+		{ name: 'Movies & TV', id: 22},
+		{ name: 'Musical Instruments', id: 23},
+		{ name: 'Office Products', id: 24},
+		{ name: 'Pet Supplies', id: 25},
+		{ name: 'Premium Beauty', id: 26},
+		{ name: 'Sports & Outdoors', id: 27},
+		{ name: 'Tools & Home Improvement', id: 28},
+		{ name: 'Toys & Games', id: 29},
+		{ name: 'video Games', id: 30}
 	]
 
 	const onsubmit = (e) => {
@@ -52,15 +80,15 @@ export const ProductSubmitForm = (props) => {
             }
         })
         .then(function(response) {
-			console.log( response.data );
             if( response.data.status ) {
-				setsubmitButtonText( 'Your product is submitted to administration' )
+				console.log( response.data.status )
             }
 		})
+		setsubmitButtonText( 'Your product is submitted to administration' )
 		//seterrorStatus('false'),
 		//seterrorMessage('Product form submitted'),
 	}
-	
+
 	const { isLoggedin } = props
 	if( !isLoggedin ) {
 		return (
