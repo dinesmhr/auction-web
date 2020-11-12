@@ -17,7 +17,7 @@ if( is_db_connected() ) {
             $user_status = $user_status_datas->fetch_all(MYSQLI_ASSOC);
             $user_status = $user_status[0]['status'];
         }
-        if( $user_status === 'verified' ) {
+        if( $user_status !== 'not-verified' ) {
             $users_sql = 'SELECT * FROM users JOIN users_details ON users.id=users_details.id WHERE users.id="' .$id.'"';
         } else {
             $users_sql = 'SELECT * FROM users WHERE id="' .$id. '"';    
@@ -30,7 +30,7 @@ if( is_db_connected() ) {
             $user_status = $user_status_datas->fetch_all(MYSQLI_ASSOC);
             $user_status = $user_status[0]['status'];
         }
-        if( $user_status === 'verified' ) {
+        if( $user_status === 'not-verified' ) {
             $users_sql = 'SELECT * FROM users JOIN users_details ON users.username=users_details.username WHERE users.username="' .$username.'"';
         } else {
             $users_sql = 'SELECT * FROM users WHERE username="' .$username. '"';    

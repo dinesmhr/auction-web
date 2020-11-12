@@ -5,18 +5,14 @@ import DatePicker from "react-datepicker";
 import TimezoneSelect from 'react-timezone-select';
 
 export const ProductSubmitForm = (props) => {
-	const [ImageFiles, setImageFiles] = useState([]);
+	const [ImageFiles, setImageFiles] = useState({});
     const [startDate, setStartDate] = useState(new Date());
     const [selectedTimezone, setSelectedTimezone] = useState({});
-
-const crop = {
-    unit: '%',
-    aspect: 4 / 3,
-    width: '100'
-  };
-
-
-
+	const crop = {
+		unit: '%',
+		aspect: 4 / 4,
+		height: '100'
+	};
 
 	const { isLoggedin } = props
 	if( !isLoggedin ) {
@@ -50,21 +46,21 @@ const crop = {
    							 />
 							</div>	
 						<div className="aweb-Product-Name">
-							<label for="Pname">Product Name:</label>
+							<label htmlFor="Pname">Product Name:</label>
 							<input type="text" id="Pname" name="Pname" required/>	
 						</div>
 
 						<div className="aweb-Product-Description">
-							<label for="PDescription">Product Description:</label><br/>
+							<label htmlFor="PDescription">Product Description:</label><br/>
 							<textarea id="PDec" name="PDec" rows="8" cols="50" required placeholder="Enter Description">
 							</textarea>
 						</div>
 						<div className="aweb-Product-Specification">
-							<label for="PSpec">Product Specification/Feature</label><br/>
+							<label htmlFor="PSpec">Product Specification/Feature</label><br/>
 							<textarea name="Text1" cols="40" rows="5"></textarea>
 						</div>
 						<div className="aweb-Product-Category">
-							<label for="PCat">Product Category:</label>
+							<label htmlFor="PCat">Product Category:</label>
 						 <select name="Category" id="PCat" name="PCat" required>	
 							<option value="">Appliances</option> 
 							<option value="">Apps & Games</option>
@@ -99,19 +95,19 @@ const crop = {
  						 </select>
 						</div>
 						<div className="aweb-Product-Tag">
-							<label for="PCat">Product Tag:</label>
+							<label htmlFor="PCat">Product Tag:</label>
 							<input type="text" id="Ptag" name="PTag" placeholder="Example: #book #harrypotter"/>	
 						</div>
 						<div className="aweb-Product-Deadline">
-							<label for="PDead">Product Bid Deadline:</label>
+							<label htmlFor="PDead">Product Bid Deadline:</label>
 							 <DatePicker required selected={startDate} onChange={date => setStartDate(date)}/>	
 						</div>
 						<div className="aweb-Product-Time">
-							<label for="PDt">Product Deadline Time:</label>
-							<input type="time" id="P" name="pDt" required/>	
+							<label htmlFor="PDt">Product Deadline Time:</label>
+							<input type="time" id="P" name="pDt" required/>
 						</div>
 							<div className="aweb-Product-timezone">
-							<label for="PTz">enter your Timezone:</label>
+							<label htmlFor="PTz">enter your Timezone:</label>
 							<TimezoneSelect
           							value={selectedTimezone}
          							 onChange={setSelectedTimezone}
@@ -119,19 +115,19 @@ const crop = {
        						/>
 						</div>
 						<div className="aweb-Product-Address">
-							<label for="Paddres">Product Address:</label>
+							<label htmlFor="Paddres">Product Address:</label>
 							<input type="text" id="Paddress" name="Paddress" required/>	
 						</div>
 						<div className="aweb-Product-Price">
-							<label for="Pprice">Product Starting Price [in Dollar(USD)]:</label>
+							<label htmlFor="Pprice">Product Starting Price [in Dollar(USD)]:</label>
 							<input type="number" id="Pprice" name="Pprice" required/>	
 						</div>
 						<div className="aweb-Product-Email">
-							<label for="email">Enter your email addresses:</label>
+							<label htmlFor="email">Enter your email addresses:</label>
 							<input type="email" id="email" name="email" required/>
 						</div>
 						<div className="aweb-Product-Phone">
-							<label for="phone">Enter Your phone number:</label>
+							<label htmlFor="phone">Enter Your phone number:</label>
 							<input type="tel" id="phone" name="phone" required/>
 						</div>
 							<div className="aweb-Product-form-button">
