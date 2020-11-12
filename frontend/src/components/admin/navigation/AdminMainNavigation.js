@@ -8,6 +8,7 @@ class AdminMainNavigation extends Component {
                     <li><a href="/aweb-admin">Dashboard</a></li>
                     <li><a href="/aweb-users">Users</a></li>
                     <li><a href="/aweb-products">Products</a></li>
+                    <li><a href="/aweb-categories">Products Categories</a></li>
                 </ul>
             </nav>
         );

@@ -30,7 +30,8 @@ class UserVerification extends Component {
             documentImageOne : [],
             documentImageTwo : [],
             errorStatus: false,
-            errorMessage: ''
+            errorMessage: '',
+            verifyButtonText: 'Verify'
         }
     }
     
@@ -58,13 +59,13 @@ class UserVerification extends Component {
         })
     }
 
-    encodeFileToDataUrl( file ) {
+    encodeFileToDataUrl( key, file ) {
         let reader = new FileReader();
         reader.readAsDataURL(file[0]);
         reader.onload = (e) => {
-            localStorage.setItem( 'auctionWebSessionUserVerificationTempfile', e.target.result )
+            localStorage.setItem( key, e.target.result )
         }
-        return( localStorage.auctionWebSessionUserVerificationTempfile )
+        return( localStorage[key] )
     }
 
     onVerify(e) {
@@ -82,10 +83,10 @@ class UserVerification extends Component {
                 birth_date : birthDate,
                 current_address : currentAddress,
                 permanent_address : permanentAddress,
-                pphoto : this.encodeFileToDataUrl( pphoto ),
+                pphoto : this.encodeFileToDataUrl( 'pphoto', pphoto ),
                 document_type : documentType,
-                document_image_one : this.encodeFileToDataUrl( documentImageOne ),
-                document_image_two : this.encodeFileToDataUrl( documentImageTwo ),
+                document_image_one : this.encodeFileToDataUrl( 'documentImageOne', documentImageOne ),
+                document_image_two : this.encodeFileToDataUrl( 'documentImageTwo', documentImageTwo ),
                 submit: true
             }
         })
@@ -93,7 +94,8 @@ class UserVerification extends Component {
             if( response.data.status ) {
                 this.setState({
                     errorStatus : false,
-                    errorMessage : response.data.message
+                    errorMessage : response.data.message,
+                    verifyButtonText: 'Your document is submitted to administration'
                 })
                 _this.getUserStatus()
             }
@@ -223,7 +225,7 @@ class UserVerification extends Component {
                                 </div>
                             </div>
                             <div className="aweb-submit">
-                                <input type="submit" name="submit" onClick= { (e) => this.onVerify(e) } value="Verify"/>
+                                <input type="submit" name="submit" onClick= { (e) => this.onVerify(e) } value={ this.state.verifyButtonText }/>
                             </div>
                         </div>
                     </form>

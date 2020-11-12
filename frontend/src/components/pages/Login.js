@@ -281,14 +281,44 @@ class Login extends Component {
         updateLoggedState()
     }
 
+    getUsersInfo( userId ) {
+        const { users } = this.props
+        const currentUser = users.map( ( user ) => {
+            if( userId === user.id  ) {
+                return user
+            }
+        })
+        return currentUser['0']
+    }
+
     render() { 
         const { username, password, errorField, errorMessage, su_fullname, su_username, su_email, su_password, su_fullname_errorField, su_fullname_errorMessage, su_username_errorField, su_username_errorMessage, su_email_errorField,  su_email_errorMessage, su_password_errorField, su_password_errorMessage, su_confirm_password, su_confirm_password_errorField, su_confirm_password_errorMessage, su_status, su_message } = this.state
         const { isLoggedIn } = this.props
         if( isLoggedIn === true ) {
+            const userInfo = this.getUsersInfo( localStorage.auctionWebSessionUserId )
             return ( 
                 <Fragment>
                     <Header userLoggedIn = { isLoggedIn }/>
                     <div id="auction-web-login" className="page--login main-wrapper">
+                        { userInfo &&
+                            <div className="aweb-my-account-info">
+                                <div className="aweb-my-account-info-field">
+                                    <strong>Fullname : </strong> { userInfo.fullname }
+                                </div>
+                                <div className="aweb-my-account-info-field">
+                                    <strong>Username : </strong> { userInfo.username }
+                                </div>
+                                <div className="aweb-my-account-info-field">
+                                    <strong>Email Address : </strong> { userInfo.email }
+                                </div>
+                                <div className="aweb-my-account-info-field">
+                                    <strong>Role : </strong> { userInfo.role }
+                                </div>
+                                <div className="aweb-my-account-info-field">
+                                    <strong>Status : </strong> { userInfo.status }
+                                </div>
+                            </div>
+                        }
                         <div className="aweb-logout-note">Logged out of auction web?</div>
                         <button onClick={ this.userLoggedOutAction.bind(this) }>
                             Logout now

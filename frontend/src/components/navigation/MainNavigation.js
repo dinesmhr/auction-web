@@ -21,7 +21,7 @@ class MainNavigation extends Component {
                     <li>
                         <NavLink activeClassName="active_name" to="/login">
                             { this.props.userLoggedIn && 
-                                    'Logout'
+                                    'My Account'
                             }
                             { !this.props.userLoggedIn && 
                                     'Login'
