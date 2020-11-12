@@ -38,7 +38,7 @@ class AdminEditProduct extends Component {
         const url = 'http://localhost/auction-web/api/edit-table/update-product-status.php'
         axios.get( url, {
             params: {
-                id: params.id,
+                product_id: params.id,
                 status: 'verified'
             }
         })
@@ -65,77 +65,53 @@ class AdminEditProduct extends Component {
                     <form id="admin-edit-products-form">
                         { 
                             product.map(( element, index ) => {
+                                let imagesKeys = Object.keys(element.images)
                                 return(
                                     <div key={ index } >
-                                        { element.fullname &&
+                                        { element.name &&
                                             <div className="admin-single-product-field">
                                                 <strong>Name :</strong> 
                                                 { element.name }
                                             </div>
                                         }
-                                        { element.username &&
+                                        { element.description &&
                                             <div className="admin-single-user-field">
-                                                <strong>Username :</strong> { element.username }
+                                                <strong>Description :</strong> { element.description }
                                             </div>   
                                         }
-                                        { element.birth_date &&
+                                        { element.specification &&
                                             <div className="admin-single-user-field">
-                                                <strong>Birth Date :</strong> { element.birth_date }
+                                                <strong>Specification :</strong> { element.specification }
                                             </div>
                                         }
                                         { element.email &&
                                             <div className="admin-single-user-field">
-                                                <strong>Email Address :</strong> { element.email }
-                                            </div>
-                                        }
-                                        { element.parent_name &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Guardian's Name :</strong> { element.parent_name }
-                                            </div>
-                                        }
-                                        { element.profession &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Profession :</strong> { element.profession }
+                                                <strong>Seller's Email Address :</strong> { element.email }
                                             </div>
                                         }
                                         { element.contact_number &&
                                             <div className="admin-single-user-field">
-                                                <strong>Contact Number :</strong> { element.contact_number }
+                                                <strong>Seller's Contact Number :</strong> { element.contact_number }
                                             </div>
                                         }
-                                        { element.current_address &&
+                                        { element.bid_deadline &&
                                             <div className="admin-single-user-field">
-                                                <strong>Current Address :</strong> { element.current_address }
+                                                <strong>Bid Deadline :</strong> { element.bid_deadline }
                                             </div>
                                         }
-                                        { element.permanent_address &&
+                                        { element.initial_price &&
                                             <div className="admin-single-user-field">
-                                                <strong>Permanent Address :</strong> { element.permanent_address }
+                                                <strong>Initial Bid Amount :</strong> { element.initial_price }
                                             </div>
                                         }
-                                        { element.document_type &&
+                                        { element.images &&
                                             <div className="admin-single-user-field">
-                                                <strong>Document Submitted :</strong> { element.document_type }
-                                            </div>
-                                        }
-                                        { element.role &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Role :</strong> { element.role }
-                                            </div>
-                                        }
-                                        { element.pphoto &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Personal Photo :</strong> <img src={ element.pphoto } />
-                                            </div>
-                                        }
-                                        { element.document_image_one &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Document Image One :</strong> <img src={ element.document_image_one } />
-                                            </div>
-                                        }
-                                        { element.document_image_two &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Document Image Two :</strong> <img src={ element.document_image_two } />
+                                                <strong>Product Feature images :</strong>
+                                                { 
+                                                    imagesKeys.map(( image ) => {                                                        
+                                                        return ( <img key={ image } src={element.images[image]} alt="No Image" /> )
+                                                    })
+                                                }
                                             </div>
                                         }
                                     </div>
@@ -143,16 +119,16 @@ class AdminEditProduct extends Component {
                             })
                         }
                     </form>
-                    { ( userStatus === 'under-verification' ) &&
-                            <button onClick = { (e) => this.verifyUser() }>Verify the user</button>
+                    { ( productStatus === 'under-verification' ) &&
+                            <button onClick = { (e) => this.verifyProduct() }>Verify the Product</button>
                     }
-                    { ( userStatus === 'not-verified' ) &&
+                    { ( productStatus === 'not-verified' ) &&
                             <button>Document not available for verification</button>
                     }
-                    { ( userStatus === 'verified' ) &&
-                            <button>Verified User</button>
+                    { ( productStatus === 'verified' ) &&
+                            <button>Verified Product</button>
                     }
-                    <button>Delete the User</button>
+                    <button>Remove the Product</button>
                 </div>
             </>
         )

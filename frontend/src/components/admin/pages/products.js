@@ -43,7 +43,7 @@ const AdminProducts = (props) => {
 											<td>{product.initial_price}</td>
 											<td>{product.seller_id}</td>
 											<td>
-												<button><a href={ `/aweb-users/${product.id}` }>{`Edit`}</a></button>
+												<button><a href={ `/aweb-products/${product.id}` }>{`Edit`}</a></button>
 											</td>
 										</tr>
 									)

@@ -30,6 +30,9 @@ if( is_db_connected() ) {
             $structure['status'] = true;
             $structure['message'] = 'success';
             $products = $datas->fetch_all(MYSQLI_ASSOC);
+            if( isset( $_GET['id'] ) ) {
+                $products[0]['images'] = unserialize( htmlspecialchars_decode( $products[0]['images'] ) );
+            }
             $structure['data'] = $products;
         }
     } else {

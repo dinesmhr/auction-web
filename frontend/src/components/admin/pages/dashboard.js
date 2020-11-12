@@ -6,7 +6,7 @@ class AdminDashboard extends Component {
         return (         	
             <header>
                 <div className="aweb-admin-top-header">
-                    <h1 className="aweb-admin-site-title">Auction Web</h1>
+                    <h1 className="aweb-admin-site-title"><a href="/" target="_blank">Auction Web</a></h1>
                     <AdminMainNavigation userLoggedIn = { this.props.userLoggedIn }/>
                 </div>
             </header>

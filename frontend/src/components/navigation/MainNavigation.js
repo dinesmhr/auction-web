@@ -17,7 +17,7 @@ class MainNavigation extends Component {
         	<div className="nav-wrap">        
                 <ul>                 	                       				 
                     <li><NavLink exact activeClassName="active_name" to="/">Home</NavLink></li>  				 
-                    <li><NavLink activeClassName="active_name" to="/shop">Products</NavLink></li>
+                    <li><NavLink activeClassName="active_name" to="/products">Products</NavLink></li>
                     <li>
                         <NavLink activeClassName="active_name" to="/login">
                             { this.props.userLoggedIn && 

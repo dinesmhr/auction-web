@@ -1,21 +1,22 @@
 <?php
 /**
- * Generated products list json file
+ * Generated products categories list json file
  * 
  * @package Auction Web
  */
 
 header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
+
 if( is_db_connected() ) {
     extract( $GLOBALS );
-    if( isset( $_GET['product_id'] ) ) {
-        $product_id = $_GET['product_id'];
-        $products_sql = 'SELECT * FROM products WHERE id="'.$product_id.'"';
+    if( isset( $_GET['id'] ) ) {
+        $id = $_GET['id'];
+        $product_categories_sql = 'SELECT * FROM product_categories WHERE id="'.$id.'"';
     } else {
-        $products_sql = 'SELECT * FROM products WHERE 1';
+        $product_categories_sql = 'SELECT * FROM product_categories WHERE 1';
     }
-    $datas = $CONNECTION->query( $products_sql );
+    $datas = $CONNECTION->query( $product_categories_sql );
     if( $datas ) {
         if( $datas->num_rows == 0 ) {
             $structure['status'] = false;
@@ -24,9 +25,6 @@ if( is_db_connected() ) {
             $structure['status'] = true;
             $structure['message'] = 'success';
             $products = $datas->fetch_all(MYSQLI_ASSOC);
-            foreach( $products as $key => $product ) {
-                $products[$key]['images'] = unserialize( htmlspecialchars_decode( $products[$key]['images'] ) );
-            }
             $structure['data'] = $products;
         }
     } else {
