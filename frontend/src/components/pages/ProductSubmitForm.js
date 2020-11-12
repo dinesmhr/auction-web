@@ -57,7 +57,7 @@ export const ProductSubmitForm = (props) => {
 						</div>
 						<div className="aweb-Product-Specification">
 							<label htmlFor="PSpec">Product Specification/Feature</label><br/>
-							<textarea name="Text1" cols="40" rows="5"></textarea>
+							<textarea id="PSpec" cols="40" rows="5"></textarea>
 						</div>
 						<div className="aweb-Product-Category">
 							<label htmlFor="PCat">Product Category:</label>
