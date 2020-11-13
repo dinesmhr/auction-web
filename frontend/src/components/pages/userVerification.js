@@ -110,6 +110,20 @@ class UserVerification extends Component {
         const { isLoggedin } = this.props
         const { userStatus, fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, errorMessage } = this.state
         let loggedUserName = localStorage.auctionWebSessionUserName
+        
+        if( !isLoggedin ) {
+            return (
+                <>
+                    <Header userLoggedIn = { isLoggedin }/> 
+                    <div id="auction-web-user-verification">
+                        <div className="aweb-heading">
+                            { `You dont have registered your account to Auction Web. ` }
+                            <a href="/login">{ "Sign Up Now?" }</a>
+                        </div>
+                    </div>
+                </>
+            )
+        }
 
         if( userStatus === 'under-verification' ) {
             return (
