@@ -164,10 +164,18 @@ a.active_name {
 ********************************************/
 
 
-
+#auction-web-login{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+#aweb-login-form{
+	width: 50%;
+	padding-top: 20px;
+}
 .aweb-login-form-wrapper{
 	border: 1px solid#000;
-	width: 35%;
+	width: 60%;
 	padding-left:60px;
 	padding-right:60px;
 	padding-bottom: 100px;
@@ -175,7 +183,7 @@ a.active_name {
 	border-radius: 10px;
 }
 .aweb-login-form-wrapper .input-wrapper {
-	padding-top: 20px;
+	padding-top: 30px;
 }
 .aweb-red-note{
 	color: #c90202;
@@ -243,13 +251,13 @@ a.active_name {
 @media(max-width: 790px){
 	#aweb-login-form{
 	 background: none;
+	 width: 60%;
 
 	}
 	.aweb-login-form-wrapper{
-	    min-width: 80%;
-        padding-bottom: unset;
-    	margin-top: 230px;
-
+	    width: 100%;
+    	margin-top: 70px;
+    	margin-left: 90px;
 	}
 }
 /*******************************************
@@ -263,9 +271,9 @@ a.active_name {
 
 .aweb-signup-form-wrapper{
 	border: 1px solid#000;
-	width: 35%;
-	padding-left:60px;
-	padding-right:60px;
+	width: 75%;
+	padding-left:70px;
+	padding-right:40px;
 	padding-bottom: 100px;
 	margin: auto;	
 	border-radius: 10px;
