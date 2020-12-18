@@ -31,7 +31,7 @@ if( is_db_connected() ) {
         }
     } else {
         $structure['status'] = false;
-        $structure['message'] = mysql_error();
+        $structure['message'] = mysqli_error( $CONNECTION );
     }
 } else {
     $structure['status'] = false;
