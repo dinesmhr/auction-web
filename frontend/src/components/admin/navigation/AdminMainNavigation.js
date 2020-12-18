@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 class AdminMainNavigation extends Component {
     render() { 
         return ( 
+        	<div className="aweb-admin-wrap">
             <nav id="aweb-admin-navigation">
                 <ul className="admin-nav-wrap">
                     <li><a href="/aweb-admin">Dashboard</a></li>
@@ -11,6 +12,7 @@ class AdminMainNavigation extends Component {
                     <li><a href="/aweb-categories">Products Categories</a></li>
                 </ul>
             </nav>
+            </div>
         );
     }
 }
