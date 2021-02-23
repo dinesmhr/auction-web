@@ -11,12 +11,12 @@ require_once 'functions.php';
 if( is_db_connected() ) {
     if( isset( $_GET['id'] ) ) {
         $id = $_GET['id'];
-        $users_sql = 'SELECT * FROM users WHERE id="'.$id.'"';
+        $users_sql = 'SELECT * FROM aw_users WHERE ID="'.$id.'"';
     } else if( isset( $_GET['username'] ) ) {
         $username = $_GET['username'];
-        $users_sql = 'SELECT * FROM users WHERE username="'.$username.'"';
+        $users_sql = 'SELECT * FROM aw_users WHERE username="'.$username.'"';
     } else {
-        $users_sql = 'SELECT * FROM users WHERE 1';
+        $users_sql = 'SELECT * FROM aw_users WHERE 1';
     }
     $datas = $CONNECTION->query( $users_sql );
     if( $datas ) {

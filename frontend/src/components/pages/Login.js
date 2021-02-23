@@ -68,7 +68,7 @@ class Login extends Component {
                     _this.setState({ 
                         errorField: false 
                     })
-                    if( password !== response.data.data[0].password ) {
+                    if( password !== response.data.data[0].user_pass ) {
                         _this.setState({
                             errorField: true,
                             errorMessage: 'Username or password incorrect!'
@@ -80,9 +80,9 @@ class Login extends Component {
                         })
                         localStorage.clear()
                         localStorage.setItem( 'auctionWebSessionUserLogged', true )
-                        localStorage.setItem( 'auctionWebSessionUserId', response.data.data[0].id )
-                        localStorage.setItem( 'auctionWebSessionUserName', response.data.data[0].fullname )
-                        localStorage.setItem( 'auctionWebSessionUserStatus', response.data.data[0].status )
+                        localStorage.setItem( 'auctionWebSessionUserId', response.data.data[0].ID )
+                        localStorage.setItem( 'auctionWebSessionUserName', response.data.data[0].first_name )
+                        localStorage.setItem( 'auctionWebSessionUserStatus', response.data.data[0].verified )
                         updateLoggedState()
                     }
                 } else {
