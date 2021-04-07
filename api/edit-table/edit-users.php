@@ -20,7 +20,7 @@ if( is_db_connected() ) {
     $password = isset( $_GET['password'] ) ? $_GET['password'] : 'dummy';
     $role     = isset( $_GET['role'] ) ? $_GET['role'] : 'subscriber';
     $status   = isset( $_GET['status'] ) ? $_GET['status'] : 'not-verified';
-    $users_sql = 'INSERT INTO users( fullname, username, email, password, role, status ) VALUES( "'. $fullname . '", "' .$username. '", "' .$email. '", "' .$password. '", "' .$role. '", "' .$status. '" )';
+    $users_sql = 'INSERT INTO aw_users( fullname, username, email, password, role, status ) VALUES( "'. $fullname . '", "' .$username. '", "' .$email. '", "' .$password. '", "' .$role. '", "' .$status. '" )';
     if ( $CONNECTION->query( $users_sql ) === TRUE ) {
         $structure['status'] = true;
         $structure['message'] = 'New record created successfully';

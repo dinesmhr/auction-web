@@ -34,7 +34,7 @@ if( is_db_connected() ) {
     $document_type   = !empty( $data->document_type ) ? $data->document_type : '';
     $document_image_one   = !empty( $data->document_image_one ) ? $data->document_image_one : '';
     $document_image_two   = !empty( $data->document_image_two ) ? $data->document_image_two : '';
-    $users_sql = 'INSERT INTO users_details( id, fullname, parent_name, profession, contact_number, birth_Date, current_address, permanent_address, pphoto, document_type, document_image_one, document_image_two ) VALUES( "' .$id. '", "' .$fullname. '", "' .$parent_name. '", "' .$profession. '", "' .$contact_number. '", "' .$birth_date. '", "' .$current_address. '", "' .$permanent_address. '", "' .$pphoto .'", "' .$document_type. '", "' .$document_image_one. '", "' .$document_image_two .'" )';
+    $users_sql = 'INSERT INTO aw_users_details( id, fullname, parent_name, profession, contact_number, birth_date, current_address, permanent_address, pphoto, document_type, document_image_one, document_image_two ) VALUES( "' .$id. '", "' .$fullname. '", "' .$parent_name. '", "' .$profession. '", "' .$contact_number. '", "' .$birth_date. '", "' .$current_address. '", "' .$permanent_address. '", "' .$pphoto .'", "' .$document_type. '", "' .$document_image_one. '", "' .$document_image_two .'" )';
     if ( $CONNECTION->query( $users_sql ) === TRUE ) {
         // update users status as under-verification
         $users_status_update_sql = 'UPDATE users SET status = "under-verification" WHERE id = "' .$id. '"';
