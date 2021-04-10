@@ -29,11 +29,14 @@ export const AdminRoutes = (props) => {
             )
         }
     }
+
     return (
         <BrowserRouter>
             <Switch>
                 <Route path="/aweb-admin" component={() => <AdminDashboard isLoggedIn = {isLoggedin} />}></Route>
-                <Route path="/aweb-users" exact component={() => <AdminUsers users = {users} userLoggedIn = { isLoggedin } />}></Route>
+                { Array.isArray(users) && users.length &&
+                    <Route path="/aweb-users" exact component={() => <AdminUsers users = {users} userLoggedIn = { isLoggedin } />}></Route>
+                }
                 <Route path="/aweb-products" exact component={() => <AdminProducts />}></Route>
                 <Route path="/aweb-users/:id" component={(props) => <AdminEditUser {...props}/>}></Route>
                 <Route path="/aweb-products/:id" component={(props) => <AdminEditProduct {...props}/>}></Route>

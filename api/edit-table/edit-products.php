@@ -36,7 +36,7 @@ if( is_db_connected() ) {
   $tags   = !empty( $data->tags ) ? $data->tags : '';
   $bid_deadline   = !empty( $data->bid_deadline ) ? $data->bid_deadline : '';
   $address   = !empty( $data->address ) ? $data->address : '';
-  $product_sql = 'INSERT INTO products ( name, slug, images, description, specification, status, initial_price, email, contact_number, address, seller_id, category_ids, tags, bid_deadline ) VALUES( "' .$name. '", "' .$slug. '", "' .$images. '", "' .$description. '", "' .$specification. '", "' .$status. '", "' .$initial_price. '", "' .$email. '", "' .$contact_number. '", "' .$address. '", "' .$seller_id. '", "' .$category_ids. '", "' .$tags. '", "' .$bid_deadline. '" )';
+  $product_sql = 'INSERT INTO aw_products ( name, slug, images, description, specification, status, initial_price, email, contact_number, address, seller_id, category_ids, tags, bid_deadline ) VALUES( "' .$name. '", "' .$slug. '", "' .$images. '", "' .$description. '", "' .$specification. '", "' .$status. '", "' .$initial_price. '", "' .$email. '", "' .$contact_number. '", "' .$address. '", "' .$seller_id. '", "' .$category_ids. '", "' .$tags. '", "' .$bid_deadline. '" )';
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
     $structure['status'] = false;
     $structure['message'] = 'Your product form is submitted. Your product is under verification!! Thank you for your patience';

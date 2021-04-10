@@ -23,15 +23,16 @@ class AdminUsers extends Component {
 							<tbody>
 								{
 									users.map( ( user, index )  => {
+										console.log( user )
 										return (	 
 											<tr key={ index }>
-												<td>{user.fullname}</td>
-												<td>{user.email}</td>
-												<td>{user.role}</td>
+												<td>{ user.first_name + user.middle_name + ' ' + user.last_name }</td>
+												<td>{ user.user_email }</td>
+												<td>{ user.user_role }</td>
 												<td>
 													<button><a href={ `/aweb-users/${user.id}` }>{`Edit`}</a></button>
 												</td>
-												<td>{user.status}</td>
+												<td>{user.verified}</td>
 											</tr>
 										)
 									})

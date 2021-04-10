@@ -11,9 +11,9 @@ if( is_db_connected() ) {
     extract( $GLOBALS );
     if( isset( $_GET['product_id'] ) ) {
         $product_id = $_GET['product_id'];
-        $products_sql = 'SELECT * FROM products WHERE id="'.$product_id.'"';
+        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'"';
     } else {
-        $products_sql = 'SELECT * FROM products WHERE 1';
+        $products_sql = 'SELECT * FROM aw_products WHERE 1';
     }
     $datas = $CONNECTION->query( $products_sql );
     if( $datas ) {
