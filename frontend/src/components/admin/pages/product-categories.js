@@ -23,7 +23,7 @@ const AdminProductCategories = (props) => {
 				<div className="aweb-admin-top-header">
 					<h1 className="aweb-admin-site-title">Auction Web</h1>
 					<AdminMainNavigation userLoggedIn = { userLoggedIn }/>
-					<table style={{width:"100%"}}>
+					<table style={{width:"75%"}}>
 						<thead>
 							<tr>
                                 <th>ID</th>
