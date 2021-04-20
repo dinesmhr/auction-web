@@ -12,9 +12,9 @@ if( is_db_connected() ) {
     extract( $GLOBALS );
     if( isset( $_GET['id'] ) ) {
         $id = $_GET['id'];
-        $product_categories_sql = 'SELECT * FROM product_categories WHERE id="'.$id.'"';
+        $product_categories_sql = 'SELECT * FROM aw_product_categories WHERE id="'.$id.'"';
     } else {
-        $product_categories_sql = 'SELECT * FROM product_categories WHERE 1';
+        $product_categories_sql = 'SELECT * FROM aw_product_categories WHERE 1';
     }
     $datas = $CONNECTION->query( $product_categories_sql );
     if( $datas ) {

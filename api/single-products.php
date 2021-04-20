@@ -17,9 +17,9 @@ if( is_db_connected() ) {
             $user_status = $user_status_datas->fetch_all(MYSQLI_ASSOC);
             $user_status = $user_status[0]['status'];
         }
-        $products_sql = 'SELECT * FROM products WHERE id="' .$id. '"';
+        $products_sql = 'SELECT * FROM aw_products WHERE id="' .$id. '"';
     } else {
-        $products_sql = 'SELECT * FROM products WHERE 1';
+        $products_sql = 'SELECT * FROM aw_products WHERE 1';
     }
     $datas = $CONNECTION->query( $products_sql );
     if( $datas ) {

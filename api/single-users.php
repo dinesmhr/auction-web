@@ -18,7 +18,7 @@ if( is_db_connected() ) {
             $user_status = $user_status[0]['status'];
         }
         if( $user_status !== 'not-verified' ) {
-            $users_sql = 'SELECT * FROM aw_users JOIN users_details ON users.id=users_details.id WHERE users.id="' .$id.'"';
+            $users_sql = 'SELECT * FROM aw_users JOIN aw_users_details ON users.id=users_details.id WHERE users.id="' .$id.'"';
         } else {
             $users_sql = 'SELECT * FROM aw_users WHERE id="' .$id. '"';    
         }
@@ -31,7 +31,7 @@ if( is_db_connected() ) {
             $user_status = $user_status[0]['status'];
         }
         if( $user_status === 'not-verified' ) {
-            $users_sql = 'SELECT * FROM aw_users JOIN users_details ON users.username=users_details.username WHERE users.username="' .$username.'"';
+            $users_sql = 'SELECT * FROM aw_users JOIN aw_users_details ON users.username=users_details.username WHERE users.username="' .$username.'"';
         } else {
             $users_sql = 'SELECT * FROM aw_users WHERE username="' .$username. '"';    
         }
