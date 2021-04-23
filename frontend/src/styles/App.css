@@ -385,6 +385,9 @@ a.active_name {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 }
+.product-box button a{
+	color: white;
+}
 
 .product-box button:hover{
 	background: #191f16;
@@ -538,7 +541,7 @@ a.active_name {
 .aweb-admin-site-title{
 	position: absolute;
 	font-size: 20px;
-	color: #000080;
+	color: #DCDCDC;
 	z-index: 4;
 	font-weight: bold;
 	width: 20%;
@@ -552,7 +555,7 @@ a.active_name {
 	position: fixed;
 	width: 20%;
 	height: 100%;
-	background: #696969;
+	background: #181818;
 	z-index: 3;
 }
 #aweb-admin-navigation ul li{
@@ -671,17 +674,49 @@ table th {
 /*************************************************
  	    ENDS  ADMIN TABLE CSS
 **************************************************/
+/*************************************************
+ 	        ENDS ADMIN SIDE CSS
+**************************************************/
+/*************************************************
+ 	        SINGLE PRODUCT CSS
+**************************************************/
+#auction-web-single-product{
+	max-width: 1200px;
+	width: 100%;
+	margin:100px auto;
+	box-shadow: 0 0 5px #ccc;
+}
 
 
+/*************************************************
+ 	       ENDS SINGLE PRODUCT CSS
+**************************************************/
 
-
+/*************************************************
+ 	       HOMEPAGE CSS
+**************************************************/
+.home-banner img{
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 60vh;
+	width: 100vw;
+	margin-top: -10px;
+}
 
 
 
 
 /*************************************************
- 	        ENDS ADMIN SIDE CSS
+ 	    ENDS HOMEPAGE CSS
 **************************************************/
+
+
+
+
+
+
+
 
 
 
