@@ -8,7 +8,9 @@ class Home extends Component {
             <>
                 <Header userLoggedIn = { isLoggedIn }/>
                 <div id="auction-web-home" className="page--home main-wrapper">
-                    This is home page
+                    <div className= "home-banner">
+                    <img src="/assets/auction.jpg"/>
+                    </div>
                 </div>
             </>
         );
