@@ -355,69 +355,6 @@ class Login extends Component {
                             </div>
                         </div>
                     </form>
-                    <form id="aweb-signup-form">
-                        <div className="aweb-signup-form-wrapper">
-                            <div className="input-wrapper">
-                                <div className="form-heading">
-                                    <h2>Do Not Have Account? Please <span>Sign Up!</span></h2>
-                                </div>
-                                <div className="aweb-fullname">
-                                    <label>Fullname</label>
-                                    { su_fullname_errorField &&
-                                        <div className="aweb-red-note">
-                                            { su_fullname_errorMessage }
-                                        </div>
-                                    }
-                                    <input type="text" name="fullname" required onChange={ (e) => this.setInputValueChange( 'su_fullname', e.target.value) } value={ su_fullname }/>
-                                </div>
-                                <div className="aweb-username">
-                                    <label>Username</label>
-                                    { su_username_errorField &&
-                                        <div className="aweb-red-note">
-                                            { su_username_errorMessage }
-                                        </div>
-                                    }
-                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'su_username', e.target.value) } value={ su_username }/>
-                                </div>
-                                <div className="aweb-email">
-                                    <label>Email Address</label>
-                                    { su_email_errorField &&
-                                        <div className="aweb-red-note">
-                                            { su_email_errorMessage }
-                                            { su_email_errorField }
-                                        </div>
-                                    }
-                                    <input type="text" name="email" required onChange={ (e) => this.setInputValueChange( 'su_email', e.target.value) } value={ su_email }/>
-                                </div>
-                                <div className="aweb-password">
-                                    <label>Password</label>
-                                    { su_password_errorField &&
-                                        <div className="aweb-red-note">
-                                            { su_password_errorMessage }
-                                        </div>
-                                    }
-                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'su_password', e.target.value) } value={ su_password }/>
-                                </div>
-                                <div className="aweb-password">
-                                    <label>Confirm Password</label>
-                                    { su_confirm_password_errorField &&
-                                        <div className="aweb-red-note">
-                                            { su_confirm_password_errorMessage }
-                                        </div>
-                                    }
-                                    <input type="password" name="su_confirm_password" required onChange={ (e) => this.setInputValueChange( 'su_confirm_password', e.target.value) } value={ su_confirm_password }/>
-                                </div>
-                            </div>
-                            <div className="aweb-submit">
-                                <input type="submit" name="submit" onClick= { (e) => this.onSignup(e) } value="Sign Up"/>
-                            </div>
-                            { su_status && 
-                                <div className="aweb-success-note">
-                                    { su_message }
-                                </div>
-                            }
-                        </div>
-                    </form>
                 </div>
                </div>
             </Fragment>

@@ -62,8 +62,8 @@ class App extends Component {
   render() {
     return (
       <div id="auction-web">
-            <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } />
-            <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } updateLoggedState = { this.updateLoggedState.bind(this) } />
+        {/* <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } /> */}
+        <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } updateLoggedState = { this.updateLoggedState.bind(this) } />
         <Footer />
       </div>
     );
