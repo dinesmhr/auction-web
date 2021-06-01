@@ -15,6 +15,9 @@ if( is_db_connected() ) {
     } else if( isset( $_GET['username'] ) ) {
         $username = $_GET['username'];
         $users_sql = 'SELECT * FROM aw_users WHERE username="'.$username.'"';
+    } else if( isset( $_GET['email'] ) ) {
+        $email = $_GET['email'];
+        $users_sql = 'SELECT * FROM aw_users WHERE email="'.$email.'"';
     } else {
         $users_sql = 'SELECT * FROM aw_users WHERE 1';
     }

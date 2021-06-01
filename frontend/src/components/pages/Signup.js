@@ -14,6 +14,7 @@ const Signup = () => {
     const [ email, setEmail ] = useState({ value: ''});
     const [ password, setPassword ] = useState({ value: ''});
     const [ cpassword, setCpassword ] = useState({ value: ''});
+    const [ signUpText, setSignUpText ] = useState('Sign Up');
     const [ status, setStatus ] = useState(false);
     const [ message, setMessage ] = useState();
 
@@ -97,6 +98,7 @@ const Signup = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         if( validateFullname() && validateUsername() && validateEmail() && validatePassword() && validateCpassword() ) {
+            setSignUpText('Signing Up')
             axios.post('/edit-table/edit-users.php', {
                 submit: 'submit',
                 fullname: fullname.value,
@@ -105,9 +107,19 @@ const Signup = () => {
                 password: password.value,
             })
             .then(function (response) {
-                console.log(response);
-                setStatus(true)
-                setMessage( 'Signed up successfully' )
+                if( response.data.status ) {
+                    setStatus(true)
+                    setMessage( 'Signed up successfully' )
+                } else {
+                    setStatus(true)
+                    setMessage( 'Error in sign up' )
+                }
+                setFullname({value:''})
+                setUsername({value:''})
+                setEmail({value:''});
+                setPassword({value:''});
+                setCpassword({value:''});
+                setSignUpText('Sign Up')
             })
             .catch(function (error) {
                 setStatus(true)
@@ -182,7 +194,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className="aweb-submit">
-                        <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value="Sign Up"/>
+                        <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText }/>
                     </div>
                     { status && 
                         <div className="aweb-success-note">
