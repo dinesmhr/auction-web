@@ -2,6 +2,7 @@
   "name": "auction-web",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost/auction-web/api",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -14,8 +15,7 @@
     "react-images-upload": "^1.2.8",
     "react-multiple-image-input": "^1.0.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
-    "universal-cookie": "^4.0.4"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
