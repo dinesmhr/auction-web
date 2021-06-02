@@ -19,6 +19,44 @@ const Signup = () => {
     const [ status, setStatus ] = useState(false);
     const [ message, setMessage ] = useState();
 
+    // handle username field on change
+    const handleUsername = (value) => {
+        setUsername({value: value})
+        setTimeout( function() {
+            axios.get( `/users.php?username=${value}` )
+            .then( function (response) {
+                if( response.data.status ) {
+                    username.value = value
+                    username.error = true
+                    username.errorMessage = "Username not available"
+                    setUsername( JSON.parse(JSON.stringify( username )) )
+                    setIsDisabled(true)
+                } else {
+                    setIsDisabled(false)
+                }
+            })
+        }, 2000)
+    }
+
+    // handle email field on change
+    const handleEmail = (value) => {
+        setEmail({value: value})
+        setTimeout( function() {
+            axios.get( `/users.php?email=${value}` )
+            .then( function (response) {
+                if( response.data.status ) {
+                    email.value = value
+                    email.error = true
+                    email.errorMessage = "Email already exists"
+                    setEmail( JSON.parse(JSON.stringify( email )) )
+                    setIsDisabled(true)
+                } else {
+                    setIsDisabled(false)
+                }
+            })
+        }, 2000)
+    }
+
     // validate fullname field
     const validateFullname = () => {
         if( fullname.value == '' ) {
@@ -189,7 +227,7 @@ const Signup = () => {
                                     { username.errorMessage }
                                 </div>
                             }
-                            <input type="text" name="username" onChange = {(e) => setUsername({ value: e.target.value }) } value={ username.value }/>
+                            <input type="text" name="username" onChange = {(e) => handleUsername( e.target.value ) } value={ username.value }/>
                         </div>
                         <div className="aweb-email">
                             <label>Email Address</label>
@@ -198,7 +236,7 @@ const Signup = () => {
                                     { email.errorMessage }
                                 </div>
                             }
-                            <input type="text" name="email" onChange = {(e) => setEmail({ value: e.target.value }) } value={ email.value }/>
+                            <input type="text" name="email" onChange = {(e) => handleEmail( e.target.value) } value={ email.value }/>
                         </div>
                         <div className="aweb-password">
                             <label>Password ( <i>Contain at least 1 UPPERCASE letter, lowercase letters and 1 numeric character</i> ) </label>
@@ -225,6 +263,7 @@ const Signup = () => {
                     { status && 
                         <div className="aweb-success-note">
                             { message }
+                            <a href="/login">Login now</a>
                         </div>
                     }
                 </div>
