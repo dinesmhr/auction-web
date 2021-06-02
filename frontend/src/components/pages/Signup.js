@@ -15,6 +15,7 @@ const Signup = () => {
     const [ password, setPassword ] = useState({ value: ''});
     const [ cpassword, setCpassword ] = useState({ value: ''});
     const [ signUpText, setSignUpText ] = useState('Sign Up');
+    const [ isDisabled, setIsDisabled ] = useState(false);
     const [ status, setStatus ] = useState(false);
     const [ message, setMessage ] = useState();
 
@@ -37,7 +38,19 @@ const Signup = () => {
             username.errorMessage = "Username must not be empty";
             setUsername( JSON.parse(JSON.stringify( username )) )
         } else {
-            return true
+            let condition = true
+            // axios.get( `/users.php?username=${username.value}` )
+            // .then( function (response) {
+            //     if( response.data.status ) {
+            //         username.value = username.value
+            //         username.error = true
+            //         username.errorMessage = "Username not available"
+            //         setUsername( JSON.parse(JSON.stringify( username )) )
+            //         setIsDisabled(true)
+            //         condition = false
+            //     }
+            // })
+            return condition
         }
         return false
     }
@@ -51,8 +64,21 @@ const Signup = () => {
         } else if( !re.test( email.value ) ) { 
             email.error = true;
             email.errorMessage = "Email is not valid";
-        } else {
-            return true
+        }  else {
+            let condition = true
+            // axios.get( `/users.php?email=${username.email}` )
+            // .then( function (response) {
+            //     if( response.data.status ) {
+            //         email.value = email.value
+            //         email.error = true
+            //         email.errorMessage = "Email already exists"
+            //         setEmail( JSON.parse(JSON.stringify( email )) )
+            //         console.log(email)
+            //         setIsDisabled(true)
+            //         condition = false
+            //     }
+            // })
+            return condition
         }
         setEmail( JSON.parse(JSON.stringify( email )) )
         return false
@@ -194,7 +220,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className="aweb-submit">
-                        <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText }/>
+                        <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText } disabled={ isDisabled }/>
                     </div>
                     { status && 
                         <div className="aweb-success-note">
