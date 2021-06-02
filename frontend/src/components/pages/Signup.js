@@ -22,39 +22,39 @@ const Signup = () => {
     // handle username field on change
     const handleUsername = (value) => {
         setUsername({value: value})
-        // setTimeout( function() {
-        //     axios.get( `/users.php?username=${value}` )
-        //     .then( function (response) {
-        //         if( response.data.status ) {
-        //             username.value = value
-        //             username.error = true
-        //             username.errorMessage = "Username not available"
-        //             setUsername( JSON.parse(JSON.stringify( username )) )
-        //             setIsDisabled(true)
-        //         } else {
-        //             setIsDisabled(false)
-        //         }
-        //     })
-        // }, 2000)
+        setTimeout( function() {
+            axios.get( `/users.php?username=${value}` )
+            .then( function (response) {
+                if( response.data.status ) {
+                    username.value = value
+                    username.error = true
+                    username.errorMessage = "Username not available"
+                    setUsername( JSON.parse(JSON.stringify( username )) )
+                    setIsDisabled(true)
+                } else {
+                    setIsDisabled(false)
+                }
+            })
+        }, 2000)
     }
 
     // handle email field on change
     const handleEmail = (value) => {
         setEmail({value: value})
-        // setTimeout( function() {
-        //     axios.get( `/users.php?email=${value}` )
-        //     .then( function (response) {
-        //         if( response.data.status ) {
-        //             email.value = value
-        //             email.error = true
-        //             email.errorMessage = "Email already exists"
-        //             setEmail( JSON.parse(JSON.stringify( email )) )
-        //             setIsDisabled(true)
-        //         } else {
-        //             setIsDisabled(false)
-        //         }
-        //     })
-        // }, 2000)
+        setTimeout( function() {
+            axios.get( `/users.php?email=${value}` )
+            .then( function (response) {
+                if( response.data.status ) {
+                    email.value = value
+                    email.error = true
+                    email.errorMessage = "Email already exists"
+                    setEmail( JSON.parse(JSON.stringify( email )) )
+                    setIsDisabled(true)
+                } else {
+                    setIsDisabled(false)
+                }
+            })
+        }, 2000)
     }
 
     // validate fullname field
