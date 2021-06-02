@@ -5,7 +5,7 @@
  * @package Auction Web
  */
 header("Access-Control-Allow-Origin: *");
-$_POST = json_decode(file_get_contents("php://input"),true);
+$_POST = json_decode( file_get_contents("php://input"), true );
 if( !isset( $_POST['submit'] ) ) {
     $structure['status'] = false;
     $structure['message'] = 'Insufficient parameters';
@@ -26,6 +26,9 @@ if( is_db_connected() ) {
         $structure['status'] = true;
         $structure['message'] = 'New record created successfully';
       } else {
+        echo '<pre>';
+          var_dump( $CONNECTION );
+        echo '</pre>';
         $structure['status'] = false;
         $structure['message'] = 'Error in creating new record';
       }
