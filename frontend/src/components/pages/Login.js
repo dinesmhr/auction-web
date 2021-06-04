@@ -1,8 +1,69 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState } from 'react';
 import Header from '../header/Header'
 
 const axios = require('axios');
 
+const Login = () => {
+    const [ username, setUsername ] = useState({value: ''})
+    const [ password, setPassword ] = useState({value: ''})
+    const [ error, setError ] = useState(false)
+    const [ errorMessage, setErrorMessage ] = useState()
+    const [ isDisabled, setIsDisabled ] = useState(false);
+    
+    const onSubmit = (e) => {
+        e.preventDefault();
+        axios.get( `/users.php?username=${username.value}` )
+            .then( function (response) {
+                if( !response.data.status ) { //if no response with given username
+                    setError( true );
+                    setErrorMessage( "Username not exists" )
+                    setIsDisabled(true)
+                } else {
+                    if( response.data.data[0].password != password.value ) { //if Username matched
+                        setError( true );
+                        setErrorMessage( "Password incorrect" )
+                        setIsDisabled(true)
+                    } else { // if both password username matched
+                        setIsDisabled(false)
+                    }
+                }
+            })
+    }
+    
+    return (
+        <>
+            <Header/>
+            <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
+                <form id="aweb-login-form">
+                    <div className="aweb-login-form-wrapper">
+                        <div className="input-wrapper">
+                            <div className="aweb-login-note">Login</div>
+                            { error &&
+                                <div className="aweb-red-note">
+                                    { errorMessage }
+                                </div>
+                            }
+                            <div className="aweb-username">
+                                <label>Username</label>
+                                <input type="text" name="username" onChange={ (e) => setUsername({ value: e.target.value }) } value={ username.value }/>
+                            </div>
+                            <div className="aweb-password">
+                                <label>Password</label>
+                                <input type="password" name="password" onChange={ (e) => setPassword({ value: e.target.value }) } value={ password.value }/>
+                            </div>
+                        </div>
+                        <div className="aweb-submit">
+                            <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ 'Log In' } disabled={ isDisabled }/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </>
+    )
+}
+
+export default Login;
+/*
 class Login extends Component {
     constructor(props) {
         super( props )
@@ -10,24 +71,7 @@ class Login extends Component {
             username: '',
             password: '',
             errorField: false,
-            errorMessage: '',
-            su_fullname: '',
-            su_fullname_errorField: false,
-            su_fullname_errorMessage: '',
-            su_username: '',
-            su_username_errorField: false,
-            su_username_errorMessage: '',
-            su_email: '',
-            su_email_errorField: false,
-            su_email_errorMessage: '',
-            su_password: '',
-            su_password_errorField: false,
-            su_password_errorMessage: '',
-            su_confirm_password: '',
-            su_confirm_password_errorField: false,
-            su_confirm_password_errorMessage: '',
-            su_status: false,
-            su_message: ''
+            errorMessage: ''
         }
     }
 
@@ -290,76 +334,13 @@ class Login extends Component {
         })
         return currentUser['0']
     }
-
-    render() { 
-        const { username, password, errorField, errorMessage, su_fullname, su_username, su_email, su_password, su_fullname_errorField, su_fullname_errorMessage, su_username_errorField, su_username_errorMessage, su_email_errorField,  su_email_errorMessage, su_password_errorField, su_password_errorMessage, su_confirm_password, su_confirm_password_errorField, su_confirm_password_errorMessage, su_status, su_message } = this.state
-        const { isLoggedIn } = this.props
-        if( isLoggedIn === true ) {
-            const userInfo = this.getUsersInfo( localStorage.auctionWebSessionUserId )
-            return ( 
-                <Fragment>
-                    <Header userLoggedIn = { isLoggedIn }/>
-                    <div id="auction-web-login" className="page--login main-wrapper">
-                        { userInfo &&
-                            <div className="aweb-my-account-info">
-                                <div className="aweb-my-account-info-field">
-                                    <strong>Fullname : </strong> { userInfo.fullname }
-                                </div>
-                                <div className="aweb-my-account-info-field">
-                                    <strong>Username : </strong> { userInfo.username }
-                                </div>
-                                <div className="aweb-my-account-info-field">
-                                    <strong>Email Address : </strong> { userInfo.email }
-                                </div>
-                                <div className="aweb-my-account-info-field">
-                                    <strong>Role : </strong> { userInfo.role }
-                                </div>
-                                <div className="aweb-my-account-info-field">
-                                    <strong>Status : </strong> { userInfo.status }
-                                </div>
-                            </div>
-                        }
-                        <div className="aweb-logout-note">Logged out of auction web?</div>
-                        <button onClick={ this.userLoggedOutAction.bind(this) }>
-                            Logout now
-                        </button>
-                    </div>
-                </Fragment>
-            )
-        }
         return (
             <Fragment>
                 <Header userLoggedIn = { isLoggedIn }/>
                 <div className="aweb-login-signup-wrapper">
-                 <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
-                    <form id="aweb-login-form">
-                        <div className="aweb-login-form-wrapper">
-                            { errorField &&
-                                <div className="aweb-red-note">
-                                    { errorMessage }
-                                </div>
-                            }
-                            <div className="input-wrapper">
-                            	<div className="aweb-login-note">Login</div>
-                                <div className="aweb-username">
-                                    <label>Username</label>
-                                    <input type="text" name="username" required onChange={ (e) => this.setInputValueChange( 'username', e.target.value) } defaultValue={ username }/>
-                                </div>
-                                <div className="aweb-password">
-                                    <label>Password</label>
-                                    <input type="password" name="password" required onChange={ (e) => this.setInputValueChange( 'password', e.target.value) } value={ password }/>
-                                </div>
-                            </div>
-                            <div className="aweb-submit">
-                                <input type="submit" name="submit" onClick= { (e) => this.onSubmit(e) } value="Submit"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                 
                </div>
             </Fragment>
         );
     }
-}
-
-export default Login;
+}*/
