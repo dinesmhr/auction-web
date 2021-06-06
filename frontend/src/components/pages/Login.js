@@ -11,23 +11,29 @@ const Login = () => {
     const [ isDisabled, setIsDisabled ] = useState(false);
     
     const onSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         axios.get( `/users.php?username=${username.value}` )
-            .then( function (response) {
-                if( !response.data.status ) { //if no response with given username
-                    setError( true );
-                    setErrorMessage( "Username not exists" )
+        .then( function (response) {
+            if( !response.data.status ) { //if no response with given username
+                setError(true)
+                setErrorMessage("Username not exists")
+                setIsDisabled(true)
+            } else {
+                if( response.data.data[0].password != password.value ) { //if Username matched
+                    setError(true)
+                    setErrorMessage("Password incorrect")
                     setIsDisabled(true)
-                } else {
-                    if( response.data.data[0].password != password.value ) { //if Username matched
-                        setError( true );
-                        setErrorMessage( "Password incorrect" )
-                        setIsDisabled(true)
-                    } else { // if both password username matched
-                        setIsDisabled(false)
-                    }
+                } else { // if both password username matched
+                    setIsDisabled(false)
+                    axios.post( `/edit-table/edit-session.php`, {
+                        param: JSON.stringify( response.data.data[0] )
+                    })
+                    .then(function(res) {
+                        console.log(res)
+                    })
                 }
-            })
+            }
+        })
     }
     
     return (
