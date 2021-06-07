@@ -1,73 +1,32 @@
-import React, { Component } from 'react';
-import { AdminRoutes } from './components/routes/adminRoutes'
+import React, { useState, useEffect } from 'react';
 import { PublicRoutes } from './components/routes/publicRoutes'
 import Footer from './components/footer/Footer'
 import './styles/App.css'
 
 const axios = require('axios');
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    let userLoggedin
-    if( localStorage.auctionWebSessionUserLogged === 'true' ) {
-      userLoggedin = true
-    } else {
-      userLoggedin = false
-    }
-    this.state = {
-      users: [],
-      isLoaded: true,
-      error: false,
-      errorMessage: '',
-      isLoggedin: userLoggedin
-    }
+const App = () => {
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
+  const [ userId, setUserId ] = useState('')
+  const updateLoggedInStatus = () => {
+    setIsLoggedIn(!isLoggedIn)
   }
 
-  async componentDidMount() {
-    let _this = this
-    const url = 'http://localhost/auction-web/api/users.php'
-    axios.get(url)
-    .then(function ( response ) {
-        if( response.status === 200 ) {
-            _this.setState({
-              users : response.data.data,
-              isLoaded: true,
-              error: false
-            })
-        }
+  useEffect(() => {
+    axios.get( '/sessions.php' )
+    .then(function(res) {
+      setIsLoggedIn(res.data.login)
+      setUserId(res.data.userId)
     })
-    .catch(function (error) {
-        _this.setState({ 
-          isLoaded: false,
-          error: true,
-          errorMessage: error
-        })
-    })
-    .then(function () {
-        console.log( "Request Completed" )
-    });
-  }
+  }, [isLoggedIn])
 
-  updateLoggedState() {
-      let userLoggedin = false
-      if( localStorage.auctionWebSessionUserLogged === 'true' ) {
-          userLoggedin = true
-      } else {
-          userLoggedin = false
-      }
-      this.setState({ isLoggedin: userLoggedin })
-  }
-
-  render() {
-    return (
-      <div id="auction-web">
-        {/* <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } /> */}
-        <PublicRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } updateLoggedState = { this.updateLoggedState.bind(this) } />
-        <Footer />
-      </div>
-    );
-  }
+  return (
+    <div id="auction-web">
+      {/* <AdminRoutes users = { this.state.users } isLoggedin = { this.state.isLoggedin } /> */}
+      <PublicRoutes isLoggedIn = {isLoggedIn} updateLoggedInStatus = { updateLoggedInStatus }/>
+      <Footer />
+    </div>
+  );
 }
  
 export default App;

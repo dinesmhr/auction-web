@@ -27,9 +27,6 @@ if( is_db_connected() ) {
         $structure['status'] = true;
         $structure['message'] = 'New record created successfully';
       } else {
-        echo '<pre>';
-          var_dump( $CONNECTION );
-        echo '</pre>';
         $structure['status'] = false;
         $structure['message'] = 'Error in creating new record';
       }

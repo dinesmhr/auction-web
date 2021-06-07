@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import Header from '../header/Header'
+import { Redirect } from 'react-router-dom';
+import Header from '../header/Header';
 
 const axios = require('axios');
 
-const Login = () => {
+const Login = (props) => {
     const [ username, setUsername ] = useState({value: ''})
     const [ password, setPassword ] = useState({value: ''})
     const [ error, setError ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState()
     const [ isDisabled, setIsDisabled ] = useState(false);
+    const [ redirectToMyaccount, setRedirectToMyaccount ] = useState(false)
+
+    const { isLoggedIn, updateLoggedInStatus } = props
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -17,28 +21,31 @@ const Login = () => {
             if( !response.data.status ) { //if no response with given username
                 setError(true)
                 setErrorMessage("Username not exists")
-                setIsDisabled(true)
             } else {
-                if( response.data.data[0].password != password.value ) { //if Username matched
+                if( response.data.data[0].password !== password.value ) { //if Username matched
                     setError(true)
                     setErrorMessage("Password incorrect")
-                    setIsDisabled(true)
                 } else { // if both password username matched
-                    setIsDisabled(false)
                     axios.post( `/edit-table/edit-session.php`, {
-                        param: JSON.stringify( response.data.data[0] )
+                        login: 'true',
+                        userId: response.data.data[0].id
                     })
                     .then(function(res) {
-                        console.log(res)
+                        updateLoggedInStatus()
+                        setRedirectToMyaccount(true)
                     })
                 }
             }
         })
     }
+
+    if( redirectToMyaccount ) {
+        return <Redirect to="/myaccount"/>
+    }
     
     return (
         <>
-            <Header/>
+            <Header isLoggedIn = { isLoggedIn }/>
             <div id="auction-web-login" className="page--login main-wrapper aweb-clearfix">
                 <form id="aweb-login-form">
                     <div className="aweb-login-form-wrapper">

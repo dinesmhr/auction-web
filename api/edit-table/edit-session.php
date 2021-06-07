@@ -5,8 +5,12 @@
  */
 header("Access-Control-Allow-Origin: *");
 $_POST = json_decode( file_get_contents("php://input"), true );
-return var_dump( $_POST );
-//session_start();
-//$_SESSION['auction_web_user'] = $_POST;
-
-//return json_decode( $_SESSION );
+if( $_POST['login'] === 'true' ) {
+    $auction_web_session['login'] = true;
+    $auction_web_session['userId'] = $_POST['userId'];
+} else {
+    $auction_web_session['login'] = false;
+}
+session_start();
+$_SESSION['auction_web_session'] = $auction_web_session;
+echo json_encode( $auction_web_session );

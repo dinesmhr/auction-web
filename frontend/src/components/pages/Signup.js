@@ -8,7 +8,7 @@ import Header from '../header/Header';
 
 const axios = require('axios');
 
-const Signup = () => {
+const Signup = (props) => {
     const [ fullname, setFullname ] = useState({ value: ''});
     const [ username, setUsername ] = useState({ value: ''});
     const [ email, setEmail ] = useState({ value: ''});
@@ -18,6 +18,8 @@ const Signup = () => {
     const [ isDisabled, setIsDisabled ] = useState(false);
     const [ status, setStatus ] = useState(false);
     const [ message, setMessage ] = useState();
+
+    const { isLoggedIn } = props
 
     // handle username field on change
     const handleUsername = (value) => {
@@ -171,7 +173,6 @@ const Signup = () => {
                 password: password.value,
             })
             .then(function (response) {
-                console.log(response)
                 if( response.data.status ) {
                     setStatus(true)
                     setMessage( 'Signed up successfully' )
@@ -205,7 +206,7 @@ const Signup = () => {
 
     return (
         <>
-            <Header/>
+            <Header isLoggedIn = { isLoggedIn }/>
             <form id="aweb-signup-form">
                 <div className="aweb-signup-form-wrapper">
                     <div className="input-wrapper">

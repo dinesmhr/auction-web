@@ -4,6 +4,5 @@
  * 
  */
 session_start();
-$_SESSION['username'] = 'Dinesh Maharjan';
 
-var_dump( $_SESSION );
+echo json_encode( $_SESSION['auction_web_session'] );
