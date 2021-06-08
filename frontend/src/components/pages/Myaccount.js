@@ -8,7 +8,6 @@ const axios = require('axios');
 
 const Myaccount = (props) => {
     const { isLoggedIn, updateLoggedInStatus } = props
-    const [ redirectToLogin, setRedirectToLogin ] = useState(false)
     
     const triggerLogoutEvent = () => {
         axios.post( `/edit-table/edit-session.php`, {
@@ -16,7 +15,6 @@ const Myaccount = (props) => {
         })
         .then(function(res) {
             updateLoggedInStatus();
-            setRedirectToLogin(true)
         })
     }
 
@@ -34,8 +32,8 @@ const Myaccount = (props) => {
             ]
         });
     }
-
-    if( redirectToLogin ) {
+    
+    if( !isLoggedIn ) {
         return <Redirect to="/login"/>
     }
 

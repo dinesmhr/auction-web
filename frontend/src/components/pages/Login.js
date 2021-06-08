@@ -10,7 +10,6 @@ const Login = (props) => {
     const [ error, setError ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState()
     const [ isDisabled, setIsDisabled ] = useState(false);
-    const [ redirectToMyaccount, setRedirectToMyaccount ] = useState(false)
 
     const { isLoggedIn, updateLoggedInStatus } = props
     
@@ -32,14 +31,13 @@ const Login = (props) => {
                     })
                     .then(function(res) {
                         updateLoggedInStatus()
-                        setRedirectToMyaccount(true)
                     })
                 }
             }
         })
     }
 
-    if( redirectToMyaccount ) {
+    if( isLoggedIn ) {
         return <Redirect to="/myaccount"/>
     }
     

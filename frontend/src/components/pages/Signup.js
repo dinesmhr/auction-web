@@ -4,6 +4,7 @@
  * 
  */
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import Header from '../header/Header';
 
 const axios = require('axios');
@@ -202,6 +203,10 @@ const Signup = (props) => {
     // check if string has upper case letter
     const isStringHasNum = ( string ) => {
         return ( /\d/.test(string) )
+    }
+
+    if( isLoggedIn ) {
+        return <Redirect to="/myaccount"/>
     }
 
     return (

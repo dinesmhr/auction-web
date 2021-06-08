@@ -7,7 +7,6 @@ const axios = require('axios');
 
 const App = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-  const [ userId, setUserId ] = useState('')
   const updateLoggedInStatus = () => {
     setIsLoggedIn(!isLoggedIn)
   }
@@ -15,8 +14,7 @@ const App = () => {
   useEffect(() => {
     axios.get( '/sessions.php' )
     .then(function(res) {
-      setIsLoggedIn(res.data.login)
-      setUserId(res.data.userId)
+      setIsLoggedIn( res.data.login )
     })
   }, [isLoggedIn])
 

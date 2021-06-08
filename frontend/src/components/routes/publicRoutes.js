@@ -19,15 +19,9 @@ export const PublicRoutes = (props) => {
                 <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 <Route path="/user-submit-product" component={() => <ProductSubmitForm/> }></Route>
                 <Route path="/products/:id" component={(props) => <SingleProduct/>}></Route>
-                { isLoggedIn &&
-                    <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
-                }
-                { !isLoggedIn &&
-                    <>
-                        <Route path="/login" component={() => <Login isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
-                        <Route path="/signup" component={() => <Signup isLoggedIn = { isLoggedIn }/>}></Route>
-                    </>
-                }
+                <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
+                <Route path="/login" component={() => <Login isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
+                <Route path="/signup" component={() => <Signup isLoggedIn = { isLoggedIn }/>}></Route>
             </Switch>
         </BrowserRouter>
     )

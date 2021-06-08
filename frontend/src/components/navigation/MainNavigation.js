@@ -23,7 +23,7 @@ const MainNavigation = (props) => {
                     </>
                 }
             </ul>
-        </div>                                    
+        </div>
     );
 }
  
