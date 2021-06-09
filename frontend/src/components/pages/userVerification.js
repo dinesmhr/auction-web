@@ -4,17 +4,18 @@
  * @since 1.0.0
  * 
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../header/Header';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ImageUploader from 'react-images-upload';
 
-const axios = require('axios');
+const axios = require('axios')
 
 const UserVerification = () => {
+    const [ userId, setUserId ] = useState('')
     const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-    const [ loggedUserName, setLoggedUserName ] = useState('')
+    const [ loggedUserData, setLoggedUserData ] = useState({})
     const [ userStatus, setUserStatus ] = useState('')
     const [ submitText, setSubmitText ] = useState('Submit For Verification')
     const [ fullname, setFullname ] = useState()
@@ -27,7 +28,29 @@ const UserVerification = () => {
     const [ documentType, setDocumentType ] = useState()
     const [ documentId, setDocumentId ] = useState()
     const [ documentImage, setDocumentImage ] = useState()
-    
+
+    useEffect(() => {
+        axios.get( '/sessions.php' )
+        .then(function(res) {
+            if(res.data.login) {
+                setUserId(res.data.userId)
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        userId &&
+        axios.get( `/users.php?id=${userId}`)
+        .then(function(res) {
+            if(res.data.status) {
+                console.log(res.data.data[0])
+                setLoggedUserData(res.data.data[0])
+                setFullname(res.data.data[0].fullname)
+                setEmail(res.data.data[0].email)
+            }
+        })
+    }, [userId])
+
     const getUserStatus = () => {
         let _this = this
         const { userId } = this.state
@@ -39,7 +62,7 @@ const UserVerification = () => {
         })
         .then(function(response) {
             if( response.status === 200 ) {
-                _this.setState({ 
+                _this.setState({
                     userStatus : response.data.data[0].status
                 })
             }
@@ -71,7 +94,9 @@ const UserVerification = () => {
                 <Header userLoggedIn = { isLoggedIn }/> 
                 <div id="auction-web-user-verification">
                     <div className="aweb-heading">
-                        { `You are logged in as ${loggedUserName}. Your account is currently under verification process. Thank you for your patience!!` }
+                    { 
+                        `You are logged in as ${loggedUserData.fullname}. Your account is currently under verification process. Thank you for your patience!!`
+                    }
                     </div>
                 </div>
             </>
@@ -84,7 +109,9 @@ const UserVerification = () => {
             <div id="auction-web-user-verification">
                 <form id="aweb-user-verification-form">
                     <div className="aweb-heading">
-                        { `You are logged in as ${loggedUserName}. Please verify your account here.` }
+                        { 
+                            `You are logged in as ${ loggedUserData.fullname}. Please verify your account here.` 
+                        }
                     </div>
                     <div className="input-wrapper">
                         <div className="aweb-heading-personal-details">
@@ -92,15 +119,28 @@ const UserVerification = () => {
                         </div>
                         <div className="aweb-fullname">
                             <label>Fullname</label>
-                            <input type="text" name="fullname" required onChange={ (e) => this.onInputChange( 'fullname', e.target.value) } value={ fullname }/>
+                            <input type="text" name="fullname" required onChange={ (e) => setFullname( e.target.value) } value={ fullname }/>
+                        </div>
+                        <div className="aweb-email">
+                            <label>Email Address</label>
+                            <input type="text" name="email" required onChange={ (e) => setEmail( e.target.value) } value={ email }/>
                         </div>
                         <div className="aweb-profession">
                             <label>Profession</label>
-                            <input type="text" name="profession" required onChange={ (e) => this.onInputChange( 'profession', e.target.value) } value={ profession }/>
+                            <input type="text" name="profession" required onChange={ (e) => setProfession( e.target.value ) } value={ profession }/>
                         </div>
-                        <div className="aweb-contactNumber">
-                            <label>Contact Number</label>
-                            <input type="number" name="contactNumber" required onChange={ (e) => this.onInputChange( 'contactNumber', e.target.value) } value={ contactNumber }/>
+                        <div className="">
+                            <div className="aweb-heading">
+                                { 'Contact Number' }
+                            </div>
+                            <div className="aweb-areacode">
+                                {/* <select type="number" name="areacode" onChange={ (e) => setContactNumber( areacode: e.target.value ) } value={ contactNumber.areaCode }/>
+                                    
+                                </select> */}
+                            </div>
+                            <div    className="aweb-contactNumber">
+                                <input type="number" name="contactNumber" required onChange={ (e) => this.onInputChange( 'contactNumber', e.target.value) } value={ contactNumber.number }/>
+                            </div>
                         </div>
                         <div className="aweb-birthDate">
                             <label>Birth Date</label>

@@ -9,7 +9,7 @@ const Login = (props) => {
     const [ password, setPassword ] = useState({value: ''})
     const [ error, setError ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState()
-    const [ isDisabled, setIsDisabled ] = useState(false);
+    const [ isDisabled ] = useState(false);
 
     const { isLoggedIn, updateLoggedInStatus } = props
     

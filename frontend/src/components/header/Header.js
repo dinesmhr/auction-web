@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AdminNavigation from '../navigation/AdminNavigation'
 import MainNavigation from '../navigation/MainNavigation'
 
