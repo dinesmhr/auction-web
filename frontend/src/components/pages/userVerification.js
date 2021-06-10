@@ -11,6 +11,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import ImageUploader from 'react-images-upload';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { GrAdd } from "react-icons/gr";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const axios = require('axios')
 
@@ -31,8 +33,8 @@ const UserVerification = () => {
     const [ documentImage, setDocumentImage ] = useState({value:''})
     const [ documentImageOne, setDocumentImageOne ] = useState({value:''})
 
+    const documentImageRef = React.createRef()
     const documentImageOneRef = React.createRef()
-    const documentImageTwoRef = React.createRef()
     
     useEffect(() => {
         axios.get( '/sessions.php' )
@@ -56,14 +58,48 @@ const UserVerification = () => {
         })
     }, [userId])
 
-    // handle document image one
+    // trigger document image
+    const handleDocumentImage = () => {
+        documentImageRef.current.click()
+    }
+
+    // trigger document image one
     const handleDocumentImageOne = () => {
         documentImageOneRef.current.click()
     }
 
-    // handle document image two
-    const handleDocumentImageTwo = () => {
-        documentImageTwoRef.current.click()
+    // help set document image one
+    const handlesetDocumentImage = (file) => {
+        setDocumentImage({value: file.target.files[0]})
+        if(file.target.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file.target.files[0]);
+            reader.onload = (e) => {
+                setDocumentImage({dataUrl: e.target.result})
+            }
+        } else {
+            setDocumentImage({value: '', dataUrl: ''})
+        }
+    }
+    const deleteDocumentImage = () => {
+        setDocumentImage({value: ''})
+    }
+
+    // help set document image One
+    const handlesetDocumentImageOne = (file) => {
+        setDocumentImageOne({value: file.target.files[0]})
+        if(file.target.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file.target.files[0]);
+            reader.onload = (e) => {
+                setDocumentImageOne({dataUrl: e.target.result})
+            }
+        } else {
+            setDocumentImageOne({value: '', dataUrl: ''})
+        }
+    }
+    const deleteDocumentImageOne = () => {
+        setDocumentImageOne({value: ''})
     }
 
     // validate email field
@@ -82,18 +118,19 @@ const UserVerification = () => {
         return false
     }
 
-    const encodeFileToDataUrl = ( file ) => {
-        if( !file ) {
-            return 1;
-        }
-        let url, reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-            url = e.target.result
-        }
-        return url
-    }
-    console.log(encodeFileToDataUrl(documentImage))
+    // const encodeFileToDataUrl = ( file ) => {
+    //     if( !file ) {
+    //         return 1;
+    //     }
+    //     let url, reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = (e) => {
+    //         url = e.target.result
+    //         console.log(url)
+    //     }
+    //     return url
+    // }
+    // console.log(encodeFileToDataUrl(documentImage.value))
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -163,23 +200,23 @@ const UserVerification = () => {
                             <div className="aweb-heading">
                                 { 'Current Address' }
                             </div>
-                            <div class="street-address">
+                            <div className="street-address">
                                 <label>Street Address</label>
                                 <input type="text" name="cstreetAddress" onChange = { (e) => setCurrentAddress({ streetAddress: e.target.value, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.streetAddress}/>
                             </div>
-                            <div class="city">
+                            <div className="city">
                                 <label>City</label>
                                 <input type="text" name="city" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: e.target.value, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.city}/>
                             </div>
-                            <div class="stateProvince">
+                            <div className="stateProvince">
                                 <label>State/Province</label>
                                 <input type="text" name="stateProvince" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: e.target.value, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.stateProvince}/>
                             </div>
-                            <div class="postalCode">
+                            <div className="postalCode">
                                 <label>Postal Code</label>
                                 <input type="text" name="postalCode" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: e.target.value, country: currentAddress.country }) } value={currentAddress.postalCode}/>
                             </div>
-                            <div class="country">
+                            <div className="country">
                                 <label>Country</label>
                                 <input type="text" name="country" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: e.target.value }) } value={currentAddress.country}/>
                             </div>
@@ -188,23 +225,23 @@ const UserVerification = () => {
                             <div className="aweb-heading">
                                 { 'Permanent Address' }
                             </div>
-                            <div class="street-address">
+                            <div className="street-address">
                                 <label>Street Address</label>
                                 <input type="text" name="cstreetAddress" onChange = { (e) => setPermanentAddress({ streetAddress: e.target.value, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.streetAddress}/>
                             </div>
-                            <div class="city">
+                            <div className="city">
                                 <label>City</label>
                                 <input type="text" name="city" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: e.target.value, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.city}/>
                             </div>
-                            <div class="stateProvince">
+                            <div className="stateProvince">
                                 <label>State/Province</label>
                                 <input type="text" name="stateProvince" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: e.target.value, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.stateProvince}/>
                             </div>
-                            <div class="postalCode">
+                            <div className="postalCode">
                                 <label>Postal Code</label>
                                 <input type="text" name="postalCode" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: e.target.value, country: permanentAddress.country }) } value={permanentAddress.postalCode}/>
                             </div>
-                            <div class="country">
+                            <div className="country">
                                 <label>Country</label>
                                 <input type="text" name="country" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: e.target.value }) } value={permanentAddress.country}/>
                             </div>
@@ -220,15 +257,29 @@ const UserVerification = () => {
                                     <option value='passport'>{ 'Passport' }</option>
                                 </select>
                             </div>
-                            <div className="aweb-documentImageOne">
+                            <div className="aweb-documentImage">
                                 <label>Document Image One</label>
-                                <input type="file" name="documentImageTwo" ref={documentImageOneRef} onChange = { (e) => setDocumentImage(e.target.files[0]) } style={{display:"none"}}/>
-                                <div className="image-upload" onClick = { () => handleDocumentImageOne() }>Add</div>
+                                <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
+                                { documentImage.dataUrl ? (
+                                    <>
+                                        <span className="image-delete" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span>
+                                        <span><img src={documentImage.dataUrl} /></span>
+                                    </>
+                                ) : (
+                                    <span className="image-upload" onClick = { () => handleDocumentImage() }><GrAdd/></span>
+                                )}
                             </div>
-                            <div className="aweb-documentImageTwo">
+                            <div className="aweb-documentImageOne">
                                 <label>Document Image Two</label>
-                                <input type="file" name="documentImageTwo" ref={documentImageTwoRef} onChange = { (e) => setDocumentImageOne(e.target.value) } style={{display:"none"}}/>
-                                <div className="image-upload" onClick = { () => handleDocumentImageTwo() }>Add</div>
+                                <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
+                                { documentImageOne.dataUrl ? (
+                                    <>
+                                        <span className="image-delete" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span>
+                                        <span><img src={documentImageOne.dataUrl} /></span>
+                                    </>
+                                ) : (
+                                    <span className="image-upload" onClick = { () => handleDocumentImageOne() }><GrAdd/></span>
+                                )}
                             </div>
                         </div>
                         <div className="aweb-submit">
