@@ -6,11 +6,11 @@
  */
 import React, { useState, useEffect } from 'react';
 import Header from '../header/Header';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ImageUploader from 'react-images-upload';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import DatePicker from "react-modern-calendar-datepicker";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 
@@ -25,13 +25,15 @@ const UserVerification = () => {
     const [ fullname, setFullname ] = useState({ value: ''})
     const [ email, setEmail ] = useState({value:''})
     const [ profession, setProfession ] = useState({value:''})
-    const [ birthDate, setBirthDate ] = useState()
+    const [ birthDate, setBirthDate ] = useState({value: ''})
     const [ currentAddress, setCurrentAddress ] = useState({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
     const [ permanentAddress, setPermanentAddress ] = useState({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
-    const [ contactNumber, setContactNumber ] = useState({ areaCode: '', number: '' })
-    const [ documentType, setDocumentType ] = useState({value:''})
+    const [ contactNumber, setContactNumber ] = useState({ areaCode: '+977', number: '' })
+    const [ documentType, setDocumentType ] = useState({value:'citizenship'})
     const [ documentImage, setDocumentImage ] = useState({value:''})
     const [ documentImageOne, setDocumentImageOne ] = useState({value:''})
+    const [ status, setStatus ] = useState(false)
+    const [ message, setMessage ] = useState('')
 
     const documentImageRef = React.createRef()
     const documentImageOneRef = React.createRef()
@@ -40,13 +42,13 @@ const UserVerification = () => {
         axios.get( '/sessions.php' )
         .then(function(res) {
             if(res.data.login) {
+                setIsLoggedIn(true)
                 setUserId(res.data.userId)
             }
         })
     }, [])
 
-    useEffect(() => {
-        userId &&
+    const checkUserDetails = () => {
         axios.get( `/users.php?id=${userId}`)
         .then(function(res) {
             if(res.data.status) {
@@ -56,6 +58,10 @@ const UserVerification = () => {
                 setUserStatus(res.data.data[0].status)
             }
         })
+    }
+    useEffect(() => {
+        userId &&
+        checkUserDetails()
     }, [userId])
 
     // trigger document image
@@ -102,10 +108,23 @@ const UserVerification = () => {
         setDocumentImageOne({value: ''})
     }
 
+    /******************** Validation Fields Section  ********************/
+    // validate fullname
+    const validateFullname = () => {
+        if( fullname.value === '' ) {
+            fullname.error = true
+            fullname.errorMessage = "Fullname field cannot be empty"
+        } else {
+            return true
+        }
+        setFullname( JSON.parse(JSON.stringify( fullname )) )
+        return false
+    }
+
     // validate email field
     const validateEmail = () => {
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if( email.value == '' ) {
+        if( email.value === '' ) {
             email.error = true;
             email.errorMessage = "Email must not be empty";
         } else if( !re.test( email.value ) ) { 
@@ -118,28 +137,103 @@ const UserVerification = () => {
         return false
     }
 
-    // const encodeFileToDataUrl = ( file ) => {
-    //     if( !file ) {
-    //         return 1;
-    //     }
-    //     let url, reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.onload = (e) => {
-    //         url = e.target.result
-    //         console.log(url)
-    //     }
-    //     return url
-    // }
-    // console.log(encodeFileToDataUrl(documentImage.value))
+    const validateContactNumber = () => {
+        if( contactNumber.areaCode === '' || contactNumber.number === '' ) {
+            contactNumber.error = true
+            contactNumber.errorMessage = "Add contact number"
+        } else if(/[A-Z]/.test(contactNumber.number) || /[a-z]/.test(contactNumber.number) ) {
+            contactNumber.error = true
+            contactNumber.errorMessage = "Invalid contact number"
+        } else {
+            return true
+        }
+        setContactNumber( JSON.parse(JSON.stringify( contactNumber )) )
+        return false
+    }
+
+    const validateBirthdate = () => {
+        if( birthDate.value === '' ) {
+            birthDate.error = true
+            birthDate.errorMessage = "Select Birthdate"
+        } else {
+            return true
+        }
+        setBirthDate( JSON.parse(JSON.stringify( birthDate )) )
+        return false
+    }
+    
+    const validatePermanentAddress = () => {
+        if( permanentAddress.streetAddress === '' || permanentAddress.city === '' || permanentAddress.stateProvince === '' || permanentAddress.postalCode === '' || permanentAddress.country === '' ) {
+            permanentAddress.error = true
+            permanentAddress.errorMessage = "All fields are required"
+        } else {
+            return true
+        }
+        setPermanentAddress( JSON.parse(JSON.stringify( permanentAddress )) )
+        return false
+    }
+
+    const validateDocumentImage = () => {
+        if( documentImage.value === '' ) {
+            documentImage.error = true
+            documentImage.errorMessage = "No image uploaded"
+        } else {
+            return true
+        }
+        setDocumentImage( JSON.parse(JSON.stringify( documentImage )) )
+        return false
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
+        if( validateFullname() && validateEmail() && validateContactNumber() && validateBirthdate() && validatePermanentAddress() && validateDocumentImage() ) {
+            setSubmitText( 'Submitting for verification' )
+            axios.post('/edit-table/edit-users-details.php', {
+                submit: 'verification',
+                userid: userId,
+                fullname: fullname.value,
+                email: email.value,
+                profession: profession.value,
+                birthdate: birthDate.value,
+                currentAddress: currentAddress,
+                permanentAddress: permanentAddress,
+                contactNumber: contactNumber,
+                documentType: documentType.value,
+                documentImage: documentImage,
+                documentImageOne: documentImageOne
+            })
+            .then(function (response) {
+                if( response.data.status ) {
+                    setStatus(true)
+                    setMessage( 'Signed up successfully' )
+                } else {
+                    setStatus(true)
+                    setMessage( 'Error in sign up' )
+                }
+                setProfession({value:''})
+                setBirthDate({value: ''})
+                setCurrentAddress({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
+                setPermanentAddress({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
+                setContactNumber({ areaCode: '+977', number: '' })
+                setDocumentType({value: ''})
+                setDocumentImage({value:''})
+                setDocumentImageOne({value:''})
+                checkUserDetails()
+                setSubmitText( 'Submit For Verification.' )
+            })
+            .catch(function (error) {
+                setStatus(true)
+                setMessage( 'Error in sign up' )
+            });
+        } else {
+            setSubmitText( 'Submit For Verification' )
+        }
     }
 
     if( userStatus === 'under-verification' ) {
         return (
             <>
-                <Header userLoggedIn = { isLoggedIn }/> 
+                <Header isLoggedIn = { isLoggedIn }/> 
                 <div id="auction-web-user-verification">
                     <div className="aweb-heading">
                     { 
@@ -153,7 +247,7 @@ const UserVerification = () => {
 
     return(
         <>
-            <Header userLoggedIn = { isLoggedIn }/> 
+            <Header isLoggedIn = { isLoggedIn }/> 
             <div id="auction-web-user-verification">
                 <form id="aweb-user-verification-form">
                     <div className="aweb-heading">
@@ -167,20 +261,40 @@ const UserVerification = () => {
                         </div>
                         <div className="aweb-fullname">
                             <label>Fullname</label>
-                            <input type="text" name="fullname" required onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value }/>
+                            { fullname.error &&
+                                <div className="aweb-red-note">
+                                    { fullname.errorMessage }
+                                </div>
+                            }
+                            <input type="text" name="fullname" onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value } disabled/>
                         </div>
                         <div className="aweb-email">
                             <label>Email Address</label>
-                            <input type="text" name="email" required onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value }/>
+                            { email.error &&
+                                <div className="aweb-red-note">
+                                    { email.errorMessage }
+                                </div>
+                            }
+                            <input type="text" name="email" onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value } disabled/>
                         </div>
                         <div className="aweb-profession">
                             <label>Profession</label>
+                            { profession.error &&
+                                <div className="aweb-red-note">
+                                    { profession.errorMessage }
+                                </div>
+                            }
                             <input type="text" name="profession" required onChange={ (e) => setProfession({ value: e.target.value }) } value={ profession.value }/>
                         </div>
                         <div className="">
                             <div className="aweb-heading">
                                 { 'Contact Number' }
                             </div>
+                            { contactNumber.error &&
+                                <div className="aweb-red-note">
+                                    { contactNumber.errorMessage }
+                                </div>
+                            }
                             <div className="aweb-areacode">
                                 <PhoneInput
                                     country={'np'}
@@ -188,18 +302,33 @@ const UserVerification = () => {
                                     onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
                                 />
                             </div>
-                            <div    className="aweb-contactNumber">
+                            <div className="aweb-contactNumber">
                                 <input type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ areaCode: contactNumber.areaCode, number: e.target.value }) } value={ contactNumber.number }/>
                             </div>
                         </div>
                         <div className="aweb-birthDate">
                             <label>Birth Date</label>
-                            <DatePicker required selected={birthDate} onChange={date => this.onInputChange( 'birthDate', date)} />
+                            { birthDate.error &&
+                                <div className="aweb-red-note">
+                                    { birthDate.errorMessage }
+                                </div>
+                            }
+                            <DatePicker
+                                value={birthDate.value}
+                                onChange={(value) => setBirthDate({value:value})}
+                                inputPlaceholder="Select a day"
+                                shouldHighlightWeekends
+                                />                      
                         </div>
                         <div className="input-wrapper">
                             <div className="aweb-heading">
                                 { 'Current Address' }
                             </div>
+                            { currentAddress.error &&
+                                <div className="aweb-red-note">
+                                    { currentAddress.errorMessage }
+                                </div>
+                            }
                             <div className="street-address">
                                 <label>Street Address</label>
                                 <input type="text" name="cstreetAddress" onChange = { (e) => setCurrentAddress({ streetAddress: e.target.value, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.streetAddress}/>
@@ -225,6 +354,11 @@ const UserVerification = () => {
                             <div className="aweb-heading">
                                 { 'Permanent Address' }
                             </div>
+                            { permanentAddress.error &&
+                                <div className="aweb-red-note">
+                                    { permanentAddress.errorMessage }
+                                </div>
+                            }
                             <div className="street-address">
                                 <label>Street Address</label>
                                 <input type="text" name="cstreetAddress" onChange = { (e) => setPermanentAddress({ streetAddress: e.target.value, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.streetAddress}/>
@@ -259,6 +393,11 @@ const UserVerification = () => {
                             </div>
                             <div className="aweb-documentImage">
                                 <label>Document Image One</label>
+                                { documentImage.error &&
+                                    <div className="aweb-red-note">
+                                        { documentImage.errorMessage }
+                                    </div>
+                                }
                                 <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
                                 { documentImage.dataUrl ? (
                                     <>
@@ -285,6 +424,11 @@ const UserVerification = () => {
                         <div className="aweb-submit">
                             <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ submitText }/>
                         </div>
+                        { status && 
+                            <div className="aweb-success-note">
+                                { message }
+                            </div>
+                        }
                     </div>
                 </form>
             </div>

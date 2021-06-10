@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Product from '../pages/product'
@@ -9,14 +9,40 @@ import UserVerification from '../pages/userVerification'
 import { ProductSubmitForm } from '../pages/ProductSubmitForm'
 import Signup from '../pages/Signup'
 
+const axios = require('axios')
+
 export const PublicRoutes = (props) => {
+    const [userId, setUserId] = useState('')
+    const [userStatus, setUserStatus] = useState('')
     const { isLoggedIn, updateLoggedInStatus } = props
+
+    useEffect(() => {
+        axios.get( '/sessions.php' )
+        .then(function(res) {
+            if(res.data.login) {
+                setUserId(res.data.userId)
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        userId &&
+        axios.get( `/users.php?id=${userId}`)
+        .then(function(res) {
+            if(res.data.status) {
+                setUserStatus(res.data.data[0].status)
+            }
+        })
+    }, [userId])
+    
     return (
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={() => <Home isLoggedIn = { isLoggedIn }/>}></Route>
                 <Route path="/products" exact component={() => <Product/>}></Route>
-                <Route path="/user-verification" component={() => <UserVerification/> }></Route>
+                { userStatus !== 'verified' &&
+                  <Route path="/user-verification" component={() => <UserVerification/> }></Route>
+                }
                 <Route path="/user-submit-product" component={() => <ProductSubmitForm/> }></Route>
                 <Route path="/products/:id" component={(props) => <SingleProduct/>}></Route>
                 <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>

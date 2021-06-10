@@ -106,20 +106,7 @@ const Signup = (props) => {
             email.error = true;
             email.errorMessage = "Email is not valid";
         }  else {
-            let condition = true
-            // axios.get( `/users.php?email=${username.email}` )
-            // .then( function (response) {
-            //     if( response.data.status ) {
-            //         email.value = email.value
-            //         email.error = true
-            //         email.errorMessage = "Email already exists"
-            //         setEmail( JSON.parse(JSON.stringify( email )) )
-            //         console.log(email)
-            //         setIsDisabled(true)
-            //         condition = false
-            //     }
-            // })
-            return condition
+            return true
         }
         setEmail( JSON.parse(JSON.stringify( email )) )
         return false
