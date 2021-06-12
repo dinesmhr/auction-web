@@ -6,13 +6,13 @@
  */
 import React, { useState, useEffect } from 'react';
 import Header from '../header/Header';
-import "react-datepicker/dist/react-datepicker.css";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import DatePicker from "react-modern-calendar-datepicker";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
+
 
 const axios = require('axios')
 
@@ -262,14 +262,14 @@ const UserVerification = () => {
                         <div class="w-full px-2 md:w-1/2">
                             <label className="block mb-1">Fullname</label>
                             { fullname.error &&
-                                <span class="text-xs text-red-700" id="passwordHelp">{ fullname.errorMessage }</span>
+                                <span class="text-xs text-red-700">{ fullname.errorMessage }</span>
                             }
                             <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="fullname" onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value } disabled/>
                         </div>
                         <div class="w-full px-2 md:w-1/2">
                             <label className="block mb-1">Email Address</label>
                             { email.error &&
-                                <span class="text-xs text-red-700" id="passwordHelp">{ email.errorMessage }</span>
+                                <span class="text-xs text-red-700">{ email.errorMessage }</span>
                             }
                             <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="email" onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value } disabled/>
                         </div>
@@ -279,7 +279,7 @@ const UserVerification = () => {
                         <div class="w-full">
                             <label className="block mb-1">Profession</label>
                             { profession.error &&
-                                <span class="text-xs text-red-700" id="passwordHelp">{ profession.errorMessage }</span>
+                                <span class="text-xs text-red-700">{ profession.errorMessage }</span>
                             }
                             <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="profession" required onChange={ (e) => setProfession({ value: e.target.value }) } value={ profession.value }/>
                         </div>
@@ -289,7 +289,7 @@ const UserVerification = () => {
                         { 'Contact Number' }
                     </div>
                     { contactNumber.error &&
-                        <span class="text-xs text-red-700" id="passwordHelp">{ contactNumber.errorMessage }</span>
+                        <span class="text-xs text-red-700">{ contactNumber.errorMessage }</span>
                     }
                     <div className="aweb-areacode">
                         <PhoneInput
@@ -305,21 +305,21 @@ const UserVerification = () => {
                     <div className="aweb-birthDate">
                         <label>Birth Date</label>
                         { birthDate.error &&
-                            <span class="text-xs text-red-700" id="passwordHelp">{ birthDate.errorMessage }</span>
+                            <span class="text-xs text-red-700">{ birthDate.errorMessage }</span>
                         }
                         <DatePicker
                             value={birthDate.value}
                             onChange={(value) => setBirthDate({value:value})}
                             inputPlaceholder="Select a day"
                             shouldHighlightWeekends
-                            />                      
+                            />
                     </div>
                     <div className="input-wrapper">
                         <div className="aweb-heading">
                             { 'Current Address' }
                         </div>
                         { currentAddress.error &&
-                            <span class="text-xs text-red-700" id="passwordHelp">{ currentAddress.errorMessage }</span>
+                            <span class="text-xs text-red-700">{ currentAddress.errorMessage }</span>
                         }
                         <div className="street-address">
                             <label>Street Address</label>
@@ -347,7 +347,7 @@ const UserVerification = () => {
                             { 'Permanent Address' }
                         </div>
                         { permanentAddress.error &&
-                            <span class="text-xs text-red-700" id="passwordHelp">{ permanentAddress.errorMessage }</span>
+                            <span class="text-xs text-red-700">{ permanentAddress.errorMessage }</span>
                         }
                         <div className="street-address">
                             <label>Street Address</label>
@@ -389,7 +389,7 @@ const UserVerification = () => {
                         <div className="aweb-documentImage">
                             <label>Document Image One</label>
                             { documentImage.error &&
-                                <span class="text-xs text-red-700" id="passwordHelp">{ documentImage.errorMessage }</span>
+                                <span class="text-xs text-red-700">{ documentImage.errorMessage }</span>
                             }
                             <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
                             { documentImage.dataUrl ? (
@@ -405,7 +405,7 @@ const UserVerification = () => {
                             <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
                             { documentImageOne.dataUrl ? (
                                 <>
-                                    <div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} /></div>
+                                    <div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} /></div>
                                 </>
                             ) : (
                                 <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImageOne() }><GrAdd/></div>
