@@ -6,7 +6,7 @@ import SingleProduct from '../pages/single-product'
 import Login from '../pages/Login'
 import Myaccount from '../pages/Myaccount'
 import UserVerification from '../pages/userVerification'
-import { ProductSubmitForm } from '../pages/ProductSubmitForm'
+import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
 
 const axios = require('axios')
@@ -43,7 +43,7 @@ export const PublicRoutes = (props) => {
                 { userStatus !== 'verified' &&
                   <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 }
-                <Route path="/user-submit-product" component={() => <ProductSubmitForm/> }></Route>
+                <Route path="/submit-product" component={() => <ProductSubmit isLoggedIn = { isLoggedIn } /> }></Route>
                 <Route path="/products/:id" component={(props) => <SingleProduct/>}></Route>
                 <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
                 <Route path="/login" component={() => <Login isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>

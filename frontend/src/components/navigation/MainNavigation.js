@@ -37,7 +37,7 @@ const MainNavigation = (props) => {
                 { isLoggedIn && userStatus !== 'verified' &&
                     <li><NavLink activeClassName="active_name" to="/user-verification">Verify Account</NavLink></li>
                 }
-                <li><NavLink activeClassName="active_name" to="/user-submit-product">Submit Product</NavLink></li>
+                <li><NavLink activeClassName="active_name" to="/submit-product">Submit Product</NavLink></li>
                 { isLoggedIn && 
                     <li><NavLink activeClassName="active_name" to="/myaccount">My Account</NavLink></li>
                 }

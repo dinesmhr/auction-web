@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Header from '../header/Header';
-import MultiImageInput from 'react-multiple-image-input';
 import DatePicker from "react-datepicker";
 import { Multiselect } from 'multiselect-react-dropdown';
 const axios = require('axios');
 
-export const ProductSubmitForm = (props) => {
+const ProductSubmit = (props) => {
 	const [ImageFiles, setImageFiles] = useState({});
 	const [Pname, setPname] = useState('');
 	const [PDescription, setPDescription] = useState('');
@@ -19,12 +18,7 @@ export const ProductSubmitForm = (props) => {
 	const [phone, setPhone] = useState('');
 	const [errorStatus, seterrorStatus] = useState(false);
 	const [errorMessage, seterrorMessage] = useState('');
-	const [submitButtonText, setsubmitButtonText] = useState('Submit');
-	const crop = {
-		unit: '%',
-		aspect: 4 / 4,
-		height: '100'
-	};
+	const [submitButtonText, setsubmitButtonText] = useState('Submit My Product');
 
 	const options =  [
 		{ name: 'Appliances', id: 1},
@@ -89,11 +83,11 @@ export const ProductSubmitForm = (props) => {
 		//seterrorMessage('Product form submitted'),
 	}
 
-	const { isLoggedin } = props
-	if( !isLoggedin ) {
+	const { isLoggedIn } = props
+	if( !isLoggedIn ) {
 		return (
 			<>
-				<Header userLoggedIn = { isLoggedin }/> 
+				<Header isLoggedIn = { isLoggedIn }/> 
 				<div id="auction-web-product-submit-page">
 					{ 'You must be logged in to submit your product' }
 					<div className="aweb-redirect-button">
@@ -106,20 +100,15 @@ export const ProductSubmitForm = (props) => {
 	
 	return (
 		<>
-			<Header userLoggedIn = { isLoggedin }/> 
+			<Header isLoggedIn = { isLoggedIn }/> 
 			<div id="auction-web-product-submit-page">
 				<form id="aweb-Product-form">
 					<div className="aweb-Product-form-wrapper">
 						<div className="aweb-Product-form-header">Enter the Details</div>						
 							<div className="aweb-Product-Image">  	
 							<label>Enter Product Images:</label>
-							<MultiImageInput
-      							images={ImageFiles}
-     					 		setImages={setImageFiles}
-     					 		max={5}
-      							cropConfig={{ crop, ruleOfThirds: true }}
-   							 />
-							</div>	
+							
+							</div>
 						<div className="aweb-Product-Name">
 							<label htmlFor="Pname">Product Name:</label>
 							<input type="text" id="Pname" name="Pname" value={Pname} onChange={(e) => setPname(e.target.value) } required/>	
@@ -182,8 +171,8 @@ export const ProductSubmitForm = (props) => {
 							<label htmlFor="phone">Enter Your phone number:</label>
 							<input type="text" id="phone" name="phone" value= {phone} required onChange={ (e) => setPhone(e.target.value) }/>
 						</div>
-							<div className="aweb-Product-form-button">
-							<button className="aweb-product-submit-button" onClick={(e) => onsubmit(e) }>{submitButtonText}</button>
+						<div className="aweb-Product-form-button">
+							<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitButtonText}</button>
 						</div>			
 					</div>
 				</form>
@@ -191,3 +180,5 @@ export const ProductSubmitForm = (props) => {
         </>
 	)
 }
+
+export default ProductSubmit

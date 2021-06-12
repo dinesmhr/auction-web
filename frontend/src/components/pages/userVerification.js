@@ -249,187 +249,175 @@ const UserVerification = () => {
         <>
             <Header isLoggedIn = { isLoggedIn }/> 
             <div id="auction-web-user-verification">
-                <form id="aweb-user-verification-form">
+                <form id="aweb-user-verification-form" className="space-y-4 text-gray-700">
                     <div className="aweb-heading">
                         { 
                             `You are logged in as ${ fullname.value}. Please verify your account here.` 
                         }
                     </div>
-                    <div className="input-wrapper">
-                        <div className="aweb-heading-personal-details">
-                            { 'Personal Details' }
-                        </div>
-                        <div className="aweb-fullname">
-                            <label>Fullname</label>
+                    <div className="aweb-heading-personal-details">
+                        { 'Personal Details' }
+                    </div>
+                    <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+                        <div class="w-full px-2 md:w-1/2">
+                            <label className="block mb-1">Fullname</label>
                             { fullname.error &&
-                                <div className="aweb-red-note">
-                                    { fullname.errorMessage }
-                                </div>
+                                <span class="text-xs text-red-700" id="passwordHelp">{ fullname.errorMessage }</span>
                             }
-                            <input type="text" name="fullname" onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value } disabled/>
+                            <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="fullname" onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value } disabled/>
                         </div>
-                        <div className="aweb-email">
-                            <label>Email Address</label>
+                        <div class="w-full px-2 md:w-1/2">
+                            <label className="block mb-1">Email Address</label>
                             { email.error &&
-                                <div className="aweb-red-note">
-                                    { email.errorMessage }
-                                </div>
+                                <span class="text-xs text-red-700" id="passwordHelp">{ email.errorMessage }</span>
                             }
-                            <input type="text" name="email" onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value } disabled/>
+                            <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="email" onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value } disabled/>
                         </div>
-                        <div className="aweb-profession">
-                            <label>Profession</label>
+                    </div>
+
+                    <div class="flex flex-wrap">
+                        <div class="w-full">
+                            <label className="block mb-1">Profession</label>
                             { profession.error &&
-                                <div className="aweb-red-note">
-                                    { profession.errorMessage }
-                                </div>
+                                <span class="text-xs text-red-700" id="passwordHelp">{ profession.errorMessage }</span>
                             }
-                            <input type="text" name="profession" required onChange={ (e) => setProfession({ value: e.target.value }) } value={ profession.value }/>
+                            <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="profession" required onChange={ (e) => setProfession({ value: e.target.value }) } value={ profession.value }/>
                         </div>
-                        <div className="">
-                            <div className="aweb-heading">
-                                { 'Contact Number' }
-                            </div>
-                            { contactNumber.error &&
-                                <div className="aweb-red-note">
-                                    { contactNumber.errorMessage }
-                                </div>
-                            }
-                            <div className="aweb-areacode">
-                                <PhoneInput
-                                    country={'np'}
-                                    value={contactNumber.areaCode}
-                                    onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
-                                />
-                            </div>
-                            <div className="aweb-contactNumber">
-                                <input type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ areaCode: contactNumber.areaCode, number: e.target.value }) } value={ contactNumber.number }/>
-                            </div>
+                    </div>
+
+                    <div className="aweb-heading">
+                        { 'Contact Number' }
+                    </div>
+                    { contactNumber.error &&
+                        <span class="text-xs text-red-700" id="passwordHelp">{ contactNumber.errorMessage }</span>
+                    }
+                    <div className="aweb-areacode">
+                        <PhoneInput
+                            country={'np'}
+                            value={contactNumber.areaCode}
+                            onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
+                        />
+                    </div>
+                    <div className="aweb-contactNumber">
+                        <input type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ areaCode: contactNumber.areaCode, number: e.target.value }) } value={ contactNumber.number }/>
+                    </div>
+
+                    <div className="aweb-birthDate">
+                        <label>Birth Date</label>
+                        { birthDate.error &&
+                            <span class="text-xs text-red-700" id="passwordHelp">{ birthDate.errorMessage }</span>
+                        }
+                        <DatePicker
+                            value={birthDate.value}
+                            onChange={(value) => setBirthDate({value:value})}
+                            inputPlaceholder="Select a day"
+                            shouldHighlightWeekends
+                            />                      
+                    </div>
+                    <div className="input-wrapper">
+                        <div className="aweb-heading">
+                            { 'Current Address' }
                         </div>
-                        <div className="aweb-birthDate">
-                            <label>Birth Date</label>
-                            { birthDate.error &&
-                                <div className="aweb-red-note">
-                                    { birthDate.errorMessage }
-                                </div>
-                            }
-                            <DatePicker
-                                value={birthDate.value}
-                                onChange={(value) => setBirthDate({value:value})}
-                                inputPlaceholder="Select a day"
-                                shouldHighlightWeekends
-                                />                      
+                        { currentAddress.error &&
+                            <span class="text-xs text-red-700" id="passwordHelp">{ currentAddress.errorMessage }</span>
+                        }
+                        <div className="street-address">
+                            <label>Street Address</label>
+                            <input type="text" name="cstreetAddress" onChange = { (e) => setCurrentAddress({ streetAddress: e.target.value, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.streetAddress}/>
                         </div>
-                        <div className="input-wrapper">
-                            <div className="aweb-heading">
-                                { 'Current Address' }
-                            </div>
-                            { currentAddress.error &&
-                                <div className="aweb-red-note">
-                                    { currentAddress.errorMessage }
-                                </div>
-                            }
-                            <div className="street-address">
-                                <label>Street Address</label>
-                                <input type="text" name="cstreetAddress" onChange = { (e) => setCurrentAddress({ streetAddress: e.target.value, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.streetAddress}/>
-                            </div>
-                            <div className="city">
-                                <label>City</label>
-                                <input type="text" name="city" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: e.target.value, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.city}/>
-                            </div>
-                            <div className="stateProvince">
-                                <label>State/Province</label>
-                                <input type="text" name="stateProvince" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: e.target.value, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.stateProvince}/>
-                            </div>
-                            <div className="postalCode">
-                                <label>Postal Code</label>
-                                <input type="text" name="postalCode" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: e.target.value, country: currentAddress.country }) } value={currentAddress.postalCode}/>
-                            </div>
-                            <div className="country">
-                                <label>Country</label>
-                                <input type="text" name="country" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: e.target.value }) } value={currentAddress.country}/>
-                            </div>
+                        <div className="city">
+                            <label>City</label>
+                            <input type="text" name="city" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: e.target.value, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.city}/>
                         </div>
-                        <div className="input-wrapper">
-                            <div className="aweb-heading">
-                                { 'Permanent Address' }
-                            </div>
-                            { permanentAddress.error &&
-                                <div className="aweb-red-note">
-                                    { permanentAddress.errorMessage }
-                                </div>
-                            }
-                            <div className="street-address">
-                                <label>Street Address</label>
-                                <input type="text" name="cstreetAddress" onChange = { (e) => setPermanentAddress({ streetAddress: e.target.value, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.streetAddress}/>
-                            </div>
-                            <div className="city">
-                                <label>City</label>
-                                <input type="text" name="city" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: e.target.value, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.city}/>
-                            </div>
-                            <div className="stateProvince">
-                                <label>State/Province</label>
-                                <input type="text" name="stateProvince" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: e.target.value, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.stateProvince}/>
-                            </div>
-                            <div className="postalCode">
-                                <label>Postal Code</label>
-                                <input type="text" name="postalCode" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: e.target.value, country: permanentAddress.country }) } value={permanentAddress.postalCode}/>
-                            </div>
-                            <div className="country">
-                                <label>Country</label>
-                                <input type="text" name="country" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: e.target.value }) } value={permanentAddress.country}/>
-                            </div>
+                        <div className="stateProvince">
+                            <label>State/Province</label>
+                            <input type="text" name="stateProvince" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: e.target.value, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.stateProvince}/>
                         </div>
-                        <div className="input-wrapper">
-                            <div className="aweb-heading">
-                                { 'Document Details' }
-                            </div>
-                            <div className="aweb-doc-type">
-                                <label>Document Type</label>
-                                <select onChange={(e) => setDocumentType({value: e.target.value}) }>
+                        <div className="postalCode">
+                            <label>Postal Code</label>
+                            <input type="text" name="postalCode" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: e.target.value, country: currentAddress.country }) } value={currentAddress.postalCode}/>
+                        </div>
+                        <div className="country">
+                            <label>Country</label>
+                            <input type="text" name="country" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: e.target.value }) } value={currentAddress.country}/>
+                        </div>
+                    </div>
+                    <div className="input-wrapper">
+                        <div className="aweb-heading">
+                            { 'Permanent Address' }
+                        </div>
+                        { permanentAddress.error &&
+                            <span class="text-xs text-red-700" id="passwordHelp">{ permanentAddress.errorMessage }</span>
+                        }
+                        <div className="street-address">
+                            <label>Street Address</label>
+                            <input type="text" name="cstreetAddress" onChange = { (e) => setPermanentAddress({ streetAddress: e.target.value, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.streetAddress}/>
+                        </div>
+                        <div className="city">
+                            <label>City</label>
+                            <input type="text" name="city" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: e.target.value, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.city}/>
+                        </div>
+                        <div className="stateProvince">
+                            <label>State/Province</label>
+                            <input type="text" name="stateProvince" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: e.target.value, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.stateProvince}/>
+                        </div>
+                        <div className="postalCode">
+                            <label>Postal Code</label>
+                            <input type="text" name="postalCode" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: e.target.value, country: permanentAddress.country }) } value={permanentAddress.postalCode}/>
+                        </div>
+                        <div className="country">
+                            <label>Country</label>
+                            <input type="text" name="country" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: e.target.value }) } value={permanentAddress.country}/>
+                        </div>
+                    </div>
+                    <div className="input-wrapper">
+                        <div className="aweb-heading">
+                            { 'Document Details' }
+                        </div>
+                        <div className="single-field">
+                            <label className="block mb-1">Document Type</label>
+                            <div className="aweb-doc-type relative inline-block w-full text-gray-700">
+                                <select className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" onChange={(e) => setDocumentType({value: e.target.value}) }>
                                     <option value='citizenship'>{ 'Citizenship' }</option>
                                     <option value='passport'>{ 'Passport' }</option>
                                 </select>
-                            </div>
-                            <div className="aweb-documentImage">
-                                <label>Document Image One</label>
-                                { documentImage.error &&
-                                    <div className="aweb-red-note">
-                                        { documentImage.errorMessage }
-                                    </div>
-                                }
-                                <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
-                                { documentImage.dataUrl ? (
-                                    <>
-                                        <span className="image-delete" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span>
-                                        <span><img src={documentImage.dataUrl} /></span>
-                                    </>
-                                ) : (
-                                    <span className="image-upload" onClick = { () => handleDocumentImage() }><GrAdd/></span>
-                                )}
-                            </div>
-                            <div className="aweb-documentImageOne">
-                                <label>Document Image Two</label>
-                                <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
-                                { documentImageOne.dataUrl ? (
-                                    <>
-                                        <span className="image-delete" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span>
-                                        <span><img src={documentImageOne.dataUrl} /></span>
-                                    </>
-                                ) : (
-                                    <span className="image-upload" onClick = { () => handleDocumentImageOne() }><GrAdd/></span>
-                                )}
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                                </div>
                             </div>
                         </div>
-                        <div className="aweb-submit">
-                            <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ submitText }/>
+                        <div className="aweb-documentImage">
+                            <label>Document Image One</label>
+                            { documentImage.error &&
+                                <span class="text-xs text-red-700" id="passwordHelp">{ documentImage.errorMessage }</span>
+                            }
+                            <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
+                            { documentImage.dataUrl ? (
+                                <>
+                                    <div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} /></div>
+                                </>
+                            ) : (
+                                <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImage() }><GrAdd/></div>
+                            )}
                         </div>
-                        { status && 
-                            <div className="aweb-success-note">
-                                { message }
-                            </div>
-                        }
+                        <div className="aweb-documentImageOne">
+                            <label>Document Image Two</label>
+                            <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
+                            { documentImageOne.dataUrl ? (
+                                <>
+                                    <div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} /></div>
+                                </>
+                            ) : (
+                                <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImageOne() }><GrAdd/></div>
+                            )}
+                        </div>
                     </div>
+                        <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" name="submit" onClick= { (e) => onSubmit(e) }>{ submitText }</button>
+                    { status && 
+                        <div className="aweb-success-note">
+                            { message }
+                        </div>
+                    }
                 </form>
             </div>
         </>
