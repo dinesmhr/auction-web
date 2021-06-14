@@ -23,7 +23,7 @@ export const PublicRoutes = (props) => {
                 setUserId(res.data.userId)
             }
         })
-    }, [])
+    })
 
     useEffect(() => {
         userId &&

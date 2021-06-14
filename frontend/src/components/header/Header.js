@@ -6,9 +6,7 @@ const Header = (props) => {
     const { isLoggedIn } = props
     return (
         <header>
-            { isLoggedIn &&
-                <AdminNavigation />
-            }
+            <AdminNavigation isLoggedIn={isLoggedIn} />
             <div className="aweb-header">
                 <h1 className="aweb-site-title"><a href="/">Auction<span>Web</span></a></h1>
                 <MainNavigation isLoggedIn = { isLoggedIn } />
