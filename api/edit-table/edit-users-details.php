@@ -72,7 +72,7 @@ if( is_db_connected() ) {
         // update users status as under-verification
         $users_status_update_sql = 'UPDATE aw_users SET status = "under-verification" WHERE id = "' .$id. '"';
         $CONNECTION->query( $users_status_update_sql );
-        $structure['status'] = false;
+        $structure['status'] = true;
         $structure['message'] = 'Your KYC form is submitted. Your account is under verification!! Thank you for your patience';
       } else {
         $structure['status'] = false;

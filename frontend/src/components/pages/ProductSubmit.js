@@ -46,7 +46,6 @@ const imagesRef = React.createRef()
 const ProductSubmit = (props) => {
 	const [userId, setUserId] = useState('')
     const [userStatus, setUserStatus] = useState('')
-
 	const [title, setTitle] = useState({value: ''});
 	const [description, setDescription] = useState({value: ''});
 	const [specifications, setSpecifications] = useState({value: [{value:''}]});
@@ -54,10 +53,9 @@ const ProductSubmit = (props) => {
 	const [maxBid, setMaxBid] = useState({value: ''});
 	const [deadlineDate, setDeadlineDate] = useState({value: ''});
 	const [images, setImages] = useState({value: []});
-	
 	const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
-	const [submitButtonText, setsubmitButtonText] = useState('Submit My Product');
+	const [submitText, setSubmitText] = useState('Submit My Product');
 
 	const { isLoggedIn } = props
 
@@ -188,6 +186,7 @@ const ProductSubmit = (props) => {
 
 	const onsubmit = (e) => {
 		e.preventDefault()
+		setSubmitText( 'Submitting product' )
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
 			let apiParams = {
 				submit: "submit-product",
@@ -202,11 +201,28 @@ const ProductSubmit = (props) => {
 			}
 			axios.post( '/edit-table/edit-products.php', apiParams)
 			.then(function(response) {
-				console.log(response)
-				// if( response.data.status ) {
-				// 	console.log( response.data.status )
-				// }
+				if( response.data.status ) {
+					setTitle({value: ''})
+					setDescription({value: ''})
+					setSpecifications({value: [{value:''}]})
+					setInitialBid({value: ''})
+					setMaxBid({value: ''})
+					setDeadlineDate({value: ''})
+					setImages({value: []})
+					setStatus(true)
+					setMessage(response.data.message)
+				} else {
+					setStatus(true)
+					setMessage(response.data.message)
+				}
 			})
+			.catch(function (error) {
+				setStatus(true)
+				setMessage('There is an error')
+			})
+			.then(function () {
+				setSubmitText( 'Submit My Product' )
+			});
 		}
 	}
 
@@ -241,7 +257,7 @@ const ProductSubmit = (props) => {
 	if( userStatus === 'under-verification' ) {
 		return (
 			<>
-				<Header isLoggedIn = { isLoggedIn }/> 
+				<Header isLoggedIn = { isLoggedIn }/>
 				<div id="auction-web-product-submit-page">
 					{ 'Your account is under verification. Please wait for account to be verified' }
 				</div>
@@ -367,7 +383,7 @@ const ProductSubmit = (props) => {
                             { Array.isArray( images.value ) &&
 								images.value.map((image, key) => {
 									return (
-										<React.Fragment key={key}>
+										<React.Fragment key={`unique-${key}`}>
 											<div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
 												<ModalImage
 													small={image.dataUrl}
@@ -384,7 +400,7 @@ const ProductSubmit = (props) => {
 					</div>
 
 					<div className="aweb-Product-form-button">
-						<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitButtonText}</button>
+						<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
 					</div>
 					{ status && 
                         <div className="aweb-success-note">

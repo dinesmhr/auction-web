@@ -50,7 +50,7 @@ if( is_db_connected() ) {
   endforeach;
   $product_sql = "INSERT INTO aw_products( user_id, title, description, specifications, initial_bid, max_bid, deadline_date, images_path ) VALUES( '" .$userId. "', '" .$title. "','" .$description. "', '" .$specifications. "', '" .$initialBid. "', '" .$maxBid. "', '" .$deadlineDate. "', '" .serialize($images_path). "' )";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
-    $structure['status'] = false;
+    $structure['status'] = true;
     $structure['message'] = 'Your product form is submitted. Your product is under verification!! Thank you for your patience';
   } else {
     $structure['status'] = false;
