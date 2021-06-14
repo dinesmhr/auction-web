@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from '../pages/Home'
-import Product from '../pages/product'
+import Products from '../pages/products'
 import SingleProduct from '../pages/single-product'
 import Login from '../pages/Login'
 import Myaccount from '../pages/Myaccount'
@@ -39,7 +39,7 @@ export const PublicRoutes = (props) => {
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={() => <Home isLoggedIn = { isLoggedIn }/>}></Route>
-                <Route path="/products" exact component={() => <Product/>}></Route>
+                <Route path="/products" exact component={() => <Products isLoggedIn = { isLoggedIn }/>}></Route>
                 { userStatus !== 'verified' &&
                   <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 }
