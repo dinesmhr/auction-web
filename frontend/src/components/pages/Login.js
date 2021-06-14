@@ -44,7 +44,7 @@ const Login = (props) => {
     return (
         <>
             <Header isLoggedIn = { isLoggedIn }/>
-            <div className="flex justify-end">
+            <div className="flex justify-center mt-16">
                 <div className="w-full max-w-xs">
                     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                         <div className="aweb-login-note">Login</div>
@@ -73,9 +73,6 @@ const Login = (props) => {
                             </a>
                         </div>
                     </form>
-                    <p className="text-center text-gray-500 text-xs">
-                        &copy;2021 Auction Web. All rights reserved.
-                    </p>
                 </div>
             </div>
         </>

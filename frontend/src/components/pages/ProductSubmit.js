@@ -269,7 +269,8 @@ const ProductSubmit = (props) => {
 		<>
 			<Header isLoggedIn = { isLoggedIn }/> 
 			<div id="auction-web-product-submit-page">
-				<form id="aweb-Product-form" className="w-full max-w-lg">
+			<div className="product-submit-wrap max-w-2xl m-auto">
+				<form id="aweb-Product-form" className="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 					<div className="flex flex-wrap -mx-3 mb-6">
 						<div className="w-full px-3">
 							<div className="aweb-Product-form-header">Enter the Details</div>
@@ -408,6 +409,7 @@ const ProductSubmit = (props) => {
                         </div>
                     }
 				</form>
+			</div>
 			</div>
         </>
 	)
