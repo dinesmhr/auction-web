@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../header/Header';
-import DatePicker from "react-modern-calendar-datepicker";
+import DatePicker, { utils } from "react-modern-calendar-datepicker";
 import ModalImage from "react-modal-image";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
+import { BiDollar } from "react-icons/bi";
 
 const axios = require('axios');
 
@@ -50,11 +51,12 @@ const ProductSubmit = (props) => {
 	const [description, setDescription] = useState({value: ''});
 	const [specifications, setSpecifications] = useState({value: [{value:''}]});
 	const [initialBid, setInitialBid] = useState({value: ''});
+	const [maxBid, setMaxBid] = useState({value: ''});
 	const [deadlineDate, setDeadlineDate] = useState({value: ''});
 	const [images, setImages] = useState({value: []});
-
-	const [errorStatus, seterrorStatus] = useState(false);
-	const [errorMessage, seterrorMessage] = useState('');
+	
+	const [status, setStatus] = useState(false);
+	const [message, setMessage] = useState('');
 	const [submitButtonText, setsubmitButtonText] = useState('Submit My Product');
 
 	const { isLoggedIn } = props
@@ -66,7 +68,7 @@ const ProductSubmit = (props) => {
                 setUserId(res.data.userId)
             }
         })
-    }, [])
+    })
 
     useEffect(() => {
         userId &&
@@ -77,6 +79,12 @@ const ProductSubmit = (props) => {
             }
         })
     }, [userId])
+
+	// set specifications on change
+	const handlesetSpecifications = (e,index) => {
+		specifications.value[index].value = e.target.value
+		setSpecifications(JSON.parse(JSON.stringify(specifications)))
+	}
 
 	// handle add row event specifications repeater
 	const addRow = () => {
@@ -120,10 +128,58 @@ const ProductSubmit = (props) => {
 
 	// validate product title field
     const validateTitle = () => {
-        if( title.value == '' ) {
+        if( title.value === '' ) {
             title.error = true;
-            title.errorMessage = "Fullname must not be empty";
+            title.errorMessage = "Tittle must not be empty";
             setTitle( JSON.parse(JSON.stringify( title )) )	
+        } else {
+            return true
+        }
+        return false
+    }
+
+	// validate product description field
+    const validateDescription = () => {
+        if( description.value === '' ) {
+            description.error = true;
+            description.errorMessage = "Description must not be empty";
+            setDescription( JSON.parse(JSON.stringify( description )) )	
+        } else {
+            return true
+        }
+        return false
+    }
+
+	// validate initialBid field
+    const validateInitialBid = () => {
+        if( initialBid.value === '' ) {
+            initialBid.error = true;
+            initialBid.errorMessage = "Add initial bid amount";
+            setInitialBid( JSON.parse(JSON.stringify( initialBid )) )	
+        } else {
+            return true
+        }
+        return false
+    }
+
+	// validate maxBid field
+    const validateMaxBid = () => {
+        if( maxBid.value === '' ) {
+            maxBid.error = true;
+            maxBid.errorMessage = "Add maximub bid amount";
+            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )	
+        } else {
+            return true
+        }
+        return false
+    }
+
+	// validate image field
+    const validateImages = () => {
+        if( images.value.length === 0 ) {
+            images.error = true;
+            images.errorMessage = "Add at least one image";
+            setImages( JSON.parse(JSON.stringify( images )) )	
         } else {
             return true
         }
@@ -132,20 +188,26 @@ const ProductSubmit = (props) => {
 
 	const onsubmit = (e) => {
 		e.preventDefault()
-        const url = 'http://localhost/auction-web/api/edit-table/edit-products.php'
-        axios.post( url, {
-            params: {
-                submit: 'submit'
-            }
-        })
-        .then(function(response) {
-            if( response.data.status ) {
-				console.log( response.data.status )
-            }
-		})
-		setsubmitButtonText( 'Your product is submitted to administration' )
-		//seterrorStatus('false'),
-		//seterrorMessage('Product form submitted'),
+		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
+			let apiParams = {
+				submit: "submit-product",
+				title: title.value,
+				userId: userId,
+				description: description.value,
+				specifications: specifications.value,
+				initialBid: initialBid.value,
+				maxBid: maxBid.value,
+				deadlineDate: deadlineDate.value,
+				images: images.value
+			}
+			axios.post( '/edit-table/edit-products.php', apiParams)
+			.then(function(response) {
+				console.log(response)
+				// if( response.data.status ) {
+				// 	console.log( response.data.status )
+				// }
+			})
+		}
 	}
 
 	if( !isLoggedIn ) {
@@ -213,8 +275,7 @@ const ProductSubmit = (props) => {
 							{ description.error &&
                                 <span className="text-xs text-red-700">{ description.errorMessage }</span>
                             }
-							<textarea className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Add product description" onChange={(e) => setDescription({value: e.target.value})}>
-								{description.value}
+							<textarea className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Add product description" onChange={(e) => setDescription({value: e.target.value})} defaultValue={description.value}>
 							</textarea>
 						</div>
 					</div>
@@ -230,7 +291,7 @@ const ProductSubmit = (props) => {
 									return (
 										<>
 											<div className="" key={index}>
-												<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => setSpecifications({value: e.target.value})} value={specification.value} aria-label="Product Specification" />
+												<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
 												{ index !== 0 &&
 													<button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-100 rounded-lg focus:shadow-outline hover:bg-white-800" type="button" onClick ={() => deleteRow(index) }>
 														Delete row
@@ -257,7 +318,20 @@ const ProductSubmit = (props) => {
 							{ initialBid.error &&
                                 <span className="text-xs text-red-700">{ initialBid.errorMessage }</span>
                             }
-							<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add product title" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
+							<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
+							<BiDollar/>
+						</div>
+					</div>
+
+					<div className="flex flex-wrap -mx-3 mb-6">
+						<div className="w-full px-3">
+							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Maximum 
+							Bid</label>
+							{ maxBid.error &&
+                                <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
+                            }
+							<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
+							<BiDollar/>
 						</div>
 					</div>
 
@@ -270,9 +344,10 @@ const ProductSubmit = (props) => {
 							<DatePicker
 								value={deadlineDate.value}
 								onChange={(value) => setDeadlineDate({value:value})}
+								minimumDate={utils().getToday()}
 								inputPlaceholder="Select a day"
 								shouldHighlightWeekends
-								/>	
+								/>
 						</div>
 					</div>
 
@@ -311,6 +386,11 @@ const ProductSubmit = (props) => {
 					<div className="aweb-Product-form-button">
 						<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitButtonText}</button>
 					</div>
+					{ status && 
+                        <div className="aweb-success-note">
+                            { message }
+                        </div>
+                    }
 				</form>
 			</div>
         </>

@@ -1,7 +1,6 @@
 import React, { Fragment, useRef, useState } from "react";
 import { Redirect } from 'react-router-dom'
 import Header from '../header/Header'
-import { confirmAlert } from 'react-confirm-alert'
 import { Dialog, Transition } from '@headlessui/react'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 

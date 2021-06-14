@@ -5,10 +5,6 @@
  * @package Auction Web
  */
 header("Access-Control-Allow-Origin: *");
-// header("Content-Type: multipart/form-data");
-// header("Access-Control-Allow-Methods: POST");
-// header("Access-Control-Max-Age: 3600");
-// header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // get posted input data
 $decoded_data = json_decode(file_get_contents("php://input"), true );
@@ -70,7 +66,6 @@ if( is_db_connected() ) {
     } else {
       $document_image_one_path = '';
     }
-
 
     $users_sql = "INSERT INTO aw_user_details( user_id, birthdate, profession, contact_num, current_ad, permanent_ad, document_type, document_image_path, document_image_two_path ) VALUES( '" .$id. "', '" .$birth_date. "','" .$profession. "', '" .$contact_number. "', '" .$current_address. "', '" .$permanent_address. "', '" .$document_type. "', '" .$document_image_path. "', '" .$document_image_one_path. "' )";
     if ( $CONNECTION->query( $users_sql ) === TRUE ) {

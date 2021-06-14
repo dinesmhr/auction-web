@@ -62,7 +62,7 @@ const Signup = (props) => {
 
     // validate fullname field
     const validateFullname = () => {
-        if( fullname.value == '' ) {
+        if( fullname.value === '' ) {
             fullname.error = true;
             fullname.errorMessage = "Fullname must not be empty";
             setFullname( JSON.parse(JSON.stringify( fullname )) )
@@ -74,7 +74,7 @@ const Signup = (props) => {
 
     // validate username field
     const validateUsername = () => {
-        if( username.value == '' ) {
+        if( username.value === '' ) {
             username.error = true;
             username.errorMessage = "Username must not be empty";
             setUsername( JSON.parse(JSON.stringify( username )) )
@@ -99,7 +99,7 @@ const Signup = (props) => {
     // validate email field
     const validateEmail = () => {
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if( email.value == '' ) {
+        if( email.value === '' ) {
             email.error = true;
             email.errorMessage = "Email must not be empty";
         } else if( !re.test( email.value ) ) { 
@@ -114,7 +114,7 @@ const Signup = (props) => {
 
     // validate password field
     const validatePassword = () => {
-        if( password.value == '' ) {
+        if( password.value === '' ) {
             password.error = true
             password.errorMessage = "Password must not be empty"
         } else if( password.value.length < 8 ) {
@@ -133,7 +133,7 @@ const Signup = (props) => {
 
     // validate cpassword field
     const validateCpassword = () => {
-        if( cpassword.value == '' ) {
+        if( cpassword.value === '' ) {
             cpassword.error = true
             cpassword.errorMessage = "This field must not be empty";
         } else if( cpassword.value !== password.value ) {

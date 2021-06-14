@@ -19,7 +19,7 @@ const axios = require('axios')
 const UserVerification = () => {
     const [ userId, setUserId ] = useState('')
     const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-    const [ loggedUserData, setLoggedUserData ] = useState({})
+    //const [ loggedUserData, setLoggedUserData ] = useState({})
     const [ userStatus, setUserStatus ] = useState('')
     const [ submitText, setSubmitText ] = useState('Submit For Verification')
     const [ fullname, setFullname ] = useState({ value: ''})
@@ -46,13 +46,13 @@ const UserVerification = () => {
                 setUserId(res.data.userId)
             }
         })
-    }, [])
+    })
 
     const checkUserDetails = () => {
         axios.get( `/users.php?id=${userId}`)
         .then(function(res) {
             if(res.data.status) {
-                setLoggedUserData(res.data.data[0])
+                //setLoggedUserData(res.data.data[0])
                 setFullname({value: res.data.data[0].fullname})
                 setEmail({value: res.data.data[0].email})
                 setUserStatus(res.data.data[0].status)
@@ -311,6 +311,13 @@ const UserVerification = () => {
                             value={birthDate.value}
                             onChange={(value) => setBirthDate({value:value})}
                             inputPlaceholder="Select a day"
+                            maximumDate={
+                                    {
+                                        year: 2003,
+                                        month: 12,
+                                        day: 31
+                                    }
+                                }
                             shouldHighlightWeekends
                             />
                     </div>
@@ -394,7 +401,7 @@ const UserVerification = () => {
                             <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
                             { documentImage.dataUrl ? (
                                 <>
-                                    <div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} /></div>
+                                    <div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} alt=""/></div>
                                 </>
                             ) : (
                                 <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImage() }><GrAdd/></div>
@@ -405,7 +412,7 @@ const UserVerification = () => {
                             <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
                             { documentImageOne.dataUrl ? (
                                 <>
-                                    <div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} /></div>
+                                    <div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} alt=""/></div>
                                 </>
                             ) : (
                                 <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImageOne() }><GrAdd/></div>
