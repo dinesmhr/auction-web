@@ -15,6 +15,8 @@ const AdminProductCategories = () => {
 	const [ status, setStatus ] = useState(false)
 	const [ message, setMessage ] = useState('')
 
+	const [showCategoryModal, setShowCategoryModal] = React.useState(false);
+
 	const categoryImageRef = React.createRef()
 
 	useEffect(() => {
@@ -91,36 +93,35 @@ const AdminProductCategories = () => {
 
 	return (
 		<>
-			<div className="aweb-admin-top-header">
-				<h1 className="aweb-admin-site-title">Auction Web</h1>
+			<div className="content-wrap">
 				<AdminMainNavigation/>
-				<div className="flex justify-end">
-					<div className="w-4/5 bg-gray-700 px-8 pt-6 h-screen ">
+				<div id="admin-right-content" className="float-right w-4/5 text-white p-20 h-screen mt-12">
+					<div className="">
 						<div>
-							<label className="text-gray-50 text-sm font-bold mb-2">Category Title</label>
-							{ categoryTitle.error &&
-                                <span class="text-xs text-red-400">{ categoryTitle.errorMessage }</span>
-                            }
+							<label className="">Category Title</label>
 							<input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="category-title" onChange= {(e) => setCategoryTitle({value: e.target.value}) } value={categoryTitle.value} />
+							{ categoryTitle.error &&
+                                <span className="text-xs text-red-400">{ categoryTitle.errorMessage }</span>
+                            }
 						</div>
 						<div>
-							<label className="block text-gray-50 text-sm font-bold mb-2">Category Description</label>
-							<textarea className="resize-y h-40 w-80" name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription.value} >
+							<label className="block">Category Description</label>
+							<textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription.value} >
 							</textarea>
 						</div>
 						<div>
 							<div className="aweb-categoryImage">
-								<label className="text-gray-50 text-sm font-bold mb-2">Category Image</label>
+								<label className="">Category Image</label>
 								{ categoryImage.error &&
 									<span class="text-xs text-red-400">{ categoryImage.errorMessage }</span>
 								}
 								<input type="file" name="categoryImage" ref={categoryImageRef} onChange = { (e) => handlesetCategoryImage(e) } style={{display:"none"}}/>
 								{ categoryImage.dataUrl ? (
 									<>
-										<div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteCategoryImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={categoryImage.dataUrl} alt=""/></div>
+										<div className="relative w-48 h-48"><span className="image-delete absolute cursor-pointer right-0 text-red-500 hover:font-sm" onClick = { () => deleteCategoryImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={categoryImage.dataUrl} alt=""/></div>
 									</>
 								) : (
-									<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleCategoryImage() }><GrAdd/></div>
+									<div className="image-upload relative cursor-pointer w-56 h-12 border border-gray-400 border-dashed" onClick = { () => handleCategoryImage() }><span className="absolute font-thin left-16 top-3">{ `Add image` }</span></div>
 								)}
 							</div>
 						</div>
@@ -133,36 +134,36 @@ const AdminProductCategories = () => {
 							</div>
 						}
 					
-					{
-						categories === null ? (
-							'Loading datas'
-						) : categories.length === 0 ? (
-							'No product categories'
-						) : (
-							<table className="m-0" style={{width:"100%"}}>
-								<thead>
-									<tr>
-										<th>Title</th>
-										<th>Description</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-									{
-										categories.map( ( category, index )  => {
-											return (	 
-												<tr key={ index }>
-													<td>{category.title}</td>
-													<td>{category.description}</td>
-													<td><Link to={`/aweb-categories/${category.id}`}>Edit</Link></td>
-												</tr>
-											)
-										})
-									}
-								</tbody>
-							</table>
-						)
-					}
+						{
+							categories === null ? (
+								'Loading datas'
+							) : categories.length === 0 ? (
+								'No product categories'
+							) : (
+								<table id="admin-content-table" className="m-0" style={{width:"100%"}}>
+									<thead className="p-4">
+										<tr>
+											<th>Title</th>
+											<th>Description</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody className="p-4">
+										{
+											categories.map( ( category, index )  => {
+												return (	 
+													<tr key={ index }>
+														<td>{category.title}</td>
+														<td>{category.description}</td>
+														<td><Link to={`/aweb-categories/${category.id}`}>Edit</Link></td>
+													</tr>
+												)
+											})
+										}
+									</tbody>
+								</table>
+							)
+						}
 					</div>
 				</div>					
 			</div>
