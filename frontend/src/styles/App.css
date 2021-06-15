@@ -507,6 +507,9 @@ a.active_name {
 	justify-content: center;
 	align-items: center;
 }
+.react-tel-input .form-control{
+	max-width: 5px;
+}
 /*******************************************
  		Ends User Account Verification Css
 ********************************************/
