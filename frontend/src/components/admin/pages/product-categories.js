@@ -101,11 +101,11 @@ const AdminProductCategories = () => {
 							{ categoryTitle.error &&
                                 <span class="text-xs text-red-700">{ categoryTitle.errorMessage }</span>
                             }
-							<input type="text" name="category-title" onChange= {(e) => setCategoryTitle({value: e.target.value}) } value={categoryTitle} />
+							<input type="text" name="category-title" onChange= {(e) => setCategoryTitle({value: e.target.value}) } value={categoryTitle.value} />
 						</div>
 						<div>
 							<label>Category Description</label>
-							<textarea name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription} >
+							<textarea name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription.value} >
 							</textarea>
 						</div>
 						<div>
