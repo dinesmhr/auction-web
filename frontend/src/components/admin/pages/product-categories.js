@@ -71,7 +71,7 @@ const AdminProductCategories = () => {
 				submit: 'submit',
 				title: categoryTitle.value,
 				description: categoryDescription.value,
-				image: categoryImage.value
+				image: categoryImage
 			})
 			.then(function(res) {
 				if( res.data.status === true ) {

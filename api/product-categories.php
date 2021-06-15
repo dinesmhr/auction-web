@@ -24,8 +24,16 @@ if( is_db_connected() ) {
         } else {
             $structure['status'] = true;
             $structure['message'] = 'success';
-            $products = $datas->fetch_all(MYSQLI_ASSOC);
-            $structure['data'] = $products;
+            $categories = $datas->fetch_all(MYSQLI_ASSOC);
+            foreach( $categories as $key => $category ) {
+                foreach( $category as $catKey => $cat ) {
+                    if( @unserialize( $category[$catKey] ) ) {
+                        $category[$catKey] = unserialize( $category[$catKey] );
+                    }
+                }
+                $categories[$key] = $category;
+            }
+            $structure['data'] = $categories;
         }
     } else {
         $structure['status'] = false;
