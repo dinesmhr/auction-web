@@ -608,7 +608,6 @@ a.active_name {
 **************************************************/
 table{
 	margin-left: 300px;
-	width: 75% !important;
 }
 table th, td{
 	border: 1px solid #ddd;
