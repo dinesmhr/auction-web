@@ -13,7 +13,6 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 
-
 const axios = require('axios')
 
 const UserVerification = () => {
