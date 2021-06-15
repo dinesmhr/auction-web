@@ -94,8 +94,8 @@ const AdminProductCategories = () => {
 			<div className="aweb-admin-top-header">
 				<h1 className="aweb-admin-site-title">Auction Web</h1>
 				<AdminMainNavigation/>
-				<div className="flex justify-center">
-					<div className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 ml-50">
+				<div className="flex justify-end">
+					<div className="w-4/5 bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
 						<div>
 							<label className="block text-gray-700 text-sm font-bold mb-2">Category Title</label>
 							{ categoryTitle.error &&
