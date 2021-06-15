@@ -291,7 +291,8 @@ const UserVerification = () => {
                         <span class="text-xs text-red-700">{ contactNumber.errorMessage }</span>
                     }
                     <div className="aweb-areacode">
-                        <PhoneInput className="flex justify-center"
+                        <PhoneInput className="flex justify-center w-4"
+                            style= {{maxWidth: "20px"}}                                             
                             country={'np'}
                             value={contactNumber.areaCode}
                             onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
