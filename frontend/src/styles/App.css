@@ -611,16 +611,19 @@ table{
 }
 table th, td{
 	border: 1px solid #ddd;
-  padding: 8px;
+    padding: 6px;
 }
 table tr:nth-child(even){
 	background-color: #f2f2f2;
 }
+table tr:nth-child(odd){
+	background-color: #DDDDDD;
+}
 table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   text-align: left;
-  background-color: #4CAF50;
+  background-color: #393E46;
   color: white;
 }
 
@@ -702,11 +705,12 @@ table th {
 	width: 100vw;
 	margin-top: -10px;
 }
+.home-page{
+}
 
 /*************************************************
  	    ENDS HOMEPAGE CSS
 **************************************************/
-
 
 
 

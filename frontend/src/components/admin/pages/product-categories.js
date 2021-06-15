@@ -95,24 +95,24 @@ const AdminProductCategories = () => {
 				<h1 className="aweb-admin-site-title">Auction Web</h1>
 				<AdminMainNavigation/>
 				<div className="flex justify-end">
-					<div className="w-4/5 bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+					<div className="w-4/5 bg-gray-700 px-8 pt-6 h-screen ">
 						<div>
-							<label className="block text-gray-700 text-sm font-bold mb-2">Category Title</label>
+							<label className="text-gray-50 text-sm font-bold mb-2">Category Title</label>
 							{ categoryTitle.error &&
-                                <span class="text-xs text-red-700">{ categoryTitle.errorMessage }</span>
+                                <span class="text-xs text-red-400">{ categoryTitle.errorMessage }</span>
                             }
 							<input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="category-title" onChange= {(e) => setCategoryTitle({value: e.target.value}) } value={categoryTitle.value} />
 						</div>
 						<div>
-							<label className="block text-gray-700 text-sm font-bold mb-2">Category Description</label>
+							<label className="block text-gray-50 text-sm font-bold mb-2">Category Description</label>
 							<textarea className="resize-y h-40 w-80" name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription.value} >
 							</textarea>
 						</div>
 						<div>
 							<div className="aweb-categoryImage">
-								<label className="block text-gray-700 text-sm font-bold mb-2">Category Image</label>
+								<label className="text-gray-50 text-sm font-bold mb-2">Category Image</label>
 								{ categoryImage.error &&
-									<span class="text-xs text-red-700">{ categoryImage.errorMessage }</span>
+									<span class="text-xs text-red-400">{ categoryImage.errorMessage }</span>
 								}
 								<input type="file" name="categoryImage" ref={categoryImageRef} onChange = { (e) => handlesetCategoryImage(e) } style={{display:"none"}}/>
 								{ categoryImage.dataUrl ? (
@@ -124,7 +124,7 @@ const AdminProductCategories = () => {
 								)}
 							</div>
 						</div>
-						<button className="mt-2 block text-gray-700 text-sm font-bold mb-2 text-red-500 hover:border-gray-500 hover:text-gray-500 hover:border-gray-200 border-2 border-red-500 border-opacity-90 rounded-md shadow-md" onClick={(e) => addCategory(e)}>
+						<button className="mb-4 mt-2 text-sm font-bold mb-2 text-grey-100 bg-indigo-800 border-2 border-gray-100 text-gray-300 rounded-md shadow-md hover:text-indigo-800 hover:bg-gray-300 p-2" onClick={(e) => addCategory(e)}>
 							{ buttonText }
 						</button>
 						{ status && 
