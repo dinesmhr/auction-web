@@ -556,6 +556,27 @@ a.active_name {
 	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
 }
 
+.admin-content-table-row-heading {
+	border-bottom: 2px solid #151a30;
+}
+
+.admin-content-table-row {
+	border-bottom: 1px solid #151a30;
+}
+
+#admin-action-trigger-button, .admin-page-top-description {
+	background-color: #222b45;
+}
+
+.admin-modal-border {
+	border-bottom: 1px solid #151a30;
+}
+
+.admin-modal-box {
+	width: 700px;
+	background-color: #222b45;
+}
+
 /*.aweb-admin-wrap{
 	position: absolute;
 	width: 18%;
