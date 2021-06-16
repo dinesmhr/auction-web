@@ -141,14 +141,14 @@ const AdminProductCategories = () => {
 								'No product categories'
 							) : (
 								<table id="admin-content-table" className="m-0" style={{width:"100%"}}>
-									<thead className="p-4">
+									<thead className="">
 										<tr>
 											<th>Title</th>
 											<th>Description</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
-									<tbody className="p-4">
+									<tbody className="">
 										{
 											categories.map( ( category, index )  => {
 												return (	 
