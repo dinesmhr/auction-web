@@ -368,8 +368,8 @@ const ProductSubmit = (props) => {
 						</div>
 					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
+					<div className="-mx-3 mb-6">
+						<div className="min-h-full">
 							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Images</label>
 							{ images.error &&
                                 <span className="text-xs text-red-700">{ images.errorMessage }</span>
@@ -381,6 +381,7 @@ const ProductSubmit = (props) => {
 							{  (images.value.length === 8 ) &&
 								<div>The maximum number of images you can upload is only 8 ( eight )</div>
 							}
+						<div className="inline block flex flex-row justify-around ">
                             { Array.isArray( images.value ) &&
 								images.value.map((image, key) => {
 									return (
@@ -392,11 +393,12 @@ const ProductSubmit = (props) => {
 													hideDownload= {true}
 													showRotate={true}
 													/>
-											</div>
+											</div>	
 										</React.Fragment>
 									)
 								})
 							}
+						   </div>
 						</div>
 					</div>
 
