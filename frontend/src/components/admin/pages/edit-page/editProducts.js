@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AdminMainNavigation from '../navigation/AdminMainNavigation'
+import AdminMainNavigation from '../../navigation/AdminMainNavigation'
 
 const axios = require('axios');
 
