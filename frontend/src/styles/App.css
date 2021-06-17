@@ -577,6 +577,10 @@ a.active_name {
 	background-color: #222b45;
 }
 
+#admin-action-trigger-button {
+	border: 1px solid #151a30;
+}
+
 /*.aweb-admin-wrap{
 	position: absolute;
 	width: 18%;

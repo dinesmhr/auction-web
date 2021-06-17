@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineDashboard, AiOutlineShopping } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
 import { GoTasklist } from "react-icons/go";
+import { AiFillTag } from "react-icons/ai";
 
 const AdminMainNavigation = () => {
     return ( 
@@ -15,7 +16,8 @@ const AdminMainNavigation = () => {
                         <li className="text-left"><a href="/aweb-admin" className="inline-flex text-lg py-3 px-7"><AiOutlineDashboard className="text-xl mt-0.5"/><span className="pl-2.5">Dashboard</span></a></li>
                         <li className="text-left"><a href="/aweb-users" className="inline-flex text-lg py-3 px-7"><FiUsers className="text-xl mt-0.5"/><span className="pl-2.5">Users</span></a></li>
                         <li className="text-left"><a href="/aweb-products" className="inline-flex text-lg py-3 px-7"><AiOutlineShopping className="text-xl mt-0.5"/><span className="pl-2.5">Products</span></a></li>
-                        <li className="text-left"><a href="/aweb-categories" className="inline-flex text-lg py-3 px-7"><GoTasklist className="text-xl mt-0.5"/><span className="pl-2.5">Products Categories</span></a></li>
+                        <li className="text-left"><a href="/aweb-categories" className="inline-flex text-lg py-3 px-7"><GoTasklist className="text-xl mt-0.5"/><span className="pl-2.5">Categories</span></a></li>
+                        <li className="text-left"><a href="/aweb-tags" className="inline-flex text-lg py-3 px-7"><AiFillTag className="text-xl mt-0.5"/><span className="pl-2.5">Tags</span></a></li>
                     </ul>
                 </nav>
             </div>

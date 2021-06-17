@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AdminMainNavigation from '../navigation/AdminMainNavigation'
 import { AiOutlineDelete } from "react-icons/ai";
+import { GrAdd } from "react-icons/gr";
 import { ImCross } from "react-icons/im";
+import { BsDot } from "react-icons/bs";
+
 const axios = require('axios');
 
 const AdminProductCategories = () => {
@@ -109,29 +112,26 @@ const AdminProductCategories = () => {
 								<div className="admin-modal-box border-0 rounded-lg shadow-lg relative flex flex-col w-96 outline-none focus:outline-none">
 									{/*header*/}
 									<div className="flex items-start p-2 admin-modal-border">
-									<h3 className="text-2xl font-semibold">
+									<h3 className="text-2xl font-semibold pl-4">
 										{ `Create Category` }
 									</h3>
-									<button className="p-1 ml-auto bg-gray border-0 text-white opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-										onClick={() => setShowCategoryModal(false)}
+									<button className="p-1 ml-auto bg-gray border-0 text-white float-right text-base outline-none focus:outline-none" onClick={() => setShowCategoryModal(false)}
 									>
-										<span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-										×
-										</span>
+										<ImCross/>
 									</button>
 									</div>
 									{/*body*/}
 									<div className="relative p-6 flex-auto">
 										<div className="py-2">
 											<label className="py-1">Category Title</label>
-											<input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="category-title" onChange= {(e) => setCategoryTitle({value: e.target.value}) } value={categoryTitle.value} />
+											<input className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="category-title" onChange= {(e) => setCategoryTitle({value: e.target.value}) } value={categoryTitle.value} />
 											{ categoryTitle.error &&
 												<span className="text-xs text-red-400">{ categoryTitle.errorMessage }</span>
 											}
 										</div>
 										<div className="py-2">
 											<label className="block py-1">Category Description</label>
-											<textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription.value} >
+											<textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="category-title" onChange= {(e) => setCategoryDescription({value: e.target.value}) } defaultValue={categoryDescription.value} >
 											</textarea>
 										</div>
 										<div className="aweb-categoryImage py-2">
@@ -145,10 +145,10 @@ const AdminProductCategories = () => {
 													<div className="relative w-48 h-48"><span className="image-delete absolute cursor-pointer right-0 text-red-500 hover:font-sm" onClick = { () => deleteCategoryImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={categoryImage.dataUrl} alt=""/></div>
 												</>
 											) : (
-												<div className="image-upload relative cursor-pointer w-56 h-12 border border-gray-400 border-dashed" onClick = { () => handleCategoryImage() }><span className="absolute font-thin left-16 top-3">{ `Add image` }</span></div>
+												<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleCategoryImage() }><GrAdd/></div>
 											)}
 										</div>
-										<button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-10 ease-linear transition-all duration-150" type="button" onClick={(e) => addCategory(e)}>
+										<button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg focus:outline-none mr-1 mt-1 mb-10 ease-linear transition-all duration-150" type="button" onClick={(e) => addCategory(e)}>
 											{ buttonText }
 										</button>
 
@@ -157,12 +157,6 @@ const AdminProductCategories = () => {
 												{ message }
 											</div>
 										}
-									</div>
-									{/*footer*/}
-									<div className="flex border-bottom: 1px solid #151a30; items-center justify-end p-6 ">
-										<button className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={() => setShowCategoryModal(false)}>
-											Close
-										</button>
 									</div>
 								</div>
 								</div>
@@ -173,9 +167,9 @@ const AdminProductCategories = () => {
 
 					{
 						categories === null ? (
-							'Loading datas'
+							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">Loading datas</span></div>
 						) : categories.length === 0 ? (
-							'No product categories'
+							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">No product tags</span></div>
 						) : (
 							<div id="admin-content-table" className="tracking-wider">
 								<div className="admin-content-table-row-heading grid grid-cols-3 flex flex-row font-semibold">
@@ -187,7 +181,7 @@ const AdminProductCategories = () => {
 									categories.map( ( category, index )  => {
 										return (	 
 											<div key={ index } className="admin-content-table-row grid grid-cols-3 flex flex-row">
-												<span className="py-2 px-16">{category.title}</span>
+												<span className="py-2 px-16 flex"><BsDot className="mt-1"/><span className="px-2">{category.title}</span></span>
 												<span className="py-2 px-24">{category.products_ids.length}</span>
 												<span className="py-2 px-20">
 													<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-categories/${category.id}`}>Edit</Link></button>
