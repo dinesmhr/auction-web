@@ -185,7 +185,7 @@ const UserVerification = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if( validateFullname() && validateEmail() && validateContactNumber() && validateBirthdate() && validatePermanentAddress() && validateDocumentImage() ) {
+        if( validateFullname() && validateEmail() && validateContactNumber() && validatePermanentAddress() && validateBirthdate() && validateDocumentImage() ) {
             setSubmitText( 'Submitting for verification' )
             axios.post('/edit-table/edit-users-details.php', {
                 submit: 'verification',
@@ -290,33 +290,18 @@ const UserVerification = () => {
                     { contactNumber.error &&
                         <span class="text-xs text-red-700">{ contactNumber.errorMessage }</span>
                     }
-                    <div className="aweb-areacode">
-                        <PhoneInput className="flex justify-center w-4"
-                            style= {{maxWidth: "20px"}}                                             
-                            country={'np'}
-                            value={contactNumber.areaCode}
-                            onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
-                        />
-                    </div>
-                    
-                    <div className="aweb-birthDate">
-                        <label>Birth Date </label>
-                        { birthDate.error &&
-                            <span class="text-xs text-red-700">{ birthDate.errorMessage }</span>
-                        }
-                        <DatePicker
-                            value={birthDate.value}
-                            onChange={(value) => setBirthDate({value:value})}
-                            inputPlaceholder="Select a day"
-                            maximumDate={
-                                    {
-                                        year: 2003,
-                                        month: 12,
-                                        day: 31
-                                    }
-                                }
-                            shouldHighlightWeekends
+                    <div className="inline-flex">
+                        <div className="aweb-areacode">
+                            <PhoneInput className="flex justify-center w-4"
+                                style= {{maxWidth: "20px"}}                                             
+                                country={'np'}
+                                value={contactNumber.areaCode}
+                                onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
                             />
+                        </div>
+                        <div className="aweb-contactNumber">
+                            <input className="h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ value: e.target.value }) } value={ contactNumber.value }/>
+                        </div>
                     </div>
                     <div className="input-wrapper">
                         <div className="aweb-heading">
@@ -374,6 +359,25 @@ const UserVerification = () => {
                             <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="country" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: e.target.value }) } value={permanentAddress.country}/>
                         </div>
                     </div>
+                    <div className="aweb-birthDate">
+                        <label>Birth Date </label>
+                        { birthDate.error &&
+                            <span class="text-xs text-red-700">{ birthDate.errorMessage }</span>
+                        }
+                        <DatePicker
+                            value={birthDate.value}
+                            onChange={(value) => setBirthDate({value:value})}
+                            inputPlaceholder="Select a day"
+                            maximumDate={
+                                    {
+                                        year: 2003,
+                                        month: 12,
+                                        day: 31
+                                    }
+                                }
+                            shouldHighlightWeekends
+                            />
+                    </div>
                     <div className="input-wrapper">
                         <div className="aweb-heading">
                             { 'Document Details' }
@@ -385,9 +389,6 @@ const UserVerification = () => {
                                     <option value='citizenship'>{ 'Citizenship' }</option>
                                     <option value='passport'>{ 'Passport' }</option>
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
-                                </div>
                             </div>
                         </div>
                         <div className="aweb-documentImage">
@@ -398,7 +399,7 @@ const UserVerification = () => {
                             <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
                             { documentImage.dataUrl ? (
                                 <>
-                                    <div className="w-48 h-48"><span className="image-delete" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} alt=""/></div>
+                                    <div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} alt=""/></div>
                                 </>
                             ) : (
                                 <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImage() }><GrAdd/></div>

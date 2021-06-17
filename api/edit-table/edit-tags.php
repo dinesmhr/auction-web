@@ -18,33 +18,11 @@ if( !isset( $decoded_data["submit"] ) ) {
 require_once '../functions.php';
 if( is_db_connected() ) {
   $title    = isset( $decoded_data["title"] ) ? $decoded_data["title"] : '';
-  $description  = isset( $decoded_data["description"] ) ? $decoded_data["description"] : '';
-  $image         = isset( $decoded_data["image"] ) ? $decoded_data["image"] : '';
 
-    if( isset( $image['dataUrl'] ) ) {
-      if( !empty($image['dataUrl']) ) {
-        $image_parts = explode(";base64,", $image['dataUrl']);
-        $image_base64 = base64_decode($image_parts[1]);
-        $filedir = '../../uploads/tags/';
-        if( !is_dir( $filedir ) ) {
-          mkdir($filedir);
-        }
-        if( !defined('UPLOAD_DIR') ) {
-          define( 'UPLOAD_DIR', $filedir );
-        }
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $file = UPLOAD_DIR . uniqid() . '.' .$image_type;
-        file_put_contents( $file, $image_base64 );
-        $image_path[] = $file;
-      }
-    } else {
-      $image_path[] = '';
-    }
-  $category_sql = "INSERT INTO aw_tags( title, description, image_path ) VALUES( '" .$title. "','" .$description. "', '" .serialize($image_path). "' )";
-  if ( $CONNECTION->query( $category_sql ) === TRUE ) {
+  $tag_sql = "INSERT INTO aw_tags( title ) VALUES( '" .$title. "' )";
+  if ( $CONNECTION->query( $tag_sql ) === TRUE ) {
     $structure['status'] = true;
-    $structure['message'] = 'Your category details added';
+    $structure['message'] = 'Your tag details added';
   } else {
     $structure['status'] = false;
     $structure['message'] = 'Error in creating new record';

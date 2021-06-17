@@ -534,13 +534,60 @@ a.active_name {
 /*************************************************
  	       	ADMIN SIDE TITLE
 **************************************************/
+
+#admin-header {
+	background-color: #222b45;
+	z-index: 1040;
+	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
+}
+#admin-left-sidebar {
+	background-color: #222b45;
+	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
+}
+#admin-right-content {
+	background-color: #151a30;
+}
+#aweb-admin-navigation ul li {
+	border-bottom: 1px solid #151a30;
+}
+
+#admin-content-table {
+	background-color: #222b45;
+	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
+}
+
+.admin-content-table-row-heading {
+	border-bottom: 2px solid #151a30;
+}
+
+.admin-content-table-row {
+	border-bottom: 1px solid #151a30;
+}
+
+#admin-action-trigger-button, .admin-page-top-description {
+	background-color: #222b45;
+}
+
+.admin-modal-border {
+	border-bottom: 1px solid #151a30;
+}
+
+.admin-modal-box {
+	width: 700px;
+	background-color: #222b45;
+}
+
+#admin-action-trigger-button {
+	border: 1px solid #151a30;
+}
+
 /*.aweb-admin-wrap{
 	position: absolute;
 	width: 18%;
 	background: #24292d;
 	height: 100%;
 }*/
-
+/*
 .aweb-admin-site-title{
 	position: absolute;
 	font-size: 20px;
@@ -609,6 +656,7 @@ a.active_name {
 /*************************************************
  	      ADMIN TABLE CSS
 **************************************************/
+/*
 table{
 	margin-left: 300px;
 }
