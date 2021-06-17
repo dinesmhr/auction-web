@@ -269,7 +269,7 @@ const ProductSubmit = (props) => {
 		<>
 			<Header isLoggedIn = { isLoggedIn }/> 
 			<div id="auction-web-product-submit-page">
-			<div className="product-submit-wrap max-w-2xl m-auto">
+			<div className="product-submit-wrap max-w-3xl m-auto">
 				<form id="aweb-Product-form" className="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 					<div className="flex flex-wrap -mx-3 mb-6">
 						<div className="w-full px-3">
@@ -368,8 +368,8 @@ const ProductSubmit = (props) => {
 						</div>
 					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
+					<div className="-mx-3 mb-6">
+						<div className="min-h-full">
 							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Images</label>
 							{ images.error &&
                                 <span className="text-xs text-red-700">{ images.errorMessage }</span>
@@ -381,22 +381,24 @@ const ProductSubmit = (props) => {
 							{  (images.value.length === 8 ) &&
 								<div>The maximum number of images you can upload is only 8 ( eight )</div>
 							}
+						<div className="inline block flex flex-row justify-around ">
                             { Array.isArray( images.value ) &&
 								images.value.map((image, key) => {
 									return (
 										<React.Fragment key={`unique-${key}`}>
-											<div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
+											<div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
 												<ModalImage
 													small={image.dataUrl}
 													large={image.dataUrl}
 													hideDownload= {true}
 													showRotate={true}
 													/>
-											</div>
+											</div>	
 										</React.Fragment>
 									)
 								})
 							}
+						   </div>
 						</div>
 					</div>
 

@@ -300,7 +300,7 @@ const UserVerification = () => {
                             />
                         </div>
                         <div className="aweb-contactNumber">
-                            <input className="h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ value: e.target.value }) } value={ contactNumber.value }/>
+                            <input className="ml-16 w-8/12 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ value: e.target.value }) } value={ contactNumber.value }/>
                         </div>
                     </div>
                     <div className="input-wrapper">
@@ -399,7 +399,7 @@ const UserVerification = () => {
                             <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
                             { documentImage.dataUrl ? (
                                 <>
-                                    <div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} alt=""/></div>
+                                    <div className="w-48 h-48 mb-5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} alt=""/></div>
                                 </>
                             ) : (
                                 <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImage() }><GrAdd/></div>
@@ -410,7 +410,7 @@ const UserVerification = () => {
                             <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
                             { documentImageOne.dataUrl ? (
                                 <>
-                                    <div className="w-48 h-48"><span className="image-delete cursor-pointer" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} alt=""/></div>
+                                    <div className="w-48 h-48 mb-7"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} alt=""/></div>
                                 </>
                             ) : (
                                 <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImageOne() }><GrAdd/></div>
