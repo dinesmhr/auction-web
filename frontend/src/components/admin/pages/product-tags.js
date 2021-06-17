@@ -129,7 +129,7 @@ const AdminProductTags = () => {
 								{
 									tags.map( ( tag, index )  => {
 										return (	 
-											<div key={ index } className="admin-content-table-row grid grid-cols-3 flex flex-row">
+											<div key={ index } className="admin-content-table-row grid grid-cols-3 flex flex-row text-sm">
 												<span className="py-2 px-16 flex"><AiFillTag className="mt-1"/><span className="px-2">{tag.title}</span></span>
 												<span className="py-2 px-24">{tag.products_ids.length}</span>
 												<span className="py-2 px-20">

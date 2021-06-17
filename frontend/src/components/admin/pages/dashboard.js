@@ -5,9 +5,11 @@ const AdminDashboard = (props) => {
     const { isLoggedIn } = props
     return (
         <header>
-            <div className="aweb-admin-top-header">
-                <h1 className="aweb-admin-site-title"><a href="/" target="_blank">Auction Web</a></h1>
-                <AdminMainNavigation isLoggedIn={ isLoggedIn }/>
+            <div className="content-wrap">
+                <AdminMainNavigation/>
+                <div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
+
+                </div>
             </div>
         </header>
     );

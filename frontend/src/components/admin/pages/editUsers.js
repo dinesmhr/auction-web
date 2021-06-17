@@ -54,13 +54,13 @@ class AdminEditUser extends Component {
     render() {
         const { user, userStatus } = this.state
         return (
-            <>
-                <header>           
-                    <div className="aweb-admin-top-header">
-                        <h1 className="aweb-admin-site-title">Auction Web</h1>
-                        <AdminMainNavigation userLoggedIn = { this.props.userLoggedIn }/>
+            <>         
+                <div className="content-wrap">
+                    <AdminMainNavigation/>
+                    <div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
+
                     </div>
-                </header>
+                </div>
                 <div className="aweb-single-user-edit">
                     <form id="admin-edit-users-form">
                         { 
