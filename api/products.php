@@ -8,8 +8,8 @@
 header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 if( is_db_connected() ) {
-    if( isset( $_GET['product_id'] ) ) {
-        $product_id = $_GET['product_id'];
+    if( isset( $_GET['id'] ) ) {
+        $product_id = $_GET['id'];
         $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'"';
     } else {
         $products_sql = 'SELECT * FROM aw_products WHERE 1';

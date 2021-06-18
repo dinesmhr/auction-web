@@ -8,6 +8,7 @@ import AdminProductTags from '../admin/pages/product-tags'
 
 import AdminEditUser from '../admin/pages/edit-page/editUsers'
 import AdminEditProduct from '../admin/pages/edit-page/editProducts'
+import AdminEditProductCategory from '../admin/pages/edit-page/editProductCategory'
 
 const axios = require('axios')
 
@@ -52,6 +53,7 @@ export const AdminRoutes = (props) => {
                 }
                 <Route path="/aweb-users/:id" component={(props) => <AdminEditUser/>}></Route>
                 <Route path="/aweb-products/:id" component={(props) => <AdminEditProduct/>}></Route>
+                <Route path="/aweb-product-category/:id" component={(props) => <AdminEditProductCategory/>}></Route>
             </Switch>
         </BrowserRouter>
     )

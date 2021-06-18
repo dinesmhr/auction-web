@@ -19,7 +19,6 @@ const AdminEditUser = () =>  {
             }
         })
     })
-    console.log(user)
 
     const verifyUser = () => {
 

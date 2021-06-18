@@ -12,12 +12,12 @@ const Card=(product)=>{
                 <img src={`${featureImage}`} alt={title}/>
                 <div className="product-box">
                     <h3 title={title}>
-                        <a href={ `products/${id}` }>{title}</a>
+                        <a href={ `product/${id}` }>{title}</a>
                     </h3>
                     <div className="bid-amount">
                         {`${initial_bid}USD`}
                     </div>
-                    <Link to={ `products/${id}` }
+                    <Link to={ `product/${id}` }
                     >
                         Bid Now
                     </Link>

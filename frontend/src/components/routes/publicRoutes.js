@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Products from '../pages/products'
-import SingleProduct from '../pages/single-product'
 import Login from '../pages/Login'
 import Myaccount from '../pages/Myaccount'
 import UserVerification from '../pages/userVerification'
 import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
+
+import SingleProduct from '../pages/single-page/singleProduct'
 
 const axios = require('axios')
 
@@ -48,6 +49,7 @@ export const PublicRoutes = (props) => {
                 <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
                 <Route path="/login" component={() => <Login isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
                 <Route path="/signup" component={() => <Signup isLoggedIn = { isLoggedIn }/>}></Route>
+                <Route path="/product/:id" component={(props) => <SingleProduct/>}></Route>
             </Switch>
         </BrowserRouter>
     )
