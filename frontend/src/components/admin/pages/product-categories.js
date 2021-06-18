@@ -142,7 +142,7 @@ const AdminProductCategories = () => {
 											<input type="file" name="categoryImage" ref={categoryImageRef} onChange = { (e) => handlesetCategoryImage(e) } style={{display:"none"}}/>
 											{ categoryImage.dataUrl ? (
 												<>
-													<div className="relative w-48 h-48"><span className="image-delete absolute cursor-pointer right-0 text-red-500 hover:font-sm" onClick = { () => deleteCategoryImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={categoryImage.dataUrl} alt=""/></div>
+													<div className="relative w-48 h-48"><span className="bg-red-600 absolute image-delete absolute cursor-pointer right-0 text-red-500 hover:font-sm" onClick = { () => deleteCategoryImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={categoryImage.dataUrl} alt=""/></div>
 												</>
 											) : (
 												<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleCategoryImage() }><GrAdd/></div>
