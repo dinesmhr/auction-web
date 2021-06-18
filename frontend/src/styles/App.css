@@ -773,7 +773,7 @@ table th {
 .image-delete svg:hover{
 	color: #D3D3D3;
 	font-size: 1.4rem;
-	-webkit-transition: all 0.5s 0.1s ease;
+	-webkit-transition: all 0.5s 0.05s ease;
 
 }
 
