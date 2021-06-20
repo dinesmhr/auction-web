@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import MainNavigation from '../../navigation/MainNavigation'
+import Header from '../../header/Header'
 
 const axios = require('axios')
 
-const SingleProduct = () => {
+const SingleProduct = (props) => {
     const [productData, setProductData] = useState()
     const { id } = useParams()
+    const { isLoggedIn } = props
 
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
@@ -20,7 +21,7 @@ const SingleProduct = () => {
 
     return (
         <div id="auction-web">
-            <MainNavigation />
+            <Header isLoggedIn = { isLoggedIn } />
             This is Single Product page
         </div>
     )
