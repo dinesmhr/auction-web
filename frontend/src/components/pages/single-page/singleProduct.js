@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import MainNavigation from '../../navigation/MainNavigation'
 
 const axios = require('axios')
 
@@ -19,6 +20,7 @@ const SingleProduct = () => {
 
     return (
         <div id="auction-web">
+            <MainNavigation />
             This is Single Product page
         </div>
     )
