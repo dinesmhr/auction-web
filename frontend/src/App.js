@@ -22,11 +22,11 @@ const App = () => {
   }, [isLoggedIn])
 
   return (
-    <div id="auction-web">
+    <>
       <AdminRoutes isLoggedIn = { isLoggedIn } />
       <PublicRoutes isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>
       <Footer />
-    </div>
+    </>
   );
 }
  

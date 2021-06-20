@@ -94,7 +94,7 @@ const AdminProductCategories = () => {
 
 	return (
 		<>
-			<div className="content-wrap">
+			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
 				<div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
 					<div className="admin-page-top-description p-5 font-extralight italic text-sm">

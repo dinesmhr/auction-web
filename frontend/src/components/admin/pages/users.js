@@ -17,7 +17,7 @@ const AdminUsers= () => {
 	
 	return (
 		<>
-			<div className="content-wrap">
+			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
 				<div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
 					{ 

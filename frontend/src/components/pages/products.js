@@ -42,17 +42,17 @@ const Products = (props) => {
     
     if( !Array.isArray(products) ) {
         return (
-            <>
+            <div id="auction-web">
                 <Header isLoggedIn = { isLoggedIn }/>
                 <div id="auction-web-shop" className="page--shop main-wrapper">
                     No products to display
                 </div>
-            </>
+            </div>
         )
     }
 
     return ( 
-        <>
+        <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn }/>
             <div id="auction-web-shop" className="page--shop main-wrapper">
                 <div className="product-wrap">                    	                                                  
@@ -63,7 +63,7 @@ const Products = (props) => {
                     }
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 export default Products;

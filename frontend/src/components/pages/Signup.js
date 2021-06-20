@@ -197,7 +197,7 @@ const Signup = (props) => {
     }
 
     return (
-        <>
+        <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn }/>
             <form id="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="aweb-signup-form-wrapper">
@@ -262,7 +262,7 @@ const Signup = (props) => {
                 </div>
                     </div>
             </form>
-        </>
+        </div>
     )
 }
 export default Signup

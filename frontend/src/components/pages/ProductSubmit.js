@@ -228,7 +228,7 @@ const ProductSubmit = (props) => {
 
 	if( !isLoggedIn ) {
 		return (
-			<>
+			<div id="auction-web">
 				<Header isLoggedIn = { isLoggedIn }/> 
 				<div id="auction-web-product-submit-page">
 					{ 'You must be logged in to submit your product' }
@@ -236,13 +236,13 @@ const ProductSubmit = (props) => {
 						<a href="/login" target="_blank">{ 'Proceed to login page' }</a>
 					</div>
 				</div>
-			</>
+			</div>
 		)
 	}
 	
 	if( userStatus === 'not-verified' ) {
 		return (
-			<>
+			<div id="auction-web">
 				<Header isLoggedIn = { isLoggedIn }/> 
 				<div id="auction-web-product-submit-page">
 					{ 'Your account must be verified  before you submit your product' }
@@ -250,170 +250,170 @@ const ProductSubmit = (props) => {
 						<a href="/user-verification" target="_blank">{ 'Submit for verification' }</a>
 					</div>
 				</div>
-			</>
+			</div>
 		)
 	}
 
 	if( userStatus === 'under-verification' ) {
 		return (
-			<>
+			<div id="auction-web">
 				<Header isLoggedIn = { isLoggedIn }/>
 				<div id="auction-web-product-submit-page">
 					{ 'Your account is under verification. Please wait for account to be verified' }
 				</div>
-			</>
+			</div>
 		)
 	}
 
 	return (
-		<>
+		<div id="auction-web">
 			<Header isLoggedIn = { isLoggedIn }/> 
 			<div id="auction-web-product-submit-page">
-			<div className="product-submit-wrap max-w-3xl m-auto">
-				<form id="aweb-Product-form" className="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<div className="aweb-Product-form-header">Enter the Details</div>
+				<div className="product-submit-wrap max-w-3xl m-auto">
+					<form id="aweb-Product-form" className="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<div className="aweb-Product-form-header">Enter the Details</div>
+							</div>
 						</div>
-					</div>
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Product Title</label>
-							{ title.error &&
-                                <span className="text-xs text-red-700">{ title.errorMessage }</span>
-                            }
-							<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add product title" onChange={(e) => setTitle({value: e.target.value})} value={title.value} aria-label="Product Title" />
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Product Title</label>
+								{ title.error &&
+									<span className="text-xs text-red-700">{ title.errorMessage }</span>
+								}
+								<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add product title" onChange={(e) => setTitle({value: e.target.value})} value={title.value} aria-label="Product Title" />
+							</div>
 						</div>
-					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Product Description</label>
-							{ description.error &&
-                                <span className="text-xs text-red-700">{ description.errorMessage }</span>
-                            }
-							<textarea className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Add product description" onChange={(e) => setDescription({value: e.target.value})} defaultValue={description.value}>
-							</textarea>
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Product Description</label>
+								{ description.error &&
+									<span className="text-xs text-red-700">{ description.errorMessage }</span>
+								}
+								<textarea className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Add product description" onChange={(e) => setDescription({value: e.target.value})} defaultValue={description.value}>
+								</textarea>
+							</div>
 						</div>
-					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Specifications/Features</label>
-							{ specifications.error &&
-                                <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
-                            }
-							{ 
-								specifications.value.map((specification, index) => {
-									return (
-										<>
-											<div className="" key={index}>
-												<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
-												{ index !== 0 &&
-													<button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-100 rounded-lg focus:shadow-outline hover:bg-white-800" type="button" onClick ={() => deleteRow(index) }>
-														Delete row
-													</button>
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Specifications/Features</label>
+								{ specifications.error &&
+									<span className="text-xs text-red-700">{ specifications.errorMessage }</span>
+								}
+								{ 
+									specifications.value.map((specification, index) => {
+										return (
+											<>
+												<div className="" key={index}>
+													<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
+													{ index !== 0 &&
+														<button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-100 rounded-lg focus:shadow-outline hover:bg-white-800" type="button" onClick ={() => deleteRow(index) }>
+															Delete row
+														</button>
+													}
+												</div>
+												{ ( index + 1 ) === specifications.value.length &&
+													<button className="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
 												}
-											</div>
-											{ ( index + 1 ) === specifications.value.length &&
-												<button className="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
-											}
-											{ ( index === 10 ) &&
-												"Specifications/Features are limited. You can only add upto 10"
-											}
-										</>
-									)
-								})
-							}
+												{ ( index === 10 ) &&
+													"Specifications/Features are limited. You can only add upto 10"
+												}
+											</>
+										)
+									})
+								}
+							</div>
 						</div>
-					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Initial 
-							Bid</label>
-							{ initialBid.error &&
-                                <span className="text-xs text-red-700">{ initialBid.errorMessage }</span>
-                            }
-							<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
-							<BiDollar/>
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Initial 
+								Bid</label>
+								{ initialBid.error &&
+									<span className="text-xs text-red-700">{ initialBid.errorMessage }</span>
+								}
+								<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
+								<BiDollar/>
+							</div>
 						</div>
-					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Maximum 
-							Bid</label>
-							{ maxBid.error &&
-                                <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
-                            }
-							<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
-							<BiDollar/>
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Maximum 
+								Bid</label>
+								{ maxBid.error &&
+									<span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
+								}
+								<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
+								<BiDollar/>
+							</div>
 						</div>
-					</div>
 
-					<div className="flex flex-wrap -mx-3 mb-6">
-						<div className="w-full px-3">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Bid Deadline Date</label>
-							{ deadlineDate.error &&
-                                <span className="text-xs text-red-700">{ deadlineDate.errorMessage }</span>
-                            }
-							<DatePicker
-								value={deadlineDate.value}
-								onChange={(value) => setDeadlineDate({value:value})}
-								minimumDate={utils().getToday()}
-								inputPlaceholder="Select a day"
-								shouldHighlightWeekends
-								/>
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Bid Deadline Date</label>
+								{ deadlineDate.error &&
+									<span className="text-xs text-red-700">{ deadlineDate.errorMessage }</span>
+								}
+								<DatePicker
+									value={deadlineDate.value}
+									onChange={(value) => setDeadlineDate({value:value})}
+									minimumDate={utils().getToday()}
+									inputPlaceholder="Select a day"
+									shouldHighlightWeekends
+									/>
+							</div>
 						</div>
-					</div>
 
-					<div className="-mx-3 mb-6">
-						<div className="min-h-full">
-							<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Images</label>
-							{ images.error &&
-                                <span className="text-xs text-red-700">{ images.errorMessage }</span>
-                            }
-							<input type="file" name="images" ref={imagesRef} onChange = { (e) => handleSetImages(e) } multiple="multiple" accept="image/jpg, image/jpeg" style={{display:"none"}}/>
-							{  (images.value.length < 8 ) &&
-								<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
-							}
-							{  (images.value.length === 8 ) &&
-								<div>The maximum number of images you can upload is only 8 ( eight )</div>
-							}
-						<div className="inline block flex flex-row justify-around ">
-                            { Array.isArray( images.value ) &&
-								images.value.map((image, key) => {
-									return (
-										<React.Fragment key={`unique-${key}`}>
-											<div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
-												<ModalImage
-													small={image.dataUrl}
-													large={image.dataUrl}
-													hideDownload= {true}
-													showRotate={true}
-													/>
-											</div>	
-										</React.Fragment>
-									)
-								})
-							}
-						   </div>
+						<div className="-mx-3 mb-6">
+							<div className="min-h-full">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Images</label>
+								{ images.error &&
+									<span className="text-xs text-red-700">{ images.errorMessage }</span>
+								}
+								<input type="file" name="images" ref={imagesRef} onChange = { (e) => handleSetImages(e) } multiple="multiple" accept="image/jpg, image/jpeg" style={{display:"none"}}/>
+								{  (images.value.length < 8 ) &&
+									<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
+								}
+								{  (images.value.length === 8 ) &&
+									<div>The maximum number of images you can upload is only 8 ( eight )</div>
+								}
+							<div className="inline block flex flex-row justify-around ">
+								{ Array.isArray( images.value ) &&
+									images.value.map((image, key) => {
+										return (
+											<React.Fragment key={`unique-${key}`}>
+												<div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
+													<ModalImage
+														small={image.dataUrl}
+														large={image.dataUrl}
+														hideDownload= {true}
+														showRotate={true}
+														/>
+												</div>	
+											</React.Fragment>
+										)
+									})
+								}
+							</div>
+							</div>
 						</div>
-					</div>
 
-					<div className="aweb-Product-form-button">
-						<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
-					</div>
-					{ status && 
-                        <div className="aweb-success-note">
-                            { message }
-                        </div>
-                    }
-				</form>
+						<div className="aweb-Product-form-button">
+							<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
+						</div>
+						{ status && 
+							<div className="aweb-success-note">
+								{ message }
+							</div>
+						}
+					</form>
+				</div>
 			</div>
-			</div>
-        </>
+        </div>
 	)
 }
 

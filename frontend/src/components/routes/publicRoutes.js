@@ -49,7 +49,7 @@ export const PublicRoutes = (props) => {
                 <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
                 <Route path="/login" component={() => <Login isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
                 <Route path="/signup" component={() => <Signup isLoggedIn = { isLoggedIn }/>}></Route>
-                <Route path="/product/:id" component={(props) => <SingleProduct/>}></Route>
+                <Route path="/product/:id" component={(props) => <SingleProduct isLoggedIn = { isLoggedIn }/>}></Route>
             </Switch>
         </BrowserRouter>
     )

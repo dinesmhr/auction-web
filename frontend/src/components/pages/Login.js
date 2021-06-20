@@ -42,7 +42,7 @@ const Login = (props) => {
     }
     
     return (
-        <>
+        <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn }/>
             <div className="flex justify-center mt-16">
                 <div className="w-full max-w-xs">
@@ -75,7 +75,7 @@ const Login = (props) => {
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

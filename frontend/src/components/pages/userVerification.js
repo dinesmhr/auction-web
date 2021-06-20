@@ -231,7 +231,7 @@ const UserVerification = () => {
 
     if( userStatus === 'under-verification' ) {
         return (
-            <>
+            <div id="auction-web">
                 <Header isLoggedIn = { isLoggedIn }/> 
                 <div id="auction-web-user-verification">
                     <div className="aweb-heading">
@@ -240,12 +240,12 @@ const UserVerification = () => {
                     }
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 
     return(
-        <>
+        <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn }/> 
             <div id="auction-web-user-verification">
                 <form id="aweb-user-verification-form" className="space-y-4 text-gray-700">
@@ -425,7 +425,7 @@ const UserVerification = () => {
                     }
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 
