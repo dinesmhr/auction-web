@@ -103,14 +103,14 @@ const Myaccount = (props) => {
     }
 
     return (
-        <>
+        <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn }/>
             { `This is my account page` }
             <button className="logout-button" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
             { 
                LogoutModal()
             }
-        </>
+        </div>
     )
 }
 

@@ -18,9 +18,9 @@ const SingleProduct = () => {
     })
 
     return (
-        <>
+        <div id="auction-web">
             This is Single Product page
-        </>
+        </div>
     )
 }
 export default SingleProduct

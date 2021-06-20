@@ -26,9 +26,14 @@
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
-	 display: flex;
+	display: flex;
   	flex-direction: column;
   	height: 100vh;
+}
+
+#auction-web-admin {
+	height: 100%;
+	background-color: #151a30;
 }
 
 /*******************************************
@@ -544,10 +549,7 @@ a.active_name {
 	background-color: #222b45;
 	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
 }
-#admin-right-content {
-	background-color: #151a30;
-	height: 100%;
-}
+
 #aweb-admin-navigation ul li {
 	border-bottom: 1px solid #151a30;
 }
