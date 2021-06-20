@@ -11,7 +11,13 @@ const SingleProduct = (props) => {
 
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
-    @@ -20,7 +21,7 @@ const SingleProduct = () => {
+        .then(function(res) {
+            if( res.data.status ) {
+                console.log(res.data)
+                setProductData( res.data.data )
+            }
+        })
+    })
 
     return (
         <div id="auction-web">
@@ -19,3 +25,5 @@ const SingleProduct = (props) => {
             This is Single Product page
         </div>
     )
+}
+export default SingleProduct
