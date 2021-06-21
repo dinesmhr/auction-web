@@ -49,13 +49,7 @@ const SingleProduct = (props) => {
                                         const images = product.images_path.map((image, index) => {
                                             let image_url = `http://localhost/auction-web/${image.split('../').pop()}`
                                             return (
-                                                {
-                                                    images: image_url,
-                                                    
-                                                    
-
-
-                                                }
+                                                { src: image_url }
                                             )
                                         })
                                         return (     
@@ -63,8 +57,7 @@ const SingleProduct = (props) => {
                                                 <h2>{product.title.trim()}</h2>
                                                 <div className="singlePage-imageWrap max-h-32 max-w-32">
                                                     { images &&
-                                                        <Carousel images={images} style={{ height: 800, width: 500 }} />
-                                                       
+                                                        <Carousel images={images} style={{ height: 800, width: 500 }} />  
                                                     }
                                                 </div>
                                                 <div>
