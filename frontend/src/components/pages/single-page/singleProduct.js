@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import ImageGallery from 'react-image-gallery';
 
-
 const axios = require('axios')
 
 const SingleProduct = (props) => {
@@ -15,7 +14,6 @@ const SingleProduct = (props) => {
         axios.get( `/products.php?id=${id}` )
         .then(function(res) {
             if( res.data.status ) {
-                console.log(res.data)
                 setProductData( res.data.data )
             }
         })
@@ -47,24 +45,21 @@ const SingleProduct = (props) => {
                                 </div> */}
                                 {
                                     productData.map( ( product, index )  => {
-                                        console.log(product)
+                                        const images = product.images_path.map((image, index) => {
+                                            let image_url = `http://localhost/auction-web/${image.split('../').pop()}`
+                                            return (
+                                                {
+                                                    original: image_url,
+                                                    thumnail: image_url
+                                                }
+                                            )
+                                        })
                                         return (     
                                             <div key={ index } className="flex flex-col m-10">
                                                 <h2>{product.title.trim()}</h2>
                                                 <div className="singlePage-imageWrap">
-                                                    { product.images_path &&
-                                                        product.images_path.map(( image, key ) => {
-                                                            return (
-                                                                <div key={key} className="">
-                                                                    
-                                                                   < img src={ `http://localhost/auction-web/${image.split('../').pop()}` } alt={product.title}/>
-
-                                                                                                    
-
-                                                                    
-                                                                </div>
-                                                            )
-                                                        })
+                                                    { images &&
+                                                        <ImageGallery items={images} />
                                                     }
                                                 </div>
                                                 <div>

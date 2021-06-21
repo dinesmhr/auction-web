@@ -25,7 +25,7 @@ const AdminEditUser = () =>  {
     }
 
     return (
-        <>         
+        <>
             <div id="auction-web-admin" className="content-wrap">
                 <AdminMainNavigation/>
                 <div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
@@ -61,7 +61,6 @@ const AdminEditUser = () =>  {
                                         <div className="admin-single-user-field">
                                             <strong>Birth Date :</strong>
                                             <div className="input_editUser bg-gray-700 appearance-none border-1 border-gray-200 rounded mb-3 w-full py-1 px-5 ml-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
-
                                             <span> Day: { element.birthdate.day }</span>
                                             <span> Month: { element.birthdate.month }</span>
                                             <span> Year: { element.birthdate.year }</span>

@@ -43,7 +43,7 @@ const AdminProducts = () => {
 												<span className="py-2 px-16">{product.initial_bid}</span>
 												<span className="py-2 px-16">{product.status}</span>
 												<span className="py-2 px-14">
-													<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-users/${product.id}`}>Edit</Link></button>
+													<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-products/${product.id}`}>Edit</Link></button>
 												</span>
 											</div>
 										)

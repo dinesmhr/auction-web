@@ -1,137 +1,37 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import AdminMainNavigation from '../../navigation/AdminMainNavigation'
 
 const axios = require('axios');
 
-class AdminEditProduct extends Component {
-    constructor(props) {
-        super(props)
-        const { match: {params} } = props;
-        this.state = {
-            product: [],
-            productStatus: ''
-        }
-    }
+const AdminEditProduct = () => {
+    const [ title, setTitle ] = useState({value:''})
+    const [ description, setDescription ] = useState({value:''})
+    const { id } = useParams()
 
-    componentDidMount() {
-        const { match: {params} } = this.props;
-        let _this = this
-        const url = 'http://localhost/auction-web/api/single-products.php'
-        axios.get( url, {
-            params: {
-                id: params.id
-            }
+    useEffect(() => {
+        axios.get( `/products.php?id=${id}` )
+        .then(function(res) {
+            console.log(res.data.data[0])
+            setTitle({value: res.data.data[0].title})
+            setDescription({value: res.data.data[0].description})
         })
-        .then(function(response) {
-            if( response.data.status === true ) {
-                _this.setState({ 
-                    product : response.data.data,
-                    productStatus: response.data.data[0].status
-                })
-            }
-        })
-    }
+    })
 
-    verifyProduct() {
-        const { match: {params} } = this.props;
-        let _this = this
-        const url = 'http://localhost/auction-web/api/edit-table/update-product-status.php'
-        axios.get( url, {
-            params: {
-                product_id: params.id,
-                status: 'verified'
-            }
-        })
-        .then(function(response) {
-            if( response.data.status === true ) {
-                _this.setState({
-                    productStatus: 'verified'
-                })
-            }
-        })
-    }
-
-    render() {
-        const { product, productStatus } = this.state
-        return (
-            <>
-                <header>           
-                    <div className="aweb-admin-top-header">
-                        <h1 className="aweb-admin-site-title">Auction Web</h1>
-                        <AdminMainNavigation userLoggedIn = { this.props.userLoggedIn }/>
-                    </div>
-                </header>
-                <div className="aweb-single-product-edit">
-                    <form id="admin-edit-products-form">
-                        { 
-                            product.map(( element, index ) => {
-                                let imagesKeys = Object.keys(element.images)
-                                return(
-                                    <div key={ index } >
-                                        { element.name &&
-                                            <div className="admin-single-product-field">
-                                                <strong>Name :</strong> 
-                                                { element.name }
-                                            </div>
-                                        }
-                                        { element.description &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Description :</strong> { element.description }
-                                            </div>   
-                                        }
-                                        { element.specification &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Specification :</strong> { element.specification }
-                                            </div>
-                                        }
-                                        { element.email &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Seller's Email Address :</strong> { element.email }
-                                            </div>
-                                        }
-                                        { element.contact_number &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Seller's Contact Number :</strong> { element.contact_number }
-                                            </div>
-                                        }
-                                        { element.bid_deadline &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Bid Deadline :</strong> { element.bid_deadline }
-                                            </div>
-                                        }
-                                        { element.initial_price &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Initial Bid Amount :</strong> { element.initial_price }
-                                            </div>
-                                        }
-                                        { element.images &&
-                                            <div className="admin-single-user-field">
-                                                <strong>Product Feature images :</strong>
-                                                { 
-                                                    imagesKeys.map(( image ) => {                                                        
-                                                        return ( <img key={ image } src={element.images[image]} alt="No Image" /> )
-                                                    })
-                                                }
-                                            </div>
-                                        }
-                                    </div>
-                                )
-                            })
-                        }
-                    </form>
-                    { ( productStatus === 'under-verification' ) &&
-                            <button onClick = { (e) => this.verifyProduct() }>Verify the Product</button>
-                    }
-                    { ( productStatus === 'not-verified' ) &&
-                            <button>Document not available for verification</button>
-                    }
-                    { ( productStatus === 'verified' ) &&
-                            <button>Verified Product</button>
-                    }
-                    <button>Remove the Product</button>
+    return (
+        <div id="auction-web-admin" className="content-wrap">
+            <AdminMainNavigation/>
+            <div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
+                <div>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="title" onChange = { (e) => setTitle({value: e.target.value}) } value={title.value}/>
                 </div>
-            </>
-        )
-    }
+                <div>
+                    <textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange = { (e) => setDescription({value: e.target.value}) }>
+                        {description.value}
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    )
 }
 export default AdminEditProduct
