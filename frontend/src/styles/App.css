@@ -33,7 +33,18 @@ body {
 
 #auction-web-admin {
 	height: 100%;
+}
+
+#admin-right-content {
+	position: fixed;
+	color: white;
+	height: 93vh;
+	width: 80%;
+	margin-top: 3rem;
+	margin-left: 20%;
 	background-color: #151a30;
+	overflow-y: scroll;
+	padding: 30px 30px 50px;
 }
 
 /*******************************************

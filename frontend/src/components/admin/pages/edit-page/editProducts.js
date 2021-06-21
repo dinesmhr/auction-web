@@ -47,9 +47,10 @@ const AdminEditProduct = () => {
 
     useEffect(() => {
         { userId &&
-            axios.get( `/users.php?id=${userId}` )
+            axios.get( `/user-details.php?id=${userId}` )
             .then(function(res) {
                 setUserData(res.data.data[0])
+                console.log(res.data.data[0])
             })
         }
     }, [userId])
@@ -205,7 +206,10 @@ const AdminEditProduct = () => {
     return (
         <div id="auction-web-admin" className="content-wrap">
             <AdminMainNavigation/>
-            <div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
+            <div id="admin-right-content">
+                <div className="aweb-Product-form-button">
+                    <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
+                </div>
                 <div>
                     { title.error &&
                         <span className="text-xs text-red-700">{ title.errorMessage }</span>
@@ -214,7 +218,8 @@ const AdminEditProduct = () => {
                 </div>
                 <div>
                     <label>Description</label>
-                    <textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) } defaultValue={description.value}>
+                    <textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
+                        {description.value}
                     </textarea>
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-6">
@@ -301,24 +306,24 @@ const AdminEditProduct = () => {
                         {  (images.value.length === 8 ) &&
                             <div>The maximum number of images you can upload is only 8 ( eight )</div>
                         }
-                    <div className="inline block flex flex-row justify-around ">
-                        { Array.isArray( images.value ) &&
-                            images.value.map((image, key) => {
-                                return (
-                                    <React.Fragment key={`unique-${key}`}>
-                                        <div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
-                                            <ModalImage
-                                                small={image.dataUrl}
-                                                large={image.dataUrl}
-                                                hideDownload= {true}
-                                                showRotate={true}
-                                                />
-                                        </div>	
-                                    </React.Fragment>
-                                )
-                            })
-                        }
-                    </div>
+                        <div className="inline block flex flex-row justify-around ">
+                            { Array.isArray( images.value ) &&
+                                images.value.map((image, key) => {
+                                    return (
+                                        <React.Fragment key={`unique-${key}`}>
+                                            <div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
+                                                <ModalImage
+                                                    small={image.dataUrl}
+                                                    large={image.dataUrl}
+                                                    hideDownload= {true}
+                                                    showRotate={true}
+                                                    />
+                                            </div>	
+                                        </React.Fragment>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
 
@@ -330,6 +335,18 @@ const AdminEditProduct = () => {
                         { message }
                     </div>
                 }
+                <div>
+                    Author Information
+                    { userData &&
+                        <div>
+                            <div>Full Name: { userData.fullname }</div>
+                            <div>Email Address: { userData.email }</div>
+                            <div>Contact Number: { userData.areaCode + userData.number }</div>
+                            <div>Profession: { userData.profession }</div>
+                            <div>Status: { userData.status }</div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     )

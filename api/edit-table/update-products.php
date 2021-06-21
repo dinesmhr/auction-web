@@ -28,9 +28,8 @@ if( is_db_connected() ) {
 
   foreach( $images as $image ) :
     if( isset( $image['dataUrl'] ) ) {
-      if( !empty($image['dataUrl']) ) {
+      if( !empty($image['dataUrl']) && !file_exists($image['dataUrl']) ) {
         $image_parts = explode(";base64,", $image['dataUrl']);
-        if($image_parts) {
           $image_base64 = base64_decode($image_parts[1]);
           $filedir = '../../uploads/' .date("Y"). '/';
           if( !is_dir( $filedir ) ) {
@@ -44,9 +43,8 @@ if( is_db_connected() ) {
           $file = UPLOAD_DIR . uniqid() . '.' .$image_type;
           file_put_contents( $file, $image_base64 );
           $images_path[] = $file;
-        } else {
-          $images_path[] = $image['dataUrl'];
-        }
+      } else {
+        $images_path[] = $image['dataUrl'];
       }
     } else {
       $images_path[] = '';
