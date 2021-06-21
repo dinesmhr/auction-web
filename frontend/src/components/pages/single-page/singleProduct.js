@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../header/Header'
-import ImageGallery from 'react-image-gallery';
+import Carousel from 'react-gallery-carousel';
+import 'react-gallery-carousel/dist/index.css';
 
 const axios = require('axios')
 
@@ -49,17 +50,21 @@ const SingleProduct = (props) => {
                                             let image_url = `http://localhost/auction-web/${image.split('../').pop()}`
                                             return (
                                                 {
-                                                    original: image_url,
-                                                    thumnail: image_url
+                                                    images: image_url,
+                                                    
+                                                    
+
+
                                                 }
                                             )
                                         })
                                         return (     
                                             <div key={ index } className="flex flex-col m-10">
                                                 <h2>{product.title.trim()}</h2>
-                                                <div className="singlePage-imageWrap">
+                                                <div className="singlePage-imageWrap max-h-32 max-w-32">
                                                     { images &&
-                                                        <ImageGallery items={images} />
+                                                        <Carousel images={images} style={{ height: 800, width: 500 }} />
+                                                       
                                                     }
                                                 </div>
                                                 <div>
