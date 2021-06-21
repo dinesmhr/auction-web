@@ -32,7 +32,7 @@ const SingleProduct = (props) => {
                             <div id="singlePage" className="tracking-wider"><span className="">No products found</span></div>
                         ) : (
                             <div id="singlePage flex flex-row" className="tracking-wider">
-                                <div className="singlePage m-10 flex flex-col">
+                                {/* <div className="singlePage m-10 flex flex-col">
                                     <span className="">Title</span>
                                     <span className="">Category</span>
                                     <span className="">Tags</span>
@@ -42,30 +42,70 @@ const SingleProduct = (props) => {
                                     <span className="">Initial bid</span>
                                     <span className="">Specification</span>
                                     <span className="">Images</span>
-                                </div>
+                                </div> */}
                                 {
                                     productData.map( ( product, index )  => {
+                                        console.log(product)
                                         return (     
-                                            <div key={ index } className=" flex flex-col m-10">
-                                                <span className=""><span className=""/><span className="">{product.title}</span></span>
-                                                <span className="">{product.categories}</span>
-                                                <span className="">{product.tags}</span>
-                                                <span className="">{product.description}</span>
-                                                <span className="">{product.submission_date}</span>
-
-
-                                                <span className=""> </span>
-                                                <span className=""> </span>
-
-
-                                                
-
-
-                                                 
-
-                                                
-                                                }
-                                                }
+                                            <div key={ index } className="flex flex-col m-10">
+                                                <h2>{product.title.trim()}</h2>
+                                                <div>
+                                                    { product.images_path &&
+                                                        product.images_path.map(( image, key ) => {
+                                                            return (
+                                                                <div key={key} className="">
+                                                                    <img src={ `http://localhost/auction-web/${image.split('../').pop()}` } alt={product.title}/>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                                <div>
+                                                    <span>{ `Categories` }</span>
+                                                    <div>
+                                                        { product.categories && 
+                                                            product.categories.map((cat, catKey) => {
+                                                                return (
+                                                                    <div key={catKey} className="">
+                                                                        { cat.value.trim() }
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <span>{ `Tags` }</span>
+                                                    <div>
+                                                        { product.tags && 
+                                                            product.tags.map((tag, tagKey) => {
+                                                                return (
+                                                                    <div key={tagKey} className="">
+                                                                        { tag.value.trim() }
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="">
+                                                    <span>{ `Description` }</span>
+                                                    {product.description.trim()}
+                                                </div>
+                                                <div>
+                                                    <span>{ `Specifications` }</span>
+                                                    <div>
+                                                        { product.specifications && 
+                                                            product.specifications.map((spec, specKey) => {
+                                                                return (
+                                                                    <div key={specKey} className="">
+                                                                        { spec.value.trim() }
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
                                             </div>
                                         )
                                     })
