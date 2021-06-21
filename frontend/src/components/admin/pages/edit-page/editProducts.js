@@ -16,7 +16,7 @@ const AdminEditProduct = () => {
             setTitle({value: res.data.data[0].title})
             setDescription({value: res.data.data[0].description})
         })
-    })
+    }, [])
 
     return (
         <div id="auction-web-admin" className="content-wrap">
@@ -26,8 +26,7 @@ const AdminEditProduct = () => {
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="title" onChange = { (e) => setTitle({value: e.target.value}) } value={title.value}/>
                 </div>
                 <div>
-                    <textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" onChange = { (e) => setDescription({value: e.target.value}) }>
-                        {description.value}
+                    <textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) } defaultValue={description.value}>
                     </textarea>
                 </div>
             </div>
