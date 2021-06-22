@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import Header from '../header/Header';
+
 const axios = require('axios');
+const isImageUrl = require('is-image-url');
 
 const Card=(product)=>{
     const { id, title, initial_bid, images_path } = product
-    const featureImage = `http://localhost/auction-web/${images_path[0].split('../').pop()}`
+    let featureImage
+    if(!isImageUrl(images_path[0])) {
+        featureImage = `http://localhost/auction-web/${images_path[0].split('../').pop()}`
+    } else {
+        featureImage = images_path[0]
+    }
     return(
         <>
             <div className="product-card">
@@ -17,8 +24,7 @@ const Card=(product)=>{
                     <div className="bid-amount">
                         {`${initial_bid}USD`}
                     </div>
-                    <Link to={ `product/${id}` }
-                    >
+                    <Link to={ `product/${id}` }>
                         Bid Now
                     </Link>
                 </div>

@@ -5,6 +5,7 @@ import Carousel from 'react-gallery-carousel';
 import 'react-gallery-carousel/dist/index.css';
 
 const axios = require('axios')
+const isImageUrl = require('is-image-url');
 
 const SingleProduct = (props) => {
     const [productData, setProductData] = useState(null)
@@ -48,7 +49,12 @@ const SingleProduct = (props) => {
                                 {
                                     productData.map( ( product, index )  => {
                                         const images = product.images_path.map((image, index) => {
-                                            let image_url = `http://localhost/auction-web/${image.split('../').pop()}`
+                                            let image_url
+                                            if(!isImageUrl(image)) {
+                                                image_url = `http://localhost/auction-web/${image.split('../').pop()}`
+                                            } else {
+                                                image_url = image
+                                            }
                                             return (
                                                 { src: image_url }
                                                 
