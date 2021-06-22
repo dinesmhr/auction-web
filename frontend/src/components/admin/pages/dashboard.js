@@ -1,8 +1,7 @@
 import React, {} from 'react';
 import AdminMainNavigation from '../navigation/AdminMainNavigation'
 
-const AdminDashboard = (props) => {
-    const { isLoggedIn } = props
+const AdminDashboard = () => {
     return (
         <div className="content-wrap">
             <AdminMainNavigation/>

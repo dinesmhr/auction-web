@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Products from '../pages/products'
@@ -9,14 +9,12 @@ import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
 
 import SingleProduct from '../pages/single-page/singleProduct'
-import { appContext } from '../../App'
 
 const axios = require('axios')
 
 export const PublicRoutes = () => {
     const [userId, setUserId] = useState('')
     const [userStatus, setUserStatus] = useState('')
-    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( '/sessions.php' )

@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Header from '../header/Header'
-import { appContext } from '../../App'
 
 const Home = () => {
-    const { isLoggedIn } = useContext(appContext)
     return ( 
         <div id="auction-web">
             <Header/>

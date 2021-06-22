@@ -2,8 +2,7 @@ import React from 'react';
 import AdminNavigation from '../navigation/AdminNavigation'
 import MainNavigation from '../navigation/MainNavigation'
 
-const Header = (props) => {
-    const { isLoggedIn } = props
+const Header = () => {
     return (
         <header>
             <AdminNavigation/>

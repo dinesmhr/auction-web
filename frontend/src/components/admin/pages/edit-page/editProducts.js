@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import AdminMainNavigation from '../../navigation/AdminMainNavigation'
 import DatePicker, { utils } from "react-modern-calendar-datepicker";
@@ -48,8 +48,8 @@ const AdminEditProduct = () => {
             })
             setImages({value: tempImages})
             setDeadlineDate({value: res.data.data[0].deadline_date})
-            if( categories !== '' ) { setCategories(res.data.data[0].categories) }
-            if( tags !== '' ) { setTags(res.data.data[0].tags) }
+            if(Array.isArray( res.data.data[0].categories ) ) { setCategories(res.data.data[0].categories) }
+            if(Array.isArray( res.data.data[0].tags ) ) { setTags(res.data.data[0].tags) }
         })
     }, [])
 
@@ -80,8 +80,9 @@ const AdminEditProduct = () => {
     
     // handle categories multi checkbox
     const handleCategories = (e) => {
-        if(tags.includes(e.target.value)) {
-            categories.splice( tags.indexOf(e.target.value), 1 )
+        console.log(categories)
+        if(categories.includes(e.target.value)) {
+            categories.splice( categories.indexOf(e.target.value), 1 )
         } else {
             categories.push(e.target.value)
         }
