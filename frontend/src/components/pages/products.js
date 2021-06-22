@@ -13,6 +13,7 @@ const Card=(product)=>{
     } else {
         featureImage = images_path[0]
     }
+    
     return(
         <>
             <div className="product-card">
