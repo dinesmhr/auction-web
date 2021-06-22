@@ -25,11 +25,22 @@ if( is_db_connected() ) {
   $maxBid         = isset( $decoded_data["maxBid"] ) ? $decoded_data["maxBid"] : '';
   $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? serialize( $decoded_data["deadlineDate"] ) : '';
   $images         = isset( $decoded_data["images"] ) ? $decoded_data["images"] : '';
+  $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? serialize( $decoded_data["tags"] ) : '';
+  $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? serialize( $decoded_data["categories"] ) : '';
+
+  function is_base64_encoded( $data ) {
+    if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data)) {
+       return TRUE;
+    } else {
+       return FALSE;
+    }
+};
 
   foreach( $images as $image ) :
     if( isset( $image['dataUrl'] ) ) {
-      if( !empty($image['dataUrl']) && !file_exists($image['dataUrl']) ) {
+      if( !empty($image['dataUrl']) ) {
         $image_parts = explode(";base64,", $image['dataUrl']);
+        if(isset($image_parts[1])) {
           $image_base64 = base64_decode($image_parts[1]);
           $filedir = '../../uploads/' .date("Y"). '/';
           if( !is_dir( $filedir ) ) {
@@ -43,17 +54,20 @@ if( is_db_connected() ) {
           $file = UPLOAD_DIR . uniqid() . '.' .$image_type;
           file_put_contents( $file, $image_base64 );
           $images_path[] = $file;
+        } else {
+          $images_path[] = $image['dataUrl'];
+        }
       } else {
-        $images_path[] = $image['dataUrl'];
+        $images_path[] = '';
       }
     } else {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "' WHERE id = '" .$id. "'";
+  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', categories = '" .$categories. "', tags = '" .$tags. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
     $structure['status'] = true;
-    $structure['message'] = 'Your product form is submitted. Your product is under verification!! Thank you for your patience';
+    $structure['message'] = 'Your product form is updated';
   } else {
     $structure['status'] = false;
     $structure['message'] = 'Error in creating new record';

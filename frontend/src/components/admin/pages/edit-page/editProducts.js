@@ -8,12 +8,15 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
 
 const axios = require('axios');
+const isImageUrl = require('is-image-url');
 
 const imagesRef = React.createRef()
 
 const AdminEditProduct = () => {
     const [ userId, setUserId ] = useState()
     const [ userData, setUserData ] = useState()
+    const [ categoriesData, setCategoriesData ] = useState()
+    const [ tagsData, setTagsData ] = useState()
     const [ title, setTitle ] = useState({value:''})
     const [ description, setDescription ] = useState({value:''})
     const [specifications, setSpecifications] = useState({value: [{value:''}]});
@@ -21,6 +24,8 @@ const AdminEditProduct = () => {
 	const [maxBid, setMaxBid] = useState({value: ''});
 	const [deadlineDate, setDeadlineDate] = useState({value: ''});
 	const [images, setImages] = useState({value: []});
+    const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
     const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Update Product');
@@ -37,11 +42,18 @@ const AdminEditProduct = () => {
             setMaxBid({value: res.data.data[0].max_bid})
             setSpecifications({value: res.data.data[0].specifications})
             const tempImages = res.data.data[0].images_path.map((image, key) => {
-                let image_url = `http://localhost/auction-web/${image.split('../').pop()}`
+                let image_url
+                if(!isImageUrl(image)) {
+                    image_url = `http://localhost/auction-web/${image.split('../').pop()}`
+                } else {
+                    image_url = image
+                }
                 return ({ dataUrl : image_url })
             })
             setImages({value: tempImages})
             setDeadlineDate({value: res.data.data[0].deadline_date})
+            if( categories !== '' ) { setCategories(res.data.data[0].categories) }
+            if( tags !== '' ) { setTags(res.data.data[0].tags) }
         })
     }, [])
 
@@ -50,10 +62,45 @@ const AdminEditProduct = () => {
             axios.get( `/user-details.php?id=${userId}` )
             .then(function(res) {
                 setUserData(res.data.data[0])
-                console.log(res.data.data[0])
             })
         }
     }, [userId])
+
+    // set list of categories
+    useEffect(() => {
+        axios.get( `/product-categories.php` )
+        .then(function(res) {
+            setCategoriesData(res.data.data)
+        })
+    }, [])
+
+    // set list of tags
+    useEffect(() => {
+        axios.get( `/product-tags.php` )
+        .then(function(res) {
+            setTagsData(res.data.data)
+        })
+    }, [])
+    
+    // handle categories multi checkbox
+    const handleCategories = (e) => {
+        if(tags.includes(e.target.value)) {
+            categories.splice( tags.indexOf(e.target.value), 1 )
+        } else {
+            categories.push(e.target.value)
+        }
+        setCategories(JSON.parse(JSON.stringify(categories)))
+    }
+
+    // handle tags multi checkbox
+    const handleTags = (e) => {
+        if(tags.includes(e.target.value)) {
+            tags.splice( tags.indexOf(e.target.value), 1 )
+        } else {
+            tags.push(e.target.value)
+        }
+        setTags(JSON.parse(JSON.stringify(tags)))
+    }
 
     // set specifications on change
 	const handlesetSpecifications = (e,index) => {
@@ -64,7 +111,8 @@ const AdminEditProduct = () => {
 	// handle add row event specifications repeater
 	const addRow = () => {
 		specifications.value.push( {value: ''} )
-		setSpecifications(JSON.parse(JSON.stringify(specifications)))	}
+		setSpecifications(JSON.parse(JSON.stringify(specifications)))
+    }
 
 	// handle delete row event specifications repeater
 	const deleteRow = (index) => {
@@ -166,7 +214,7 @@ const AdminEditProduct = () => {
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
             setSubmitText( 'Submitting product' )
 			let apiParams = {
-				submit: "submit-product",
+				submit: "update-product",
                 id: id,
 				title: title.value,
 				description: description.value,
@@ -174,18 +222,14 @@ const AdminEditProduct = () => {
 				initialBid: initialBid.value,
 				maxBid: maxBid.value,
 				deadlineDate: deadlineDate.value,
-				images: images.value
+				images: images.value,
+                tags: tags,
+                categories: categories
 			}
 			axios.post( '/edit-table/update-products.php', apiParams)
 			.then(function(response) {
+                console.log(response.data)
 				if( response.data.status ) {
-					setTitle({value: ''})
-					setDescription({value: ''})
-					setSpecifications({value: [{value:''}]})
-					setInitialBid({value: ''})
-					setMaxBid({value: ''})
-					setDeadlineDate({value: ''})
-					setImages({value: []})
 					setStatus(true)
 					setMessage(response.data.message)
 				} else {
@@ -198,7 +242,7 @@ const AdminEditProduct = () => {
 				setMessage('There is an error')
 			})
 			.then(function () {
-				setSubmitText( 'Submit My Product' )
+				setSubmitText( 'Update Product' )
 			});
 		}
 	}
@@ -317,13 +361,47 @@ const AdminEditProduct = () => {
                                                     large={image.dataUrl}
                                                     hideDownload= {true}
                                                     showRotate={true}
-                                                    />
-                                            </div>	
+                                                />
+                                            </div>
                                         </React.Fragment>
                                     )
                                 })
                             }
                         </div>
+                    </div>
+                </div>
+
+                <div>
+                    Categories
+                    <div>
+                        { categoriesData &&
+                            categoriesData.map((category, index) => {
+                                let checkedStatus = false
+                                if( categories.includes(category.id) ) {
+                                    checkedStatus = true
+                                }
+                                return(
+                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/>{ category.title }</>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    Tags
+                    <div>
+                        { tagsData &&
+                            tagsData.map(( tag, index) => {
+                                let checkedStatus = false
+                                if( tags.includes(tag.id) ) {
+                                    checkedStatus = true
+                                }
+                                return(
+                                    <><input key={index} onChange = { (e) => handleTags(e) } type="checkbox" value={ tag.id } checked={checkedStatus}/> { tag.title }</>
+                                )
+                            })
+                        }
                     </div>
                 </div>
 
