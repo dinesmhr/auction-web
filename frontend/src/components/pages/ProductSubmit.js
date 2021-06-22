@@ -186,8 +186,8 @@ const ProductSubmit = (props) => {
 
 	const onsubmit = (e) => {
 		e.preventDefault()
-		setSubmitText( 'Submitting product' )
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
+			setSubmitText( 'Submitting product' )
 			let apiParams = {
 				submit: "submit-product",
 				title: title.value,

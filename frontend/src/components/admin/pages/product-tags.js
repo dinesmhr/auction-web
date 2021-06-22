@@ -64,7 +64,7 @@ const AdminProductTags = () => {
 		<>
 			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
-				<div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
+				<div id="admin-right-content">
 					<div className="admin-page-top-description p-5 font-extralight italic text-sm">
 						{ `Manage, Edit or Delete the product tags in this panel. Navigate to the single tag edit page ` }
 					</div>

@@ -19,7 +19,7 @@ const AdminUsers= () => {
 		<>
 			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
-				<div id="admin-right-content" className="float-right w-4/5 text-white p-8 h-screen mt-12">
+				<div id="admin-right-content">
 					{ 
 						users === null ? (
 							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">Loading datas</span></div>
