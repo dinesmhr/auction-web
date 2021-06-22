@@ -15,6 +15,7 @@ const SingleProduct = (props) => {
         axios.get( `/products.php?id=${id}` )
         .then(function(res) {
             if( res.data.status ) {
+                
                 setProductData( res.data.data )
             }
         })
@@ -50,18 +51,29 @@ const SingleProduct = (props) => {
                                             let image_url = `http://localhost/auction-web/${image.split('../').pop()}`
                                             return (
                                                 { src: image_url }
+                                                
                                             )
                                         })
-                                        return (     
-                                            <div key={ index } className="flex flex-col m-10">
-                                                <h2>{product.title.trim()}</h2>
-                                                <div className="singlePage-imageWrap max-h-32 max-w-32">
+                                        return (  
+                                            
+
+                                            <div key={ index } className="flex flex-row m-10">
+                                                
+                                                <div className="singlePage-imageWrap">
                                                     { images &&
-                                                        <Carousel images={images} style={{ height: 800, width: 500 }} />  
+                                                        <Carousel images={images} style={{ height: 450, width: 550 }}                                                            
+                                                            hasTransition={true}
+                                                            hasMediaButton={false}
+
+                                                            
+                                                        
+                                                         />  
                                                     }
                                                 </div>
+                                            <div className="singlePage-right ml-12">
+                                                <h2 className="font-bold text-2xl">{product.title.trim()}</h2>
                                                 <div>
-                                                    <span>{ `Categories` }</span>
+                                                    <span className="text-sm">{ `Categories` }</span>
                                                     <div>
                                                         { product.categories && 
                                                             product.categories.map((cat, catKey) => {
@@ -75,7 +87,7 @@ const SingleProduct = (props) => {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span>{ `Tags` }</span>
+                                                    <span className="text-sm">{ `Tags` }</span>
                                                     <div>
                                                         { product.tags && 
                                                             product.tags.map((tag, tagKey) => {
@@ -87,13 +99,25 @@ const SingleProduct = (props) => {
                                                             })
                                                         }
                                                     </div>
+                                                    <hr/>
                                                 </div>
-                                                <div className="">
-                                                    <span>{ `Description` }</span>
+                                                <div className="mt-2">
+                                                    <span className="singlePage_RightData font-bold mr-2 text-base">{ `Description ` }</span>
                                                     {product.description.trim()}
                                                 </div>
+
                                                 <div>
-                                                    <span>{ `Specifications` }</span>
+                                                      <span className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</span>
+                                                      {product.initial_bid.trim()}
+                                                </div>
+
+                                                 <div>
+                                                      <span className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</span>
+                                                      {product.submission_date.trim()}
+                                                </div>
+
+                                                <div>                                                
+                                                    <span className="singlePage_RightData font-bold mr-2 text-base">{ `Specifications ` }</span>
                                                     <div>
                                                         { product.specifications && 
                                                             product.specifications.map((spec, specKey) => {
@@ -105,7 +129,9 @@ const SingleProduct = (props) => {
                                                             })
                                                         }
                                                     </div>
-                                                </div>
+                                             
+                                             </div>
+                                             </div>
                                             </div>
                                         )
                                     })
