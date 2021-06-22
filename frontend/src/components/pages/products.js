@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import Header from '../header/Header';
+import {appContext} from '../../App'
 
 const axios = require('axios');
 const isImageUrl = require('is-image-url');
@@ -8,7 +9,7 @@ const isImageUrl = require('is-image-url');
 const Card=(product)=>{
     const { id, title, initial_bid, images_path } = product
     let featureImage
-    if(!isImageUrl(images_path[0])) {
+    if(!images_path[0].includes('http://localhost/auction-web/')) {
         featureImage = `http://localhost/auction-web/${images_path[0].split('../').pop()}`
     } else {
         featureImage = images_path[0]
@@ -34,9 +35,9 @@ const Card=(product)=>{
     );
 }
 
-const Products = (props) => {
+const Products = () => {
     const [ products, setProducts ] = useState({})
-    const { isLoggedIn } = props
+    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( '/products.php' )

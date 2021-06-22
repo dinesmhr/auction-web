@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import AdminDashboard from '../admin/pages/dashboard'
 import AdminUsers from '../admin/pages/users'
@@ -9,13 +9,14 @@ import AdminProductTags from '../admin/pages/product-tags'
 import AdminEditUser from '../admin/pages/edit-page/editUsers'
 import AdminEditProduct from '../admin/pages/edit-page/editProducts'
 import AdminEditProductCategory from '../admin/pages/edit-page/editProductCategory'
+import { appContext } from '../../App'
 
 const axios = require('axios')
 
 export const AdminRoutes = (props) => {
     const [userId, setUserId] = useState('')
     const [userRole, setUserRole] = useState('')
-    const { isLoggedIn } = props
+    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( '/sessions.php' )

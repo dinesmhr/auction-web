@@ -3,13 +3,14 @@
  * 
  * 
  */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../header/Header';
+import {appContext} from '../../App'
 
 const axios = require('axios');
 
-const Signup = (props) => {
+const Signup = () => {
     const [ fullname, setFullname ] = useState({ value: ''});
     const [ username, setUsername ] = useState({ value: ''});
     const [ email, setEmail ] = useState({ value: ''});
@@ -20,7 +21,7 @@ const Signup = (props) => {
     const [ status, setStatus ] = useState(false);
     const [ message, setMessage ] = useState();
 
-    const { isLoggedIn } = props
+    const { isLoggedIn } = useContext(appContext)
 
     // handle username field on change
     const handleUsername = (value) => {

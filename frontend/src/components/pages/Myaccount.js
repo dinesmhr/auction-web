@@ -1,14 +1,15 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useRef, useState, useContext } from "react";
 import { Redirect } from 'react-router-dom'
 import Header from '../header/Header'
 import { Dialog, Transition } from '@headlessui/react'
+import {appContext} from '../../App'
 
 const axios = require('axios');
 
-const Myaccount = (props) => {
+const Myaccount = () => {
     const [openLogoutConfirmModal, setOpenLogoutConfirmModal] = useState(false)
 
-    const { isLoggedIn, updateLoggedInStatus } = props
+    const { isLoggedIn, updateLoggedInStatus } = useContext(appContext)
     const cancelButtonRef = useRef(null)
 
     const triggerLogoutEvent = () => {

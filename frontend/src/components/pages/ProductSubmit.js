@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from '../header/Header';
 import DatePicker, { utils } from "react-modern-calendar-datepicker";
 import ModalImage from "react-modal-image";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
+import {appContext} from '../../App'
 
 const axios = require('axios');
 
@@ -43,7 +44,7 @@ const options =  [
 
 const imagesRef = React.createRef()
 
-const ProductSubmit = (props) => {
+const ProductSubmit = () => {
 	const [userId, setUserId] = useState('')
     const [userStatus, setUserStatus] = useState('')
 	const [title, setTitle] = useState({value: ''});
@@ -57,7 +58,7 @@ const ProductSubmit = (props) => {
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Submit My Product');
 
-	const { isLoggedIn } = props
+	const { isLoggedIn } = useContext(appContext)
 
 	useEffect(() => {
         axios.get( '/sessions.php' )

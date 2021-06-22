@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import Carousel from 'react-gallery-carousel';
 import 'react-gallery-carousel/dist/index.css';
+import {appContext} from '../../../App'
 
 const axios = require('axios')
-const isImageUrl = require('is-image-url');
-
-const SingleProduct = (props) => {
+const SingleProduct = () => {
     const [productData, setProductData] = useState(null)
     const { id } = useParams()
-    const { isLoggedIn } = props
+    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
         .then(function(res) {
             if( res.data.status ) {
-                
                 setProductData( res.data.data )
             }
         })
@@ -27,7 +25,6 @@ const SingleProduct = (props) => {
         <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn } />                    
             <div id="auction-web-singlePage" className="">
-
                     {
                         productData === null ? (
                             <div id="singlePage" className="tracking-wider"><span className="">Loading datas..</span></div>
@@ -35,28 +32,14 @@ const SingleProduct = (props) => {
                             <div id="singlePage" className="tracking-wider"><span className="">No products found</span></div>
                         ) : (
                             <div id="singlePage flex flex-row" className="tracking-wider">
-                                {/* <div className="singlePage m-10 flex flex-col">
-                                    <span className="">Title</span>
-                                    <span className="">Category</span>
-                                    <span className="">Tags</span>
-                                    <span className="">Description</span>
-                                    <span className="">Submission Date</span>
-                                    <span className="">Deadline Date</span>
-                                    <span className="">Initial bid</span>
-                                    <span className="">Specification</span>
-                                    <span className="">Images</span>
-                                </div> */}
                                 {
                                     productData.map( ( product, index )  => {
                                         const images = product.images_path.map((image, index) => {
-                                            let image_url
-                                            if(!isImageUrl(image)) {
-                                                image_url = `http://localhost/auction-web/${image.split('../').pop()}`
-                                            } else {
-                                                image_url = image
+                                            if(!image.includes('http://localhost/auction-web/')) {
+                                                image = `http://localhost/auction-web/${image.split('../').pop()}`
                                             }
                                             return (
-                                                { src: image_url }
+                                                { src: image }
                                                 
                                             )
                                         })

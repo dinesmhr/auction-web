@@ -6,9 +6,11 @@ import './styles/App.css'
 
 const axios = require('axios');
 
+export const appContext = React.createContext()
+
 const App = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-
+  
   // 
   const updateLoggedInStatus = () => {
     setIsLoggedIn(!isLoggedIn)
@@ -22,11 +24,11 @@ const App = () => {
   }, [isLoggedIn])
 
   return (
-    <>
-      <AdminRoutes isLoggedIn = { isLoggedIn } />
-      <PublicRoutes isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>
+    <appContext.Provider value={ {isLoggedIn, updateLoggedInStatus} }>
+      <AdminRoutes />
+      <PublicRoutes/>
       <Footer />
-    </>
+    </appContext.Provider>
   );
 }
  

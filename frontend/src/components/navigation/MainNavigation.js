@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import {appContext} from '../../App'
 
 const axios = require('axios')
 
-const MainNavigation = (props) => {
-
+const MainNavigation = () => {
     const [userId, setUserId] = useState('')
     const [userStatus, setUserStatus] = useState('')
+    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( '/sessions.php' )
@@ -26,8 +27,6 @@ const MainNavigation = (props) => {
             }
         })
     }, [userId])
-
-    const { isLoggedIn } = props
 
     return (
         <div className="nav-wrap">        

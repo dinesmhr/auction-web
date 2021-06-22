@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../header/Header';
+import {appContext} from '../../App'
 
 const axios = require('axios');
 
-const Login = (props) => {
+const Login = () => {
     const [ username, setUsername ] = useState({value: ''})
     const [ password, setPassword ] = useState({value: ''})
     const [ error, setError ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState()
     const [ isDisabled ] = useState(false);
 
-    const { isLoggedIn, updateLoggedInStatus } = props
+    const { isLoggedIn, updateLoggedInStatus } = useContext(appContext)
     
     const onSubmit = (e) => {
         e.preventDefault()

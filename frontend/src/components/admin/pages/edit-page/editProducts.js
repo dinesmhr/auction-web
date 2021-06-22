@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import AdminMainNavigation from '../../navigation/AdminMainNavigation'
 import DatePicker, { utils } from "react-modern-calendar-datepicker";
@@ -8,7 +8,6 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
 
 const axios = require('axios');
-const isImageUrl = require('is-image-url');
 
 const imagesRef = React.createRef()
 
@@ -29,7 +28,7 @@ const AdminEditProduct = () => {
     const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Update Product');
-
+    
     const { id } = useParams()
 
     useEffect(() => {
@@ -42,13 +41,10 @@ const AdminEditProduct = () => {
             setMaxBid({value: res.data.data[0].max_bid})
             setSpecifications({value: res.data.data[0].specifications})
             const tempImages = res.data.data[0].images_path.map((image, key) => {
-                let image_url
-                if(!isImageUrl(image)) {
-                    image_url = `http://localhost/auction-web/${image.split('../').pop()}`
-                } else {
-                    image_url = image
+                if( !image.includes('http://localhost/auction-web/') ) {
+                    image = `http://localhost/auction-web/${image.split('../').pop()}`
                 }
-                return ({ dataUrl : image_url })
+                return ({ dataUrl : image })
             })
             setImages({value: tempImages})
             setDeadlineDate({value: res.data.data[0].deadline_date})

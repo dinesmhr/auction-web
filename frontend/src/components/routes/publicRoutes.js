@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Products from '../pages/products'
@@ -9,13 +9,14 @@ import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
 
 import SingleProduct from '../pages/single-page/singleProduct'
+import { appContext } from '../../App'
 
 const axios = require('axios')
 
-export const PublicRoutes = (props) => {
+export const PublicRoutes = () => {
     const [userId, setUserId] = useState('')
     const [userStatus, setUserStatus] = useState('')
-    const { isLoggedIn, updateLoggedInStatus } = props
+    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( '/sessions.php' )
@@ -39,17 +40,17 @@ export const PublicRoutes = (props) => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={() => <Home isLoggedIn = { isLoggedIn }/>}></Route>
-                <Route path="/products" exact component={() => <Products isLoggedIn = { isLoggedIn }/>}></Route>
+                <Route path="/" exact component={() => <Home/>}></Route>
+                <Route path="/products" exact component={() => <Products/>}></Route>
                 { userStatus !== 'verified' &&
                   <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 }
-                <Route path="/submit-product" component={() => <ProductSubmit isLoggedIn = { isLoggedIn } /> }></Route>
+                <Route path="/submit-product" component={() => <ProductSubmit/> }></Route>
                 <Route path="/products/:id" component={(props) => <SingleProduct/>}></Route>
-                <Route path="/myaccount" component={() => <Myaccount isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
-                <Route path="/login" component={() => <Login isLoggedIn = { isLoggedIn } updateLoggedInStatus = { updateLoggedInStatus }/>}></Route>
-                <Route path="/signup" component={() => <Signup isLoggedIn = { isLoggedIn }/>}></Route>
-                <Route path="/product/:id" component={(props) => <SingleProduct isLoggedIn = { isLoggedIn }/>}></Route>
+                <Route path="/myaccount" component={() => <Myaccount/>}></Route>
+                <Route path="/login" component={() => <Login/>}></Route>
+                <Route path="/signup" component={() => <Signup/>}></Route>
+                <Route path="/product/:id" component={(props) => <SingleProduct/>}></Route>
             </Switch>
         </BrowserRouter>
     )
