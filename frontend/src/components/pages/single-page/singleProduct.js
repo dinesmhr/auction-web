@@ -9,6 +9,8 @@ const axios = require('axios')
 
 const SingleProduct = () => {
     const [productData, setProductData] = useState(null)
+    const [ sellerID, setSellerID ] = useState()
+    const [ sellerData, setSellerData ] = useState()
     const [ catids, setCatids ] = useState()
     const [ tagIds, setTagIds ] = useState()
     const [ categories, setCategories ] = useState('')
@@ -21,6 +23,7 @@ const SingleProduct = () => {
         .then(function(res) {
             if( res.data.status ) {
                 setProductData( res.data.data )
+                setSellerID( res.data.data[0].user_id )
                 setCatids( res.data.data[0].categories )
                 setTagIds( res.data.data[0].tags )
             }
@@ -42,6 +45,15 @@ const SingleProduct = () => {
             setTags(res.data.data)
         })
     })
+
+    useEffect(() => {
+        { sellerID &&
+            axios.get( `/user-details.php?id=${sellerID}` )
+            .then(function(res) {
+                setSellerData(res.data.data[0])
+            })
+        }
+    }, [sellerID])
 
     return (
         <>  
@@ -117,6 +129,10 @@ const SingleProduct = () => {
                                                         </div>
                                                         <hr/>
                                                     </div>
+                                                    <div>
+                                                    <span className="text-sm">{ `Status` }</span>
+                                                        {product.status}
+                                                    </div>
                                                     <div className="mt-2">
                                                         <span className="singlePage_RightData font-bold mr-2 text-base">{ `Description ` }</span>
                                                         {product.description.trim()}
@@ -151,6 +167,18 @@ const SingleProduct = () => {
                                         )
                                     })
                                 }
+                                <div>
+                                    Seller Information
+                                    { sellerData &&
+                                        <div>
+                                            <div>Full Name: { sellerData.fullname }</div>
+                                            <div>Email Address: { sellerData.email }</div>
+                                            <div>Contact Number: { sellerData.areaCode + sellerData.number }</div>
+                                            <div>Profession: { sellerData.profession }</div>
+                                            <div>Status: { sellerData.status }</div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         )
                     }
