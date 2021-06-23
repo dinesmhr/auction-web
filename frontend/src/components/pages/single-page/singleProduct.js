@@ -63,9 +63,9 @@ const SingleProduct = () => {
             <div id="auction-web-singlePage" className="">
                     {
                         productData === null ? (
-                            <div id="singlePage" className="tracking-wider"><span className="">Loading datas..</span></div>
+                            <div id="singlePage" className="tracking-wider"><div className="">Loading datas..</div></div>
                         ) : productData.length === 0 ? (
-                            <div id="singlePage" className="tracking-wider"><span className="">No products found</span></div>
+                            <div id="singlePage" className="tracking-wider"><div className="">No products found</div></div>
                         ) : (
                             <div id="singlePage flex flex-row" className="tracking-wider">
                                 {
@@ -90,10 +90,11 @@ const SingleProduct = () => {
                                                     }
                                                 </div>
                                                 <div className="singlePage-right ml-12">
-                                                    <h2 className="font-bold text-2xl">{product.title.trim()}</h2>
-                                                    <div>
-                                                        <span className="text-sm">{ `Categories` }</span>
-                                                        <div>
+                                                    <div className="font-bold text-2xl">{product.title.trim()}</div>
+
+                                                    <div className="flex flex-row">
+                                                        <div className="text-sm">{ `Categories` }</div>
+                                                        <div className="ml-3 text-sm">
                                                             { !categories ? (
                                                                     "No categories"
                                                                 ) : categories.length === 0 ? (
@@ -110,9 +111,9 @@ const SingleProduct = () => {
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <span className="text-sm">{ `Tags` }</span>
-                                                        <div>
+                                                    <div className="flex flex-row">
+                                                        <div className="text-sm">{ `Tags` }</div>
+                                                        <div className="ml-3 text-sm">
                                                             { !tags ? (
                                                                     "No tags"
                                                                 ) : tags.length === 0 ? (
@@ -127,56 +128,84 @@ const SingleProduct = () => {
                                                                     })
                                                                 )
                                                             }
-                                                        </div>
-                                                        <hr/>
+                                                        </div> 
                                                     </div>
+                                                     <div className="flex flex-row">
+                                                        <div className="text-sm">{ `Status` }</div>
+                                                        <div className="text-sm ml-3">{product.status}</div>
+                                                    </div>
+                                                    <hr/>   
                                                     <div>
-                                                    <span className="text-sm">{ `Status` }</span>
-                                                        {product.status}
-                                                    </div>
-                                                    <div className="mt-2">
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Description ` }</span>
-                                                        {product.description.trim()}
-                                                    </div>
-
-                                                    <div>
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</span>
+                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</div>
                                                         {product.initial_bid.trim()}
                                                     </div>
 
                                                     <div>
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</span>
+                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
                                                         {product.submission_date.trim()}
                                                     </div>
 
-                                                    <div>                                                
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Specifications ` }</span>
-                                                        <div>
-                                                            { product.specifications && 
-                                                                product.specifications.map((spec, specKey) => {
-                                                                    return (
-                                                                        <div key={specKey} className="">
-                                                                            { spec.value.trim() }
-                                                                        </div>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </div>
-                                                    </div>
+
+                                                  
+                                                    <div>
+                                                    <button class="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5">Bid Now</button>
+                                                     </div>
+
                                                 </div>
                                             </div>
                                         )
                                     })
-                                }
+                                } 
+
+                                <hr/>
+                                  {
+                                 productData.map( ( product, index )  => {
+                                         return(
+                                                  <div> 
+                                                        <div className="singleProductRightMargin mt-2 text-sm">
+                                                              <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Description ` }</div>
+                                                              <div className="ml-8 text-sm mr-1">{product.description.trim()}</div>
+                                                         </div>
+                                                <div className="singleProductRightMargin">
+                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Specifications ` }</div>
+                                                          <div className="ml-8 text-sm mr-1 mb-5">
+                                                               { product.specifications && 
+                                                                  product.specifications.map((spec, specKey) => {
+                                                                  return (
+                                                                    <div key={specKey} className="">
+                                                                            { spec.value.trim() }
+                                                                      </div>
+                                                                  )
+                                                                })
+                                                         }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 )
+                                               })
+                                        } 
+
+
+                                <hr/>
                                 <div>
-                                    Seller Information
+                                    <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>
                                     { sellerData &&
-                                        <div>
-                                            <div>Full Name: { sellerData.fullname }</div>
-                                            <div>Email Address: { sellerData.email }</div>
-                                            <div>Contact Number: { sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
-                                            <div>Profession: { sellerData.profession }</div>
-                                            <div>Status: { sellerData.status }</div>
+                                        <div className="mb-5">
+                                            <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
+                                            </div>
+                                            <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
+                                            </div>
+                                            <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
+                                            </div>
+                                            <div className="flex flex-row">   
+                                            <div className="ml-8 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
+                                            </div>
+                                            <div className="flex flex-row">
+                                            <div className="ml-8 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
+                                            </div>
                                         </div>
                                     }
                                 </div>
