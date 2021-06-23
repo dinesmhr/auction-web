@@ -71,6 +71,7 @@ const AdminEditProductCategory = () => {
 			setButtonText( 'Adding category' )
 			axios.post( '/edit-table/update-category.php', {
 				submit: 'submit',
+                id: id,
 				title: categoryTitle.value,
 				description: categoryDescription.value,
 				image: categoryImage

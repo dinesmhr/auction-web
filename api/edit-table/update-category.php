@@ -17,6 +17,7 @@ if( !isset( $decoded_data["submit"] ) ) {
 
 require_once '../functions.php';
 if( is_db_connected() ) {
+  $id       = isset( $decoded_data["id"] ) ? $decoded_data["id"] : '';
   $title    = isset( $decoded_data["title"] ) ? $decoded_data["title"] : '';
   $description  = isset( $decoded_data["description"] ) ? $decoded_data["description"] : '';
   $image         = isset( $decoded_data["image"] ) ? $decoded_data["image"] : '';
@@ -45,7 +46,7 @@ if( is_db_connected() ) {
     } else {
       $image_path[] = '';
     }
-  $category_sql = "UPDATE aw_categories SET title = '" .$title. "', description = '" .$description. "', image_path = '" .serialize($image_path). "'";
+  $category_sql = "UPDATE aw_categories SET title = '" .$title. "', description = '" .$description. "', image_path = '" .serialize($image_path). "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $category_sql ) === TRUE ) {
     $structure['status'] = true;
     $structure['message'] = 'Your category details update';
