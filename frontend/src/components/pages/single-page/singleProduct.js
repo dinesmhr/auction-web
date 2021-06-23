@@ -90,7 +90,8 @@ const SingleProduct = () => {
                                                     }
                                                 </div>
                                                 <div className="singlePage-right ml-12">
-                                                    <h2 className="font-bold text-2xl">{product.title.trim()}</h2>
+                                                    <div className="font-bold text-2xl">{product.title.trim()}</div>
+
                                                     <div className="flex flex-row">
                                                         <div className="text-sm">{ `Categories` }</div>
                                                         <div className="ml-3 text-sm">
@@ -129,14 +130,13 @@ const SingleProduct = () => {
                                                             }
                                                         </div> 
                                                     </div>
-<<<<<<< HEAD
-                                                    <hr/>
-=======
-                                                    <div>
-                                                    <span className="text-sm">{ `Status` }</span>
-                                                        {product.status}
+                                                     <div className="flex flex-row">
+                                                        <div className="text-sm">{ `Status` }</div>
+                                                        <div className="text-sm ml-3">{product.status}</div>
                                                     </div>
->>>>>>> 2ecbad0bc7f73fa7f875919e8a592cd473893cd3
+
+                                                    <hr/>
+
                                                     <div className="mt-2">
                                                         <div className="singlePage_RightData font-bold mr-2 text-base">{ `Description ` }</div>
                                                         {product.description.trim()}
@@ -173,15 +173,26 @@ const SingleProduct = () => {
                                         )
                                     })
                                 }
+                                <hr/>
                                 <div>
-                                    Seller Information
+                                    <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>
                                     { sellerData &&
-                                        <div>
-                                            <div>Full Name: { sellerData.fullname }</div>
-                                            <div>Email Address: { sellerData.email }</div>
-                                            <div>Contact Number: { sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
-                                            <div>Profession: { sellerData.profession }</div>
-                                            <div>Status: { sellerData.status }</div>
+                                        <div className="mb-5">
+                                            <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
+                                            </div>
+                                            <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
+                                            </div>
+                                            <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
+                                            </div>
+                                            <div className="flex flex-row">   
+                                            <div className="ml-8 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
+                                            </div>
+                                            <div className="flex flex-row">
+                                            <div className="ml-8 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
+                                            </div>
                                         </div>
                                     }
                                 </div>
