@@ -4,7 +4,6 @@ import Header from '../header/Header';
 import {appContext} from '../../App'
 
 const axios = require('axios');
-const isImageUrl = require('is-image-url');
 
 const Card=(product)=>{
     const { id, title, initial_bid, images_path } = product
