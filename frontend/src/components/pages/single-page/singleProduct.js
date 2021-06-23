@@ -50,6 +50,7 @@ const SingleProduct = () => {
         { sellerID &&
             axios.get( `/user-details.php?id=${sellerID}` )
             .then(function(res) {
+                console.log(res.data.data[0])
                 setSellerData(res.data.data[0])
             })
         }
@@ -173,7 +174,7 @@ const SingleProduct = () => {
                                         <div>
                                             <div>Full Name: { sellerData.fullname }</div>
                                             <div>Email Address: { sellerData.email }</div>
-                                            <div>Contact Number: { sellerData.areaCode + sellerData.number }</div>
+                                            <div>Contact Number: { sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
                                             <div>Profession: { sellerData.profession }</div>
                                             <div>Status: { sellerData.status }</div>
                                         </div>

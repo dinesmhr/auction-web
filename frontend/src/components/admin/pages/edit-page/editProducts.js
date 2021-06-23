@@ -431,7 +431,7 @@ const AdminEditProduct = () => {
                         <div>
                             <div>Full Name: { userData.fullname }</div>
                             <div>Email Address: { userData.email }</div>
-                            <div>Contact Number: { userData.areaCode + userData.number }</div>
+                            <div>Contact Number: { userData.contact_num.areaCode + userData.contact_num.number }</div>
                             <div>Profession: { userData.profession }</div>
                             <div>Status: { userData.status }</div>
                         </div>
