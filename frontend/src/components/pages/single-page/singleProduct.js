@@ -50,9 +50,9 @@ const SingleProduct = () => {
             <div id="auction-web-singlePage" className="">
                     {
                         productData === null ? (
-                            <div id="singlePage" className="tracking-wider"><span className="">Loading datas..</span></div>
+                            <div id="singlePage" className="tracking-wider"><div className="">Loading datas..</div></div>
                         ) : productData.length === 0 ? (
-                            <div id="singlePage" className="tracking-wider"><span className="">No products found</span></div>
+                            <div id="singlePage" className="tracking-wider"><div className="">No products found</div></div>
                         ) : (
                             <div id="singlePage flex flex-row" className="tracking-wider">
                                 {
@@ -78,9 +78,9 @@ const SingleProduct = () => {
                                                 </div>
                                                 <div className="singlePage-right ml-12">
                                                     <h2 className="font-bold text-2xl">{product.title.trim()}</h2>
-                                                    <div>
-                                                        <span className="text-sm">{ `Categories` }</span>
-                                                        <div>
+                                                    <div className="flex flex-row">
+                                                        <div className="text-sm">{ `Categories` }</div>
+                                                        <div className="ml-3 text-sm">
                                                             { !categories ? (
                                                                     "No categories"
                                                                 ) : categories.length === 0 ? (
@@ -97,9 +97,9 @@ const SingleProduct = () => {
                                                             }
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <span className="text-sm">{ `Tags` }</span>
-                                                        <div>
+                                                    <div className="flex flex-row">
+                                                        <div className="text-sm">{ `Tags` }</div>
+                                                        <div className="ml-3 text-sm">
                                                             { !tags ? (
                                                                     "No tags"
                                                                 ) : tags.length === 0 ? (
@@ -114,27 +114,28 @@ const SingleProduct = () => {
                                                                     })
                                                                 )
                                                             }
-                                                        </div>
-                                                        <hr/>
+                                                        </div> 
                                                     </div>
+                                                    <hr/>
                                                     <div className="mt-2">
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Description ` }</span>
+                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Description ` }</div>
                                                         {product.description.trim()}
                                                     </div>
 
                                                     <div>
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</span>
+                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</div>
                                                         {product.initial_bid.trim()}
                                                     </div>
 
                                                     <div>
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</span>
+                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
                                                         {product.submission_date.trim()}
                                                     </div>
+                                                    <hr/>
 
                                                     <div>                                                
-                                                        <span className="singlePage_RightData font-bold mr-2 text-base">{ `Specifications ` }</span>
-                                                        <div>
+                                                        <div className="mt-2 singlePage_RightData font-bold mr-2 text-base">{ `Specifications ` }</div>
+                                                        <div className="mb-3">
                                                             { product.specifications && 
                                                                 product.specifications.map((spec, specKey) => {
                                                                     return (
@@ -146,6 +147,7 @@ const SingleProduct = () => {
                                                             }
                                                         </div>
                                                     </div>
+                                                    <button class="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded">Bid Now</button>
                                                 </div>
                                             </div>
                                         )
