@@ -27,6 +27,7 @@ if( is_db_connected() ) {
   $images         = isset( $decoded_data["images"] ) ? $decoded_data["images"] : '';
   $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? serialize( $decoded_data["tags"] ) : '';
   $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? serialize( $decoded_data["categories"] ) : '';
+  $status         = isset( $decoded_data["status"] ) ? $decoded_data["status"] : 'draft';
 
   function is_base64_encoded( $data ) {
     if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data)) {
@@ -64,7 +65,7 @@ if( is_db_connected() ) {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', categories = '" .$categories. "', tags = '" .$tags. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "' WHERE id = '" .$id. "'";
+  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', categories = '" .$categories. "', tags = '" .$tags. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
     $structure['status'] = true;
     $structure['message'] = 'Your product form is updated';

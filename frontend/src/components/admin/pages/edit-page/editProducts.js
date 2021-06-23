@@ -25,6 +25,7 @@ const AdminEditProduct = () => {
 	const [images, setImages] = useState({value: []});
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
+    const [productStatus, setProductStatus] = useState('');
     const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Update Product');
@@ -48,6 +49,7 @@ const AdminEditProduct = () => {
             })
             setImages({value: tempImages})
             setDeadlineDate({value: res.data.data[0].deadline_date})
+            setProductStatus({value: res.data.data[0].status})
             if(Array.isArray( res.data.data[0].categories ) ) { setCategories(res.data.data[0].categories) }
             if(Array.isArray( res.data.data[0].tags ) ) { setTags(res.data.data[0].tags) }
         })
@@ -221,7 +223,8 @@ const AdminEditProduct = () => {
 				deadlineDate: deadlineDate.value,
 				images: images.value,
                 tags: tags,
-                categories: categories
+                categories: categories,
+                status: productStatus.value
 			}
 			axios.post( '/edit-table/update-products.php', apiParams)
 			.then(function(response) {
@@ -402,6 +405,18 @@ const AdminEditProduct = () => {
                     </div>
                 </div>
 
+                <div>
+                    Status
+                    <div>
+                        <select className="text-black" value={productStatus.value} onChange={(e) => setProductStatus({value: e.target.value})}>
+                            <option value="draft" >Draft</option>
+                            <option value="available">Available</option>
+                            <option value="sold">Sold</option>
+                            <option value="unavailable">Unavailable</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div className="aweb-Product-form-button">
                     <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
@@ -411,12 +426,12 @@ const AdminEditProduct = () => {
                     </div>
                 }
                 <div>
-                    Author Information
+                    Seller Information
                     { userData &&
                         <div>
                             <div>Full Name: { userData.fullname }</div>
                             <div>Email Address: { userData.email }</div>
-                            <div>Contact Number: { userData.areaCode + userData.number }</div>
+                            <div>Contact Number: { userData.contact_num.areaCode + userData.contact_num.number }</div>
                             <div>Profession: { userData.profession }</div>
                             <div>Status: { userData.status }</div>
                         </div>
