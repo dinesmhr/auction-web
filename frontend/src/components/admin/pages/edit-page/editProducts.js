@@ -251,7 +251,7 @@ const AdminEditProduct = () => {
         <div id="auction-web-admin" className="content-wrap">
             <AdminMainNavigation/>
             <div id="admin-right-content">
-                <div className="aweb-Product-form-button">
+                <div className="aweb-Product-form-button mb-2">
                     <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
                 <div>
@@ -268,7 +268,7 @@ const AdminEditProduct = () => {
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Specifications/Features</label>
+                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Specifications/Features</label>
                         { specifications.error &&
                             <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
                         }
@@ -299,33 +299,34 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Initial 
-                        Bid</label>
+                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Initial 
+                        Bid<BiDollar/></label>
                         { initialBid.error &&
                             <span className="text-xs text-red-700">{ initialBid.errorMessage }</span>
                         }
                         <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
-                        <BiDollar/>
                     </div>
                 </div>
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Maximum 
-                        Bid</label>
+                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Maximum 
+                        Bid<BiDollar/></label>
                         { maxBid.error &&
                             <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
                         }
                         <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
-                        <BiDollar/>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap -mx-3 mb-6">
-                    <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Bid Deadline Date</label>
+                <div className="flex flex-wrap -mx-3 mb-6  w-full px-3 flex-col items-center">
+                        <div>
+                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Bid Deadline Date</label>
+                        </div>
                         { deadlineDate.error &&
-                            <span className="text-xs text-red-700">{ deadlineDate.errorMessage }</span>
+                            <div>
+                            <span className="text-xs text-red-700 flex justify-center">{ deadlineDate.errorMessage }</span>
+                            </div>
                         }
                         <DatePicker
                             value={deadlineDate.value}
@@ -334,12 +335,12 @@ const AdminEditProduct = () => {
                             inputPlaceholder="Select a day"
                             shouldHighlightWeekends
                             />
-                    </div>
+                    
                 </div>
 
                 <div className="-mx-3 mb-6">
                     <div className="min-h-full">
-                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Images</label>
+                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Images</label>
                         { images.error &&
                             <span className="text-xs text-red-700">{ images.errorMessage }</span>
                         }
@@ -372,8 +373,9 @@ const AdminEditProduct = () => {
                 </div>
 
                 <div>
-                    Categories
-                    <div>
+                 <div className="">
+                    Categories</div>
+                    <div className="flex flex-row">
                         { categoriesData &&
                             categoriesData.map((category, index) => {
                                 let checkedStatus = false
@@ -381,7 +383,7 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/>{ category.title }</>
+                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-2">{ category.title }</div></>
                                 )
                             })
                         }
@@ -417,7 +419,7 @@ const AdminEditProduct = () => {
                     </div>
                 </div>
 
-                <div className="aweb-Product-form-button">
+                <div className="aweb-Product-form-button mt-2 mb-2">
                     <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
                 { status && 
@@ -425,15 +427,27 @@ const AdminEditProduct = () => {
                         { message }
                     </div>
                 }
+                <hr/>
                 <div>
-                    Seller Information
+                <div className="mt-2 text-lg text-yellow-600 font-bold">
+                    Seller Information</div>
                     { userData &&
                         <div>
-                            <div>Full Name: { userData.fullname }</div>
-                            <div>Email Address: { userData.email }</div>
-                            <div>Contact Number: { userData.contact_num.areaCode + userData.contact_num.number }</div>
-                            <div>Profession: { userData.profession }</div>
-                            <div>Status: { userData.status }</div>
+                            <div className="flex flex-row">
+                                <div className="font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ userData.fullname }</div>
+                            </div>
+                            <div className="flex flex-row">
+                                <div className="font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ userData.email }</div>
+                            </div>
+                            <div className="flex flex-row">    
+                                <div className="font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ userData.contact_num.areaCode + userData.contact_num.number }</div>
+                            </div>
+                            <div className="flex flex-row">
+                                <div className="font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ userData.profession }</div>
+                            </div>
+                            <div className="flex flex-row">  
+                                <div className="font-bold text-sm mr-1">Status : </div><div className="text-sm">{ userData.status }</div>
+                            </div>        
                         </div>
                     }
                 </div>
