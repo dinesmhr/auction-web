@@ -6,6 +6,7 @@ import ModalImage from "react-modal-image";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
 
 const axios = require('axios');
 
@@ -325,8 +326,8 @@ const AdminEditProduct = () => {
         <div id="auction-web-admin" className="content-wrap">
             <AdminMainNavigation/>
             <div id="admin-right-content">
-                <div className="aweb-Product-form-button mb-2">
-                    <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
+                <div className="aweb-Product-form-button">
+                    <button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
                 <div>
                     { title.error &&
@@ -334,16 +335,16 @@ const AdminEditProduct = () => {
                     }
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="title" onChange = { (e) => setTitle({value: e.target.value}) } value={title.value}/>
                 </div>
-                <div>
-                    <label>Description</label>
-                    <textarea className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
+                <div className="mt-4">
+                    <label>Description : </label>
+                    <textarea className="mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
                         {description.value}
                     </textarea>
                 </div>
-                <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="flex flex-wrap -mx-3 mb-6 mt-4">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Specifications/Features</label>
-                        <div className="bg-gray-200">
+                        <label className="">Specifications/Features :</label>
+                        <div className="bg-gray-200 mt-2 pb-3">
                             { specifications.error &&
                                 <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
                             }
@@ -352,15 +353,16 @@ const AdminEditProduct = () => {
                                     return (
                                         <>
                                             <div className="" key={index}>
-                                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
-                                                { index !== 0 &&
-                                                    <button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-400 rounded-lg focus:shadow-outline hover:bg-gray-500" type="button" onClick ={() => deleteRow(index) }>
-                                                        Delete above row
+                                            { index !== 0 &&
+                                                    <button className="fill-current text-red-700 ml-3 p-1 text-2xl hover:text-red-600 " type="button" onClick ={() => deleteRow(index) }>
+                                                    <AiFillDelete  Delete row />
                                                     </button>
                                                 }
+                                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
+                                                
 
                                             { ( index + 1 ) === specifications.value.length &&
-                                                <button className="bg-gray-800 flex-shrink-0 border-transparent border-4 text-teal-500 hover:bg-gray-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
+                                                <button className="ml-4 mt-2 mb-2 bg-gray-800 flex-shrink-0 border-transparent border-4 text-teal-500 hover:bg-gray-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
                                             }
                                             { ( index === 10 ) &&
                                                 "Specifications/Features are limited. You can only add upto 10"
@@ -376,29 +378,28 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Initial 
-                        Bid<BiDollar/></label>
+                        <label className="">Initial Bid :<BiDollar/></label>
                         { initialBid.error &&
-                            <span className="text-xs text-red-700">{ initialBid.errorMessage }</span>
+                            <span className="text-xs text-red-700 ">{ initialBid.errorMessage }</span>
                         }
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
+                        <input className="mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
                     </div>
                 </div>
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Maximum 
-                        Bid<BiDollar/></label>
+                        <label className="">Maximum 
+                        Bid :<BiDollar/></label>
                         { maxBid.error &&
                             <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
                         }
-                        <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
+                        <input className="mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
                     </div>
                 </div>
 
-                <div className="flex flex-wrap -mx-3 mb-6  w-full px-3 flex-col items-center">
+                <div className="flex flex-wrap -mx-3 mb-6  w-full px-3 flex-col items-center mt-4">
                         <div>
-                            <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Bid Deadline Date</label>
+                            <div className="mb-2">Bid Deadline Date :</div>
                         </div>
                         { deadlineDate.error &&
                             <div>
@@ -414,15 +415,15 @@ const AdminEditProduct = () => {
                         />
                 </div>
 
-                <div className="-mx-3 mb-8 p-6">
+                <div className="-mx-3 mb-8 p-6 mt-4">
                     <div className="min-h-full">
-                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Images</label>
+                        <div className="mb-2">Images :</div>
                         { images.error &&
                             <span className="text-xs text-red-700">{ images.errorMessage }</span>
                         }
                         <input type="file" name="images" ref={imagesRef} onChange = { (e) => handleSetImages(e) } multiple="multiple" accept="image/jpg, image/jpeg" style={{display:"none"}}/>
                         {  (images.value.length < 8 ) &&
-                            <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-300 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
+                            <div className="mt-1 img-add image-upload cursor-pointer w-16 h-16 p-6 border border-gray-300 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
                         }
                         {  (images.value.length === 8 ) &&
                             <div>The maximum number of images you can upload is only 8 ( eight )</div>
@@ -432,7 +433,7 @@ const AdminEditProduct = () => {
                                 images.value.map((image, key) => {
                                     return (
                                         <React.Fragment key={`unique-${key}`}>
-                                            <div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
+                                            <div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className=" bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
                                                 <ModalImage
                                                     small={image.dataUrl}
                                                     large={image.dataUrl}
@@ -449,8 +450,8 @@ const AdminEditProduct = () => {
                 </div>
 
                 <div>
-                 <div className="">
-                    Categories</div>
+                 <div className="mt-4">
+                    Categories : </div>
                     <div className="flex flex-row p-1">
                         { categoriesData &&
                             categoriesData.map((category, index) => {
@@ -459,7 +460,7 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-2 text-sm">{ category.title }</div></>
+                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-1 ml-1 text-sm">{ category.title }</div></>
                                 )
                             })
                         }
@@ -467,7 +468,7 @@ const AdminEditProduct = () => {
                 </div>
 
                 <div className="flex flex-col p-1">
-                   <div> Tags</div>
+                   <div className="mt-4"> Tags : </div>
                     <div className="flex flex-row">
                         { tagsData &&
                             tagsData.map(( tag, index) => {
@@ -476,7 +477,7 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <><input key={index} onChange = { (e) => handleTags(e) } type="checkbox" value={ tag.id } checked={checkedStatus}/><div className="mr-1 text-sm">{ tag.title }</div></>
+                                    <><input key={index} onChange = { (e) => handleTags(e) } type="checkbox" value={ tag.id } checked={checkedStatus}/><div className="mr-1 ml-1 text-sm">{ tag.title }</div></>
                                 )
                             })
                         }
@@ -484,9 +485,9 @@ const AdminEditProduct = () => {
                 </div>
 
                 <div className="p-1">
-                    <div>Status</div>
+                    <div className="mt-4">Status : </div>
                     <div className="">
-                        <select className="text-black" value={productStatus.value} onChange={(e) => setProductStatus({value: e.target.value})}>
+                        <select className="text-black mt-1" value={productStatus.value} onChange={(e) => setProductStatus({value: e.target.value})}>
                             <option value="draft" >Draft</option>
                             <option value="available">Available</option>
                             <option value="sold">Sold</option>
@@ -496,7 +497,7 @@ const AdminEditProduct = () => {
                 </div>
 
                 <div className="aweb-Product-form-button mt-3 mb-4">
-                    <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
+                    <button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
                 { status && 
                     <div className="aweb-success-note">
@@ -504,8 +505,8 @@ const AdminEditProduct = () => {
                     </div>
                 }
                 <hr/>
-                <div>
-                <div className="mt-2 text-lg text-yellow-600 font-bold">
+                <div className="mt-3 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-300 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
+                <div className="mt-2 text-lg text-purple-900 font-bold">
                     Seller Information</div>
                     { userData &&
                         <div>
