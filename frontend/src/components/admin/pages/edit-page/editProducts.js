@@ -79,11 +79,12 @@ const AdminEditProduct = () => {
                 const tempTags = res.data.data.map((tag) => {
                     return tag.term_id
                 })
+                console.log(tempTags)
                 setInitialTags(tempTags)
             }
         })
     }, [updateTerm])
-
+    
     // set categories of the product
     useEffect(() => {
         axios.get( `/product-meta.php?product_id=${id}&meta_key=cat` )
@@ -285,7 +286,6 @@ const AdminEditProduct = () => {
                 delete: getUnmatchedArray(initialTags, tags),
                 add : getUnmatchedArray(tags, initialTags)
             }
-            console.log(finalTags)
 			let apiParams = {
 				submit: "update-product",
                 id: id,
@@ -304,7 +304,6 @@ const AdminEditProduct = () => {
 			.then(function(response) {
 				if( response.data.status ) {
                     setUpdateTerm(!updateTerm)
-                    console.log(!updateTerm)
 					setStatus(true)
 					setMessage(response.data.message)
 				} else {
