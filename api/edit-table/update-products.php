@@ -29,6 +29,8 @@ if( is_db_connected() ) {
   $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? serialize( $decoded_data["categories"] ) : '';
   $status         = isset( $decoded_data["status"] ) ? $decoded_data["status"] : 'draft';
 
+  var_dump($decoded_data["categories"]);
+  return;
   function is_base64_encoded( $data ) {
     if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data)) {
        return TRUE;

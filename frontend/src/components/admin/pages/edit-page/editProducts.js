@@ -29,7 +29,9 @@ const AdminEditProduct = () => {
     const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Update Product');
-    
+    const [initialCategories, setInitialCategories] = useState([]);
+    const [initialTags, setInitialTags] = useState([]);
+
     const { id } = useParams()
 
     useEffect(() => {
@@ -50,8 +52,13 @@ const AdminEditProduct = () => {
             setImages({value: tempImages})
             setDeadlineDate({value: res.data.data[0].deadline_date})
             setProductStatus({value: res.data.data[0].status})
-            if(Array.isArray( res.data.data[0].categories ) ) { setCategories(res.data.data[0].categories) }
-            if(Array.isArray( res.data.data[0].tags ) ) { setTags(res.data.data[0].tags) }
+            if(Array.isArray( res.data.data[0].categories ) ) { 
+                setCategories(res.data.data[0].categories)
+                setInitialCategories(res.data.data[0].categories)
+            }
+            if(Array.isArray( res.data.data[0].tags ) ) { 
+                setTags(res.data.data[0].tags)
+            }
         })
     }, [])
 
@@ -82,7 +89,6 @@ const AdminEditProduct = () => {
     
     // handle categories multi checkbox
     const handleCategories = (e) => {
-        console.log(categories)
         if(categories.includes(e.target.value)) {
             categories.splice( categories.indexOf(e.target.value), 1 )
         } else {
@@ -208,8 +214,36 @@ const AdminEditProduct = () => {
         return false
     }
 
+    // filter categories
+    const filterCategories = () => {
+        if( initialCategories.length !== 0 ) {
+            const deleteCats = initialCategories.filter((cat) => {
+                return categories.indexOf(cat) === -1
+            })
+            console.log(deleteCats)
+        }
+        // return true;
+    }
+
+    // filter tags
+    const filterTags = () => {
+        console.log("Tags")
+        console.log( "Initial " + initialTags )
+        console.log( "Final " + tags )
+        if( initialTags.length !== 0 ) {
+            const deleteTags = initialTags.filter((cat) => {
+                return tags.indexOf(cat) === -1
+            })
+            console.log(deleteTags)
+        }
+        return true;
+    }
+
 	const onsubmit = (e) => {
 		e.preventDefault()
+        filterCategories();
+        //filterTags();
+        return;
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
             setSubmitText( 'Submitting product' )
 			let apiParams = {
