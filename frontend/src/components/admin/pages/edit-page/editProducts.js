@@ -303,6 +303,7 @@ const AdminEditProduct = () => {
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
                         <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Specifications/Features</label>
+                        <div className="bg-gray-200">
                         { specifications.error &&
                             <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
                         }
@@ -311,23 +312,26 @@ const AdminEditProduct = () => {
                                 return (
                                     <>
                                         <div className="" key={index}>
-                                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
+                                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
                                             { index !== 0 &&
-                                                <button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-100 rounded-lg focus:shadow-outline hover:bg-white-800" type="button" onClick ={() => deleteRow(index) }>
-                                                    Delete row
+                                                <button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-400 rounded-lg focus:shadow-outline hover:bg-gray-500" type="button" onClick ={() => deleteRow(index) }>
+                                                    Delete above row
                                                 </button>
                                             }
-                                        </div>
+
                                         { ( index + 1 ) === specifications.value.length &&
-                                            <button className="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
+                                            <button className="bg-gray-800 flex-shrink-0 border-transparent border-4 text-teal-500 hover:bg-gray-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
                                         }
                                         { ( index === 10 ) &&
                                             "Specifications/Features are limited. You can only add upto 10"
                                         }
+                                        </div>
                                     </>
                                 )
                             })
                         }
+
+                                        </div>
                     </div>
                 </div>
 
@@ -372,7 +376,7 @@ const AdminEditProduct = () => {
                     
                 </div>
 
-                <div className="-mx-3 mb-6">
+                <div className="-mx-3 mb-8 p-6">
                     <div className="min-h-full">
                         <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Images</label>
                         { images.error &&
@@ -380,7 +384,7 @@ const AdminEditProduct = () => {
                         }
                         <input type="file" name="images" ref={imagesRef} onChange = { (e) => handleSetImages(e) } multiple="multiple" accept="image/jpg, image/jpeg" style={{display:"none"}}/>
                         {  (images.value.length < 8 ) &&
-                            <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
+                            <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-300 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
                         }
                         {  (images.value.length === 8 ) &&
                             <div>The maximum number of images you can upload is only 8 ( eight )</div>
@@ -409,7 +413,7 @@ const AdminEditProduct = () => {
                 <div>
                  <div className="">
                     Categories</div>
-                    <div className="flex flex-row">
+                    <div className="flex flex-row p-1">
                         { categoriesData &&
                             categoriesData.map((category, index) => {
                                 let checkedStatus = false
@@ -417,16 +421,16 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-2">{ category.title }</div></>
+                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-2 text-sm">{ category.title }</div></>
                                 )
                             })
                         }
                     </div>
                 </div>
 
-                <div>
-                    Tags
-                    <div>
+                <div className="flex flex-col p-1">
+                   <div> Tags</div>
+                    <div className="flex flex-row">
                         { tagsData &&
                             tagsData.map(( tag, index) => {
                                 let checkedStatus = false
@@ -434,16 +438,16 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <><input key={index} onChange = { (e) => handleTags(e) } type="checkbox" value={ tag.id } checked={checkedStatus}/> { tag.title }</>
+                                    <><input key={index} onChange = { (e) => handleTags(e) } type="checkbox" value={ tag.id } checked={checkedStatus}/><div className="mr-1 text-sm">{ tag.title }</div></>
                                 )
                             })
                         }
                     </div>
                 </div>
 
-                <div>
-                    Status
-                    <div>
+                <div className="p-1">
+                    <div>Status</div>
+                    <div className="">
                         <select className="text-black" value={productStatus.value} onChange={(e) => setProductStatus({value: e.target.value})}>
                             <option value="draft" >Draft</option>
                             <option value="available">Available</option>
@@ -453,7 +457,7 @@ const AdminEditProduct = () => {
                     </div>
                 </div>
 
-                <div className="aweb-Product-form-button mt-2 mb-2">
+                <div className="aweb-Product-form-button mt-3 mb-4">
                     <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
                 { status && 
@@ -480,7 +484,7 @@ const AdminEditProduct = () => {
                                 <div className="font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ userData.profession }</div>
                             </div>
                             <div className="flex flex-row">  
-                                <div className="font-bold text-sm mr-1">Status : </div><div className="text-sm">{ userData.status }</div>
+                                <div className="font-bold text-sm mr-1"> Status : </div><div className="text-sm">{ userData.status }</div>
                             </div>        
                         </div>
                     }
