@@ -29,8 +29,10 @@ const AdminEditProduct = () => {
     const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Update Product');
+
     const [initialCategories, setInitialCategories] = useState([]);
     const [initialTags, setInitialTags] = useState([]);
+    const [updateTerm, setUpdateTerm] = useState(true);
 
     const { id } = useParams()
 
@@ -52,15 +54,60 @@ const AdminEditProduct = () => {
             setImages({value: tempImages})
             setDeadlineDate({value: res.data.data[0].deadline_date})
             setProductStatus({value: res.data.data[0].status})
-            if(Array.isArray( res.data.data[0].categories ) ) { 
-                setCategories(res.data.data[0].categories)
-                setInitialCategories(res.data.data[0].categories)
-            }
-            if(Array.isArray( res.data.data[0].tags ) ) { 
-                setTags(res.data.data[0].tags)
-            }
         })
     }, [])
+
+    // set initial categories of the product
+    useEffect(() => {
+        axios.get( `/product-meta.php?product_id=${id}&meta_key=cat` )
+        .then(function(res) {
+            if(res.data.status) {
+                const tempCats = res.data.data.map((cat) => {
+                    return cat.term_id
+                })
+                setInitialCategories(tempCats)
+            }
+        })
+    }, [updateTerm])
+
+    // set initial tags of the product
+    useEffect(() => {
+        axios.get( `/product-meta.php?product_id=${id}&meta_key=tag` )
+        .then(function(res) {
+            if(res.data.status) {
+                const tempTags = res.data.data.map((tag) => {
+                    return tag.term_id
+                })
+                setInitialTags(tempTags)
+            }
+        })
+    }, [updateTerm])
+
+    // set categories of the product
+    useEffect(() => {
+        axios.get( `/product-meta.php?product_id=${id}&meta_key=cat` )
+        .then(function(res) {
+            if(res.data.status) {
+                const tempCats = res.data.data.map((cat) => {
+                    return cat.term_id
+                })
+                setCategories(tempCats)
+            }
+        })
+    }, [updateTerm])
+
+    // set tags of the product
+    useEffect(() => {
+        axios.get( `/product-meta.php?product_id=${id}&meta_key=tag` )
+        .then(function(res) {
+            if(res.data.status) {
+                const tempTags = res.data.data.map((tag) => {
+                    return tag.term_id
+                })
+                setTags(tempTags)
+            }
+        })
+    }, [updateTerm])
 
     useEffect(() => {
         { userId &&
@@ -214,38 +261,30 @@ const AdminEditProduct = () => {
         return false
     }
 
-    // filter categories
-    const filterCategories = () => {
-        if( initialCategories.length !== 0 ) {
-            const deleteCats = initialCategories.filter((cat) => {
-                return categories.indexOf(cat) === -1
+    // return unmatched value from first array
+    const getUnmatchedArray = (firstArray, lastArray) => {
+        let unmatchedArray = []
+        if( firstArray ) {
+            unmatchedArray = firstArray.filter((cat) =>  {
+                return lastArray.indexOf(cat) === -1
             })
-            console.log(deleteCats)
         }
-        // return true;
-    }
-
-    // filter tags
-    const filterTags = () => {
-        console.log("Tags")
-        console.log( "Initial " + initialTags )
-        console.log( "Final " + tags )
-        if( initialTags.length !== 0 ) {
-            const deleteTags = initialTags.filter((cat) => {
-                return tags.indexOf(cat) === -1
-            })
-            console.log(deleteTags)
-        }
-        return true;
+        return unmatchedArray;
     }
 
 	const onsubmit = (e) => {
 		e.preventDefault()
-        filterCategories();
-        //filterTags();
-        return;
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
             setSubmitText( 'Submitting product' )
+            const finalCategories = { 
+                delete: getUnmatchedArray(initialCategories, categories),
+                add : getUnmatchedArray(categories, initialCategories)
+            }
+            const finalTags = { 
+                delete: getUnmatchedArray(initialTags, tags),
+                add : getUnmatchedArray(tags, initialTags)
+            }
+            console.log(finalTags)
 			let apiParams = {
 				submit: "update-product",
                 id: id,
@@ -256,14 +295,15 @@ const AdminEditProduct = () => {
 				maxBid: maxBid.value,
 				deadlineDate: deadlineDate.value,
 				images: images.value,
-                tags: tags,
-                categories: categories,
+                tags: finalTags,
+                categories: finalCategories,
                 status: productStatus.value
 			}
 			axios.post( '/edit-table/update-products.php', apiParams)
 			.then(function(response) {
-                console.log(response.data)
 				if( response.data.status ) {
+                    setUpdateTerm(!updateTerm)
+                    console.log(!updateTerm)
 					setStatus(true)
 					setMessage(response.data.message)
 				} else {
@@ -304,34 +344,33 @@ const AdminEditProduct = () => {
                     <div className="w-full px-3">
                         <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Specifications/Features</label>
                         <div className="bg-gray-200">
-                        { specifications.error &&
-                            <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
-                        }
-                        { 
-                            specifications.value.map((specification, index) => {
-                                return (
-                                    <>
-                                        <div className="" key={index}>
-                                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
-                                            { index !== 0 &&
-                                                <button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-400 rounded-lg focus:shadow-outline hover:bg-gray-500" type="button" onClick ={() => deleteRow(index) }>
-                                                    Delete above row
-                                                </button>
+                            { specifications.error &&
+                                <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
+                            }
+                            { 
+                                specifications.value.map((specification, index) => {
+                                    return (
+                                        <>
+                                            <div className="" key={index}>
+                                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
+                                                { index !== 0 &&
+                                                    <button className="h-10 px-5 m-2 text-red-800 transition-colors duration-150 bg-gray-400 rounded-lg focus:shadow-outline hover:bg-gray-500" type="button" onClick ={() => deleteRow(index) }>
+                                                        Delete above row
+                                                    </button>
+                                                }
+
+                                            { ( index + 1 ) === specifications.value.length &&
+                                                <button className="bg-gray-800 flex-shrink-0 border-transparent border-4 text-teal-500 hover:bg-gray-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
                                             }
-
-                                        { ( index + 1 ) === specifications.value.length &&
-                                            <button className="bg-gray-800 flex-shrink-0 border-transparent border-4 text-teal-500 hover:bg-gray-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
-                                        }
-                                        { ( index === 10 ) &&
-                                            "Specifications/Features are limited. You can only add upto 10"
-                                        }
-                                        </div>
-                                    </>
-                                )
-                            })
-                        }
-
-                                        </div>
+                                            { ( index === 10 ) &&
+                                                "Specifications/Features are limited. You can only add upto 10"
+                                            }
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
 
@@ -359,11 +398,11 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6  w-full px-3 flex-col items-center">
                         <div>
-                        <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Bid Deadline Date</label>
+                            <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2">Bid Deadline Date</label>
                         </div>
                         { deadlineDate.error &&
                             <div>
-                            <span className="text-xs text-red-700 flex justify-center">{ deadlineDate.errorMessage }</span>
+                                <span className="text-xs text-red-700 flex justify-center">{ deadlineDate.errorMessage }</span>
                             </div>
                         }
                         <DatePicker
@@ -372,8 +411,7 @@ const AdminEditProduct = () => {
                             minimumDate={utils().getToday()}
                             inputPlaceholder="Select a day"
                             shouldHighlightWeekends
-                            />
-                    
+                        />
                 </div>
 
                 <div className="-mx-3 mb-8 p-6">
