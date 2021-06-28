@@ -195,7 +195,7 @@ const AdminProductTags = () => {
 												{/*header*/}
 												<div className="flex items-start p-2 admin-modal-border">
 												<h3 className="text-2xl font-semibold pl-4">
-													{ `Create Tag` }
+													{ `Update Tag` }
 												</h3>
 												<button className="p-1 ml-auto bg-gray border-0 text-white float-right text-base outline-none focus:outline-none" onClick={() => setShowTagUpdateModal(false)}
 												>

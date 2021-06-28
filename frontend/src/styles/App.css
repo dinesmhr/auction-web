@@ -816,18 +816,23 @@ table th {
 	word-wrap: break-word;
 }
 
+
 /*************************************************
  	    ENDS SINGLE PRODUCT CSS 
 **************************************************/
-.editProductSeller{
-	display: grid;
-	grid-auto-flow: column;
-	text-align: left;
-	grid-gap: -1000px;
+/*************************************************
+ 	    DATEPICKER CSS 
+**************************************************/
+.DatePicker {
+	color: #343434;
 }
+/*************************************************
+ 	    ENDS DATEPICKER CSS 
+**************************************************/
 
-
-
+.editProductUser td{
+	padding: 2px;
+}
 
 /*******************************************
  			Footer Css

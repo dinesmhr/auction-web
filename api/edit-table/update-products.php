@@ -25,12 +25,10 @@ if( is_db_connected() ) {
   $maxBid         = isset( $decoded_data["maxBid"] ) ? $decoded_data["maxBid"] : '';
   $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? serialize( $decoded_data["deadlineDate"] ) : '';
   $images         = isset( $decoded_data["images"] ) ? $decoded_data["images"] : '';
-  $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? serialize( $decoded_data["tags"] ) : '';
-  $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? serialize( $decoded_data["categories"] ) : '';
+  $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? $decoded_data["tags"] : '';
+  $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? $decoded_data["categories"] : '';
   $status         = isset( $decoded_data["status"] ) ? $decoded_data["status"] : 'draft';
 
-  var_dump($decoded_data["categories"]);
-  return;
   function is_base64_encoded( $data ) {
     if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data)) {
        return TRUE;
@@ -67,8 +65,40 @@ if( is_db_connected() ) {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', categories = '" .$categories. "', tags = '" .$tags. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
+  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
+        // add new selected categories 
+        if(!empty($decoded_data["categories"]["add"])) {
+          foreach( $decoded_data["categories"]["add"] as $add ) {
+            $add_sql = "INSERT INTO aw_product_meta( term_id, product_id, meta_key ) VALUES( $add, $id, 'cat' )";
+            $CONNECTION->query( $add_sql );
+          }
+        }
+
+        // delete old unselect categories
+        if(!empty($decoded_data["categories"]["delete"])) {
+          foreach( $decoded_data["categories"]["delete"] as $del ) {
+            $del_sql = "DELETE FROM aw_product_meta WHERE term_id = $del AND product_id = $id AND meta_key = 'cat'";
+            $CONNECTION->query( $del_sql );
+          }
+        }
+
+        // add new selected tags
+        if(!empty($decoded_data["tags"]["add"])) {
+          foreach( $decoded_data["tags"]["add"] as $add ) {
+            $add_sql = "INSERT INTO aw_product_meta( term_id, product_id, meta_key ) VALUES( $add, $id, 'tag' )";
+            $CONNECTION->query( $add_sql );
+          }
+        }
+
+        // delete old unselect tags
+        if(!empty($decoded_data["tags"]["delete"])) {
+          foreach( $decoded_data["tags"]["delete"] as $del ) {
+            $del_sql = "DELETE FROM aw_product_meta WHERE term_id = $del AND product_id = $id AND meta_key = 'tag'";
+            $CONNECTION->query( $del_sql );
+          }
+        }
+
     $structure['status'] = true;
     $structure['message'] = 'Your product form is updated';
   } else {
