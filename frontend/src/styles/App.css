@@ -819,6 +819,16 @@ table th {
 /*************************************************
  	    ENDS SINGLE PRODUCT CSS 
 **************************************************/
+.editProductSeller{
+	display: grid;
+	grid-auto-flow: column;
+	text-align: left;
+	grid-gap: -1000px;
+}
+
+
+
+
 /*******************************************
  			Footer Css
 ********************************************/

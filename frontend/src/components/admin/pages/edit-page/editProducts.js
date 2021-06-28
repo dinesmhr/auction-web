@@ -296,14 +296,14 @@ const AdminEditProduct = () => {
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="title" onChange = { (e) => setTitle({value: e.target.value}) } value={title.value}/>
                 </div>
                 <div className="mt-4">
-                    <label>Description : </label>
+                    <div>Description : </div>
                     <textarea className="mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
                         {description.value}
                     </textarea>
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-6 mt-4">
                     <div className="w-full px-3">
-                        <label className="">Specifications/Features :</label>
+                        <div className="">Specifications/Features :</div>
                         <div className="bg-gray-200 mt-2 pb-3">
                         { specifications.error &&
                             <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
@@ -339,8 +339,8 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="">Initial 
-                        Bid :<BiDollar/></label>
+                        <div className="">Initial 
+                        Bid :<BiDollar/></div>
                         { initialBid.error &&
                             <span className="text-xs text-red-700 ">{ initialBid.errorMessage }</span>
                         }
@@ -350,8 +350,8 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="">Maximum 
-                        Bid :<BiDollar/></label>
+                        <div className="">Maximum 
+                        Bid :<BiDollar/></div>
                         { maxBid.error &&
                             <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
                         }
@@ -472,20 +472,20 @@ const AdminEditProduct = () => {
                 <div className="mt-2 text-lg text-purple-900 font-bold">
                     Seller Information</div>
                     { userData &&
-                        <div>
-                            <div className="flex flex-row">
-                                <div className="font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ userData.fullname }</div>
+                        <div className="">
+                            <div className="editProductSeller">
+                                <div className="font-bold text-sm mr-1">Full Name : </div><div className="text-sm text-left ">{ userData.fullname }</div>
                             </div>
-                            <div className="flex flex-row">
-                                <div className="font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ userData.email }</div>
+                            <div className="editProductSeller">
+                                <div className="font-bold text-sm mr-1">Email Address : </div><div className="text-sm text-left ">{ userData.email }</div>
                             </div>
-                            <div className="flex flex-row">    
-                                <div className="font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ userData.contact_num.areaCode + userData.contact_num.number }</div>
+                            <div className="editProductSeller">    
+                                <div className="font-bold text-sm mr-1">Contact Number : </div><div className="text-sm text-left">{ userData.contact_num.areaCode + userData.contact_num.number }</div>
                             </div>
-                            <div className="flex flex-row">
+                            <div className="editProductSeller">
                                 <div className="font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ userData.profession }</div>
                             </div>
-                            <div className="flex flex-row">  
+                            <div className="editProductSeller">  
                                 <div className="font-bold text-sm mr-1"> Status : </div><div className="text-sm">{ userData.status }</div>
                             </div>        
                         </div>
