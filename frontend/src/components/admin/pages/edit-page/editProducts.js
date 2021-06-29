@@ -66,6 +66,7 @@ const AdminEditProduct = () => {
                 const tempCats = res.data.data.map((cat) => {
                     return cat.term_id
                 })
+                console.log( tempCats)
                 setInitialCategories(tempCats)
             }
         })
@@ -79,7 +80,6 @@ const AdminEditProduct = () => {
                 const tempTags = res.data.data.map((tag) => {
                     return tag.term_id
                 })
-                console.log(tempTags)
                 setInitialTags(tempTags)
             }
         })
@@ -207,7 +207,7 @@ const AdminEditProduct = () => {
     const validateTitle = () => {
         if( title.value === '' ) {
             title.error = true;
-            title.errorMessage = "Tittle must not be empty";
+            title.errorMessage = "Title must not be empty";
             setTitle( JSON.parse(JSON.stringify( title )) )	
         } else {
             return true
