@@ -332,17 +332,17 @@ const AdminEditProduct = () => {
                     { title.error &&
                         <span className="text-xs text-red-700">{ title.errorMessage }</span>
                     }
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="title" onChange = { (e) => setTitle({value: e.target.value}) } value={title.value}/>
+                    <input className="text-sm shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="title" onChange = { (e) => setTitle({value: e.target.value}) } value={title.value}/>
                 </div>
                 <div className="mt-4">
-                    <label>Description : </label>
-                    <textarea className="mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
+                    <div>Description : </div>
+                    <textarea className="text-sm text-sm mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
                         {description.value}
                     </textarea>
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-6 mt-4">
                     <div className="w-full px-3">
-                        <label className="">Specifications/Features :</label>
+                        <div className="">Specifications/Features :</div>
                         <div className="bg-gray-200 mt-2 pb-3">
                             { specifications.error &&
                                 <span className="text-xs text-red-700">{ specifications.errorMessage }</span>
@@ -357,7 +357,7 @@ const AdminEditProduct = () => {
                                                     <AiFillDelete  Delete row />
                                                     </button>
                                                 }
-                                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
+                                                <input className="text-sm appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
                                                 
 
                                             { ( index + 1 ) === specifications.value.length &&
@@ -377,22 +377,23 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="">Initial Bid :<BiDollar/></label>
+                        <div className="">Initial 
+                        Bid :<BiDollar/></div>
                         { initialBid.error &&
                             <span className="text-xs text-red-700 ">{ initialBid.errorMessage }</span>
                         }
-                        <input className="mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
+                        <input className="text-sm mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
                     </div>
                 </div>
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label className="">Maximum 
-                        Bid :<BiDollar/></label>
+                        <div className="">Maximum 
+                        Bid :<BiDollar/></div>
                         { maxBid.error &&
                             <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
                         }
-                        <input className="mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
+                        <input className="text-sm mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add maximum bid" onChange={(e) => setMaxBid({value: e.target.value})} value={maxBid.value} aria-label="Initial Bid" />
                     </div>
                 </div>
 
@@ -486,7 +487,7 @@ const AdminEditProduct = () => {
                 <div className="p-1">
                     <div className="mt-4">Status : </div>
                     <div className="">
-                        <select className="text-black mt-1" value={productStatus.value} onChange={(e) => setProductStatus({value: e.target.value})}>
+                        <select className="text-sm text-black mt-1" value={productStatus.value} onChange={(e) => setProductStatus({value: e.target.value})}>
                             <option value="draft" >Draft</option>
                             <option value="available">Available</option>
                             <option value="sold">Sold</option>
@@ -499,7 +500,7 @@ const AdminEditProduct = () => {
                     <button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
                 </div>
                 { status && 
-                    <div className="aweb-success-note">
+                    <div className="aweb-success-note mb-2">
                         { message }
                     </div>
                 }
@@ -508,23 +509,23 @@ const AdminEditProduct = () => {
                 <div className="mt-2 text-lg text-purple-900 font-bold">
                     Seller Information</div>
                     { userData &&
-                        <div>
-                            <div className="flex flex-row">
-                                <div className="font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ userData.fullname }</div>
-                            </div>
-                            <div className="flex flex-row">
-                                <div className="font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ userData.email }</div>
-                            </div>
-                            <div className="flex flex-row">    
-                                <div className="font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ userData.contact_num.areaCode + userData.contact_num.number }</div>
-                            </div>
-                            <div className="flex flex-row">
-                                <div className="font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ userData.profession }</div>
-                            </div>
-                            <div className="flex flex-row">  
-                                <div className="font-bold text-sm mr-1"> Status : </div><div className="text-sm">{ userData.status }</div>
-                            </div>        
-                        </div>
+                        <tbody>
+                            <tr className="editProductUser">
+                                <td className="font-bold text-sm mr-1">Full Name : </td><td className="text-sm text-left ">{ userData.fullname }</td>
+                            </tr>
+                            <tr className="editProductUser">
+                                <td className="font-bold text-sm mr-1">Email Address : </td><td className="text-sm text-left ">{ userData.email }</td>
+                            </tr>
+                            <tr className="editProductUser">    
+                                <td className="font-bold text-sm mr-1">Contact Number : </td><td className="text-sm text-left">{ userData.contact_num.areaCode + userData.contact_num.number }</td>
+                            </tr>
+                            <tr className="editProductUser">
+                                <td className="font-bold text-sm mr-1">Profession : </td><td className="text-sm">{ userData.profession }</td>
+                            </tr>
+                            <tr className="editProductUser">  
+                                <td className="font-bold text-sm mr-1"> Status : </td><td className="text-sm">{ userData.status }</td>
+                            </tr>        
+                        </tbody>
                     }
                 </div>
             </div>
