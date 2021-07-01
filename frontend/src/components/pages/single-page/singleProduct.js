@@ -183,9 +183,7 @@ const SingleProduct = () => {
                                                 </div>
                                                  )
                                                })
-                                        } 
-
-
+                                        }
                                 <hr/>
                                 <div>
                                     <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>

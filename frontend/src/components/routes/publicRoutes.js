@@ -7,6 +7,7 @@ import Myaccount from '../pages/Myaccount'
 import UserVerification from '../pages/userVerification'
 import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
+import Categories from '../pages/categories'
 
 import SingleProduct from '../pages/single-page/singleProduct'
 
@@ -40,6 +41,7 @@ export const PublicRoutes = () => {
             <Switch>
                 <Route path="/" exact component={() => <Home/>}></Route>
                 <Route path="/products" exact component={() => <Products/>}></Route>
+                <Route path="/categories" exact component={() => <Categories/>}></Route>
                 { userStatus !== 'verified' &&
                   <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 }
