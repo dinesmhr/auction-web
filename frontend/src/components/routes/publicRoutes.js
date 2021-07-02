@@ -8,6 +8,7 @@ import UserVerification from '../pages/userVerification'
 import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
 import Categories from '../pages/categories'
+import SingleCategory from '../pages/single-page/singleCategory'
 
 import SingleProduct from '../pages/single-page/singleProduct'
 
@@ -47,6 +48,7 @@ export const PublicRoutes = () => {
                 }
                 <Route path="/submit-product" component={() => <ProductSubmit/> }></Route>
                 <Route path="/products/:id" component={(props) => <SingleProduct/>}></Route>
+                <Route path="/category/:id" component={(props) => <SingleCategory/>}></Route>
                 <Route path="/myaccount" component={() => <Myaccount/>}></Route>
                 <Route path="/login" component={() => <Login/>}></Route>
                 <Route path="/signup" component={() => <Signup/>}></Route>

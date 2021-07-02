@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import Carousel from 'react-gallery-carousel';
 import 'react-gallery-carousel/dist/index.css';
-import {appContext} from '../../../App'
 
 const axios = require('axios')
 
@@ -16,7 +15,6 @@ const SingleProduct = () => {
     const [ categories, setCategories ] = useState('')
     const [ tags, setTags ] = useState('')
     const { id } = useParams()
-    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
@@ -59,7 +57,7 @@ const SingleProduct = () => {
     return (
         <>  
         <div id="auction-web">
-            <Header isLoggedIn = { isLoggedIn } />                    
+            <Header/>                    
             <div id="auction-web-singlePage" className="">
                     {
                         productData === null ? (

@@ -12,6 +12,14 @@ if( is_db_connected() ) {
         $product_id = $_GET['product_id'];
         $meta_key   = isset( $_GET['meta_key'] ) ? $_GET['meta_key'] : 'cat';
         $product_meta_sql = 'SELECT term_id FROM aw_product_meta WHERE product_id="'.$product_id.'" AND meta_key = "' .$meta_key. '"';
+    } else if( isset( $_GET['term_id'] ) ) {
+        $term_id = $_GET['term_id'];
+        $meta_key   = isset( $_GET['meta_key'] ) ? $_GET['meta_key'] : 'cat';
+        if( isset( $_GET['count'] ) ) {
+            $product_meta_sql = 'SELECT COUNT(*) FROM aw_product_meta WHERE term_id="'.$term_id.'" AND meta_key = "' .$meta_key. '"';
+        } else {
+            $product_meta_sql = 'SELECT * FROM aw_product_meta WHERE term_id="'.$term_id.'" AND meta_key = "' .$meta_key. '"';
+        }
     } else {
         $product_meta_sql = 'SELECT * FROM aw_product_meta WHERE 1';
     }
@@ -23,7 +31,11 @@ if( is_db_connected() ) {
         } else {
             $structure['status'] = true;
             $structure['message'] = 'success';
-            $product_meta = $datas->fetch_all(MYSQLI_ASSOC);
+            if( isset($_GET['count']) ) {
+                $product_meta = $datas->fetch_all();
+            } else {
+                $product_meta = $datas->fetch_all(MYSQLI_ASSOC);
+            }
             $structure['data'] = $product_meta;
         }
     } else {

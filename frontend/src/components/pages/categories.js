@@ -4,6 +4,7 @@ import Header from "../header/Header"
 const axios = require('axios')
 
 const Card=(category)=>{
+    const [  productCount, setProductCount ] = useState()
     const { id, title, image_path } = category
     let featureImage
     if( !image_path[0].includes('http://localhost/auction-web/') ) {
@@ -11,6 +12,13 @@ const Card=(category)=>{
     } else {
         featureImage = image_path[0]
     }
+
+    useEffect(() => {
+        axios.get( `/product-meta.php?term_id=${id}&count=count` )
+        .then(function(res) {
+            setProductCount(res.data.data[0])
+        })
+    }, [])
     
     return(
         <>
@@ -20,6 +28,9 @@ const Card=(category)=>{
                     <h3 title={title}>
                         <a href={ `category/${id}` }>{title}</a>
                     </h3>
+                    { productCount &&
+                        <div>{ `${productCount} products` }</div>
+                    }
                 </div>
             </div>
         </>
