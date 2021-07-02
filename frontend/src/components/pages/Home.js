@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../header/Header'
+import Footer from '../footer/Footer'
 
 const Home = () => {
     return ( 
@@ -10,6 +11,7 @@ const Home = () => {
                 <img src="/assets/auction.jpg"/>
                 </div>
             </div>
+            
         </div>
     );
 }
