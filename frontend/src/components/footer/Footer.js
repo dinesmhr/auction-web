@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="aweb-main-footer-wrap">
             <div className="upper-footer-wrap">
                 <div class="footer-item">
-                    <p className="text-gray-300 text-base mb-2 font-semibold mt-3">Company</p>
+                    <p className="text-gray-200 text-base mb-2 font-semibold mt-3">Company</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="" target="_black">About</a></li>
                         <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="" target="_blank">Auction Central News</a></li>
@@ -18,7 +18,7 @@ const Footer = () => {
                 </div>
 
                <div class="footer-item">  
-                <p className="text-gray-300 text-base mb-2 font-semibold mt-3">Winning</p>
+                <p className="text-gray-200 text-base mb-2 font-semibold mt-3">Winning</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="" target="_black">Auction Calender</a></li>
                         <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="" target="_blank">Auction House Directory</a></li>
@@ -29,7 +29,7 @@ const Footer = () => {
                 </div>
 
                 <div class="footer-item">  
-                <p className="text-gray-300 text-base mb-2 font-semibold mt-3">Selling</p>
+                <p className="text-gray-200 text-base mb-2 font-semibold mt-3">Selling</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="" target="_black">Auction Sign-in</a></li>
                         <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="" target="_blank">Become A Seller</a></li>
