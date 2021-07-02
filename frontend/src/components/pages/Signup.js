@@ -200,7 +200,7 @@ const Signup = () => {
     return (
         <div id="auction-web">
             <Header isLoggedIn = { isLoggedIn }/>
-            <form id="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form className="mt-5">
                 <div className="aweb-signup-form-wrapper">
                     <div className="input-wrapper">
                         <div className="form-heading">
@@ -213,7 +213,7 @@ const Signup = () => {
                                     { fullname.errorMessage }
                                 </div>
                             }
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="fullname" onChange = {(e) => setFullname({ value: e.target.value }) } value={ fullname.value }/>
+                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="fullname" onChange = {(e) => setFullname({ value: e.target.value }) } value={ fullname.value }/>
                         </div>
                         <div className="aweb-username">
                             <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
@@ -222,7 +222,7 @@ const Signup = () => {
                                     { username.errorMessage }
                                 </div>
                             }
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="username" onChange = {(e) => handleUsername( e.target.value ) } value={ username.value }/>
+                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="username" onChange = {(e) => handleUsername( e.target.value ) } value={ username.value }/>
                         </div>
                         <div className="aweb-email">
                             <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
@@ -231,7 +231,7 @@ const Signup = () => {
                                     { email.errorMessage }
                                 </div>
                             }
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="email" onChange = {(e) => handleEmail( e.target.value) } value={ email.value }/>
+                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="email" onChange = {(e) => handleEmail( e.target.value) } value={ email.value }/>
                         </div>
                         <div className="aweb-password">
                             <label className="block text-gray-700 text-sm font-bold mb-2">Password ( <i>Contain at least 1 UPPERCASE letter, lowercase letters and 1 numeric character</i> ) </label>
@@ -240,7 +240,7 @@ const Signup = () => {
                                     { password.errorMessage }
                                 </div>
                             }
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" onChange = {(e) => setPassword({ value: e.target.value }) } value={ password.value }/>
+                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" onChange = {(e) => setPassword({ value: e.target.value }) } value={ password.value }/>
                         </div>
                         <div className="aweb-password">
                             <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
@@ -249,7 +249,7 @@ const Signup = () => {
                                     { cpassword.errorMessage }
                                 </div>
                             }
-                            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="cpassword" onChange = {(e) => setCpassword({value: e.target.value}) } value={ cpassword.value }/>
+                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="cpassword" onChange = {(e) => setCpassword({value: e.target.value}) } value={ cpassword.value }/>
                         </div>
                             <div className="aweb-submit">
                         <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText } disabled={ isDisabled }/>

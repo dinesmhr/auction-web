@@ -213,29 +213,19 @@ a.active_name {
 .aweb-submit input{
 	border: none;
  	outline: none;
- 	height: 50px;
+ 	height: 40px;
  	background: #1c8adb;
  	color: #fff;
- 	font-size: 18px;
- 	border-radius: 20px;
+ 	font-size: 16px;
+ 	border-radius: 5px;
  	width: 75%;
  	margin: 20px 50px;
+
  }
-.aweb-submit input{
-	border: none;
- 	outline: none;
- 	height: 50px;
- 	background: #1c8adb;
- 	color: #fff;
- 	font-size: 18px;
- 	border-radius: 20px;
- 	width: 75%;
- 	margin: 20px 50px;
-}
+
 .aweb-submit input:hover{
 	cursor: pointer;
-	background: #39dc79;
- 	color: #000;
+	background: #1d4ed8;
 }
 .aweb-login-form-wrapper .input-wrapper .aweb-login-note{
 	font-weight: bold;
@@ -282,7 +272,8 @@ a.active_name {
 	margin-top: 10px;
 	max-height: auto;
 	overflow-y: hidden; 
-	box-shadow: 2px 6px 10px grey;
+	box-shadow: 3px 18px 50px -16px rgba(148,140,140,0.45);
+
 }
 .input-wrapper .form-heading h2{
 	color: #1a1261;
@@ -301,10 +292,10 @@ a.active_name {
 	display: flex;
 	justify-content: center;
 	text-align: center;
-	width: 50%;
+	width: 40%;
 	margin:auto;
-
 }
+
 /*******************************************
  			Ends Login Form Css
 ********************************************/
