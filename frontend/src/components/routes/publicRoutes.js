@@ -47,12 +47,12 @@ export const PublicRoutes = () => {
                   <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 }
                 <Route path="/submit-product" component={() => <ProductSubmit/> }></Route>
-                <Route path="/products/:id" component={(props) => <SingleProduct/>}></Route>
-                <Route path="/category/:id" component={(props) => <SingleCategory/>}></Route>
+                <Route path="/category:id" component={(props) => <SingleCategory/>}></Route>
                 <Route path="/myaccount" component={() => <Myaccount/>}></Route>
                 <Route path="/login" component={() => <Login/>}></Route>
                 <Route path="/signup" component={() => <Signup/>}></Route>
                 <Route path="/product/:id" component={(props) => <SingleProduct/>}></Route>
+                <Route path="/category/product/:id" component={(props) => <SingleProduct/>}></Route>
             </Switch>
         </BrowserRouter>
     )
