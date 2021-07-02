@@ -57,7 +57,7 @@ const SingleCategory = () => {
         <div>
             { data &&
                 <>
-                    <h2>{data.title}</h2>
+                    <h1>{data.title}</h1>
                     <div>
                         {data.description}
                     </div>
@@ -70,6 +70,7 @@ const SingleCategory = () => {
                 </>
             }
             <div>
+                <h2>Products</h2>
                 { !productIds &&
                     <>
                         <div>No products assigned in this category</div>
