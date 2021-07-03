@@ -9,8 +9,8 @@ import ProductSubmit from '../pages/ProductSubmit'
 import Signup from '../pages/Signup'
 import Categories from '../pages/categories'
 import SingleCategory from '../pages/single-page/singleCategory'
-
 import SingleProduct from '../pages/single-page/singleProduct'
+import Search from '../pages/search'
 
 const axios = require('axios')
 
@@ -53,6 +53,8 @@ export const PublicRoutes = () => {
                 <Route path="/signup" component={() => <Signup/>}></Route>
                 <Route path="/product/:id" component={(props) => <SingleProduct/>}></Route>
                 <Route path="/category/product/:id" component={(props) => <SingleProduct/>}></Route>
+                <Route path="/search/product/:id" component={(props) => <SingleProduct/>}></Route>
+                <Route path="/search/:search_key" exact component={(props) => <Search/>}></Route>
             </Switch>
         </BrowserRouter>
     )

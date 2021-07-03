@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Header from '../header/Header';
-import {appContext} from '../../App'
+import React, { useState, useEffect } from 'react';
+import Header from '../header/Header'
 import {ProductCard} from './cards/productCard'
 import Footer from '../footer/Footer'
 
@@ -8,7 +7,6 @@ const axios = require('axios');
 
 const Products = () => {
     const [ products, setProducts ] = useState({})
-    const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
         axios.get( '/products.php' )
@@ -17,12 +15,12 @@ const Products = () => {
                 setProducts(response.data.data)
             }
         })
-    })
+    }, [])
     
     if( !Array.isArray(products) ) {
         return (
             <div id="auction-web">
-                <Header isLoggedIn = { isLoggedIn }/>
+                <Header/>
                 <div id="auction-web-shop" className="page--shop main-wrapper">
                     No products to display
                 </div>

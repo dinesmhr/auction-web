@@ -6,7 +6,7 @@ const Footer = () => {
         <footer>
         <div className="aweb-main-footer-wrap">
             <div className="upper-footer-wrap">
-                <div class="footer-item">
+                <div className="footer-item">
                     <p className="text-gray-100 text-base mb-3 font-semibold mt-3">Company</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="" target="_black">About</a></li>
@@ -17,7 +17,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-               <div class="footer-item">  
+               <div className="footer-item">  
                 <p className="text-gray-100 text-base mb-3 font-semibold mt-3">Winning</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="" target="_black">Auction Calender</a></li>
@@ -28,7 +28,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div class="footer-item">  
+                <div className="footer-item">  
                 <p className="text-gray-100 text-base mb-3 font-semibold mt-3">Selling</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="" target="_black">Auction Sign-in</a></li>

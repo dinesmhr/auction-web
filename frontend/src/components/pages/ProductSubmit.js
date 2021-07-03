@@ -68,6 +68,7 @@ const ProductSubmit = () => {
 		let files = e.target.files
 		if( files.length !== 0 ) {
 			for( let i = 0; i < files.length; i++ ) {
+				//if( i >=8 ) { break; }
 				if(files[i]) {
 					let reader = new FileReader();
 					reader.readAsDataURL(files[i]);
@@ -76,6 +77,7 @@ const ProductSubmit = () => {
 						setImages(JSON.parse(JSON.stringify(images)))
 					}
 				}
+				console.log(images.value.length)
 			}
 		}
 	}
@@ -349,7 +351,7 @@ const ProductSubmit = () => {
 									{  (images.value.length < 8 ) &&
 										<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
 									}
-									{  (images.value.length === 8 ) &&
+									{  (images.value.length >= 8 ) &&
 										<div>The maximum number of images you can upload is only 8 ( eight )</div>
 									}
 								<div className="inline block flex flex-row justify-around ">

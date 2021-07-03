@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
+import { SearchCard } from './cards/searchCard'
 
 const Home = () => {
 
@@ -8,6 +9,7 @@ const Home = () => {
         <div id="auction-web">
             <Header/>
                 <div id="auction-web-home" className="page--home main-wrapper">
+                    <SearchCard />
                     <div className= "home-banner">
                         <img src="/assets/auction.jpg"/>
                     </div>
