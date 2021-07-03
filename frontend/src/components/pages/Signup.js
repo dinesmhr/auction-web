@@ -1,12 +1,12 @@
 /**
  * Sign up form
  * 
- * 
  */
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../header/Header';
 import {appContext} from '../../App'
+import Footer from '../footer/Footer'
 
 const axios = require('axios');
 
@@ -81,17 +81,6 @@ const Signup = () => {
             setUsername( JSON.parse(JSON.stringify( username )) )
         } else {
             let condition = true
-            // axios.get( `/users.php?username=${username.value}` )
-            // .then( function (response) {
-            //     if( response.data.status ) {
-            //         username.value = username.value
-            //         username.error = true
-            //         username.errorMessage = "Username not available"
-            //         setUsername( JSON.parse(JSON.stringify( username )) )
-            //         setIsDisabled(true)
-            //         condition = false
-            //     }
-            // })
             return condition
         }
         return false
@@ -199,70 +188,71 @@ const Signup = () => {
 
     return (
         <div id="auction-web">
-            <Header isLoggedIn = { isLoggedIn }/>
-            <form className="mt-5">
-                <div className="aweb-signup-form-wrapper">
-                    <div className="input-wrapper">
-                        <div className="form-heading">
-                            <h2>Do Not Have Account? Please <span>Sign Up!</span></h2>
+            <Header/>
+                <form className="mt-5">
+                    <div className="aweb-signup-form-wrapper">
+                        <div className="input-wrapper">
+                            <div className="form-heading">
+                                <h2>Do Not Have Account? Please <span>Sign Up!</span></h2>
+                            </div>
+                            <div className="aweb-fullname">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Fullname</label>
+                                { fullname.error &&
+                                    <div className="aweb-red-note">
+                                        { fullname.errorMessage }
+                                    </div>
+                                }
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="fullname" onChange = {(e) => setFullname({ value: e.target.value }) } value={ fullname.value }/>
+                            </div>
+                            <div className="aweb-username">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                                { username.error &&
+                                    <div className="aweb-red-note">
+                                        { username.errorMessage }
+                                    </div>
+                                }
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="username" onChange = {(e) => handleUsername( e.target.value ) } value={ username.value }/>
+                            </div>
+                            <div className="aweb-email">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                                { email.error &&
+                                    <div className="aweb-red-note">
+                                        { email.errorMessage }
+                                    </div>
+                                }
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="email" onChange = {(e) => handleEmail( e.target.value) } value={ email.value }/>
+                            </div>
+                            <div className="aweb-password">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Password ( <i>Contain at least 1 UPPERCASE letter, lowercase letters and 1 numeric character</i> ) </label>
+                                { password.error &&
+                                    <div className="aweb-red-note">
+                                        { password.errorMessage }
+                                    </div>
+                                }
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" onChange = {(e) => setPassword({ value: e.target.value }) } value={ password.value }/>
+                            </div>
+                            <div className="aweb-password">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                                { cpassword.error &&
+                                    <div className="aweb-red-note">
+                                        { cpassword.errorMessage }
+                                    </div>
+                                }
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="cpassword" onChange = {(e) => setCpassword({value: e.target.value}) } value={ cpassword.value }/>
+                            </div>
+                                <div className="aweb-submit">
+                            <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText } disabled={ isDisabled }/>
                         </div>
-                        <div className="aweb-fullname">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Fullname</label>
-                            { fullname.error &&
-                                <div className="aweb-red-note">
-                                    { fullname.errorMessage }
-                                </div>
-                            }
-                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="fullname" onChange = {(e) => setFullname({ value: e.target.value }) } value={ fullname.value }/>
-                        </div>
-                        <div className="aweb-username">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
-                            { username.error &&
-                                <div className="aweb-red-note">
-                                    { username.errorMessage }
-                                </div>
-                            }
-                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="username" onChange = {(e) => handleUsername( e.target.value ) } value={ username.value }/>
-                        </div>
-                        <div className="aweb-email">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-                            { email.error &&
-                                <div className="aweb-red-note">
-                                    { email.errorMessage }
-                                </div>
-                            }
-                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="email" onChange = {(e) => handleEmail( e.target.value) } value={ email.value }/>
-                        </div>
-                        <div className="aweb-password">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Password ( <i>Contain at least 1 UPPERCASE letter, lowercase letters and 1 numeric character</i> ) </label>
-                            { password.error &&
-                                <div className="aweb-red-note">
-                                    { password.errorMessage }
-                                </div>
-                            }
-                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" onChange = {(e) => setPassword({ value: e.target.value }) } value={ password.value }/>
-                        </div>
-                        <div className="aweb-password">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-                            { cpassword.error &&
-                                <div className="aweb-red-note">
-                                    { cpassword.errorMessage }
-                                </div>
-                            }
-                            <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="cpassword" onChange = {(e) => setCpassword({value: e.target.value}) } value={ cpassword.value }/>
-                        </div>
-                            <div className="aweb-submit">
-                        <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText } disabled={ isDisabled }/>
+                        { status && 
+                            <div className="aweb-success-note">
+                                { message }
+                                <a href="/login">Login now</a>
+                            </div>
+                        }
                     </div>
-                    { status && 
-                        <div className="aweb-success-note">
-                            { message }
-                            <a href="/login">Login now</a>
                         </div>
-                    }
-                </div>
-                    </div>
-            </form>
+                </form>
+            <Footer/>
         </div>
     )
 }

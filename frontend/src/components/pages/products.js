@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Header from '../header/Header';
 import {appContext} from '../../App'
 import {ProductCard} from './cards/productCard'
+import Footer from '../footer/Footer'
 
 const axios = require('axios');
 
@@ -31,16 +32,17 @@ const Products = () => {
 
     return ( 
         <div id="auction-web">
-            <Header isLoggedIn = { isLoggedIn }/>
-            <div id="auction-web-shop" className="page--shop main-wrapper">
-                <div className="product-wrap">                    	                                                  
-                    { Array.isArray(products) &&
-                        products.map((product, index) => {
-                            return( <ProductCard key={index} { ...product } /> )
-                        })
-                    }
+            <Header/>
+                <div id="auction-web-shop" className="page--shop main-wrapper">
+                    <div className="product-wrap">                    	                                                  
+                        { Array.isArray(products) &&
+                            products.map((product, index) => {
+                                return( <ProductCard key={index} { ...product } /> )
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
+            <Footer/>
         </div>
     );
 }

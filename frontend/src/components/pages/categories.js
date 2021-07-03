@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import Header from "../header/Header"
-import {ProductCard} from './cards/productCard'
+import Footer from "../footer/Footer"
 
 const axios = require('axios')
 
-const Card=(category)=>{
+const CategoryCard=(category)=>{
     const [  productCount, setProductCount ] = useState()
     const { id, title, image_path } = category
     let featureImage
@@ -51,16 +51,17 @@ const Categories = () => {
     return (
         <>
             <Header/>
-            <div id="auction-web-categoriesPage">
-                { !data &&
-                    <div>{`Loading categories`}</div>
-                }
-                { Array.isArray(data) &&
-                    data.map((dat, key) => {
-                        return <Card key={key} {...dat}/>
-                    })   
-                }
-            </div>
+                <div id="auction-web-categoriesPage">
+                    { !data &&
+                        <div>{`Loading categories`}</div>
+                    }
+                    { Array.isArray(data) &&
+                        data.map((dat, key) => {
+                            return <CategoryCard key={key} {...dat}/>
+                        })   
+                    }
+                </div>
+            <Footer/>
         </>
     )
 }

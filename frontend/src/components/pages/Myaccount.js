@@ -1,6 +1,7 @@
 import React, { Fragment, useRef, useState, useContext } from "react";
 import { Redirect } from 'react-router-dom'
 import Header from '../header/Header'
+import Footer from '../footer/Footer'
 import { Dialog, Transition } from '@headlessui/react'
 import {appContext} from '../../App'
 
@@ -105,12 +106,13 @@ const Myaccount = () => {
 
     return (
         <div id="auction-web">
-            <Header isLoggedIn = { isLoggedIn }/>
-            { `This is my account page` }
-            <button className="logout-button" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
-            { 
-               LogoutModal()
-            }
+            <Header/>
+                { `This is my account page` }
+                <button className="logout-button" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
+                { 
+                LogoutModal()
+                }
+            <Footer/>
         </div>
     )
 }

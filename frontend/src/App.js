@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminRoutes } from './components/routes/adminRoutes'
 import { PublicRoutes } from './components/routes/publicRoutes'
-import Footer from './components/footer/Footer'
 import './styles/App.css'
 
 const axios = require('axios');
@@ -27,7 +26,6 @@ const App = () => {
     <appContext.Provider value={ {isLoggedIn, updateLoggedInStatus} }>
       <AdminRoutes />
       <PublicRoutes/>
-      <Footer />
     </appContext.Provider>
   );
 }

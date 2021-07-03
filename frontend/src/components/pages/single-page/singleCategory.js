@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import { ProductCard } from '../cards/productCard'
+import Footer from '../../footer/Footer'
 
 const axios = require('axios')
 
@@ -18,7 +19,7 @@ const CatProductCard = (productId) => {
     return (
         <>
             { !product &&
-                <>Loading product info</>
+                <div>Loading product info</div>
             }
             { product &&
                 <ProductCard { ...product }/>
@@ -53,39 +54,40 @@ const SingleCategory = () => {
     
     return (
         <>
-        <Header/>
-        <div>
-            { data &&
-                <>
-                    <h1>{data.title}</h1>
-                    <div>
-                        {data.description}
-                    </div>
-                    <div>
-                    {
-                        <img src={data.image_path[0]} alt={data.title}/>
-                        
+            <Header/>
+                <div>
+                    { data &&
+                        <>
+                            <h1>{data.title}</h1>
+                            <div>
+                                {data.description}
+                            </div>
+                            <div>
+                            {
+                                <img src={data.image_path[0]} alt={data.title}/>
+                                
+                            }
+                            </div>
+                        </>
                     }
+                    <div>
+                        <h2>Products</h2>
+                        { !productIds &&
+                            <>
+                                <div>No products assigned in this category</div>
+                                <div>
+                                    <Link to="/categories">Browse other categories</Link>
+                                </div>
+                            </>
+                        }
+                        { productIds && 
+                            productIds.map(( productId, index ) => {
+                                return( <CatProductCard key={index} {...productId.product_id}/>)
+                            })
+                        }
                     </div>
-                </>
-            }
-            <div>
-                <h2>Products</h2>
-                { !productIds &&
-                    <>
-                        <div>No products assigned in this category</div>
-                        <div>
-                            <Link to="/categories">Browse other categories</Link>
-                        </div>
-                    </>
-                }
-                { productIds && 
-                    productIds.map(( productId, index ) => {
-                        return( <CatProductCard key={index} {...productId.product_id}/>)
-                    })
-                }
-            </div>
-        </div>
+                </div>
+            <Footer/>
         </>
     )
 }

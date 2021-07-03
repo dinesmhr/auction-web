@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import Carousel from 'react-gallery-carousel';
 import 'react-gallery-carousel/dist/index.css';
+import Footer from '../../footer/Footer'
 
 const axios = require('axios')
 
@@ -56,160 +57,161 @@ const SingleProduct = () => {
 
     return (
         <>  
-        <div id="auction-web">
-            <Header/>                    
-            <div id="auction-web-singlePage" className="">
-                    {
-                        productData === null ? (
-                            <div id="singlePage" className="tracking-wider"><div className="">Loading datas..</div></div>
-                        ) : productData.length === 0 ? (
-                            <div id="singlePage" className="tracking-wider"><div className="">No products found</div></div>
-                        ) : (
-                            <div id="singlePage flex flex-row" className="tracking-wider">
-                                {
-                                    productData.map( ( product, index )  => {
-                                        const images = product.images_path.map((image, index) => {
-                                            if(!image.includes('http://localhost/auction-web/')) {
-                                                image = `http://localhost/auction-web/${image.split('../').pop()}`
-                                            }
-                                            return (
-                                                { src: image }
-                                                
+            <div id="auction-web">
+                <Header/>                    
+                    <div id="auction-web-singlePage" className="">
+                        {
+                            productData === null ? (
+                                <div id="singlePage" className="tracking-wider"><div className="">Loading datas..</div></div>
+                            ) : productData.length === 0 ? (
+                                <div id="singlePage" className="tracking-wider"><div className="">No products found</div></div>
+                            ) : (
+                                <div id="singlePage flex flex-row" className="tracking-wider">
+                                    {
+                                        productData.map( ( product, index )  => {
+                                            const images = product.images_path.map((image, index) => {
+                                                if(!image.includes('http://localhost/auction-web/')) {
+                                                    image = `http://localhost/auction-web/${image.split('../').pop()}`
+                                                }
+                                                return (
+                                                    { src: image }
+                                                    
+                                                )
+                                            })
+                                            return ( 
+                                                <div key={ index } className="flex flex-row m-10">
+                                                    <div className="singlePage-imageWrap">
+                                                        { images &&
+                                                            <Carousel images={images} style={{ height: 450, width: 550 }}
+                                                                hasTransition={true}
+                                                                hasMediaButton={false} 
+                                                            />  
+                                                        }
+                                                    </div>
+                                                    <div className="singlePage-right ml-12">
+                                                        <div className="font-bold text-2xl">{product.title.trim()}</div>
+
+                                                        <div className="flex flex-row">
+                                                            <div className="text-sm">{ `Categories` }</div>
+                                                            <div className="ml-3 text-sm">
+                                                                { !categories ? (
+                                                                        "No categories"
+                                                                    ) : categories.length === 0 ? (
+                                                                        "Loading categories"
+                                                                    ) : (
+                                                                        categories.map((cat, catKey) => {
+                                                                            return (
+                                                                                <div key={catKey} className="">
+                                                                                    <Link to={`/product-categories/${cat.id}`}>{ cat.title }</Link>
+                                                                                </div>
+                                                                            )
+                                                                        })
+                                                                    )
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex flex-row">
+                                                            <div className="text-sm">{ `Tags` }</div>
+                                                            <div className="ml-3 text-sm">
+                                                                { !tags ? (
+                                                                        "No tags"
+                                                                    ) : tags.length === 0 ? (
+                                                                        "Loading tags"
+                                                                    ) : ( 
+                                                                        tags.map((tag, tagKey) => {
+                                                                            return (
+                                                                                <div key={tagKey} className="">
+                                                                                    <Link to={`/product-tag/${tag.id}`}>{ tag.title }</Link>
+                                                                                </div>
+                                                                            )
+                                                                        })
+                                                                    )
+                                                                }
+                                                            </div> 
+                                                        </div>
+                                                        <div className="flex flex-row">
+                                                            <div className="text-sm">{ `Status` }</div>
+                                                            <div className="text-sm ml-3">{product.status}</div>
+                                                        </div>
+                                                        <hr/>   
+                                                        <div>
+                                                            <div className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</div>
+                                                            {product.initial_bid.trim()}
+                                                        </div>
+
+                                                        <div>
+                                                            <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
+                                                            {product.submission_date.trim()}
+                                                        </div>
+
+
+                                                    
+                                                        <div>
+                                                        <button class="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5">Bid Now</button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             )
                                         })
-                                        return ( 
-                                            <div key={ index } className="flex flex-row m-10">
-                                                <div className="singlePage-imageWrap">
-                                                    { images &&
-                                                        <Carousel images={images} style={{ height: 450, width: 550 }}
-                                                            hasTransition={true}
-                                                            hasMediaButton={false} 
-                                                        />  
-                                                    }
-                                                </div>
-                                                <div className="singlePage-right ml-12">
-                                                    <div className="font-bold text-2xl">{product.title.trim()}</div>
+                                    } 
 
-                                                    <div className="flex flex-row">
-                                                        <div className="text-sm">{ `Categories` }</div>
-                                                        <div className="ml-3 text-sm">
-                                                            { !categories ? (
-                                                                    "No categories"
-                                                                ) : categories.length === 0 ? (
-                                                                    "Loading categories"
-                                                                ) : (
-                                                                    categories.map((cat, catKey) => {
-                                                                        return (
-                                                                            <div key={catKey} className="">
-                                                                                <Link to={`/product-categories/${cat.id}`}>{ cat.title }</Link>
-                                                                            </div>
-                                                                        )
+                                    <hr/>
+                                    {
+                                    productData.map( ( product, index )  => {
+                                            return(
+                                                    <div> 
+                                                            <div className="singleProductRightMargin mt-2 text-sm">
+                                                                <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Description ` }</div>
+                                                                <div className="ml-8 text-sm mr-1">{product.description.trim()}</div>
+                                                            </div>
+                                                    <div className="singleProductRightMargin">
+                                                            <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Specifications ` }</div>
+                                                            <div className="ml-8 text-sm mr-1 mb-5">
+                                                                { product.specifications && 
+                                                                    product.specifications.map((spec, specKey) => {
+                                                                    return (
+                                                                        <div key={specKey} className="">
+                                                                                { spec.value.trim() }
+                                                                        </div>
+                                                                    )
                                                                     })
-                                                                )
                                                             }
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div className="flex flex-row">
-                                                        <div className="text-sm">{ `Tags` }</div>
-                                                        <div className="ml-3 text-sm">
-                                                            { !tags ? (
-                                                                    "No tags"
-                                                                ) : tags.length === 0 ? (
-                                                                    "Loading tags"
-                                                                ) : ( 
-                                                                    tags.map((tag, tagKey) => {
-                                                                        return (
-                                                                            <div key={tagKey} className="">
-                                                                                <Link to={`/product-tag/${tag.id}`}>{ tag.title }</Link>
-                                                                            </div>
-                                                                        )
-                                                                    })
-                                                                )
-                                                            }
-                                                        </div> 
-                                                    </div>
-                                                     <div className="flex flex-row">
-                                                        <div className="text-sm">{ `Status` }</div>
-                                                        <div className="text-sm ml-3">{product.status}</div>
-                                                    </div>
-                                                    <hr/>   
-                                                    <div>
-                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</div>
-                                                        {product.initial_bid.trim()}
-                                                    </div>
-
-                                                    <div>
-                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
-                                                        {product.submission_date.trim()}
-                                                    </div>
-
-
-                                                  
-                                                    <div>
-                                                    <button class="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5">Bid Now</button>
-                                                     </div>
-
+                                                    )
+                                                })
+                                            }
+                                    <hr/>
+                                    <div>
+                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>
+                                        { sellerData &&
+                                            <div className="mb-5">
+                                                <div className="flex flex-row">
+                                                    <div className="ml-8 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
+                                                </div>
+                                                <div className="flex flex-row">
+                                                    <div className="ml-8 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
+                                                </div>
+                                                <div className="flex flex-row">
+                                                    <div className="ml-8 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
+                                                </div>
+                                                <div className="flex flex-row">   
+                                                <div className="ml-8 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
+                                                </div>
+                                                <div className="flex flex-row">
+                                                <div className="ml-8 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
                                                 </div>
                                             </div>
-                                        )
-                                    })
-                                } 
-
-                                <hr/>
-                                  {
-                                 productData.map( ( product, index )  => {
-                                         return(
-                                                  <div> 
-                                                        <div className="singleProductRightMargin mt-2 text-sm">
-                                                              <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Description ` }</div>
-                                                              <div className="ml-8 text-sm mr-1">{product.description.trim()}</div>
-                                                         </div>
-                                                <div className="singleProductRightMargin">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Specifications ` }</div>
-                                                          <div className="ml-8 text-sm mr-1 mb-5">
-                                                               { product.specifications && 
-                                                                  product.specifications.map((spec, specKey) => {
-                                                                  return (
-                                                                    <div key={specKey} className="">
-                                                                            { spec.value.trim() }
-                                                                      </div>
-                                                                  )
-                                                                })
-                                                         }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                 )
-                                               })
                                         }
-                                <hr/>
-                                <div>
-                                    <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>
-                                    { sellerData &&
-                                        <div className="mb-5">
-                                            <div className="flex flex-row">
-                                                <div className="ml-8 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
-                                            </div>
-                                            <div className="flex flex-row">
-                                                <div className="ml-8 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
-                                            </div>
-                                            <div className="flex flex-row">
-                                                <div className="ml-8 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
-                                            </div>
-                                            <div className="flex flex-row">   
-                                            <div className="ml-8 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
-                                            </div>
-                                            <div className="flex flex-row">
-                                            <div className="ml-8 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
-                                            </div>
-                                        </div>
-                                    }
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    }
-                </div>       
-        </div>
+                            )
+                        }
+                    </div>
+                <Footer/>
+            </div>
         </>
     )
 }
