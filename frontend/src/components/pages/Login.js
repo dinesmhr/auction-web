@@ -46,7 +46,7 @@ const Login = () => {
     return (
         <div id="auction-web">
             <Header/>
-                <div className="flex justify-center mt-16">
+                <div className="flex justify-center mt-16 h-screen">
                     <div className="w-full max-w-xs">
                         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                             <div className="aweb-login-note">Login</div>

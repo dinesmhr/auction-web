@@ -51,7 +51,7 @@ const Categories = () => {
     return (
         <>
             <Header/>
-                <div id="auction-web-categoriesPage">
+                <div id="auction-web-categoriesPage" className="h-screen">
                     { !data &&
                         <div>{`Loading categories`}</div>
                     }

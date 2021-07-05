@@ -200,7 +200,7 @@ const ProductSubmit = () => {
 		return (
 			<div id="auction-web">
 				<Header/>
-					<div id="auction-web-product-submit-page">
+					<div id="auction-web-product-submit-page" className="h-screen">
 						{ 'You must be logged in to submit your product' }
 						<div className="aweb-redirect-button">
 							<a href="/login" target="_blank">{ 'Proceed to login page' }</a>

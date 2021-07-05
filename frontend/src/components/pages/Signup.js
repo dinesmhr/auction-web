@@ -189,7 +189,7 @@ const Signup = () => {
     return (
         <div id="auction-web">
             <Header/>
-                <form className="mt-5">
+                <form className="mt-5 h-screen">
                     <div className="aweb-signup-form-wrapper">
                         <div className="input-wrapper">
                             <div className="form-heading">
