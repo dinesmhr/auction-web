@@ -11,6 +11,11 @@ import Categories from '../pages/categories'
 import SingleCategory from '../pages/single-page/singleCategory'
 import SingleProduct from '../pages/single-page/singleProduct'
 import Search from '../pages/search'
+import WhySell from '../pages/extras/whySell'
+import HowAuctionWorks from '../pages/extras/howAuctionWorks'
+import BecomeSeller from '../pages/extras/becomeSeller'
+import GetHelp from '../pages/extras/getHelp'
+import About from '../pages/extras/about'
 
 const axios = require('axios')
 
@@ -47,15 +52,21 @@ export const PublicRoutes = () => {
                   <Route path="/user-verification" component={() => <UserVerification/> }></Route>
                 }
                 <Route path="/submit-product" component={() => <ProductSubmit/> }></Route>
-                <Route path="/category/:id" exact component={(props) => <SingleCategory/>}></Route>
+                <Route path="/category/:id" exact component={() => <SingleCategory/>}></Route>
                 <Route path="/myaccount" component={() => <Myaccount/>}></Route>
                 <Route path="/login" component={() => <Login/>}></Route>
                 <Route path="/signup" component={() => <Signup/>}></Route>
-                <Route path="/product/:id" component={(props) => <SingleProduct/>}></Route>
-                <Route path="/category/product/:id" component={(props) => <SingleProduct/>}></Route>
-                <Route path="/search/product/:id" component={(props) => <SingleProduct/>}></Route>
-                <Route path="/search/:search_key" exact component={(props) => <Search/>}></Route>
-                <Route path="/search/" exact component={(props) => <Search/>}></Route>
+                <Route path="/product/:id" component={() => <SingleProduct/>}></Route>
+                <Route path="/category/product/:id" component={() => <SingleProduct/>}></Route>
+                <Route path="/search/product/:id" component={() => <SingleProduct/>}></Route>
+                <Route path="/search/:search_key" exact component={() => <Search/>}></Route>
+                <Route path="/search/" exact component={() => <Search/>}></Route>
+                { /*Extras*/ }
+                <Route path="/why-sell/" exact component={() => <WhySell/>}></Route>
+                <Route path="/become-seller/" exact component={() => <BecomeSeller/>}></Route>
+                <Route path="/how-auction-works/" exact component={() => <HowAuctionWorks/>}></Route>
+                <Route path="/get-help/" exact component={() => <GetHelp/>}></Route>
+                <Route path="/about/" exact component={() => <About/>}></Route>
             </Switch>
         </BrowserRouter>
     )
