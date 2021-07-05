@@ -33,9 +33,10 @@ const SingleProduct = () => {
         catids &&
             axios.get( `/product-bulkCategories.php?id=${catids}` )
             .then(function(res){
+                console.log(res)
                 setCategories(res.data.data)
             })
-    })
+    }, [])
 
     useEffect(() => {
         tagIds &&
@@ -43,13 +44,12 @@ const SingleProduct = () => {
         .then(function(res){
             setTags(res.data.data)
         })
-    })
+    }, [])
 
     useEffect(() => {
         { sellerID &&
             axios.get( `/user-details.php?id=${sellerID}` )
             .then(function(res) {
-                console.log(res.data.data[0])
                 setSellerData(res.data.data[0])
             })
         }
@@ -135,7 +135,7 @@ const SingleProduct = () => {
                                                         </div>
                                                         <hr/>   
                                                         <div>
-                                                            <div className="singlePage_RightData font-bold mr-2 text-base">{ `Initial Bid ` }</div>
+                                                            <div className="singlePage_RightData font-bold mr-2 text-base">{ `Opening Bid ` }</div>
                                                             {product.initial_bid.trim()}
                                                         </div>
 
@@ -147,7 +147,7 @@ const SingleProduct = () => {
 
                                                     
                                                         <div>
-                                                        <button class="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5">Bid Now</button>
+                                                        <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5">Bid Now</button>
                                                         </div>
 
                                                     </div>
@@ -158,31 +158,31 @@ const SingleProduct = () => {
 
                                     <hr/>
                                     {
-                                    productData.map( ( product, index )  => {
+                                        productData.map( ( product, index )  => {
                                             return(
-                                                    <div> 
-                                                            <div className="singleProductRightMargin mt-2 text-sm">
-                                                                <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Description ` }</div>
-                                                                <div className="ml-8 text-sm mr-1">{product.description.trim()}</div>
-                                                            </div>
+                                                <div key={index}>
+                                                    <div className="singleProductRightMargin mt-2 text-sm">
+                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Description ` }</div>
+                                                        <div className="ml-8 text-sm mr-1">{product.description.trim()}</div>
+                                                    </div>
                                                     <div className="singleProductRightMargin">
-                                                            <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Specifications ` }</div>
-                                                            <div className="ml-8 text-sm mr-1 mb-5">
-                                                                { product.specifications && 
-                                                                    product.specifications.map((spec, specKey) => {
-                                                                    return (
-                                                                        <div key={specKey} className="">
-                                                                                { spec.value.trim() }
-                                                                        </div>
-                                                                    )
-                                                                    })
-                                                            }
-                                                            </div>
+                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Specifications ` }</div>
+                                                        <div className="ml-8 text-sm mr-1 mb-5">
+                                                            { product.specifications && 
+                                                                product.specifications.map((spec, specKey) => {
+                                                                return (
+                                                                    <div key={specKey} className="">
+                                                                            { spec.value.trim() }
+                                                                    </div>
+                                                                )
+                                                                })
+                                                        }
                                                         </div>
                                                     </div>
-                                                    )
-                                                })
-                                            }
+                                                </div>
+                                            )
+                                        })
+                                    }
                                     <hr/>
                                     <div>
                                         <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>

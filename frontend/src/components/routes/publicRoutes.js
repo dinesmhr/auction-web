@@ -55,6 +55,7 @@ export const PublicRoutes = () => {
                 <Route path="/category/product/:id" component={(props) => <SingleProduct/>}></Route>
                 <Route path="/search/product/:id" component={(props) => <SingleProduct/>}></Route>
                 <Route path="/search/:search_key" exact component={(props) => <Search/>}></Route>
+                <Route path="/search/" exact component={(props) => <Search/>}></Route>
             </Switch>
         </BrowserRouter>
     )

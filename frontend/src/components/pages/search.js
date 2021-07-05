@@ -13,15 +13,19 @@ const Search = () => {
     const { search_key } = useParams()
 
     useEffect(() => {
-        axios.get( `/products-search.php?products=products&search_key=${search_key}` )
-        .then(function(response) {
-            if( response.data.status === true ) {
-                setProducts(response.data.data)
-            } else {
-                setError(true)
-                setErrorMessage( `No Products Found with key ${search_key}` )
-            }
-        })
+        let url = `/products-search.php`
+        if(search_key) {
+            url = `/products-search.php?products=products&search_key=${search_key}`
+        }
+            axios.get( url )
+            .then(function(response) {
+                if( response.data.status === true ) {
+                    setProducts(response.data.data)
+                } else {
+                    setError(true)
+                    setErrorMessage( `No Products Found with key ${search_key}` )
+                }
+            })
     }, [])
 
     return ( 
