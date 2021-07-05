@@ -16,6 +16,7 @@ if( !isset( $_POST['submit'] ) ) {
 
 require_once '../functions.php';
 if( is_db_connected() ) {
+  extract( $GLOBALS );
     $fullname = isset( $_POST['fullname'] ) ? $_POST['fullname'] : 'Dummy';
     $username = isset( $_POST['username'] ) ? $_POST['username'] : 'dummy';
     $email    = isset( $_POST['email'] ) ? $_POST['email'] : 'dummy@gmail.com';

@@ -4,9 +4,30 @@ import Header from '../../header/Header'
 import Carousel from 'react-gallery-carousel';
 import 'react-gallery-carousel/dist/index.css';
 import Footer from '../../footer/Footer'
+import { ProductCard } from '../cards/productCard'
 
 const axios = require('axios')
 
+const SimilarProducts = (similarProductId) => {
+    const [ product, setProduct ] = useState()
+    const { product_id } = similarProductId
+
+    // get product data
+    useEffect(() => {
+        axios.get( `/products.php?id=${product_id}` )
+        .then((res) => {
+            setProduct(res.data.data[0])
+        })
+    }, [])
+
+    return (
+        <div>
+            { product &&
+                <ProductCard {...product}/>
+            }            
+        </div>
+    )
+}
 const SingleProduct = () => {
     const [productData, setProductData] = useState(null)
     const [ sellerID, setSellerID ] = useState()
@@ -15,16 +36,43 @@ const SingleProduct = () => {
     const [ tagIds, setTagIds ] = useState()
     const [ categories, setCategories ] = useState('')
     const [ tags, setTags ] = useState('')
+    const [ similarProductsIds, setSimilarProductsIds ] = useState('')
     const { id } = useParams()
-
+    
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
         .then(function(res) {
             if( res.data.status ) {
                 setProductData( res.data.data )
                 setSellerID( res.data.data[0].user_id )
-                setCatids( res.data.data[0].categories )
-                setTagIds( res.data.data[0].tags )
+            }
+        })
+    }, [])
+
+    // get cat ids
+    useEffect(() => {
+        axios.get( `/product-meta.php?product_id=${id}` )
+        .then(function(res) {
+            if(res.data.status) {
+                let tempCatids = []
+                res.data.data.map((tempCatid) => {
+                    tempCatids.push(tempCatid.term_id)
+                })
+                setCatids(tempCatids)
+            }
+        })
+    }, [])
+
+    // get tags ids
+    useEffect(() => {
+        axios.get( `/product-meta.php?product_id=${id}&meta_key=tag` )
+        .then(function(res) {
+            if(res.data.status) {
+                let tempTagids = []
+                res.data.data.map((tempTagid) => {
+                    tempTagids.push(tempTagid.term_id)
+                })
+                setTagIds(tempTagids)
             }
         })
     }, [])
@@ -32,19 +80,26 @@ const SingleProduct = () => {
     useEffect(() => {
         catids &&
             axios.get( `/product-bulkCategories.php?id=${catids}` )
-            .then(function(res){
-                console.log(res)
+            .then(function(res) {
                 setCategories(res.data.data)
             })
-    }, [])
+    }, [catids])
+
+    useEffect(() => {
+        catids &&
+            axios.get( `/product-meta-bulk.php?term_id=${catids}&product_id=${id}` )
+            .then(function(res) {
+                setSimilarProductsIds(res.data.data)
+            })
+    }, [catids])
 
     useEffect(() => {
         tagIds &&
-        axios.get( `/product-bulkTags.php?id=${tagIds}` )
-        .then(function(res){
-            setTags(res.data.data)
-        })
-    }, [])
+            axios.get( `/product-bulkTags.php?id=${tagIds}` )
+            .then(function(res){
+                setTags(res.data.data)
+            })
+    }, [tagIds])
 
     useEffect(() => {
         { sellerID &&
@@ -102,7 +157,7 @@ const SingleProduct = () => {
                                                                         categories.map((cat, catKey) => {
                                                                             return (
                                                                                 <div key={catKey} className="">
-                                                                                    <Link to={`/product-categories/${cat.id}`}>{ cat.title }</Link>
+                                                                                    <Link to={`/category/${cat.id}`}>{ cat.title }</Link>
                                                                                 </div>
                                                                             )
                                                                         })
@@ -121,7 +176,7 @@ const SingleProduct = () => {
                                                                         tags.map((tag, tagKey) => {
                                                                             return (
                                                                                 <div key={tagKey} className="">
-                                                                                    <Link to={`/product-tag/${tag.id}`}>{ tag.title }</Link>
+                                                                                    <Link to={`/tag/${tag.id}`}>{ tag.title }</Link>
                                                                                 </div>
                                                                             )
                                                                         })
@@ -206,6 +261,18 @@ const SingleProduct = () => {
                                             </div>
                                         }
                                     </div>
+                                    { Array.isArray( similarProductsIds ) &&
+                                        <>
+                                            <h1>{ `Similar Products` }</h1>
+                                            { 
+                                                similarProductsIds.map((similarProductId) => {
+                                                    return (
+                                                        <SimilarProducts {...similarProductId}/>
+                                                    )
+                                                })    
+                                            }
+                                        </>
+                                    }
                                 </div>
                             )
                         }

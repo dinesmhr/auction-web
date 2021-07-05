@@ -9,6 +9,7 @@ header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 
 if( is_db_connected() ) {
+    extract( $GLOBALS );
     if( isset( $_GET['id'] ) ) {
         $id = $_GET['id'];
         $user_status_sql = 'SELECT status from aw_users WHERE id = "' .$id. '"';

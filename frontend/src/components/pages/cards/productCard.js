@@ -21,7 +21,7 @@ export const ProductCard = (product) => {
                     <div className="bid-amount">
                         {`${initial_bid}USD`}
                     </div>
-                    <Link to={ `product/${id}` }>
+                    <Link to={ `/product/${id}` }>
                         Bid Now
                     </Link>
                 </div>

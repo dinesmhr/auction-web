@@ -8,13 +8,18 @@
 header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 if( is_db_connected() ) {
-    if( isset( $_GET['id'] ) ) {
-        $product_id = $_GET['id'];
-        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'"';
+    if( isset( $_GET['user_id'] ) ) {
+        $user_id = $_GET['user_id'];
+        if( isset( $_GET['product_id'] ) ) {
+            $product_id = $_GET['product_id'];
+            $bids_sql = 'SELECT * FROM aw_bids WHERE id="'.$user_id.'" AND product_id ="' .$product_id. '"';
+        } else {
+            $bids_sql = 'SELECT * FROM aw_bids WHERE id="'.$user_id.'"';
+        }
     } else {
-        $products_sql = 'SELECT * FROM aw_products WHERE 1';
+        $bids_sql = 'SELECT * FROM aw_bids WHERE 1';
     }
-    $datas = $CONNECTION->query( $products_sql );
+    $datas = $CONNECTION->query( $bids_sql );
     if( $datas ) {
         if( $datas->num_rows == 0 ) {
             $structure['status'] = false;
@@ -22,16 +27,8 @@ if( is_db_connected() ) {
         } else {
             $structure['status'] = true;
             $structure['message'] = 'success';
-            $products = $datas->fetch_all(MYSQLI_ASSOC);
-            foreach( $products as $key => $product ) {
-                foreach( $product as $prodKey => $prod ) {
-                    if( @unserialize( $product[$prodKey] ) ) {
-                        $product[$prodKey] = unserialize( $product[$prodKey] );
-                    }
-                }
-                $products[$key] = $product;
-            }
-            $structure['data'] = $products;
+            $bids = $datas->fetch_all(MYSQLI_ASSOC);
+            $structure['data'] = $bids;
         }
     } else {
         $structure['status'] = false;

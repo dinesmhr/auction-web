@@ -17,6 +17,7 @@ if( !isset( $decoded_data["submit"] ) ) {
 
 require_once '../functions.php';
 if( is_db_connected() ) {
+  extract( $GLOBALS );
   $title    = isset( $decoded_data["title"] ) ? $decoded_data["title"] : '';
   $description  = isset( $decoded_data["description"] ) ? $decoded_data["description"] : '';
   $image         = isset( $decoded_data["image"] ) ? $decoded_data["image"] : '';

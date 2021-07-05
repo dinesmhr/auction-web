@@ -8,6 +8,7 @@
 header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 if( is_db_connected() ) {
+    extract( $GLOBALS );
     if( isset( $_GET['products'] ) ) {
         $search_key = $_GET['search_key'];
         $products_search_sql = 'SELECT * FROM aw_products WHERE title LIKE "%'.$search_key.'%"';

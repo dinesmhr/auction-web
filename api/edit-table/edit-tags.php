@@ -17,6 +17,7 @@ if( !isset( $decoded_data["submit"] ) ) {
 
 require_once '../functions.php';
 if( is_db_connected() ) {
+  extract( $GLOBALS );
   $title    = isset( $decoded_data["title"] ) ? $decoded_data["title"] : '';
 
   $tag_sql = "INSERT INTO aw_tags( title ) VALUES( '" .$title. "' )";

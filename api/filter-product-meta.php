@@ -20,11 +20,7 @@ if( is_db_connected() ) {
         } else {
             $structure['status'] = true;
             $structure['message'] = 'success';
-            if( isset($_GET['count']) ) {
-                $product_meta = $datas->fetch_all();
-            } else {
-                $product_meta = $datas->fetch_all(MYSQLI_ASSOC);
-            }
+            $product_meta = $datas->fetch_all(MYSQLI_ASSOC);
             $structure['data'] = $product_meta;
         }
     } else {

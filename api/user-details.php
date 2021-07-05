@@ -9,6 +9,7 @@ header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 
 if( is_db_connected() ) {
+    extract( $GLOBALS );
     if( isset( $_GET['id'] ) ) {
         $id = $_GET['id'];
         $users_sql = 'Select * FROM aw_users INNER JOIN aw_user_details WHERE aw_users.id = "' .$id. '" && aw_user_details.user_id = "' .$id. '"';
