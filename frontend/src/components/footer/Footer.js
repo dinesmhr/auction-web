@@ -10,10 +10,10 @@ const Footer = () => {
                     <p className="text-gray-100 text-base mb-3 font-semibold mt-3">Company</p>
                     <ul>
                         <li className="text-gray-300 text mb-1 hover:text-gray-100"><a href="about" target="_black">About</a></li>
-                        <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="" target="_blank">Auction Central News</a></li>
-                        <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="h" target="_blank">Careers</a></li>
+                        <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="auction-central-news" target="_blank">Auction Central News</a></li>
+                        <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="careers" target="_blank">Careers</a></li>
                         <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="/get-help" target="_blank">Get Help</a></li>
-                        <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="" target="_blank">Send Feedback</a></li>
+                        <li className="text-gray-300 mb-1 hover:text-gray-100"><a href="send-feedback" target="_blank">Send Feedback</a></li>
                     </ul>
                 </div>
 

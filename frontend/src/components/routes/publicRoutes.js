@@ -17,6 +17,9 @@ import HowAuctionWorks from '../pages/extras/howAuctionWorks'
 import BecomeSeller from '../pages/extras/becomeSeller'
 import GetHelp from '../pages/extras/getHelp'
 import About from '../pages/extras/about'
+import AuctionCentralNews from '../pages/extras/auctionCentralNews'
+import Careers from '../pages/extras/careers'
+import SendFeedback from '../pages/extras/sendFeedback'
 
 const axios = require('axios')
 
@@ -69,6 +72,10 @@ export const PublicRoutes = () => {
                 <Route path="/how-auction-works/" exact component={() => <HowAuctionWorks/>}></Route>
                 <Route path="/get-help/" exact component={() => <GetHelp/>}></Route>
                 <Route path="/about/" exact component={() => <About/>}></Route>
+                <Route path="/auction-central-news/" exact component={() => <AuctionCentralNews/>}></Route>
+                <Route path="/careers/" exact component={() => <Careers/>}></Route>
+                <Route path="/send-feedback/" exact component={() => <SendFeedback/>}></Route>              
+
             </Switch>
         </BrowserRouter>
     )
