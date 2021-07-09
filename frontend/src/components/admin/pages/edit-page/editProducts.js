@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import AdminMainNavigation from '../../navigation/AdminMainNavigation'
-import DatePicker, { utils } from "react-modern-calendar-datepicker";
 import ModalImage from "react-modal-image";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
@@ -19,6 +20,7 @@ const AdminEditProduct = () => {
     const [ tagsData, setTagsData ] = useState()
     const [ title, setTitle ] = useState({value:''})
     const [ description, setDescription ] = useState({value:''})
+    const [ details, setDetails ] = useState({value:''})
     const [specifications, setSpecifications] = useState({value: [{value:''}]});
 	const [initialBid, setInitialBid] = useState({value: ''});
 	const [maxBid, setMaxBid] = useState({value: ''});
@@ -46,6 +48,7 @@ const AdminEditProduct = () => {
             setInitialBid({value: res.data.data[0].initial_bid})
             setMaxBid({value: res.data.data[0].max_bid})
             setSpecifications({value: res.data.data[0].specifications})
+            setDetails({value: res.data.data[0].details})
             const tempImages = res.data.data[0].images_path.map((image, key) => {
                 if( !image.includes('http://localhost/auction-web/') ) {
                     image = `http://localhost/auction-web/${image.split('../').pop()}`
@@ -66,7 +69,6 @@ const AdminEditProduct = () => {
                 const tempCats = res.data.data.map((cat) => {
                     return cat.term_id
                 })
-                console.log( tempCats)
                 setInitialCategories(tempCats)
             }
         })
@@ -276,6 +278,7 @@ const AdminEditProduct = () => {
 
 	const onsubmit = (e) => {
 		e.preventDefault()
+        console.log(deadlineDate.value)
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
             setSubmitText( 'Submitting product' )
             const finalCategories = { 
@@ -292,6 +295,7 @@ const AdminEditProduct = () => {
 				title: title.value,
 				description: description.value,
 				specifications: specifications.value,
+                details: details.value,
 				initialBid: initialBid.value,
 				maxBid: maxBid.value,
 				deadlineDate: deadlineDate.value,
@@ -353,13 +357,12 @@ const AdminEditProduct = () => {
                                         <>
                                             <div className="" key={index}>
                                             { index !== 0 &&
-                                                    <button className="fill-current text-red-700 ml-3 p-1 text-2xl hover:text-red-600 " type="button" onClick ={() => deleteRow(index) }>
-                                                    <AiFillDelete  Delete row />
-                                                    </button>
-                                                }
-                                                <input className="text-sm appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
+                                                <button className="fill-current text-red-700 ml-3 p-1 text-2xl hover:text-red-600 " type="button" onClick ={() => deleteRow(index) }>
+                                                <AiFillDelete  Delete row />
+                                                </button>
+                                            }
+                                            <input className="text-sm appearance-none block w-full bg-gray-200 text-gray-700 border-b-2 border-0 border-gray-600 py-3 px-4 mb-3  focus:outline-none focus:bg-white focus:border-gray-500" type="text" key={index} placeholder="Add features title" name={`specifications${index}`} onChange={(e) => handlesetSpecifications(e,index)} value={specification.value} aria-label="Product Specification" />
                                                 
-
                                             { ( index + 1 ) === specifications.value.length &&
                                                 <button className="ml-4 mt-2 mb-2 bg-gray-800 flex-shrink-0 border-transparent border-4 text-teal-500 hover:bg-gray-800 text-sm py-1 px-2 rounded" type="button" onClick ={() => addRow() }>Add row</button>
                                             }
@@ -377,6 +380,20 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Other Details</label>
+                        { details.error &&
+                            <span className="text-xs text-red-700">{ details.errorMessage }</span>
+                        }
+                        <ReactQuill
+                            theme="snow" 
+                            value ={details.value} 
+                            onChange={(value) => setDetails({value:value})}
+                            />
+                    </div>
+                </div>
+
+                <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
                         <div className="">Initial 
                         Bid :<BiDollar/></div>
                         { initialBid.error &&
@@ -388,8 +405,7 @@ const AdminEditProduct = () => {
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <div className="">Maximum 
-                        Bid :<BiDollar/></div>
+                        <div className="">Maximum Bid :<BiDollar/></div>
                         { maxBid.error &&
                             <span className="text-xs text-red-700">{ maxBid.errorMessage }</span>
                         }
@@ -406,13 +422,6 @@ const AdminEditProduct = () => {
                                 <span className="text-xs text-red-700 flex justify-center">{ deadlineDate.errorMessage }</span>
                             </div>
                         }
-                        <DatePicker
-                            value={deadlineDate.value}
-                            onChange={(value) => setDeadlineDate({value:value})}
-                            minimumDate={utils().getToday()}
-                            inputPlaceholder="Select a day"
-                            shouldHighlightWeekends
-                        />
                 </div>
 
                 <div className="-mx-3 mb-8 p-6 mt-4">

@@ -22,9 +22,10 @@ if( is_db_connected() ) {
   $title    = isset( $decoded_data["title"] ) ? $decoded_data["title"] : '';
   $description  = isset( $decoded_data["description"] ) ? $decoded_data["description"] : '';
   $specifications = isset( $decoded_data["specifications"] ) ? serialize( $decoded_data["specifications"] ) : '';
+  $details  = isset( $decoded_data["details"] ) ? htmlspecialchars($decoded_data["details"]) : '';
   $initialBid     = isset( $decoded_data["initialBid"] ) ? $decoded_data["initialBid"] : '';
   $maxBid         = isset( $decoded_data["maxBid"] ) ? $decoded_data["maxBid"] : '';
-  $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? serialize( $decoded_data["deadlineDate"] ) : '';
+  $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? $decoded_data["deadlineDate"] : '';
   $images         = isset( $decoded_data["images"] ) ? $decoded_data["images"] : '';
 
   foreach( $images as $image ) :
@@ -49,7 +50,7 @@ if( is_db_connected() ) {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "INSERT INTO aw_products( user_id, title, description, specifications, initial_bid, max_bid, deadline_date, images_path ) VALUES( '" .$userId. "', '" .$title. "','" .$description. "', '" .$specifications. "', '" .$initialBid. "', '" .$maxBid. "', '" .$deadlineDate. "', '" .serialize($images_path). "' )";
+  $product_sql = "INSERT INTO aw_products( user_id, title, description, specifications, details, initial_bid, max_bid, deadline_date, images_path ) VALUES( '" .$userId. "', '" .$title. "','" .$description. "', '" .$specifications. "', '" .$details. "', '" .$initialBid. "', '" .$maxBid. "', '" .$deadlineDate. "', '" .serialize($images_path). "' )";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
     $structure['status'] = true;
     $structure['message'] = 'Your product form is submitted. Your product is under verification!! Thank you for your patience';

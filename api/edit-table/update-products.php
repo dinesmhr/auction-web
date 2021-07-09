@@ -22,9 +22,10 @@ if( is_db_connected() ) {
   $title    = isset( $decoded_data["title"] ) ? $decoded_data["title"] : '';
   $description  = isset( $decoded_data["description"] ) ? $decoded_data["description"] : '';
   $specifications = isset( $decoded_data["specifications"] ) ? serialize( $decoded_data["specifications"] ) : '';
+  $details  = isset( $decoded_data["details"] ) ? htmlspecialchars($decoded_data["details"]) : '';
   $initialBid     = isset( $decoded_data["initialBid"] ) ? $decoded_data["initialBid"] : '';
   $maxBid         = isset( $decoded_data["maxBid"] ) ? $decoded_data["maxBid"] : '';
-  $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? serialize( $decoded_data["deadlineDate"] ) : '';
+  $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? $decoded_data["deadlineDate"] : '';
   $images         = isset( $decoded_data["images"] ) ? $decoded_data["images"] : '';
   $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? $decoded_data["tags"] : '';
   $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? $decoded_data["categories"] : '';
@@ -66,7 +67,7 @@ if( is_db_connected() ) {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
+  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', details = '" .$details. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
         // add new selected categories 
         if(!empty($decoded_data["categories"]["add"])) {

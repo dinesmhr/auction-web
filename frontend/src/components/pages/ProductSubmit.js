@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../header/Header';
-import DatePicker, { utils } from "react-modern-calendar-datepicker";
 import ModalImage from "react-modal-image";
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
 import {appContext} from '../../App'
 import Footer from '../footer/Footer'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const axios = require('axios');
 const imagesRef = React.createRef()
@@ -17,9 +18,10 @@ const ProductSubmit = () => {
 	const [title, setTitle] = useState({value: ''});
 	const [description, setDescription] = useState({value: ''});
 	const [specifications, setSpecifications] = useState({value: [{value:''}]});
+	const [details, setDetails] = useState({value: ''});
 	const [initialBid, setInitialBid] = useState({value: ''});
 	const [maxBid, setMaxBid] = useState({value: ''});
-	const [deadlineDate, setDeadlineDate] = useState({value: ''});
+	const [deadlineDate, setDeadlineDate] = useState({value: new Date()});
 	const [images, setImages] = useState({value: []});
 	const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
@@ -164,6 +166,7 @@ const ProductSubmit = () => {
 				userId: userId,
 				description: description.value,
 				specifications: specifications.value,
+				details : details.value,
 				initialBid: initialBid.value,
 				maxBid: maxBid.value,
 				deadlineDate: deadlineDate.value,
@@ -303,6 +306,16 @@ const ProductSubmit = () => {
 
 							<div className="flex flex-wrap -mx-3 mb-6">
 								<div className="w-full px-3">
+									<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Other Details</label>
+									{ details.error &&
+										<span className="text-xs text-red-700">{ details.errorMessage }</span>
+									}
+									<ReactQuill theme="snow" value={details.value} onChange={(value) => setDetails({value:value})}/>
+								</div>
+							</div>
+
+							<div className="flex flex-wrap -mx-3 mb-6">
+								<div className="w-full px-3">
 									<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Initial 
 									Bid</label>
 									{ initialBid.error &&
@@ -331,13 +344,6 @@ const ProductSubmit = () => {
 									{ deadlineDate.error &&
 										<span className="text-xs text-red-700">{ deadlineDate.errorMessage }</span>
 									}
-									<DatePicker
-										value={deadlineDate.value}
-										onChange={(value) => setDeadlineDate({value:value})}
-										minimumDate={utils().getToday()}
-										inputPlaceholder="Select a day"
-										shouldHighlightWeekends
-										/>
 								</div>
 							</div>
 
