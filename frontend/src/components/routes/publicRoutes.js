@@ -13,13 +13,15 @@ import SingleTag from '../pages/single-page/singleTag'
 import SingleProduct from '../pages/single-page/singleProduct'
 import Search from '../pages/search'
 import WhySell from '../pages/extras/whySell'
-import HowAuctionWorks from '../pages/extras/howAuctionWorks'
 import BecomeSeller from '../pages/extras/becomeSeller'
 import GetHelp from '../pages/extras/getHelp'
 import About from '../pages/extras/about'
 import AuctionCentralNews from '../pages/extras/auctionCentralNews'
 import Careers from '../pages/extras/careers'
 import SendFeedback from '../pages/extras/sendFeedback'
+import AuctionSignIn from '../pages/extras/auctionSignIn'
+import SellerResourceCenter from '../pages/extras/sellerResourceCenter'
+import SellerReview from '../pages/extras/sellerReview'
 
 const axios = require('axios')
 
@@ -69,12 +71,14 @@ export const PublicRoutes = () => {
                 { /*Extras*/ }
                 <Route path="/why-sell/" exact component={() => <WhySell/>}></Route>
                 <Route path="/become-seller/" exact component={() => <BecomeSeller/>}></Route>
-                <Route path="/how-auction-works/" exact component={() => <HowAuctionWorks/>}></Route>
                 <Route path="/get-help/" exact component={() => <GetHelp/>}></Route>
                 <Route path="/about/" exact component={() => <About/>}></Route>
                 <Route path="/auction-central-news/" exact component={() => <AuctionCentralNews/>}></Route>
                 <Route path="/careers/" exact component={() => <Careers/>}></Route>
-                <Route path="/send-feedback/" exact component={() => <SendFeedback/>}></Route>              
+                <Route path="/send-feedback/" exact component={() => <SendFeedback/>}></Route> 
+                <Route path="/login" exact component={() => <Login/>}></Route> 
+                <Route path="/resource-center/" exact component={() => <SellerResourceCenter/>}></Route> 
+                <Route path="/seller-review/" exact component={() => <SellerReview/>}></Route>              
 
             </Switch>
         </BrowserRouter>
