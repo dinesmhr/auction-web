@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../../header/Header'
 import Footer from '../../footer/Footer'
 
-const HowAuctionWorks = () => {
+const SellerReview = () => {
     return (
     <div id="auction-web">
         <Header/>
@@ -13,4 +13,4 @@ const HowAuctionWorks = () => {
     </div>
     )
 }
-export default HowAuctionWorks
+export default SellerReview
