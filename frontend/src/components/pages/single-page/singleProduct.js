@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react'
+import React, { Fragment, useState, useEffect, useContext, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import Carousel from 'react-gallery-carousel'
@@ -8,6 +8,7 @@ import { ProductCard } from '../cards/productCard'
 import {decode} from 'html-entities';
 import { Dialog, Transition } from '@headlessui/react'
 import Countdown from 'react-countdown'
+import {appContext} from '../../../App'
 
 const axios = require('axios')
 
@@ -31,6 +32,7 @@ const SimilarProducts = (similarProductId) => {
         </div>
     )
 }
+
 const SingleProduct = () => {
     const [openBidModal, setOpenBidModal] = useState(false)
 
@@ -42,8 +44,25 @@ const SingleProduct = () => {
     const [ categories, setCategories ] = useState('')
     const [ tags, setTags ] = useState('')
     const [ similarProductsIds, setSimilarProductsIds ] = useState('')
+    const [ bidNowButtonClickable, setBidNowButtonClickable ] = useState(true)
+    const [ bidNowButtonClickableMessage, setBidNowButtonClickableMessage ] = useState('')
     const { id } = useParams()
     const cancelButtonRef = useRef(null)
+
+    const { isLoggedIn } = useContext(appContext)
+
+    useEffect(() => {
+        if( isLoggedIn ) {
+            setBidNowButtonClickable(false)
+        } else {
+            setBidNowButtonClickableMessage( 'You are not logged in' )
+            setBidNowButtonClickable(true)
+            axios( `/session.php` )
+            .then(() => [
+
+            ])
+        }
+    }, [isLoggedIn])
     
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
@@ -156,41 +175,43 @@ const SingleProduct = () => {
                         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div className="sm:flex sm:items-start">
-                                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                        <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                            Perform Bid
-                                        </Dialog.Title>
-                                        <div className="mt-2">
-                                            <h2>{productData[0].title}</h2>
-                                            <div>
-                                                Bid will close in
-                                            </div>
-                                            <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
-                                            <div>
-                                                <div>Opening Bid : { productData[0].initial_bid}</div>
-                                                <div>Closing Bid : { productData[0].max_bid}</div>
-                                                <div>Current Highest Bid : { productData[0].max_bid}</div>
+                                    { isLoggedIn &&
+                                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                            <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                                                Perform Bid
+                                            </Dialog.Title>
+                                            <div className="mt-2">
+                                                <h2>{productData[0].title}</h2>
                                                 <div>
-                                                    <input type="number" value={productData[0].max_bid}/>
-                                                    <button>Place a Bid</button>
+                                                    Bid will close in
+                                                </div>
+                                                <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
+                                                <div>
+                                                    <div>Opening Bid : { productData[0].initial_bid}</div>
+                                                    <div>Closing Bid : { productData[0].max_bid}</div>
+                                                    <div>Current Highest Bid : { productData[0].max_bid}</div>
                                                     <div>
-                                                        Your recent bid is just  ago
+                                                        <input type="number" value={productData[0].max_bid}/>
+                                                        <button>Place a Bid</button>
+                                                        <div>
+                                                            Your recent bid is just  ago
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    Your Recent Bids
+                                                    <div>
+                                                        You have not made bid in this product before
+                                                    </div>
+                                                    <div>
+                                                        <span>Bid Amount</span>
+                                                        <span>Bid Difference</span>
+                                                        <span>Bid Date</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                Your Recent Bids
-                                                <div>
-                                                    You have not made bid in this product before
-                                                </div>
-                                                <div>
-                                                    <span>Bid Amount</span>
-                                                    <span>Bid Difference</span>
-                                                    <span>Bid Date</span>
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                             <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -302,10 +323,14 @@ const SingleProduct = () => {
                                                             </div>
 
                                                             <div>
-                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5" onClick = { (e) => setOpenBidModal(true) }>Bid Now</button>
+                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5" onClick = { (e) => setOpenBidModal(true) } disabled={bidNowButtonClickable}>Bid Now</button>
+                                                                { bidNowButtonClickableMessage &&
+                                                                    bidNowButtonClickableMessage
+                                                                }
                                                             </div>
                                                             <div>
-                                                                Bid will close in { productData[0].deadline_date}
+                                                                Bid will close in
+                                                                <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
                                                             </div>
                                                             { BidModal() }
                                                         </div>
