@@ -25,6 +25,7 @@ const AdminEditProduct = () => {
 	const [initialBid, setInitialBid] = useState({value: ''});
 	const [maxBid, setMaxBid] = useState({value: ''});
 	const [deadlineDate, setDeadlineDate] = useState({value: ''});
+    const [deadlineTime, setDeadlineTime] = useState({value: ''});
 	const [images, setImages] = useState({value: []});
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
@@ -278,7 +279,7 @@ const AdminEditProduct = () => {
 
 	const onsubmit = (e) => {
 		e.preventDefault()
-        console.log(deadlineDate.value)
+        let deadlineFullDate = deadlineDate.value + ' ' + deadlineTime.value
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
             setSubmitText( 'Submitting product' )
             const finalCategories = { 
@@ -298,7 +299,7 @@ const AdminEditProduct = () => {
                 details: details.value,
 				initialBid: initialBid.value,
 				maxBid: maxBid.value,
-				deadlineDate: deadlineDate.value,
+				deadlineDate: deadlineFullDate,
 				images: images.value,
                 tags: finalTags,
                 categories: finalCategories,
@@ -422,6 +423,8 @@ const AdminEditProduct = () => {
                                 <span className="text-xs text-red-700 flex justify-center">{ deadlineDate.errorMessage }</span>
                             </div>
                         }
+                        <input type="date" onChange ={ (e) => setDeadlineDate({value : e.target.value})} value={deadlineDate.value} min={new Date().toISOString().substring(0,10)}/>
+                        <input type="time" onChange ={ (e) => setDeadlineTime({value : e.target.value})} value={deadlineTime.value}/>
                 </div>
 
                 <div className="-mx-3 mb-8 p-6 mt-4">

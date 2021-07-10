@@ -24,7 +24,7 @@ const SellerResourceCenter = () => {
 		        						intuitive dashboard.</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img src="sellerResourceImage/SellerSmile.png"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>	

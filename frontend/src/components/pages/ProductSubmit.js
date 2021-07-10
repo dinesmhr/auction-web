@@ -8,7 +8,6 @@ import {appContext} from '../../App'
 import Footer from '../footer/Footer'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
 const axios = require('axios');
 const imagesRef = React.createRef()
 
@@ -21,14 +20,15 @@ const ProductSubmit = () => {
 	const [details, setDetails] = useState({value: ''});
 	const [initialBid, setInitialBid] = useState({value: ''});
 	const [maxBid, setMaxBid] = useState({value: ''});
-	const [deadlineDate, setDeadlineDate] = useState({value: new Date()});
+	const [deadlineDate, setDeadlineDate] = useState({value: ''});
+	const [deadlineTime, setDeadlineTime] = useState({value: ''});
 	const [images, setImages] = useState({value: []});
 	const [status, setStatus] = useState(false);
 	const [message, setMessage] = useState('');
 	const [submitText, setSubmitText] = useState('Submit My Product');
 
 	const { isLoggedIn } = useContext(appContext)
-
+	
 	useEffect(() => {
         axios.get( '/sessions.php' )
         .then(function(res) {
@@ -79,7 +79,6 @@ const ProductSubmit = () => {
 						setImages(JSON.parse(JSON.stringify(images)))
 					}
 				}
-				console.log(images.value.length)
 			}
 		}
 	}
@@ -158,6 +157,7 @@ const ProductSubmit = () => {
 
 	const onsubmit = (e) => {
 		e.preventDefault()
+		let deadlineFullDate = deadlineDate.value + ' ' + deadlineTime.value
 		if( validateTitle() && validateDescription() && validateInitialBid() && validateMaxBid() && validateImages() ) {
 			setSubmitText( 'Submitting product' )
 			let apiParams = {
@@ -169,7 +169,7 @@ const ProductSubmit = () => {
 				details : details.value,
 				initialBid: initialBid.value,
 				maxBid: maxBid.value,
-				deadlineDate: deadlineDate.value,
+				deadlineDate: deadlineFullDate,
 				images: images.value
 			}
 			axios.post( '/edit-table/edit-products.php', apiParams)
@@ -344,6 +344,8 @@ const ProductSubmit = () => {
 									{ deadlineDate.error &&
 										<span className="text-xs text-red-700">{ deadlineDate.errorMessage }</span>
 									}
+									<input type="date" onChange ={ (e) => setDeadlineDate({value : e.target.value})} value={deadlineDate.value} min={new Date().toISOString().substring(0,10)}/>
+									<input type="time" onChange ={ (e) => setDeadlineTime({value : e.target.value})} value={deadlineTime.value}/>
 								</div>
 							</div>
 

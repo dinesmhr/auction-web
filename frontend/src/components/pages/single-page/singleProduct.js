@@ -118,9 +118,6 @@ const SingleProduct = () => {
 
     // bid modal
     const BidModal = () => {
-        // console.log(Date.parse(new Date(productData[0].deadline_date) ))
-        // console.log('br')
-        // console.log( Date.now() )
         return (
             <Transition.Root show={openBidModal} as={Fragment}>
                 <Dialog
@@ -166,7 +163,7 @@ const SingleProduct = () => {
                                         <div className="mt-2">
                                             <h2>{productData[0].title}</h2>
                                             <div>
-                                                Bid will close in { productData[0].deadline_date }
+                                                Bid will close in
                                             </div>
                                             <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
                                             <div>
