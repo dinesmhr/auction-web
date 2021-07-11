@@ -32,7 +32,7 @@ const BecomeSeller = () => {
 		        			<div className="mt-20 ">
 		        			If you have a problem regarding selling or verification, please reach us at 
 		        			<a className="mailto text-blue-900" href="mailto:contact@test.com"> Sellers@auctionweb.com </a>
-		    </div>
+		   			</div>
 		    </div>
         <Footer/>
     </div>
