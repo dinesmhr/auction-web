@@ -54,8 +54,9 @@ const SingleProduct = () => {
     useEffect(() => {
         if( isLoggedIn ) {
             setBidNowButtonClickable(false)
+            axios.get( `` )
         } else {
-            setBidNowButtonClickableMessage( 'You are not logged in' )
+            setBidNowButtonClickableMessage( `You are not logged in. To take part in bidding process please login. ` )
             setBidNowButtonClickable(true)
             axios( `/session.php` )
             .then(() => [
@@ -325,7 +326,10 @@ const SingleProduct = () => {
                                                             <div>
                                                                 <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5" onClick = { (e) => setOpenBidModal(true) } disabled={bidNowButtonClickable}>Bid Now</button>
                                                                 { bidNowButtonClickableMessage &&
-                                                                    bidNowButtonClickableMessage
+                                                                    <>
+                                                                        {bidNowButtonClickableMessage}
+                                                                        <Link to="/login" target="_blank">Go to Login</Link>
+                                                                    </>
                                                                 }
                                                             </div>
                                                             <div>
