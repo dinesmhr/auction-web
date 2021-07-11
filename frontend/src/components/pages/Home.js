@@ -10,10 +10,13 @@ const Home = () => {
     const [ topCategories, setTopCategories ] = useState({})
 
     useEffect(() => {
-        axios.get( `/filter-product-meta.php` )
-        .then(function(res) {
-            setTopCategories(res.data.data)
-        })
+        let isMounted = true;
+        async function fetchData() {
+            let results = await axios.get( `/filter-product-meta.php` )
+            if (isMounted) setTopCategories(results.data.data)
+        }
+        fetchData()
+        return () => { isMounted = false };
     }, [])
 
     return ( 
