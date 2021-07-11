@@ -44,8 +44,11 @@ const SingleProduct = () => {
     const [ categories, setCategories ] = useState('')
     const [ tags, setTags ] = useState('')
     const [ similarProductsIds, setSimilarProductsIds ] = useState('')
-    const [ bidNowButtonClickable, setBidNowButtonClickable ] = useState(true)
-    const [ bidNowButtonClickableMessage, setBidNowButtonClickableMessage ] = useState('')
+    const [ bidNowButtonDisable, setBidNowButtonDisable ] = useState(true)
+    const [ bidNowButtonDisableTitle, setBidNowButtonDisableTitle ] = useState("Can't perform this action right now")
+    const [ bidNowButtonDisableMessage, setBidNowButtonDisableMessage ] = useState('')
+    const [ userId, setUserId ] = useState()
+    const [ userStatus, setUserStatus ] = useState()
     const { id } = useParams()
     const cancelButtonRef = useRef(null)
 
@@ -53,18 +56,28 @@ const SingleProduct = () => {
 
     useEffect(() => {
         if( isLoggedIn ) {
-            setBidNowButtonClickable(false)
-            axios.get( `` )
+            axios.get( `/sessions.php` )
+            .then((res) => {
+                setUserId(res.data.userId)
+            })
         } else {
-            setBidNowButtonClickableMessage( `You are not logged in. To take part in bidding process please login. ` )
-            setBidNowButtonClickable(true)
-            axios( `/session.php` )
-            .then(() => [
-
-            ])
+            setBidNowButtonDisableMessage( `You are not logged in. To take part in bidding process please login. ` )
         }
     }, [isLoggedIn])
     
+    useEffect(() => {
+        { userId &&
+            axios.get( `/users.php?id=${userId}` )
+            .then((res) => {
+                setUserStatus(res.data.data[0].status)
+                if( res.data.data[0].status === 'verified' ) {
+                    setBidNowButtonDisable(false)
+                    setBidNowButtonDisableTitle("Click to bid")
+                }
+            })
+        }
+    }, [userId])
+
     useEffect(() => {
         axios.get( `/products.php?id=${id}` )
         .then(function(res) {
@@ -324,12 +337,15 @@ const SingleProduct = () => {
                                                             </div>
 
                                                             <div>
-                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5" onClick = { (e) => setOpenBidModal(true) } disabled={bidNowButtonClickable}>Bid Now</button>
-                                                                { bidNowButtonClickableMessage &&
+                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
+                                                                { bidNowButtonDisable && bidNowButtonDisableMessage &&
                                                                     <>
-                                                                        {bidNowButtonClickableMessage}
+                                                                        {bidNowButtonDisableMessage}
                                                                         <Link to="/login" target="_blank">Go to Login</Link>
                                                                     </>
+                                                                }
+                                                                { userStatus && ( userStatus !== 'verified' ) &&
+                                                                    <>{ `User must be verified to take part in bidding process` }</>
                                                                 }
                                                             </div>
                                                             <div>
