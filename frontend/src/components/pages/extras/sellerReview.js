@@ -10,7 +10,7 @@ const SellerReview = () => {
 		        	<div className="text-3xl uppercase text-gray-700 mb-12 bold">Seller Review</div>
 
 		        		<div className="">
-		        			<div className="flex flex-row mb-7">
+		        			<div className="flex flex-row mb-10 mt-10">
 		        				<div className="w-2/3">
 		        						<div className="text-2xl mb-6 mt-9">Jenny Genevieve Dedrick</div>
 		        						<p className="text-gray-700 font-base mb-4">"I am really satisfied 
@@ -18,13 +18,13 @@ const SellerReview = () => {
 		        						AuctionWeb."</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/SellerSmile.png"/></a>
+		        						<a href=""><img className ="ml-12 rounded-full border border-gray-100 shadow-sm h-52 w-52" src="http://localhost/auction-web/frontend/src/components/pages/extras/images/client1.jpg"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>	
-		        			<div className="flex flex-row mb-7">
+		        			<div className="flex flex-row mb-10 mt-10">
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img className ="rounded-full border border-gray-100 shadow-sm h-52 w-52" src="http://localhost/auction-web/frontend/src/components/pages/extras/images/client2.jpg"/></a>
 		        				</div>
 		        				<div className="w-2/3">
 		        						<div className="text-2xl mb-6 mt-9">Perce Quickley</div>
@@ -37,7 +37,7 @@ const SellerReview = () => {
 		        			</div>
 		        			<hr/>
 
-		        			<div className="flex flex-row mb-7">
+		        			<div className="flex flex-row mb-10 mt-10">
 		        				<div className="w-2/3">
 		        						<div className="text-2xl mb-6 mt-9">Winton Blackburn</div>
 		        						<p className="text-gray-700 font-base mb-4">"I just can't get enough
@@ -45,22 +45,22 @@ const SellerReview = () => {
 		        						show it off to everyone."</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img className ="ml-12 rounded-full border border-gray-100 shadow-sm h-52 w-52" src="http://localhost/auction-web/frontend/src/components/pages/extras/images/client3.jpg"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>
-		        			<div className="flex flex-row mb-7">
+		        			<div className="flex flex-row mb-10 mt-10">
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img className ="rounded-full border border-gray-100 shadow-sm h-52 w-52" src="http://localhost/auction-web/frontend/src/components/pages/extras/images/client4.jpg"/></a>
 		        				</div>
-		        						        				<div className="w-2/3">
+		        						  <div className="w-2/3">
 		        						<div className="text-2xl mb-6 mt-9">Rachyl Washington</div>
 		        						<p className="text-gray-700 font-base mb-4">"The very best. Thank you for making it
 		        						 painless, pleasant and most of all hassle free! It's really wonderful."</p>	
 		        				</div>
 		        			</div>
 		        			<hr/>
-							<div className="flex flex-row mb-7">
+							<div className="flex flex-row mb-10 mt-10">
 		        				<div className="w-2/3">
 		        						<div className="text-2xl mb-6 mt-9">Jenessa Cook</div>
 		        						<p className="text-gray-700 font-base mb-4">"I don't know what else 
@@ -69,7 +69,7 @@ const SellerReview = () => {
 		        						 purchased. Nice work on your AuctionWeb."</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img className ="ml-12 rounded-full border border-gray-100 shadow-sm h-52 w-52" src="http://localhost/auction-web/frontend/src/components/pages/extras/images/client5.jpg"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>
