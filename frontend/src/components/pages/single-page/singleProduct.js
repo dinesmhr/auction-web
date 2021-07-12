@@ -208,7 +208,7 @@ const SingleProduct = () => {
                                                         <input type="number" value={productData[0].max_bid}/>
                                                         <button>Place a Bid</button>
                                                         <div>
-                                                            Your recent bid is just  ago
+                                                            Your recent bid is just ago
                                                         </div>
                                                     </div>
                                                 </div>
