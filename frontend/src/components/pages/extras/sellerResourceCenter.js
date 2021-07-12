@@ -24,7 +24,7 @@ const SellerResourceCenter = () => {
 		        						intuitive dashboard.</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/SellerSmile.png"/></a>
+		        						<a href=""><img src="http://localhost/auction-web/frontend/src/components/pages/extras/images/SellerSmile.png"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>	
@@ -41,7 +41,7 @@ const SellerResourceCenter = () => {
 		        						intuitive dashboard.</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img src="http://localhost/auction-web/frontend/src/components/pages/extras/images/"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>
@@ -59,7 +59,7 @@ const SellerResourceCenter = () => {
 		        						intuitive dashboard.</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img src="http://localhost/auction-web/frontend/src/components/pages/extras/images/"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>
@@ -76,7 +76,7 @@ const SellerResourceCenter = () => {
 		        						intuitive dashboard.</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img src="http://localhost/auction-web/frontend/src/components/pages/extras/images/"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>
@@ -93,7 +93,7 @@ const SellerResourceCenter = () => {
 		        						intuitive dashboard.</p>	
 		        				</div>
 		        				<div className="w-1/3">
-		        						<a href=""><img src="sellerResourceImage/"/></a>
+		        						<a href=""><img src="http://localhost/auction-web/frontend/src/components/pages/extras/images/"/></a>
 		        				</div>
 		        			</div>
 		        			<hr/>
