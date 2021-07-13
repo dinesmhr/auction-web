@@ -4,249 +4,431 @@
  * @since 1.0.0
  * 
  */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../header/Header';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import ImageUploader from 'react-images-upload';
+import Footer from '../footer/Footer';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import { GrAdd } from "react-icons/gr";
+import { AiOutlineDelete } from "react-icons/ai";
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+import DatePicker from 'react-modern-calendar-datepicker';
 
-const axios = require('axios');
+const axios = require('axios')
 
-class UserVerification extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            userId: localStorage.auctionWebSessionUserId,
-            userStatus: '',
-            fullname : '',
-            parentName : '',
-            professionName : '',
-            contactNumber : '',
-            birthDate : '',
-            currentAddress : '',
-            permanentAddress : '',
-            pphoto : [],
-            documentType : 'citizenship',
-            documentImageOne : [],
-            documentImageTwo : [],
-            errorStatus: false,
-            errorMessage: '',
-            verifyButtonText: 'Verify'
+const UserVerification = () => {
+    const [ userId, setUserId ] = useState('')
+    const [ isLoggedIn, setIsLoggedIn ] = useState(false)
+    //const [ loggedUserData, setLoggedUserData ] = useState({})
+    const [ userStatus, setUserStatus ] = useState('')
+    const [ submitText, setSubmitText ] = useState('Submit For Verification')
+    const [ fullname, setFullname ] = useState({ value: ''})
+    const [ email, setEmail ] = useState({value:''})
+    const [ profession, setProfession ] = useState({value:''})
+    const [ birthDate, setBirthDate ] = useState({value: ''})
+    const [ currentAddress, setCurrentAddress ] = useState({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
+    const [ permanentAddress, setPermanentAddress ] = useState({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
+    const [ contactNumber, setContactNumber ] = useState({ areaCode: '+977', number: '' })
+    const [ documentType, setDocumentType ] = useState({value:'citizenship'})
+    const [ documentImage, setDocumentImage ] = useState({value:''})
+    const [ documentImageOne, setDocumentImageOne ] = useState({value:''})
+    const [ status, setStatus ] = useState(false)
+    const [ message, setMessage ] = useState('')
+
+    const documentImageRef = React.createRef()
+    const documentImageOneRef = React.createRef()
+    
+    useEffect(() => {
+        axios.get( '/sessions.php' )
+        .then(function(res) {
+            if(res.data.login) {
+                setIsLoggedIn(true)
+                setUserId(res.data.userId)
+            }
+        })
+    })
+
+    const checkUserDetails = () => {
+        axios.get( `/users.php?id=${userId}`)
+        .then(function(res) {
+            if(res.data.status) {
+                //setLoggedUserData(res.data.data[0])
+                setFullname({value: res.data.data[0].fullname})
+                setEmail({value: res.data.data[0].email})
+                setUserStatus(res.data.data[0].status)
+            }
+        })
+    }
+    useEffect(() => {
+        userId &&
+        checkUserDetails()
+    }, [userId])
+
+    // trigger document image
+    const handleDocumentImage = () => {
+        documentImageRef.current.click()
+    }
+
+    // trigger document image one
+    const handleDocumentImageOne = () => {
+        documentImageOneRef.current.click()
+    }
+
+    // help set document image one
+    const handlesetDocumentImage = (file) => {
+        setDocumentImage({value: file.target.files[0]})
+        if(file.target.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file.target.files[0]);
+            reader.onload = (e) => {
+                setDocumentImage({dataUrl: e.target.result})
+            }
+        } else {
+            setDocumentImage({value: '', dataUrl: ''})
         }
+    }
+    const deleteDocumentImage = () => {
+        setDocumentImage({value: ''})
+    }
+
+    // help set document image One
+    const handlesetDocumentImageOne = (file) => {
+        setDocumentImageOne({value: file.target.files[0]})
+        if(file.target.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file.target.files[0]);
+            reader.onload = (e) => {
+                setDocumentImageOne({dataUrl: e.target.result})
+            }
+        } else {
+            setDocumentImageOne({value: '', dataUrl: ''})
+        }
+    }
+    const deleteDocumentImageOne = () => {
+        setDocumentImageOne({value: ''})
+    }
+
+    /******************** Validation Fields Section  ********************/
+    // validate fullname
+    const validateFullname = () => {
+        if( fullname.value === '' ) {
+            fullname.error = true
+            fullname.errorMessage = "Fullname field cannot be empty"
+        } else {
+            return true
+        }
+        setFullname( JSON.parse(JSON.stringify( fullname )) )
+        return false
+    }
+
+    // validate email field
+    const validateEmail = () => {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if( email.value === '' ) {
+            email.error = true;
+            email.errorMessage = "Email must not be empty";
+        } else if( !re.test( email.value ) ) { 
+            email.error = true;
+            email.errorMessage = "Email is not valid";
+        }  else {
+            return true
+        }
+        setEmail( JSON.parse(JSON.stringify( email )) )
+        return false
+    }
+
+    const validateContactNumber = () => {
+        if( contactNumber.areaCode === '' || contactNumber.number === '' ) {
+            contactNumber.error = true
+            contactNumber.errorMessage = "Add contact number"
+        } else if(/[A-Z]/.test(contactNumber.number) || /[a-z]/.test(contactNumber.number) ) {
+            contactNumber.error = true
+            contactNumber.errorMessage = "Invalid contact number"
+        } else {
+            return true
+        }
+        setContactNumber( JSON.parse(JSON.stringify( contactNumber )) )
+        return false
+    }
+
+    const validateBirthdate = () => {
+        if( birthDate.value === '' ) {
+            birthDate.error = true
+            birthDate.errorMessage = "Select Birthdate"
+        } else {
+            return true
+        }
+        setBirthDate( JSON.parse(JSON.stringify( birthDate )) )
+        return false
     }
     
-    getUserStatus() {
-        let _this = this
-        const { userId } = this.state
-        const url = 'http://localhost/auction-web/api/users.php'
-        axios.get( url, {
-            params: {
-                id: userId
-            }
-        })
-        .then(function(response) {
-            if( response.status === 200 ) {
-                _this.setState({ 
-                    userStatus : response.data.data[0].status
-                })
-            }
-        })
-    }
-
-    onInputChange( key, value ) {
-        this.setState({
-          [key] : value
-        })
-    }
-
-    encodeFileToDataUrl( key, file ) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file[0]);
-        reader.onload = (e) => {
-            localStorage.setItem( key, e.target.result )
+    const validatePermanentAddress = () => {
+        if( permanentAddress.streetAddress === '' || permanentAddress.city === '' || permanentAddress.stateProvince === '' || permanentAddress.postalCode === '' || permanentAddress.country === '' ) {
+            permanentAddress.error = true
+            permanentAddress.errorMessage = "All fields are required"
+        } else {
+            return true
         }
-        return( localStorage[key] )
+        setPermanentAddress( JSON.parse(JSON.stringify( permanentAddress )) )
+        return false
     }
 
-    onVerify(e) {
+    const validateDocumentImage = () => {
+        if( documentImage.value === '' ) {
+            documentImage.error = true
+            documentImage.errorMessage = "No image uploaded"
+        } else {
+            return true
+        }
+        setDocumentImage( JSON.parse(JSON.stringify( documentImage )) )
+        return false
+    }
+
+    const onSubmit = (e) => {
         e.preventDefault()
-        let _this = this
-        const { userId, fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, pphoto, documentType, documentImageOne, documentImageTwo } = this.state
-        const url = 'http://localhost/auction-web/api/edit-table/edit-users-details.php'
-        axios.post( url, {
-            params: {
-                id : userId,
-                fullname : fullname,
-                parent_name : parentName,
-                profession : professionName,
-                contact_number : contactNumber,
-                birth_date : birthDate,
-                current_address : currentAddress,
-                permanent_address : permanentAddress,
-                pphoto : this.encodeFileToDataUrl( 'pphoto', pphoto ),
-                document_type : documentType,
-                document_image_one : this.encodeFileToDataUrl( 'documentImageOne', documentImageOne ),
-                document_image_two : this.encodeFileToDataUrl( 'documentImageTwo', documentImageTwo ),
-                submit: true
-            }
-        })
-        .then(function(response) {
-            if( response.data.status ) {
-                this.setState({
-                    errorStatus : false,
-                    errorMessage : response.data.message,
-                    verifyButtonText: 'Your document is submitted to administration'
-                })
-                _this.getUserStatus()
-            }
-        })
+        if( validateFullname() && validateEmail() && validateContactNumber() && validatePermanentAddress() && validateBirthdate() && validateDocumentImage() ) {
+            setSubmitText( 'Submitting for verification' )
+            axios.post('/edit-table/edit-users-details.php', {
+                submit: 'verification',
+                userid: userId,
+                fullname: fullname.value,
+                email: email.value,
+                profession: profession.value,
+                birthdate: birthDate.value,
+                currentAddress: currentAddress,
+                permanentAddress: permanentAddress,
+                contactNumber: contactNumber,
+                documentType: documentType.value,
+                documentImage: documentImage,
+                documentImageOne: documentImageOne
+            })
+            .then(function (response) {
+                if( response.data.status ) {
+                    setStatus(true)
+                    setMessage( 'Signed up successfully' )
+                } else {
+                    setStatus(true)
+                    setMessage( 'Error in sign up' )
+                }
+                setProfession({value:''})
+                setBirthDate({value: ''})
+                setCurrentAddress({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
+                setPermanentAddress({ streetAddress: '', city: '', stateProvince: '', postalCode: '', country: '' })
+                setContactNumber({ areaCode: '+977', number: '' })
+                setDocumentType({value: ''})
+                setDocumentImage({value:''})
+                setDocumentImageOne({value:''})
+                checkUserDetails()
+                setSubmitText( 'Submit For Verification.' )
+            })
+            .catch(function (error) {
+                setStatus(true)
+                setMessage( 'Error in sign up' )
+            });
+        } else {
+            setSubmitText( 'Submit For Verification' )
+        }
     }
 
-    componentDidMount() {
-        this.getUserStatus()
-    }
-
-    render() {
-        const { isLoggedin } = this.props
-        const { userStatus, fullname, parentName, professionName, contactNumber, birthDate, currentAddress, permanentAddress, errorMessage } = this.state
-        let loggedUserName = localStorage.auctionWebSessionUserName
-        
-        if( !isLoggedin ) {
-            return (
-                <>
-                    <Header userLoggedIn = { isLoggedin }/> 
-                    <div id="auction-web-user-verification">
-                        <div className="aweb-heading">
-                            { `You dont have registered your account to Auction Web. ` }
-                            <a href="/login">{ "Sign Up Now?" }</a>
-                        </div>
-                    </div>
-                </>
-            )
-        }
-
-        if( userStatus === 'under-verification' ) {
-            return (
-                <>
-                    <Header userLoggedIn = { isLoggedin }/> 
-                    <div id="auction-web-user-verification">
-                        <div className="aweb-heading">
-                            { `You are logged in as ${loggedUserName}. Your account is currently under verification process. Thank you for your patience!!` }
-                        </div>
-                    </div>
-                </>
-            )
-        }
-
-        if( errorMessage ) {
-            return(
-                <>
-                    <Header userLoggedIn = { isLoggedin }/> 
-                    <div id="auction-web-user-verification">
-                        <div className="aweb-note">
-                            { errorMessage }
-                        </div>
-                    </div>
-                </>
-            )
-        }
-        return(
-            <>
-                <Header userLoggedIn = { isLoggedin }/> 
+    if( userStatus === 'under-verification' ) {
+        return (
+            <div id="auction-web">
+                <Header isLoggedIn = { isLoggedIn }/> 
                 <div id="auction-web-user-verification">
-                    <form id="aweb-user-verification-form">
+                    <div className="aweb-heading">
+                    { 
+                        `You are logged in as ${fullname.value}. Your account is currently under verification process. Thank you for your patience!!`
+                    }
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    return(
+        <div id="auction-web">
+            <Header/> 
+                <div id="auction-web-user-verification">
+                    <form id="aweb-user-verification-form" className="space-y-4 text-gray-700">
                         <div className="aweb-heading">
-                            { `You are logged in as ${loggedUserName}. Please verify your account here.` }
+                            { 
+                                `You are logged in as ${ fullname.value}. Please verify your account here.` 
+                            }
                         </div>
-                        <div className="input-wrapper">
-                            <div className="aweb-heading-personal-details">
-                                { 'Personal Details' }
+                        <div className="aweb-heading-personal-details">
+                            { 'Personal Details' }
+                        </div>
+                        <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+                            <div class="w-full px-2 md:w-1/2">
+                                <label className="block mb-1">Fullname</label>
+                                { fullname.error &&
+                                    <span class="text-xs text-red-700">{ fullname.errorMessage }</span>
+                                }
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="fullname" onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value } disabled/>
                             </div>
-                            <div className="aweb-fullname">
-                                <label>Fullname</label>
-                                <input type="text" name="fullname" required onChange={ (e) => this.onInputChange( 'fullname', e.target.value) } value={ fullname }/>
+                            <div class="w-full px-2 md:w-1/2">
+                                <label className="block mb-1">Email Address</label>
+                                { email.error &&
+                                    <span class="text-xs text-red-700">{ email.errorMessage }</span>
+                                }
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="email" onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value } disabled/>
                             </div>
-                            <div className="aweb-parentName">
-                                <label>Father/Mother's Name</label>
-                                <input type="text" name="parentName" required onChange={ (e) => this.onInputChange( 'parentName', e.target.value) } value={ parentName }/>
+                        </div>
+
+                        <div class="flex flex-wrap">
+                            <div class="w-full">
+                                <label className="block mb-1">Profession</label>
+                                { profession.error &&
+                                    <span class="text-xs text-red-700">{ profession.errorMessage }</span>
+                                }
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="profession" required onChange={ (e) => setProfession({ value: e.target.value }) } value={ profession.value }/>
                             </div>
-                            <div className="aweb-professionName">
-                                <label>Profession</label>
-                                <input type="text" name="professionName" required onChange={ (e) => this.onInputChange( 'professionName', e.target.value) } value={ professionName }/>
+                        </div>
+
+                        <div className="aweb-heading">
+                            { 'Contact Number' }
+                        </div>
+                        { contactNumber.error &&
+                            <span class="text-xs text-red-700">{ contactNumber.errorMessage }</span>
+                        }
+                        <div className="inline-flex">
+                            <div className="aweb-areacode">
+                                <PhoneInput className="flex justify-center w-4"
+                                    style= {{maxWidth: "20px"}}                                             
+                                    country={'np'}
+                                    value={contactNumber.areaCode}
+                                    onChange={ phone => setContactNumber({ areaCode: phone, number: contactNumber.number })}
+                                />
                             </div>
                             <div className="aweb-contactNumber">
-                                <label>Contact Number</label>
-                                <input type="number" name="contactNumber" required onChange={ (e) => this.onInputChange( 'contactNumber', e.target.value) } value={ contactNumber }/>
+                                <input className="ml-16 w-8/12 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ value: e.target.value }) } value={ contactNumber.value }/>
                             </div>
-                            <div className="aweb-birthDate">
-                                <label>Birth Date</label>
-                                <DatePicker required selected={birthDate} onChange={date => this.onInputChange( 'birthDate', date)} />
+                        </div>
+                        <div className="input-wrapper">
+                            <div className="aweb-heading">
+                                { 'Current Address' }
                             </div>
-                            <div className="aweb-currentAddress">
-                                <label>Current Address</label>
-                                <input type="text" name="currentAddress" required onChange={ (e) => this.onInputChange( 'currentAddress', e.target.value) } value={ currentAddress }/>
+                            { currentAddress.error &&
+                                <span class="text-xs text-red-700">{ currentAddress.errorMessage }</span>
+                            }
+                            <div className="street-address flex flex-wrap">
+                                <label>Street Address</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="cstreetAddress" onChange = { (e) => setCurrentAddress({ streetAddress: e.target.value, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.streetAddress}/>
                             </div>
-                            <div className="aweb-permanentAddress">
-                                <label>Permanent Address</label>
-                                <input type="text" name="permanentAddress" required onChange={ (e) => this.onInputChange( 'permanentAddress', e.target.value) } value={ permanentAddress }/>
+                            <div className="city">
+                                <label>City</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="city" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: e.target.value, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.city}/>
                             </div>
-                            <div className="input-wrapper">
-                                <div className="aweb-heading">
-                                    { 'Document Details' }
-                                </div>
-                                <div className="aweb-pp-photo">
-                                    <label>Password Size Photo</label>
-                                    <ImageUploader
-                                        withIcon={false}
-                                        buttonText={ 'Choose document image one' }
-                                        onChange={ (value) => this.onInputChange( 'pphoto', value )}
-                                        imgExtension={['.jpg', '.png']}
-                                        maxFileSize={5242880}
-                                        singleImage={true}
-                                        withPreview = {true}
-                                    />
-                                </div>
-                                <div className="aweb-pp-photo">
-                                    <label>Document Type</label>
-                                    <select onChange={(e) => this.onInputChange( 'documentType', e.target.value ) }>
+                            <div className="stateProvince">
+                                <label>State/Province</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="stateProvince" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: e.target.value, postalCode: currentAddress.postalCode, country: currentAddress.country }) } value={currentAddress.stateProvince}/>
+                            </div>
+                            <div className="postalCode">
+                                <label>Postal Code </label>
+                                <input className="w-40 h-10 m-2 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="postalCode" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: e.target.value, country: currentAddress.country }) } value={currentAddress.postalCode}/>
+                            </div>
+                            <div className="country">
+                                <label>Country</label>
+                                <input className="w-40 h-10 m-2 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="country" onChange = { (e) => setCurrentAddress({ streetAddress: currentAddress.streetAddress, city: currentAddress.city, stateProvince: currentAddress.stateProvince, postalCode: currentAddress.postalCode, country: e.target.value }) } value={currentAddress.country}/>
+                            </div>
+                        </div>
+                        <div className="input-wrapper">
+                            <div className="aweb-heading">
+                                { 'Permanent Address' }
+                            </div>
+                            { permanentAddress.error &&
+                                <span class="text-xs text-red-700">{ permanentAddress.errorMessage }</span>
+                            }
+                            <div className="street-address">
+                                <label>Street Address</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="cstreetAddress" onChange = { (e) => setPermanentAddress({ streetAddress: e.target.value, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.streetAddress}/>
+                            </div>
+                            <div className="city">
+                                <label>City</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"type="text" name="city" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: e.target.value, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.city}/>
+                            </div>
+                            <div className="stateProvince">
+                                <label>State/Province</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="stateProvince" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: e.target.value, postalCode: permanentAddress.postalCode, country: permanentAddress.country }) } value={permanentAddress.stateProvince}/>
+                            </div>
+                            <div className="postalCode">
+                                <label>Postal Code</label>
+                                <input className="w-40 m-2 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="postalCode" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: e.target.value, country: permanentAddress.country }) } value={permanentAddress.postalCode}/>
+                            </div>
+                            <div className="country">
+                                <label>Country</label>
+                                <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="country" onChange = { (e) => setPermanentAddress({ streetAddress: permanentAddress.streetAddress, city: permanentAddress.city, stateProvince: permanentAddress.stateProvince, postalCode: permanentAddress.postalCode, country: e.target.value }) } value={permanentAddress.country}/>
+                            </div>
+                        </div>
+                        <div className="aweb-birthDate">
+                            <label>Birth Date </label>
+                            { birthDate.error &&
+                                <span class="text-xs text-red-700">{ birthDate.errorMessage }</span>
+                            }
+                            <DatePicker
+                                value={birthDate.value}
+                                onChange={(value) => setBirthDate({value:value})}
+                                inputPlaceholder="Select a day"
+                                maximumDate={
+                                        {
+                                            year: 2003,
+                                            month: 12,
+                                            day: 31
+                                        }
+                                    }
+                                shouldHighlightWeekends
+                                />
+                        </div>
+                        <div className="input-wrapper">
+                            <div className="aweb-heading">
+                                { 'Document Details' }
+                            </div>
+                            <div className="single-field">
+                                <label className="block mb-1">Document Type</label>
+                                <div className="aweb-doc-type relative inline-block w-full text-gray-700">
+                                    <select className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" onChange={(e) => setDocumentType({value: e.target.value}) }>
                                         <option value='citizenship'>{ 'Citizenship' }</option>
                                         <option value='passport'>{ 'Passport' }</option>
                                     </select>
                                 </div>
-                                <div className="aweb-documentImageOne">
-                                    <label>Document Image One</label>
-                                    <ImageUploader
-                                        withIcon={false}
-                                        buttonText={ 'Choose document image one' }
-                                        onChange={ (value) => this.onInputChange( 'documentImageOne', value )}
-                                        imgExtension={['.jpg', '.png']}
-                                        maxFileSize={5242880}
-                                        singleImage={true}
-                                        withPreview = {true}
-                                    />
-                                </div>
-                                <div className="aweb-documentImageTwo">
-                                    <label>Document Image Two</label>
-                                    <ImageUploader
-                                        withIcon={false}
-                                        buttonText={ 'Choose document image two' }
-                                        onChange={ (value) => this.onInputChange( 'documentImageTwo', value )}
-                                        imgExtension={['.jpg', '.png']}
-                                        maxFileSize={5242880}
-                                        singleImage={true}
-                                        withPreview = {true}
-                                    />
-                                </div>
                             </div>
-                            <div className="aweb-submit">
-                                <input type="submit" name="submit" onClick= { (e) => this.onVerify(e) } value={ this.state.verifyButtonText }/>
+                            <div className="aweb-documentImage">
+                                <label>Document Image One</label>
+                                { documentImage.error &&
+                                    <span class="text-xs text-red-700">{ documentImage.errorMessage }</span>
+                                }
+                                <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
+                                { documentImage.dataUrl ? (
+                                    <>
+                                        <div className="w-48 h-48 mb-5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteDocumentImage() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImage.dataUrl} alt=""/></div>
+                                    </>
+                                ) : (
+                                    <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImage() }><GrAdd/></div>
+                                )}
+                            </div>
+                            <div className="aweb-documentImageOne">
+                                <label>Document Image Two</label>
+                                <input type="file" name="documentImageOne" ref={documentImageOneRef} onChange = { (e) => handlesetDocumentImageOne(e) } style={{display:"none"}}/>
+                                { documentImageOne.dataUrl ? (
+                                    <>
+                                        <div className="w-48 h-48 mb-7"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteDocumentImageOne() }><AiOutlineDelete/></span><img className="w-48 h-48" src={documentImageOne.dataUrl} alt=""/></div>
+                                    </>
+                                ) : (
+                                    <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImageOne() }><GrAdd/></div>
+                                )}
                             </div>
                         </div>
+                            <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" name="submit" onClick= { (e) => onSubmit(e) }>{ submitText }</button>
+                        { status && 
+                            <div className="aweb-success-note">
+                                { message }
+                            </div>
+                        }
                     </form>
                 </div>
-            </>
-        )
-    }
+            <Footer/>
+        </div>
+    )
 }
 
 export default UserVerification

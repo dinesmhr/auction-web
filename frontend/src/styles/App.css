@@ -26,9 +26,25 @@
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
-	position:absolute;
-	min-width:100%;
-	min-height:100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+#auction-web-admin {
+	height: 100%;
+}
+
+#admin-right-content {
+	position: fixed;
+	color: white;
+	height: 93vh;
+	width: 80%;
+	margin-top: 3rem;
+	margin-left: 20%;
+	background-color: #151a30;
+	overflow-y: scroll;
+	padding: 30px 30px 50px;
 }
 
 /*******************************************
@@ -163,7 +179,6 @@ a.active_name {
  			Login Form Css
 ********************************************/
 
-
 #auction-web-login{
 	display: flex;
 	flex-wrap: wrap;
@@ -195,43 +210,22 @@ a.active_name {
 .input-wrapper label{
 	font-size: 18px;
 }
-.input-wrapper input{
-	width: 100%;
+.aweb-submit input{
 	border: none;
-	border-bottom: 1px solid #000;
-	margin-bottom: 20px;
- 	background: transparent;
  	outline: none;
  	height: 40px;
+ 	background: #1c8adb;
+ 	color: #fff;
  	font-size: 16px;
-}
+ 	border-radius: 5px;
+ 	width: 75%;
+ 	margin: 20px 50px;
 
-.aweb-submit input{
-	border: none;
- 	outline: none;
- 	height: 50px;
- 	background: #1c8adb;
- 	color: #fff;
- 	font-size: 18px;
- 	border-radius: 20px;
- 	width: 75%;
- 	margin: 20px 50px;
  }
-.aweb-submit input{
-	border: none;
- 	outline: none;
- 	height: 50px;
- 	background: #1c8adb;
- 	color: #fff;
- 	font-size: 18px;
- 	border-radius: 20px;
- 	width: 75%;
- 	margin: 20px 50px;
-}
+
 .aweb-submit input:hover{
 	cursor: pointer;
-	background: #39dc79;
- 	color: #000;
+	background: #1d4ed8;
 }
 .aweb-login-form-wrapper .input-wrapper .aweb-login-note{
 	font-weight: bold;
@@ -270,24 +264,38 @@ a.active_name {
 ********************************************/
 
 .aweb-signup-form-wrapper{
-	border: 1px solid#000;
-	width: 75%;
+	border: 1px;
+	width: 44%;
 	padding-left:70px;
 	padding-right:40px;
-	padding-bottom: 100px;
 	margin: auto;	
-	border-radius: 10px;
 	margin-top: 10px;
+	max-height: auto;
+	overflow-y: hidden; 
+	box-shadow: 3px 18px 50px -16px rgba(148,140,140,0.45);
+
 }
-.input-wrapper .form-heading{
-	color: #1d184d;
-	margin: 15px auto;
+.input-wrapper .form-heading h2{
+	color: #1a1261;
+	margin: 10px auto;
+	
 }
 .input-wrapper .form-heading h2 span{
 	font-weight: bold;
-	font-size: 35px;
+	font-size: 25px;
 	color: #1a1261;
 }
+.input-wrapper label{
+	font-size: 13px;
+}
+.input-wrapper .aweb-submit{
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	width: 40%;
+	margin:auto;
+}
+
 /*******************************************
  			Ends Login Form Css
 ********************************************/
@@ -303,7 +311,6 @@ a.active_name {
 	.aweb-signup-form-wrapper{
 	    min-width: 80%;
         padding-bottom: unset;
-
 
 	}
 }
@@ -384,6 +391,9 @@ a.active_name {
 	cursor: pointer;
 	text-transform: uppercase;
 	letter-spacing: 2px;
+}
+.product-box button a{
+	color: white;
 }
 
 .product-box button:hover{
@@ -504,6 +514,9 @@ a.active_name {
 	justify-content: center;
 	align-items: center;
 }
+.react-tel-input .form-control{
+	max-width: 5px;
+}
 /*******************************************
  		Ends User Account Verification Css
 ********************************************/
@@ -528,77 +541,315 @@ a.active_name {
 /*************************************************
  	       	ADMIN SIDE TITLE
 **************************************************/
-.aweb-admin-wrap{
-	position: fixed;
+
+#admin-header {
+	background-color: #222b45;
+	z-index: 1040;
+	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
+}
+#admin-left-sidebar {
+	background-color: #222b45;
+	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
+}
+
+#aweb-admin-navigation ul li {
+	border-bottom: 1px solid #151a30;
+}
+
+#admin-content-table {
+	background-color: #222b45;
+	box-shadow: 0 0.5rem 1rem 0 #1a1f33;
+}
+
+.admin-content-table-row-heading {
+	border-bottom: 2px solid #151a30;
+}
+
+.admin-content-table-row {
+	border-bottom: 1px solid #151a30;
+}
+
+#admin-action-trigger-button, .admin-page-top-description {
+	background-color: #222b45;
+}
+
+.admin-modal-border {
+	border-bottom: 1px solid #151a30;
+}
+
+.admin-modal-box {
+	width: 700px;
+	background-color: #222b45;
+}
+
+#admin-action-trigger-button {
+	border: 1px solid #151a30;
+}
+
+/*.aweb-admin-wrap{
+	position: absolute;
 	width: 18%;
 	background: #24292d;
 	height: 100%;
-}
-
+}*/
+/*
 .aweb-admin-site-title{
-	font-size: 26px;
-	top: 0;
-	color:#fafbfd;
-	position: fixed;
-	z-index: 1;
-	margin-left: 30px;
+	position: absolute;
+	font-size: 20px;
+	color: #DCDCDC;
+	z-index: 4;
+	font-weight: bold;
+	width: 20%;
+	margin-bottom: 10px;
+	text-align: center;
+	font-size: 25px;
 	margin-top: 5px;
+	font-style: italic;
 }
 #aweb-admin-navigation{
+	position: fixed;
+	width: 20%;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	overflow: hidden;
-	margin-top: 50px;
-
+	background: #181818;
+	z-index: 3;
 }
 #aweb-admin-navigation ul li{
-	position: relative;
-	color: white;
-	margin-bottom: 20px;
-	transition: 0.3s;
+	padding: 20px 10px;
+	border-bottom: 1px;
+	margin-left: none;
 
+}
+#aweb-admin-navigation ul li:first-child{
+	padding-top: 30px;
+	margin-top: 25px;
 }
 #aweb-admin-navigation ul li a{
 	color: white;
+	text-decoration: none;
+}
+
+#aweb-admin-navigation ul li a:hover{
+	font-size: 17px;
+}
+@media(max-width: 790px){
+	#aweb-admin-navigation{
+		width: 85px;
+		display: fixed;
+	}
+	#aweb-admin-navigation ul li{
+		text-align: left;
+		margin-left: -40px;
+	}
+	#aweb-admin-navigation ul li a{
+		font-size: 14px;
+	}
+	#aweb-admin-navigation ul li a:hover{
+	font-size: 15px;
+	}
+	.aweb-admin-site-title{
+		font-size: 20px;
+		max-width: 16px;
+	}
+	#aweb-admin-navigation ul li:first-child{
+	margin-top: 25px;
+}
 }
 /*************************************************
  	      ENDS ADMIN SIDE TITLE
 **************************************************/
 
+/*************************************************
+ 	      ADMIN TABLE CSS
+**************************************************/
+/*
+table{
+	margin-left: 300px;
+}
+table th, td{
+	border: 1px solid #ddd;
+    padding: 6px;
+}
+table tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+table tr:nth-child(odd){
+	background-color: #DDDDDD;
+}
+table th {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  text-align: left;
+  background-color: #393E46;
+  color: white;
+}
 
 
+@media (max-width: 954px){
+		table{
+		width: 50% !important;
+		margin-left: 200px;
+	}
+}
 
+@media (max-width: 774px) {
 
+	table{
+		margin-left: 120px;
+		width: 50% !important;
+	}
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { 
+		border: 1px solid #ccc;
+	 }
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 10%; 
+		padding-right: -10%;
 
-
-
-
-
-
-
+	}
+	
+	td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 40; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+}
+/*************************************************
+ 	    ENDS  ADMIN TABLE CSS
+**************************************************/
 /*************************************************
  	        ENDS ADMIN SIDE CSS
 **************************************************/
+/*************************************************
+ 	        SINGLE PRODUCT CSS
+**************************************************/
+#auction-web-single-product{
+	max-width: 1200px;
+	width: 100%;
+	margin:100px auto;
+	box-shadow: 0 0 5px #ccc;
+}
 
 
+/*************************************************
+ 	       ENDS SINGLE PRODUCT CS
+**************************************************/
+
+/*************************************************
+ 	       HOMEPAGE CSS
+**************************************************/
+.home-banner img{
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 60vh;
+	width: 100vw;
+	margin-top: -10px;
+}
+
+
+/*************************************************
+ 	    ENDS HOMEPAGE CSS
+**************************************************/
+
+/*************************************************
+ 	    SVG IMAGE CSS
+**************************************************/
+.image-delete svg{
+ 	color: white;
+ 	border-radius: 50px;
+ 	opacity: 0.9;
+
+}
+.image-delete svg:hover{
+	color: #D3D3D3;
+	font-size: 1.4rem;
+	-webkit-transition: all 0.5s 0.05s ease;
+
+}
+
+/*************************************************
+ 	    ENDS SVG IMAGE CSS
+**************************************************/
+/*************************************************
+ 	   USER EDIT CSS
+**************************************************/
+.input_editUser{
+	color: white;
+}
+/*************************************************
+ 	    ENDS USER EDIT CSS
+**************************************************/
+/*************************************************
+ 	    SINGLE PRODUCT CSS  
+**************************************************/
+.singlePage_RightData{
+	font-size: 0.9rem;
+}
+
+.singleProductRightMargin{
+	max-width: 70%;
+	word-wrap: break-word;
+}
+
+
+/*************************************************
+ 	    ENDS SINGLE PRODUCT CSS 
+**************************************************/
+/*************************************************
+ 	    DATEPICKER CSS 
+**************************************************/
+.DatePicker {
+	color: #343434;
+}
+/*************************************************
+ 	    ENDS DATEPICKER CSS 
+**************************************************/
+
+.editProductUser td{
+	padding: 2px;
+}
 
 /*******************************************
  			Footer Css
 ********************************************/
-#aweb-footer {
-	background-color: #0a183d;
-	height: 32px;
-	width: 100%;
+footer{
+	margin-top: auto;
+  	width: 100%;
 }
-#aweb-footer p{
-	color: #fff;
-	text-align: center;
-	text-transform: capitalize;
-	font-family: 'Open Sans', sans-serif;
-	padding-top: 3px;
-}	
+.aweb-main-footer-wrap{
+	padding: 20px 0;
+}
+.upper-footer-wrap{
+	display: flex;
+	justify-content: space-around;
+}
+.footer-item ul li {
+    list-style: none;
+    display: flex;
+}
+
+.aweb-main-footer-wrap{
+	 width: 100%;
+ 	 background-color: #506987 ;	
+	;
+ 
+}
 /*******************************************
  			Ends Footer Css
 ********************************************/

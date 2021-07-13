@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import AdminMainNavigation from '../navigation/AdminMainNavigation'
+import { BsDot } from "react-icons/bs"
+
 const axios = require('axios');
 
-const AdminProducts = (props) => {
-	const [ products, setProducts ] = useState([])
-	const { userLoggedIn } = props
+const AdminProducts = () => {
+	const [ products, setProducts ] = useState(null)
 
 	useEffect(() => {
-		let _this = this
-        const url = 'http://localhost/auction-web/api/products.php'
-        axios.get( url )
+        axios.get( '/products.php' )
         .then(function(response) {
             if( response.data.status === true ) {
                 setProducts( response.data.data )
@@ -18,41 +18,42 @@ const AdminProducts = (props) => {
 	})
 
 	return (
-		<>
-		 	<header>           
-				<div className="aweb-admin-top-header">
-					<h1 className="aweb-admin-site-title">Auction Web</h1>
-					<AdminMainNavigation userLoggedIn = { userLoggedIn }/> 
-					<table style={{width:"100%"}}>
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Status</th>
-								<th>Initial Price</th>
-								<th>Seller Id</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{
-								products.map( ( product, index )  => {
-									return (	 
-										<tr key={ index }>
-											<td>{product.name}</td>
-											<td>{product.status}</td>
-											<td>{product.initial_price}</td>
-											<td>{product.seller_id}</td>
-											<td>
-												<button><a href={ `/aweb-products/${product.id}` }>{`Edit`}</a></button>
-											</td>
-										</tr>
-									)
-								})
-							}
-						</tbody>
-					</table>					
+		<>           
+			<div id="auction-web-admin" className="content-wrap">
+				<AdminMainNavigation/>
+				<div id="admin-right-content">
+					{
+						products === null ? (
+							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">Loading datas</span></div>
+						) : products.length === 0 ? (
+							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">No products found</span></div>
+						) : (
+							<div id="admin-content-table" className="tracking-wider">
+								<div className="admin-content-table-row-heading grid grid-cols-4 flex flex-row font-semibold">
+									<span className="py-4 px-14">Name</span>
+									<span className="py-4 px-14">Initial Price</span>
+									<span className="py-4 px-14">Status</span>
+									<span className="py-4 px-14">Actions</span>
+								</div>
+								{
+									products.map( ( product, index )  => {
+										return (	 
+											<div key={ index } className="admin-content-table-row grid grid-cols-4 flex flex-row text-sm">
+												<span className="py-2 px-8 flex"><BsDot className="mt-1"/><span className="px-2">{product.title}</span></span>
+												<span className="py-2 px-16">{product.initial_bid}</span>
+												<span className="py-2 px-16">{product.status}</span>
+												<span className="py-2 px-14">
+													<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-products/${product.id}`}>Edit</Link></button>
+												</span>
+											</div>
+										)
+									})
+								}
+							</div>
+						)
+					}
 				</div>
-			</header>
+			</div>
 		</>
 	)
 }

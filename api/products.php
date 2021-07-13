@@ -9,11 +9,11 @@ header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 if( is_db_connected() ) {
     extract( $GLOBALS );
-    if( isset( $_GET['product_id'] ) ) {
-        $product_id = $_GET['product_id'];
-        $products_sql = 'SELECT * FROM products WHERE id="'.$product_id.'"';
+    if( isset( $_GET['id'] ) ) {
+        $product_id = $_GET['id'];
+        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'"';
     } else {
-        $products_sql = 'SELECT * FROM products WHERE 1';
+        $products_sql = 'SELECT * FROM aw_products WHERE 1';
     }
     $datas = $CONNECTION->query( $products_sql );
     if( $datas ) {
@@ -25,7 +25,12 @@ if( is_db_connected() ) {
             $structure['message'] = 'success';
             $products = $datas->fetch_all(MYSQLI_ASSOC);
             foreach( $products as $key => $product ) {
-                $products[$key]['images'] = unserialize( htmlspecialchars_decode( $products[$key]['images'] ) );
+                foreach( $product as $prodKey => $prod ) {
+                    if( @unserialize( $product[$prodKey] ) ) {
+                        $product[$prodKey] = unserialize( $product[$prodKey] );
+                    }
+                }
+                $products[$key] = $product;
             }
             $structure['data'] = $products;
         }

@@ -1,41 +1,55 @@
-import React, { Component} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import {appContext} from '../../App'
 
-class MainNavigation extends Component {
-    constructor(props) {
-        super( props )
-        this.state = {
-                userId: localStorage.auctionWebSessionUserId,
-                userloggedin: localStorage.auctionWebSessionUserLogged,
-                userVerified: localStorage.auctionWebSessionUserStatus
+const axios = require('axios')
+
+const MainNavigation = () => {
+    const [userId, setUserId] = useState('')
+    const [userStatus, setUserStatus] = useState('')
+    const { isLoggedIn } = useContext(appContext)
+
+    useEffect(() => {
+        axios.get( '/sessions.php' )
+        .then(function(res) {
+            if(res.data.login) {
+                setUserId(res.data.userId)
             }
-    }
+        })
+    }, [])
 
-    render() { 
-        const { userloggedin, userVerified } = this.state
-        return (
-        	<div className="nav-wrap">        
-                <ul>                 	                       				 
-                    <li><NavLink exact activeClassName="active_name" to="/">Home</NavLink></li>  				 
-                    <li><NavLink activeClassName="active_name" to="/products">Products</NavLink></li>
-                    <li>
-                        <NavLink activeClassName="active_name" to="/login">
-                            { this.props.userLoggedIn && 
-                                    'My Account'
-                            }
-                            { !this.props.userLoggedIn && 
-                                    'Login'
-                            }
-                        </NavLink>
-                    </li>
-                    { userloggedin && ( userVerified !== 'verified' ) && 
-                        <li><NavLink activeClassName="active_name" to="/user-verification">Verify Account</NavLink></li>
-                    }
-                    <li><NavLink activeClassName="active_name" to="/user-submit-product">Submit Product</NavLink></li>
-                </ul>
-            </div>                                    
-        );
-    }
+    useEffect(() => {
+        userId &&
+        axios.get( `/users.php?id=${userId}`)
+        .then(function(res) {
+            if(res.data.status) {
+                setUserStatus(res.data.data[0].status)
+            }
+        })
+    }, [userId])
+
+    return (
+        <div className="nav-wrap">        
+            <ul>                 	                       				 
+                <li><NavLink exact activeClassName="active_name" to="/">Home</NavLink></li>
+                <li><NavLink activeClassName="active_name" to="/products">Products</NavLink></li>
+                <li><NavLink activeClassName="active_name" to="/categories">Categories</NavLink></li>
+                { isLoggedIn && userStatus !== 'verified' &&
+                    <li><NavLink activeClassName="active_name" to="/user-verification">Verify Account</NavLink></li>
+                }
+                <li><NavLink activeClassName="active_name" to="/submit-product">Submit Product</NavLink></li>
+                { isLoggedIn && 
+                    <li><NavLink activeClassName="active_name" to="/myaccount">My Account</NavLink></li>
+                }
+                { !isLoggedIn && 
+                    <>
+                        <li><NavLink activeClassName="active_name" to="/login">Login</NavLink></li>
+                        <li><NavLink activeClassName="active_name" to="/signup">Sign Up</NavLink></li>
+                    </>
+                }
+            </ul>
+        </div>
+    );
 }
  
 export default MainNavigation;
