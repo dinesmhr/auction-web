@@ -23,12 +23,14 @@ const CategoryCard=(category)=>{
     
     return(
         <>
-            <div className="category-card">
-                <img src={`${featureImage}`} alt={title}/>
-                <div className="category-box">
-                    <h3 title={title}>
-                        <a href={ `category/${id}` }>{title}</a>
+            <div className="category-card ml-14 mt-10">
+            <a href={ `category/${id}` }>
+                <img src={`${featureImage}`} alt={title} className="h-40 w-40"/>
+                    <h3 title={title} className="relative text-center">
+                        <a href={ `category/${id}`} className="">{title}</a>
                     </h3>
+            </a>
+                <div className="category-box">
                     { productCount &&
                         <div>{ `${productCount} products` }</div>
                     }
@@ -51,15 +53,17 @@ const Categories = () => {
     return (
         <>
             <Header/>
-                <div id="auction-web-categoriesPage">
+                <div className="auction-web-categoriesPage h-full ">
+                    <div className="categoriesPageWrap flex flex-wrap ">
                     { !data &&
                         <div>{`Loading categories`}</div>
                     }
                     { Array.isArray(data) &&
                         data.map((dat, key) => {
-                            return <CategoryCard key={key} {...dat}/>
+                            return (<CategoryCard key={key} {...dat}/>)
                         })   
                     }
+                    </div>
                 </div>
             <Footer/>
         </>
