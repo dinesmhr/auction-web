@@ -24,6 +24,7 @@ const AdminEditProduct = () => {
     const [specifications, setSpecifications] = useState({value: [{value:''}]});
 	const [initialBid, setInitialBid] = useState({value: ''});
 	const [maxBid, setMaxBid] = useState({value: ''});
+    const [bidRaise, setBidRaise] = useState({value: ''});
 	const [deadlineDate, setDeadlineDate] = useState({value: ''});
     const [deadlineTime, setDeadlineTime] = useState({value: ''});
 	const [images, setImages] = useState({value: []});
@@ -48,6 +49,7 @@ const AdminEditProduct = () => {
             setDescription({value: res.data.data[0].description})
             setInitialBid({value: res.data.data[0].initial_bid})
             setMaxBid({value: res.data.data[0].max_bid})
+            setBidRaise({value: res.data.data[0].bid_raise})
             setSpecifications({value: res.data.data[0].specifications})
             setDetails({value: res.data.data[0].details})
             const tempImages = res.data.data[0].images_path.map((image, key) => {
@@ -57,7 +59,8 @@ const AdminEditProduct = () => {
                 return ({ dataUrl : image })
             })
             setImages({value: tempImages})
-            setDeadlineDate({value: res.data.data[0].deadline_date})
+            setDeadlineDate({value: res.data.data[0].deadline_date.substring(0,10)})
+            setDeadlineTime({value: res.data.data[0].deadline_date.substring(11)})
             setProductStatus({value: res.data.data[0].status})
         })
     }, [])
@@ -299,6 +302,7 @@ const AdminEditProduct = () => {
                 details: details.value,
 				initialBid: initialBid.value,
 				maxBid: maxBid.value,
+                bidRaise: bidRaise.value,
 				deadlineDate: deadlineFullDate,
 				images: images.value,
                 tags: finalTags,
@@ -414,6 +418,16 @@ const AdminEditProduct = () => {
                     </div>
                 </div>
 
+                <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                        <div className="">Bid Raise :<BiDollar/></div>
+                        { bidRaise.error &&
+                            <span className="text-xs text-red-700">{ bidRaise.errorMessage }</span>
+                        }
+                        <input className="text-sm mt-2 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add bid raise amount" onChange={(e) => setBidRaise({value: e.target.value})} value={bidRaise.value} aria-label="Initial Bid" />
+                    </div>
+                </div>
+
                 <div className="flex flex-wrap -mx-3 mb-6  w-full px-3 flex-col items-center mt-4">
                         <div>
                             <div className="mb-2">Bid Deadline Date :</div>
@@ -472,7 +486,7 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-1 ml-1 text-sm">{ category.title }</div></>
+                                    <React.Fragment key={`unique-${index}`}><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-1 ml-1 text-sm">{ category.title }</div></React.Fragment>
                                 )
                             })
                         }

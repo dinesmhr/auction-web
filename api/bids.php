@@ -18,7 +18,12 @@ if( is_db_connected() ) {
         }
     } else if( isset($_GET['product_id']) ) {
         $product_id = $_GET['product_id'];
-        $bids_sql = 'SELECT * FROM aw_bids WHERE product_id="'.$product_id.'"';
+        if( isset( $_GET['return_type'] ) ) {
+            if( $_GET['return_type'] === 'highest_bid' )
+            $bids_sql = 'SELECT *, MAX(bid_amount) FROM aw_bids WHERE product_id="'.$product_id.'"';
+        } else {
+            $bids_sql = 'SELECT * FROM aw_bids WHERE product_id="'.$product_id.'"';
+        }
     } else {
         $bids_sql = 'SELECT * FROM aw_bids WHERE 1';
     }

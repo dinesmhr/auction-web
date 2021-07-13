@@ -25,19 +25,12 @@ if( is_db_connected() ) {
   $details  = isset( $decoded_data["details"] ) ? htmlspecialchars($decoded_data["details"]) : '';
   $initialBid     = isset( $decoded_data["initialBid"] ) ? $decoded_data["initialBid"] : '';
   $maxBid         = isset( $decoded_data["maxBid"] ) ? $decoded_data["maxBid"] : '';
+  $bidRaise         = isset( $decoded_data["bidRaise"] ) ? $decoded_data["bidRaise"] : '';
   $deadlineDate   = isset( $decoded_data["deadlineDate"] ) ? $decoded_data["deadlineDate"] : '';
   $images         = isset( $decoded_data["images"] ) ? $decoded_data["images"] : '';
   $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? $decoded_data["tags"] : '';
   $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? $decoded_data["categories"] : '';
   $status         = isset( $decoded_data["status"] ) ? $decoded_data["status"] : 'draft';
-
-  function is_base64_encoded( $data ) {
-    if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data)) {
-       return TRUE;
-    } else {
-       return FALSE;
-    }
-};
 
   foreach( $images as $image ) :
     if( isset( $image['dataUrl'] ) ) {
@@ -67,7 +60,7 @@ if( is_db_connected() ) {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', details = '" .$details. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
+  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', details = '" .$details. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', bid_raise = '" .$bidRaise. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
         // add new selected categories 
         if(!empty($decoded_data["categories"]["add"])) {
