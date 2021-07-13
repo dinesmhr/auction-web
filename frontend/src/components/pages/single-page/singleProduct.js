@@ -88,6 +88,7 @@ const SingleProduct = () => {
             if( res.data.status ) {
                 setProductData( res.data.data )
                 setSellerID( res.data.data[0].user_id )
+                setCurrentBid( res.data.data[0].user_id )
             }
         })
     }, [])
