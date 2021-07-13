@@ -12,9 +12,17 @@ if( is_db_connected() ) {
         $user_id = $_GET['user_id'];
         if( isset( $_GET['product_id'] ) ) {
             $product_id = $_GET['product_id'];
-            $bids_sql = 'SELECT * FROM aw_bids WHERE id="'.$user_id.'" AND product_id ="' .$product_id. '"';
+            $bids_sql = 'SELECT * FROM aw_bids WHERE user_id="'.$user_id.'" AND product_id ="' .$product_id. '"';
         } else {
-            $bids_sql = 'SELECT * FROM aw_bids WHERE id="'.$user_id.'"';
+            $bids_sql = 'SELECT * FROM aw_bids WHERE user_id="'.$user_id.'"';
+        }
+    } else if( isset($_GET['product_id']) ) {
+        $product_id = $_GET['product_id'];
+        if( isset( $_GET['return_type'] ) ) {
+            if( $_GET['return_type'] === 'highest_bid' )
+            $bids_sql = 'SELECT *, MAX(bid_amount) FROM aw_bids WHERE product_id="'.$product_id.'"';
+        } else {
+            $bids_sql = 'SELECT * FROM aw_bids WHERE product_id="'.$product_id.'"';
         }
     } else {
         $bids_sql = 'SELECT * FROM aw_bids WHERE 1';

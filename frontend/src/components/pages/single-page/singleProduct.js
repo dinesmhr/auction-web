@@ -49,6 +49,10 @@ const SingleProduct = () => {
     const [ bidNowButtonDisableMessage, setBidNowButtonDisableMessage ] = useState('')
     const [ userId, setUserId ] = useState()
     const [ userStatus, setUserStatus ] = useState()
+
+    const [ currentHighestBid, setCurrentHighestBid ] = useState()
+    const [ currentBid, setCurrentBid ] = useState()
+
     const { id } = useParams()
     const cancelButtonRef = useRef(null)
 
@@ -149,6 +153,23 @@ const SingleProduct = () => {
         }
     }, [sellerID])
 
+    // set current highest bid
+    useEffect(() => {
+        let isMounted = true;
+        async function fetchData() {
+            let results = await axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
+            if( results.data.status ) {
+                if(isMounted) setCurrentHighestBid(results.data.data[0].bid_amount)
+            }
+        }
+        fetchData()
+        return () => { isMounted = false };
+    }, [])
+
+    const validateBid = () => {
+        console.log('dinesh')
+    }
+
     // bid modal
     const BidModal = () => {
         return (
@@ -203,12 +224,14 @@ const SingleProduct = () => {
                                                 <div>
                                                     <div>Opening Bid : { productData[0].initial_bid}</div>
                                                     <div>Closing Bid : { productData[0].max_bid}</div>
-                                                    <div>Current Highest Bid : { productData[0].max_bid}</div>
                                                     <div>
-                                                        <input type="number" value={productData[0].max_bid}/>
-                                                        <button>Place a Bid</button>
+                                                        Current Highest Bid : { currentHighestBid ? currentHighestBid : productData[0].initial_bid }
+                                                    </div>
+                                                    <div>
+                                                        <input type="number" defaultValue={ currentHighestBid ? currentHighestBid :productData[0].initial_bid} step={ productData[0].bid_raise }/>
+                                                        <button onClick= {() => validateBid()}>Place a Bid</button>
                                                         <div>
-                                                            Your recent bid is just  ago
+                                                            Your recent bid is just ago
                                                         </div>
                                                     </div>
                                                 </div>
@@ -349,8 +372,11 @@ const SingleProduct = () => {
                                                                 }
                                                             </div>
                                                             <div>
+                                                                Current Highest Bid : {  currentHighestBid ? currentHighestBid : product.initial_bid }
+                                                            </div>
+                                                            <div>
                                                                 Bid will close in
-                                                                <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
+                                                                <Countdown date={ Date.parse(new Date(product.deadline_date) ) } />
                                                             </div>
                                                             { BidModal() }
                                                         </div>
