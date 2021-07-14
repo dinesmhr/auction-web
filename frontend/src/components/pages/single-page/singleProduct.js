@@ -50,8 +50,10 @@ const SingleProduct = () => {
     const [ userId, setUserId ] = useState()
     const [ userStatus, setUserStatus ] = useState()
 
+    const [ bidRaise, setBidRaise ] = useState()
     const [ currentHighestBid, setCurrentHighestBid ] = useState()
-    const [ currentBid, setCurrentBid ] = useState()
+    const [ currentBid, setCurrentBid ] = useState({value:''})
+    const [ recentUserBids, setRecentUserBids ] = useState()
 
     const { id } = useParams()
     const cancelButtonRef = useRef(null)
@@ -88,7 +90,9 @@ const SingleProduct = () => {
             if( res.data.status ) {
                 setProductData( res.data.data )
                 setSellerID( res.data.data[0].user_id )
-                setCurrentBid( res.data.data[0].user_id )
+                setCurrentHighestBid(res.data.data[0].initial_bid)
+                setCurrentBid({value:res.data.data[0].initial_bid})
+                setBidRaise(res.data.data[0].bid_raise)
             }
         })
     }, [])
@@ -160,15 +164,47 @@ const SingleProduct = () => {
         async function fetchData() {
             let results = await axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
             if( results.data.status ) {
-                if(isMounted) setCurrentHighestBid(results.data.data[0].bid_amount)
+                if(isMounted)  {
+                    setCurrentHighestBid(results.data.data[0].bid_amount)
+                    setCurrentBid({value:results.data.data[0].bid_amount})
+                }
+            }
+        }
+
+        async function fetchBidData() {
+            let resultss = await axios.get( `/bids.php?user_id=${id}&product_id=${id}` )
+            console.log(resultss.data)
+            if( resultss.data.status ) {
+                if(isMounted)  {
+                    setRecentUserBids(resultss.data.data)
+                }
             }
         }
         fetchData()
+        fetchBidData()
         return () => { isMounted = false };
     }, [])
 
     const validateBid = () => {
-        console.log('dinesh')
+        if( currentBid.value <= currentHighestBid ) {
+            currentBid.value = currentBid.value
+            currentBid.error = true
+            currentBid.errorMessage = `Currrent Bid must be geater than previous highest bid. Previous bid was ${currentHighestBid}`
+            setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
+            return;
+        } else if ( ( currentBid.value - currentHighestBid ) < bidRaise ) {
+            currentBid.value = currentBid.value
+            currentBid.error = true
+            currentBid.errorMessage = `Currrent Bid raised amount is not enough to place a bid. Bid raise is ${bidRaise}`
+            setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
+            return;
+        }
+    }
+
+    const onBidsubmit =  () => {
+        if( validateBid() ) {
+            console.log('valid bid')
+        }
     }
 
     // bid modal
@@ -229,8 +265,14 @@ const SingleProduct = () => {
                                                         Current Highest Bid : { currentHighestBid ? currentHighestBid : productData[0].initial_bid }
                                                     </div>
                                                     <div>
-                                                        <input type="number" defaultValue={ currentHighestBid ? currentHighestBid :productData[0].initial_bid} step={ productData[0].bid_raise }/>
-                                                        <button onClick= {() => validateBid()}>Place a Bid</button>
+                                                        Valid Bid Raise : { bidRaise ? bidRaise : productData[0].bid_raise }
+                                                    </div>
+                                                    <div>
+                                                        <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise }/>
+                                                        <button onClick= {() => onBidsubmit()}>Place a Bid</button>
+                                                        { currentBid.error &&
+                                                            <div>{ currentBid.errorMessage }</div>
+                                                        }
                                                         <div>
                                                             Your recent bid is just ago
                                                         </div>
@@ -238,14 +280,31 @@ const SingleProduct = () => {
                                                 </div>
                                                 <div>
                                                     Your Recent Bids
-                                                    <div>
-                                                        You have not made bid in this product before
-                                                    </div>
-                                                    <div>
-                                                        <span>Bid Amount</span>
-                                                        <span>Bid Difference</span>
-                                                        <span>Bid Date</span>
-                                                    </div>
+                                                    { !recentUserBids &&
+                                                        <div>
+                                                            You have not made bid in this product before
+                                                        </div>
+                                                    }
+                                                    { recentUserBids &&
+                                                        <div>
+                                                            <div>
+                                                                <span>Bid Amount</span>
+                                                                <span>Bid Difference</span>
+                                                                <span>Bid Date</span>
+                                                            </div>
+                                                            { 
+                                                                recentUserBids.map(( recentUserBid, key) => {
+                                                                    return(
+                                                                        <div>
+                                                                            <span>{recentUserBid.bid_amount}</span>
+                                                                            <span>{recentUserBid.bid_difference}</span>
+                                                                            <span>{recentUserBid.bid_date}</span>
+                                                                        </div>
+                                                                    )      
+                                                                })
+                                                            }
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
