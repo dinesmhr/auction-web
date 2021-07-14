@@ -50,9 +50,14 @@ const SingleProduct = () => {
     const [ userId, setUserId ] = useState()
     const [ userStatus, setUserStatus ] = useState()
 
+    const [ userCanBid, setUserCanBid ] = useState(false)
     const [ bidRaise, setBidRaise ] = useState()
     const [ currentHighestBid, setCurrentHighestBid ] = useState()
     const [ currentBid, setCurrentBid ] = useState({value:''})
+    const [ closingBid, setClosingBid ] = useState()
+    const [ bidDifferrence, setBidDifferrence ] = useState()
+    const [ userLastBidDate, setUserLastBidDate ] = useState()
+    
     const [ recentUserBids, setRecentUserBids ] = useState()
 
     const { id } = useParams()
@@ -93,6 +98,7 @@ const SingleProduct = () => {
                 setCurrentHighestBid(res.data.data[0].initial_bid)
                 setCurrentBid({value:res.data.data[0].initial_bid})
                 setBidRaise(res.data.data[0].bid_raise)
+                setClosingBid(res.data.data[0].max_bid)
             }
         })
     }, [])
@@ -165,25 +171,37 @@ const SingleProduct = () => {
             let results = await axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
             if( results.data.status ) {
                 if(isMounted)  {
+                    setUserLastBidDate(results.data.data[0].bid_Date)
                     setCurrentHighestBid(results.data.data[0].bid_amount)
                     setCurrentBid({value:results.data.data[0].bid_amount})
                 }
             }
         }
 
+        fetchData()
+        return () => { isMounted = false };
+    }, [])
+
+    useEffect(() => {
+        let isMounted = true;
         async function fetchBidData() {
-            let resultss = await axios.get( `/bids.php?user_id=${id}&product_id=${id}` )
-            console.log(resultss.data)
+            let resultss = await axios.get( `/bids.php?user_id=${userId}&product_id=${id}` )
             if( resultss.data.status ) {
                 if(isMounted)  {
                     setRecentUserBids(resultss.data.data)
                 }
             }
         }
-        fetchData()
-        fetchBidData()
+        { userId &&
+            fetchBidData()
+        }
         return () => { isMounted = false };
-    }, [])
+    }, [userId])
+
+    // check userCanBid, checks user bid cooldown time , checks user has previous bid
+    useEffect(() => {
+
+    }, [userCanBid])
 
     const validateBid = () => {
         if( currentBid.value <= currentHighestBid ) {
@@ -192,18 +210,38 @@ const SingleProduct = () => {
             currentBid.errorMessage = `Currrent Bid must be geater than previous highest bid. Previous bid was ${currentHighestBid}`
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
+        } else if ( currentBid.value > closingBid ) {
+            currentBid.value = currentBid.value
+            currentBid.error = true
+            currentBid.errorMessage = `Currrent Bid amount cannot exceed the maximum closing bid`
+            setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
+            return;
         } else if ( ( currentBid.value - currentHighestBid ) < bidRaise ) {
             currentBid.value = currentBid.value
             currentBid.error = true
-            currentBid.errorMessage = `Currrent Bid raised amount is not enough to place a bid. Bid raise is ${bidRaise}`
+            currentBid.errorMessage = `Currrent Bid raised amount is not enough to place a bid. Bid raise is ${bidRaise} from previous bid amount. Your current bid raise is ${currentBid.value - currentHighestBid}`
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
+        } else {
+            setBidDifferrence(currentBid.value - currentHighestBid)
+            return true
         }
     }
 
     const onBidsubmit =  () => {
         if( validateBid() ) {
-            console.log('valid bid')
+            axios.post( `/edit-table/edit-bid.php`, {
+				submit: 'submit',
+				productId: id,
+                userId: userId,
+                bid_amount: currentBid.value,
+                bid_difference: bidDifferrence
+			})
+            .then((res) => {
+                if( res.data.status ) {
+                    setUserCanBid(!userCanBid)
+                }
+            })
         }
     }
 
@@ -268,11 +306,18 @@ const SingleProduct = () => {
                                                         Valid Bid Raise : { bidRaise ? bidRaise : productData[0].bid_raise }
                                                     </div>
                                                     <div>
-                                                        <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise }/>
-                                                        <button onClick= {() => onBidsubmit()}>Place a Bid</button>
-                                                        { currentBid.error &&
-                                                            <div>{ currentBid.errorMessage }</div>
+                                                        {/* { userLastBidDate &&
+                                                                
                                                         }
+                                                        { !userLastBidDate && */}
+                                                            <>
+                                                                <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
+                                                                <button onClick= {() => onBidsubmit()}>Place a Bid</button>
+                                                                { currentBid.error &&
+                                                                    <div>{ currentBid.errorMessage }</div>
+                                                                }
+                                                            </>
+                                                        {/* } */}
                                                         <div>
                                                             Your recent bid is just ago
                                                         </div>
