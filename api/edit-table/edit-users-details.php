@@ -57,7 +57,7 @@ if( is_db_connected() ) {
         if( !is_dir( $filedir1 ) ) {
           mkdir($filedir1);
         }
-        define( 'UPLOAD_DIR', $filedir1 );
+        if( !defined('UPLOAD_DIR') ) define( 'UPLOAD_DIR', $filedir1 );
         $image_type_aux1 = explode("image/", $image1_parts[0]);
         $image_type1 = $image_type_aux1[1];
         $file1 = UPLOAD_DIR . uniqid() . '.' .$image_type1;

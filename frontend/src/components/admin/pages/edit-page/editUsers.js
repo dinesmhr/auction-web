@@ -21,7 +21,12 @@ const AdminEditUser = () =>  {
     })
 
     const verifyUser = () => {
-
+        axios.get( `/edit-table/update-user-status.php?id=${id}` )
+        .then((res) => {
+            if( res.data.status ) {
+                console.log('User verified!!')
+            }
+        })
     }
 
     return (

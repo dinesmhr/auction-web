@@ -16,7 +16,7 @@ require_once '../functions.php';
 if( is_db_connected() ) {
   extract( $GLOBALS );
     $status   = isset( $_GET['status'] ) ? $_GET['status'] : 'verified';
-    $users_sql = 'UPDATE users SET status="' .$status. '" WHERE id="' .$_GET['id']. '"';
+    $users_sql = 'UPDATE aw_users SET status="' .$status. '" WHERE id="' .$_GET['id']. '"';
     if ( $CONNECTION->query( $users_sql ) === TRUE ) {
         $structure['status'] = true;
         $structure['message'] = 'Record updated successfully';

@@ -12,9 +12,9 @@ if( is_db_connected() ) {
         $user_id = $_GET['user_id'];
         if( isset( $_GET['product_id'] ) ) {
             $product_id = $_GET['product_id'];
-            $bids_sql = 'SELECT * FROM aw_bids WHERE user_id="'.$user_id.'" AND product_id ="' .$product_id. '"';
+            $bids_sql = 'SELECT * FROM aw_bids WHERE user_id="'.$user_id.'" AND product_id ="' .$product_id. '" ORDER BY bid_date DESC';
         } else {
-            $bids_sql = 'SELECT * FROM aw_bids WHERE user_id="'.$user_id.'"';
+            $bids_sql = 'SELECT * FROM aw_bids WHERE user_id="'.$user_id.'" ORDER BY bid_date DESC';
         }
     } else if( isset($_GET['product_id']) ) {
         $product_id = $_GET['product_id'];
@@ -22,7 +22,7 @@ if( is_db_connected() ) {
             if( $_GET['return_type'] === 'highest_bid' )
             $bids_sql = 'SELECT * FROM aw_bids WHERE bid_amount = ( SELECT MAX(bid_amount) FROM aw_bids WHERE product_id="'.$product_id.'" ) ';
         } else {
-            $bids_sql = 'SELECT * FROM aw_bids WHERE product_id="'.$product_id.'"';
+            $bids_sql = 'SELECT * FROM aw_bids WHERE product_id="'.$product_id.'" ORDER BY bid_date DESC';
         }
     } else {
         $bids_sql = 'SELECT * FROM aw_bids WHERE 1';

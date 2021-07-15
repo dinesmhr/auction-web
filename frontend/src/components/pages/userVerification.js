@@ -203,9 +203,10 @@ const UserVerification = () => {
                 documentImageOne: documentImageOne
             })
             .then(function (response) {
+                console.log(response)
                 if( response.data.status ) {
                     setStatus(true)
-                    setMessage( 'Signed up successfully' )
+                    setMessage( 'Verification form submitted successfully' )
                 } else {
                     setStatus(true)
                     setMessage( 'Error in sign up' )
@@ -223,7 +224,7 @@ const UserVerification = () => {
             })
             .catch(function (error) {
                 setStatus(true)
-                setMessage( 'Error in sign up' )
+                setMessage( 'Error in submission' )
             });
         } else {
             setSubmitText( 'Submit For Verification' )
@@ -258,28 +259,28 @@ const UserVerification = () => {
                         <div className="aweb-heading-personal-details">
                             { 'Personal Details' }
                         </div>
-                        <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
-                            <div class="w-full px-2 md:w-1/2">
+                        <div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0">
+                            <div className="w-full px-2 md:w-1/2">
                                 <label className="block mb-1">Fullname</label>
                                 { fullname.error &&
-                                    <span class="text-xs text-red-700">{ fullname.errorMessage }</span>
+                                    <span className="text-xs text-red-700">{ fullname.errorMessage }</span>
                                 }
                                 <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="fullname" onChange={ (e) => setFullname({ value: e.target.value}) } value={ fullname.value } disabled/>
                             </div>
-                            <div class="w-full px-2 md:w-1/2">
+                            <div className="w-full px-2 md:w-1/2">
                                 <label className="block mb-1">Email Address</label>
                                 { email.error &&
-                                    <span class="text-xs text-red-700">{ email.errorMessage }</span>
+                                    <span className="text-xs text-red-700">{ email.errorMessage }</span>
                                 }
                                 <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="email" onChange={ (e) => setEmail({ value: e.target.value}) } value={ email.value } disabled/>
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap">
-                            <div class="w-full">
+                        <div className="flex flex-wrap">
+                            <div className="w-full">
                                 <label className="block mb-1">Profession</label>
                                 { profession.error &&
-                                    <span class="text-xs text-red-700">{ profession.errorMessage }</span>
+                                    <span className="text-xs text-red-700">{ profession.errorMessage }</span>
                                 }
                                 <input className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="profession" required onChange={ (e) => setProfession({ value: e.target.value }) } value={ profession.value }/>
                             </div>
@@ -289,7 +290,7 @@ const UserVerification = () => {
                             { 'Contact Number' }
                         </div>
                         { contactNumber.error &&
-                            <span class="text-xs text-red-700">{ contactNumber.errorMessage }</span>
+                            <span className="text-xs text-red-700">{ contactNumber.errorMessage }</span>
                         }
                         <div className="inline-flex">
                             <div className="aweb-areacode">
@@ -301,7 +302,7 @@ const UserVerification = () => {
                                 />
                             </div>
                             <div className="aweb-contactNumber">
-                                <input className="ml-16 w-8/12 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ value: e.target.value }) } value={ contactNumber.value }/>
+                                <input className="ml-16 w-8/12 h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline" type="text" name="contactNumber" required onChange={ (e) => setContactNumber({ areaCode: contactNumber.areaCode, number: e.target.value }) } value={ contactNumber.number }/>
                             </div>
                         </div>
                         <div className="input-wrapper">
@@ -309,7 +310,7 @@ const UserVerification = () => {
                                 { 'Current Address' }
                             </div>
                             { currentAddress.error &&
-                                <span class="text-xs text-red-700">{ currentAddress.errorMessage }</span>
+                                <span className="text-xs text-red-700">{ currentAddress.errorMessage }</span>
                             }
                             <div className="street-address flex flex-wrap">
                                 <label>Street Address</label>
@@ -337,7 +338,7 @@ const UserVerification = () => {
                                 { 'Permanent Address' }
                             </div>
                             { permanentAddress.error &&
-                                <span class="text-xs text-red-700">{ permanentAddress.errorMessage }</span>
+                                <span className="text-xs text-red-700">{ permanentAddress.errorMessage }</span>
                             }
                             <div className="street-address">
                                 <label>Street Address</label>
@@ -363,7 +364,7 @@ const UserVerification = () => {
                         <div className="aweb-birthDate">
                             <label>Birth Date </label>
                             { birthDate.error &&
-                                <span class="text-xs text-red-700">{ birthDate.errorMessage }</span>
+                                <span className="text-xs text-red-700">{ birthDate.errorMessage }</span>
                             }
                             <DatePicker
                                 value={birthDate.value}
@@ -395,7 +396,7 @@ const UserVerification = () => {
                             <div className="aweb-documentImage">
                                 <label>Document Image One</label>
                                 { documentImage.error &&
-                                    <span class="text-xs text-red-700">{ documentImage.errorMessage }</span>
+                                    <span className="text-xs text-red-700">{ documentImage.errorMessage }</span>
                                 }
                                 <input type="file" name="documentImage" ref={documentImageRef} onChange = { (e) => handlesetDocumentImage(e) } style={{display:"none"}}/>
                                 { documentImage.dataUrl ? (

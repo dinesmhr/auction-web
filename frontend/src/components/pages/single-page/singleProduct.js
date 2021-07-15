@@ -55,8 +55,7 @@ const SingleProduct = () => {
     const [ currentHighestBid, setCurrentHighestBid ] = useState()
     const [ currentBid, setCurrentBid ] = useState({value:''})
     const [ closingBid, setClosingBid ] = useState()
-    const [ bidDifferrence, setBidDifferrence ] = useState()
-    const [ userLastBidDate, setUserLastBidDate ] = useState()
+    const [ bidSuccessMessage, setBidSuccessMessage ] = useState()
     
     const [ recentUserBids, setRecentUserBids ] = useState()
 
@@ -171,7 +170,6 @@ const SingleProduct = () => {
             let results = await axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
             if( results.data.status ) {
                 if(isMounted)  {
-                    setUserLastBidDate(results.data.data[0].bid_Date)
                     setCurrentHighestBid(results.data.data[0].bid_amount)
                     setCurrentBid({value:results.data.data[0].bid_amount})
                 }
@@ -180,7 +178,7 @@ const SingleProduct = () => {
 
         fetchData()
         return () => { isMounted = false };
-    }, [])
+    }, [userCanBid])
 
     useEffect(() => {
         let isMounted = true;
@@ -196,12 +194,7 @@ const SingleProduct = () => {
             fetchBidData()
         }
         return () => { isMounted = false };
-    }, [userId])
-
-    // check userCanBid, checks user bid cooldown time , checks user has previous bid
-    useEffect(() => {
-
-    }, [userCanBid])
+    }, [userId, userCanBid])
 
     const validateBid = () => {
         if( currentBid.value <= currentHighestBid ) {
@@ -223,7 +216,6 @@ const SingleProduct = () => {
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
         } else {
-            setBidDifferrence(currentBid.value - currentHighestBid)
             return true
         }
     }
@@ -235,11 +227,12 @@ const SingleProduct = () => {
 				productId: id,
                 userId: userId,
                 bid_amount: currentBid.value,
-                bid_difference: bidDifferrence
+                bid_difference: ( currentBid.value - currentHighestBid )
 			})
             .then((res) => {
                 if( res.data.status ) {
                     setUserCanBid(!userCanBid)
+                    setBidSuccessMessage( 'Bid successfully placed' )
                 }
             })
         }
@@ -306,10 +299,7 @@ const SingleProduct = () => {
                                                         Valid Bid Raise : { bidRaise ? bidRaise : productData[0].bid_raise }
                                                     </div>
                                                     <div>
-                                                        {/* { userLastBidDate &&
-                                                                
-                                                        }
-                                                        { !userLastBidDate && */}
+                                                        { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) > 21600000 ) &&
                                                             <>
                                                                 <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
                                                                 <button onClick= {() => onBidsubmit()}>Place a Bid</button>
@@ -317,10 +307,32 @@ const SingleProduct = () => {
                                                                     <div>{ currentBid.errorMessage }</div>
                                                                 }
                                                             </>
-                                                        {/* } */}
-                                                        <div>
-                                                            Your recent bid is just ago
-                                                        </div>
+                                                        }
+                                                        { !recentUserBids &&
+                                                            <>
+                                                                <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
+                                                                <button onClick= {() => onBidsubmit()}>Place a Bid</button>
+                                                                { currentBid.error &&
+                                                                    <div>{ currentBid.errorMessage }</div>
+                                                                }
+                                                            </>
+                                                        }
+                                                        { bidSuccessMessage &&
+                                                            <div>{ bidSuccessMessage }</div>
+                                                        }
+                                                        { recentUserBids &&
+                                                            <div>
+                                                                <div>
+                                                                    Your recent bid was on { recentUserBids[0].bid_date }
+                                                                </div>
+                                                                { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 21600000 ) &&
+                                                                    <div>
+                                                                        Cooldown Timer
+                                                                        <Countdown date={Date.parse(recentUserBids[0].bid_date) + 21600000 } />
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div>
@@ -340,7 +352,7 @@ const SingleProduct = () => {
                                                             { 
                                                                 recentUserBids.map(( recentUserBid, key) => {
                                                                     return(
-                                                                        <div>
+                                                                        <div key={key}>
                                                                             <span>{recentUserBid.bid_amount}</span>
                                                                             <span>{recentUserBid.bid_difference}</span>
                                                                             <span>{recentUserBid.bid_date}</span>
@@ -398,7 +410,7 @@ const SingleProduct = () => {
                                                 )
                                             })
                                             return ( 
-                                                <>
+                                                <React.Fragment key={index}>
                                                     <div className="flex flex-row m-10">
                                                         <div className="singlePage-imageWrap">
                                                             { images &&
@@ -509,7 +521,7 @@ const SingleProduct = () => {
                                                         <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Other Details ` }</div>
                                                         <div dangerouslySetInnerHTML =  {{__html: decode(product.details) }} className="ml-8 text-sm mr-1"/>
                                                     </div>
-                                                </>
+                                                </React.Fragment>
                                             )
                                         })
                                     }
