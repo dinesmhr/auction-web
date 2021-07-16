@@ -284,7 +284,7 @@ const SingleProduct = () => {
                                                 Perform Bid
                                             </Dialog.Title>
                                             <div className="mt-2">
-                                                <h2>{productData[0].title}</h2>
+                                                <h2 className="font-bold mb-1">{productData[0].title}</h2>
                                                 <div>
                                                     Bid will close in
                                                 </div>
@@ -477,7 +477,7 @@ const SingleProduct = () => {
                                                             </div>
 
                                                             <div>
-                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
+                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5 mb-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
                                                                 { bidNowButtonDisable && bidNowButtonDisableMessage &&
                                                                     <>
                                                                         {bidNowButtonDisableMessage}
@@ -500,12 +500,12 @@ const SingleProduct = () => {
                                                     </div>
                                                     <hr/>
                                                     <div className="singleProductRightMargin mt-2 text-sm">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Description ` }</div>
-                                                        <div className="ml-8 text-sm mr-1">{product.description.trim()}</div>
+                                                        <div className="text-lg text-yellow-600 font-bold mt-8 mb-2 ml-10">{ `Description ` }</div>
+                                                        <div className="ml-12 text-sm mr-1">{product.description.trim()}</div>
                                                     </div>
                                                     <div className="singleProductRightMargin">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Specifications ` }</div>
-                                                        <div className="ml-8 text-sm mr-1 mb-5">
+                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Specifications ` }</div>
+                                                        <div className="ml-12 text-sm mr-1 mb-5">
                                                             { product.specifications && 
                                                                 product.specifications.map((spec, specKey) => {
                                                                 return (
@@ -518,31 +518,31 @@ const SingleProduct = () => {
                                                         </div>
                                                     </div>
                                                     <div className="singleProductRightMargin mt-2 text-sm">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4">{ `Other Details ` }</div>
-                                                        <div dangerouslySetInnerHTML =  {{__html: decode(product.details) }} className="ml-8 text-sm mr-1"/>
+                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Other Details ` }</div>
+                                                        <div dangerouslySetInnerHTML =  {{__html: decode(product.details) }} className="ml-12 text-sm mr-1"/>
                                                     </div>
                                                 </React.Fragment>
                                             )
                                         })
                                     }
-                                    <div>
-                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-4"> Seller Information</div>
+                                    <div className="mb-10">
+                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10"> Seller Information</div>
                                         { sellerData &&
                                             <div className="mb-5">
                                                 <div className="flex flex-row">
-                                                    <div className="ml-8 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
+                                                    <div className="ml-12 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
                                                 </div>
                                                 <div className="flex flex-row">
-                                                    <div className="ml-8 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
+                                                    <div className="ml-12 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
                                                 </div>
                                                 <div className="flex flex-row">
-                                                    <div className="ml-8 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
+                                                    <div className="ml-12 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
                                                 </div>
                                                 <div className="flex flex-row">   
-                                                <div className="ml-8 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
+                                                <div className="ml-12 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
                                                 </div>
                                                 <div className="flex flex-row">
-                                                <div className="ml-8 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
+                                                <div className="ml-12 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
                                                 </div>
                                             </div>
                                         }

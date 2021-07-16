@@ -24,15 +24,17 @@ const CategoryCard=(category)=>{
     return(
         <>
             <div className="category-card ml-14 mt-10">
-            <a href={ `category/${id}` }>
-                <img src={`${featureImage}`} alt={title} className="h-40 w-40"/>
-                    <h3 title={title} className="relative text-center">
+            <div className="">
+            <a href={ `category/${id}` } className="">
+                <img src={`${featureImage}`} alt={title} className="h-44 w-40 filter brightness-50 "/>
+                    <h3 title={title} className=" relative break-all text-center bottom-24 text-white text-lg font-bold hover:text-gray-400 ">
                         <a href={ `category/${id}`} className="">{title}</a>
                     </h3>
             </a>
+            </div>
                 <div className="category-box">
                     { productCount &&
-                        <div>{ `${productCount} products` }</div>
+                        <div className="text-center">{ `${productCount} products` }</div>
                     }
                 </div>
             </div>
