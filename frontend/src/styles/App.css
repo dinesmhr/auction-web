@@ -836,6 +836,29 @@ table th {
 /*************************************************
  	    ENDS Catogory  CSS 
 **************************************************/
+
+
+.category-card img:hover{
+	filter: brightness(1);
+}
+.single-category-page-image img{
+    height: 70vh;
+    width: 100vw;
+	background-size: cover;
+	margin-top: -10px;
+	image-rendering: -webkit-optimize-contrast;
+	margin-top: 20px;
+	position: relative;
+    top: -20px;
+}
+.single-category-page-image{
+     scroll-behavior: smooth;
+      top: 0;
+      left: 0;
+}
+.single-category-page-wrap{
+	scroll-behavior: smooth;
+}
 /*******************************************
  			Footer Css
 ********************************************/

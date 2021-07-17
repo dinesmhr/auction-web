@@ -55,28 +55,30 @@ const SingleCategory = () => {
     return (
         <>
             <Header/>
-                <div>
+                <div className="single-category-page-wrap mb-14">
                     { data &&
                         <>
-                            <h1>{data.title}</h1>
-                            <div>
-                                {data.description}
-                            </div>
-                            <div>
+                            <div className="single-category-page-image">
                             {
-                                <img src={data.image_path[0]} alt={data.title}/>
+                                <img src={data.image_path[0]} alt={data.title} className=""/>
                                 
                             }
+                         </div>
+                            <div className=""> 
+                              <h1 className="ml-10 text-3xl text-gray-800">{data.title}</h1>
+                                <div className="ml-10 text-gray-700 mt-1">
+                                    {data.description}
+                                </div>
                             </div>
                         </>
                     }
-                    <div>
-                        <h2>Products</h2>
+                    <div className="w-4/6">
+                        <h2 className="ml-10 mt-10 text-gray-800">Products</h2>
                         { !productIds &&
                             <>
-                                <div>No products assigned in this category</div>
+                                <div className="ml-10 text-gray-800">No products assigned in this category</div>
                                 <div>
-                                    <Link to="/categories">Browse other categories</Link>
+                                    <Link to="/categories"><button className="ml-10 mt-6 bg-indigo-800 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">Browse other categories</button></Link>
                                 </div>
                             </>
                         }
