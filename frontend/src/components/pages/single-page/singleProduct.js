@@ -279,30 +279,39 @@ const SingleProduct = () => {
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div className="sm:flex sm:items-start">
                                     { isLoggedIn &&
-                                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                            <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                                        <div className="singleProductPopUp mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                            <Dialog.Title as="h3" className="text-base leading-6 font-medium text-gray-800 text-sm">
                                                 Perform Bid
                                             </Dialog.Title>
                                             <div className="mt-2">
-                                                <h2 className="font-bold mb-1">{productData[0].title}</h2>
+                                                <h2 className="font-bold mb-1 text-xl">{productData[0].title}</h2>
+                                           <table className="table-fixed w-full">
                                                 <div>
                                                     Bid will close in
                                                 </div>
                                                 <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
                                                 <div>
-                                                    <div>Opening Bid : { productData[0].initial_bid}</div>
-                                                    <div>Closing Bid : { productData[0].max_bid}</div>
-                                                    <div>
-                                                        Current Highest Bid : { currentHighestBid ? currentHighestBid : productData[0].initial_bid }
-                                                    </div>
-                                                    <div>
-                                                        Valid Bid Raise : { bidRaise ? bidRaise : productData[0].bid_raise }
-                                                    </div>
+                                                    <tr className="">
+                                                        <th className="">Opening Bid :</th> 
+                                                        <td className="">{ productData[0].initial_bid}</td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <th className="">Closing Bid :</th> 
+                                                        <td className="">{ productData[0].max_bid}</td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <th className="">Current Highest Bid : </th>
+                                                        <td className="">{ currentHighestBid ? currentHighestBid : productData[0].initial_bid } </td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <th className="">Valid Bid Raise : </th>
+                                                        <td className="">{ bidRaise ? bidRaise : productData[0].bid_raise } </td>
+                                                    </tr>
                                                     <div>
                                                         { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) > 21600000 ) &&
-                                                            <>
-                                                                <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
-                                                                <button onClick= {() => onBidsubmit()}>Place a Bid</button>
+                                                            <>  
+                                                                       <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
+                                                                    <button onClick= {() => onBidsubmit()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-1 mb-1 ml-8">Place a Bid</button>
                                                                 { currentBid.error &&
                                                                     <div>{ currentBid.errorMessage }</div>
                                                                 }
@@ -322,9 +331,10 @@ const SingleProduct = () => {
                                                         }
                                                         { recentUserBids &&
                                                             <div>
-                                                                <div>
-                                                                    Your recent bid was on { recentUserBids[0].bid_date }
-                                                                </div>
+                                                                <tr className="">
+                                                                    <th className="">Your recent bid was on: </th>
+                                                                    <td className="">{ recentUserBids[0].bid_date } </td>
+                                                                </tr>
                                                                 { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 21600000 ) &&
                                                                     <div>
                                                                         Cooldown Timer
@@ -335,6 +345,7 @@ const SingleProduct = () => {
                                                         }
                                                     </div>
                                                 </div>
+                                       </table>          
                                                 <div>
                                                     Your Recent Bids
                                                     { !recentUserBids &&
@@ -342,24 +353,31 @@ const SingleProduct = () => {
                                                             You have not made bid in this product before
                                                         </div>
                                                     }
+
                                                     { recentUserBids &&
                                                         <div>
-                                                            <div>
-                                                                <span>Bid Amount</span>
-                                                                <span>Bid Difference</span>
-                                                                <span>Bid Date</span>
-                                                            </div>
+                                                        <table className="w-full table-fixed">
+                                                            <tr className="">
+                                                                <th className="border border-gray-600 text-left ">Bid Amount</th>
+                                                                <th className="border border-gray-600 text-left ">Bid Difference</th>
+                                                                <th className="border border-gray-600 text-left ">Bid Date</th>
+                                                            </tr>
                                                             { 
                                                                 recentUserBids.map(( recentUserBid, key) => {
-                                                                    return(
-                                                                        <div key={key}>
-                                                                            <span>{recentUserBid.bid_amount}</span>
-                                                                            <span>{recentUserBid.bid_difference}</span>
-                                                                            <span>{recentUserBid.bid_date}</span>
-                                                                        </div>
+                                                                    return(    
+                                                                        
+                                                                        <tr className="">
+                                                                         <div key={key} >
+                                                                            <td className="border border-gray-600 text-left w-48 ">{recentUserBid.bid_amount}</td>
+                                                                            <td className="border border-gray-600 text-left w-48">{recentUserBid.bid_difference}</td>
+                                                                            <td className="border border-gray-600 text-left w-48 ">{recentUserBid.bid_date}</td>
+                                                                         </div>
+                                                                        </tr>
+                                                                        
                                                                     )      
                                                                 })
                                                             }
+                                                          </table>  
                                                         </div>
                                                     }
                                                 </div>

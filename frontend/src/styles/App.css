@@ -859,6 +859,10 @@ table th {
 .single-category-page-wrap{
 	scroll-behavior: smooth;
 }
+
+.singleProductPopUp table tr{
+	
+}
 /*******************************************
  			Footer Css
 ********************************************/
