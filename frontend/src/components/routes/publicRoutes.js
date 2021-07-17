@@ -19,7 +19,6 @@ import About from '../pages/extras/about'
 import AuctionCentralNews from '../pages/extras/auctionCentralNews'
 import Careers from '../pages/extras/careers'
 import SendFeedback from '../pages/extras/sendFeedback'
-import AuctionSignIn from '../pages/extras/auctionSignIn'
 import SellerResourceCenter from '../pages/extras/sellerResourceCenter'
 import SellerReview from '../pages/extras/sellerReview'
 
