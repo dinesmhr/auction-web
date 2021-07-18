@@ -5,6 +5,7 @@ import AdminUsers from '../admin/pages/users'
 import AdminProducts from '../admin/pages/products'
 import AdminProductCategories from '../admin/pages/product-categories'
 import AdminProductTags from '../admin/pages/product-tags'
+import AdminBids from '../admin/pages/bids'
 
 import AdminEditUser from '../admin/pages/edit-page/editUsers'
 import AdminEditProduct from '../admin/pages/edit-page/editProducts'
@@ -49,6 +50,7 @@ export const AdminRoutes = (props) => {
                 <Route path="/aweb-products" exact component={() => <AdminProducts/>}></Route>
                 <Route path="/aweb-categories" exact component={() => <AdminProductCategories/>}></Route>
                 <Route path="/aweb-tags" exact component={() => <AdminProductTags/>}></Route>
+                <Route path="/aweb-bids" exact component={() => <AdminBids/>}></Route>
                 { 
                     // Single root
                 }
