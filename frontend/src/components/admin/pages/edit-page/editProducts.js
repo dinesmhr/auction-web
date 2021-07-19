@@ -21,23 +21,23 @@ const AdminEditProduct = () => {
     const [ title, setTitle ] = useState({value:''})
     const [ description, setDescription ] = useState({value:''})
     const [ details, setDetails ] = useState({value:''})
-    const [specifications, setSpecifications] = useState({value: [{value:''}]});
-	const [initialBid, setInitialBid] = useState({value: ''});
-	const [maxBid, setMaxBid] = useState({value: ''});
-    const [bidRaise, setBidRaise] = useState({value: ''});
-	const [deadlineDate, setDeadlineDate] = useState({value: ''});
-    const [deadlineTime, setDeadlineTime] = useState({value: ''});
-	const [images, setImages] = useState({value: []});
-    const [categories, setCategories] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [productStatus, setProductStatus] = useState('');
-    const [status, setStatus] = useState(false);
-	const [message, setMessage] = useState('');
-	const [submitText, setSubmitText] = useState('Update Product');
+    const [ specifications, setSpecifications ] = useState({value: [{value:''}]});
+	const [ initialBid, setInitialBid ] = useState({value: ''});
+	const [ maxBid, setMaxBid ] = useState({value: ''});
+    const [ bidRaise, setBidRaise ] = useState({value: ''});
+	const [ deadlineDate, setDeadlineDate ] = useState({value: ''});
+    const [ deadlineTime, setDeadlineTime ] = useState({value: ''});
+	const [ images, setImages ] = useState({value: []});
+    const [ categories, setCategories ] = useState([]);
+    const [ tags, setTags ] = useState([]);
+    const [ productStatus, setProductStatus ] = useState('');
+    const [ status, setStatus ] = useState(false);
+	const [ message, setMessage ] = useState('');
+	const [ submitText, setSubmitText]  = useState('Update Product');
 
-    const [initialCategories, setInitialCategories] = useState([]);
-    const [initialTags, setInitialTags] = useState([]);
-    const [updateTerm, setUpdateTerm] = useState(true);
+    const [ initialCategories, setInitialCategories ] = useState([]);
+    const [ initialTags, setInitialTags ] = useState([]);
+    const [ updateTerm, setUpdateTerm ] = useState(true);
 
     const { id } = useParams()
 

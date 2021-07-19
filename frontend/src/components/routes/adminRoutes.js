@@ -10,6 +10,7 @@ import AdminBids from '../admin/pages/bids'
 import AdminEditUser from '../admin/pages/edit-page/editUsers'
 import AdminEditProduct from '../admin/pages/edit-page/editProducts'
 import AdminEditProductCategory from '../admin/pages/edit-page/editProductCategory'
+import AdminEditBid from '../admin/pages/edit-page/editBid'
 import { appContext } from '../../App'
 
 const axios = require('axios')
@@ -57,6 +58,7 @@ export const AdminRoutes = (props) => {
                 <Route path="/aweb-users/:id" component={(props) => <AdminEditUser/>}></Route>
                 <Route path="/aweb-products/:id" component={(props) => <AdminEditProduct/>}></Route>
                 <Route path="/aweb-product-category/:id" component={(props) => <AdminEditProductCategory/>}></Route>
+                <Route path="/aweb-bids/:id" component={(props) => <AdminEditBid/>}></Route>
             </Switch>
         </BrowserRouter>
     )
