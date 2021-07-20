@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../header/Header'
 import Footer from '../../footer/Footer'
 
+
 const SendFeedback = () => {
+	const [ email, setEmail ] = useState({ value: ''});
+	//const [ message, setMessage ] = useState();
+ 
+        const validateEmail = () => {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if( email.value === '' ) {
+            email.error = true;
+            email.errorMessage = "Email must not be empty";
+        } else if( !re.test( email.value ) ) { 
+            email.error = true;
+            email.errorMessage = "Email is not valid";
+        }  else {
+            return true
+        }
+        setEmail( JSON.parse(JSON.stringify( email )) )
+        return false
+    }
+
+    
     return (
 		<div id="auction-web">
 			<Header/>
@@ -20,6 +40,11 @@ const SendFeedback = () => {
 										<label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="Email">
 											Email
 										</label>
+										     { email.error &&
+                                         <div className="aweb-red-note">
+                                        { email.errorMessage }
+                                    </div>}
+
 										</div>
 										<div class="md:w-full">
 										<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" placeholder=""/>
@@ -32,7 +57,7 @@ const SendFeedback = () => {
 										</label>
 										</div>
 										<div class="md:w-full mt-2">
-										<textarea class="h-64 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" placeholder=""/>
+										<textarea class="h-64 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" placeholder="" />
 										</div>
 									</div>
 									

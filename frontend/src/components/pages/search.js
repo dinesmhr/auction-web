@@ -32,10 +32,10 @@ const Search = () => {
         <div id="auction-web">
             <Header/>
                 <div id="auction-web-shop" className="page--shop main-wrapper h-screen">
-                    <h2>Search Results</h2>
+                    <h2 className="ml-10 mt-10 text-xl">Search Results</h2>
                     <div className="product-wrap">
                         { (!error) && (!products) &&
-                            <div>{ `Loading` }</div>
+                            <div>{ `Loading` }</div>   
                         }
                         { error &&
                             <>

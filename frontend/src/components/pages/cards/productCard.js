@@ -14,15 +14,16 @@ export const ProductCard = (product) => {
         <>
             <div className="product-card">
                 <img src={`${featureImage}`} alt={title}/>
+                <hr/>
                 <div className="product-box">
-                    <h3 title={title}>
+                    <h3 title={title} className="font-semibold">
                         <a href={ `product/${id}` }>{title}</a>
                     </h3>
                     <div className="bid-amount">
                         {`${initial_bid}USD`}
                     </div>
                     <Link to={ `/product/${id}` }>
-                        Bid Now
+                       <div className="text-yellow-600 font-semibold hover:text-yellow-500"> Bid Now </div>
                     </Link>
                 </div>
             </div>

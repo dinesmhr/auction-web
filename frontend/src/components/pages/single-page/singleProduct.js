@@ -320,7 +320,7 @@ const SingleProduct = () => {
                                                         { !recentUserBids &&
                                                             <>
                                                                 <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
-                                                                <button onClick= {() => onBidsubmit()}>Place a Bid</button>
+                                                                <button onClick= {() => onBidsubmit()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-1 mb-1 ml-8">Place a Bid</button>
                                                                 { currentBid.error &&
                                                                     <div>{ currentBid.errorMessage }</div>
                                                                 }
@@ -332,22 +332,22 @@ const SingleProduct = () => {
                                                         { recentUserBids &&
                                                             <div>
                                                                 <tr className="">
-                                                                    <th className="">Your recent bid was on: </th>
+                                                                    <th className="">Your recent bid was on : </th>
                                                                     <td className="">{ recentUserBids[0].bid_date } </td>
                                                                 </tr>
                                                                 { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 21600000 ) &&
-                                                                    <div>
-                                                                        Cooldown Timer
+                                                                    <tr className="">
+                                                                        <th>Cooldown Timer :</th>
                                                                         <Countdown date={Date.parse(recentUserBids[0].bid_date) + 21600000 } />
-                                                                    </div>
+                                                                    </tr>
                                                                 }
                                                             </div>
                                                         }
                                                     </div>
                                                 </div>
                                        </table>          
-                                                <div>
-                                                    Your Recent Bids
+                                                <div className="">
+                                                    <div className="mt-2">Your Recent Bids </div>
                                                     { !recentUserBids &&
                                                         <div>
                                                             You have not made bid in this product before
@@ -358,20 +358,18 @@ const SingleProduct = () => {
                                                         <div>
                                                         <table className="w-full table-fixed">
                                                             <tr className="">
-                                                                <th className="border border-gray-600 text-left ">Bid Amount</th>
-                                                                <th className="border border-gray-600 text-left ">Bid Difference</th>
-                                                                <th className="border border-gray-600 text-left ">Bid Date</th>
+                                                                <th className="border border-gray-600 text-center">Bid Amount</th>
+                                                                <th className="border border-gray-600 text-center">Bid Difference</th>
+                                                                <th className="border border-gray-600 text-center">Bid Date</th>
                                                             </tr>
                                                             { 
                                                                 recentUserBids.map(( recentUserBid, key) => {
                                                                     return(    
-                                                                        
                                                                         <tr className="">
-                                                                         <div key={key} >
-                                                                            <td className="border border-gray-600 text-left w-48 ">{recentUserBid.bid_amount}</td>
-                                                                            <td className="border border-gray-600 text-left w-48">{recentUserBid.bid_difference}</td>
-                                                                            <td className="border border-gray-600 text-left w-48 ">{recentUserBid.bid_date}</td>
-                                                                         </div>
+                                                                         <React.Fragment key={key} />
+                                                                            <td className="border border-gray-600 text-left w-48 text-center">{recentUserBid.bid_amount}</td>
+                                                                            <td className="border border-gray-600 text-left w-48 text-center">{recentUserBid.bid_difference}</td>
+                                                                            <td className="border border-gray-600 text-left w-48 text-center">{recentUserBid.bid_date}</td>
                                                                         </tr>
                                                                         
                                                                     )      

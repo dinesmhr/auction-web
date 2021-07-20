@@ -346,10 +346,10 @@ a.active_name {
 }
 
 .product-card{
- 	max-width: 380px;
+ 	max-width: 300px;
  	width: 100%;
  	overflow: hidden;
- 	height: 570px;
+ 	height: 500px;
  	box-shadow: 0 0 5px #ccc;
  	padding: 15px;
  	margin: 15px 0;
