@@ -859,8 +859,10 @@ table th {
 .single-category-page-wrap{
 	scroll-behavior: smooth;
 }
-
-.singleProductPopUp table tr{
+.xyz{
+	max-height: 80px;
+	min-height: 70px;
+	overflow: hidden;
 	
 }
 /*******************************************
