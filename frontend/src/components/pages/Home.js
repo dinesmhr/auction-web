@@ -22,7 +22,7 @@ const Home = () => {
     return ( 
         <div id="auction-web">
             <Header/>
-                <div id="auction-web-home" className="page--home main-wrapper">
+                <div id="auction-web-home" className="page--home main-wrapper h-screen">
                     <SearchCard />
                     <div className= "home-banner">
                         <img src="/assets/auction.jpg"/>

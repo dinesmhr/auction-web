@@ -105,13 +105,19 @@ const Myaccount = () => {
     }
 
     return (
-        <div id="auction-web">
+        <div id="auction-web" className="">
+        <div className="h-screen">
             <Header/>
-                { `This is my account page` }
-                <button className="logout-button" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
-                { 
-                LogoutModal()
-                }
+                <div className="ml-16">
+                   <div> 
+                    { `This is my account page` }
+                   </div>
+                    <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
+                    { 
+                    LogoutModal()
+                    }
+                </div>
+            </div>
             <Footer/>
         </div>
     )
