@@ -859,12 +859,7 @@ table th {
 .single-category-page-wrap{
 	scroll-behavior: smooth;
 }
-.xyz{
-	max-height: 80px;
-	min-height: 70px;
-	overflow: hidden;
-	
-}
+
 /*******************************************
  			Footer Css
 ********************************************/

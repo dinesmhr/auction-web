@@ -101,17 +101,8 @@ const AdminEditBid = () => {
                                             </div>    
                                             </div>
                                         )
-=======
-                                    <div key={ index } className="admin-content-table-row grid grid-cols-6 flex flex-row text-sm">
-                                    <span className="py-2 px-6">{bid.bid_id }</span>
-                                    <span className="py-2 px-6">{bid.title}</span>
-                                    <span className="py-2 px-6">{bid.product_id}</span>
-                                    <span className="py-2 px-6">{bid.initial_bid}</span>
-                                    <span className="py-2 px-6">{bid.max_bid}</span>
-                                               <span className="py-2 px-6">{bid.deadline_date}</span>
-                            </div>
-                        )
->>>>>>> a2c22f93750a337cacf0087be8581ee17f05f99a
+
+                        
                     })
                 }
             </div>
