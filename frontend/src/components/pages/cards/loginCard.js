@@ -14,13 +14,13 @@ export const LoginCard = () => {
     
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.get( `/users.php?username=${username.value}` )
+        axios.get( `/check-user.php?username=${username.value}&password=${password.value}` )
         .then( function (response) {
             if( !response.data.status ) { //if no response with given username
                 setError(true)
                 setErrorMessage("Username not exists")
             } else {
-                if( response.data.data[0].password !== password.value ) { //if Username matched
+                if( !response.data.data[0].password_status ) { //if Username matched
                     setError(true)
                     setErrorMessage("Password incorrect")
                 } else { // if both password username matched

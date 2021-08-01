@@ -20,7 +20,7 @@ if( is_db_connected() ) {
     $fullname = isset( $_POST['fullname'] ) ? $_POST['fullname'] : 'Dummy';
     $username = isset( $_POST['username'] ) ? $_POST['username'] : 'dummy';
     $email    = isset( $_POST['email'] ) ? $_POST['email'] : 'dummy@gmail.com';
-    $password = isset( $_POST['password'] ) ? $_POST['password'] : 'dummy';
+    $password = isset( $_POST['password'] ) ? password_hash( $_POST['password'], PASSWORD_DEFAULT ) : 'dummy';
     $role     = isset( $_POST['role'] ) ? $_POST['role'] : 'subscriber';
     $status   = isset( $_POST['status'] ) ? $_POST['status'] : 'not-verified';
     $users_sql = 'INSERT INTO aw_users( fullname, username, email, password ) VALUES( "'. $fullname . '", "' .$username. '", "' .$email. '", "' .$password. '" )';
