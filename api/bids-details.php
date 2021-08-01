@@ -12,7 +12,7 @@ if( is_db_connected() ) {
     extract( $GLOBALS );
     if( isset( $_GET['id'] ) ) {
         $id = $_GET['id'];
-        $bids_sql = 'Select * FROM aw_bids INNER JOIN aw_users WHERE aw_bids.user_id = aw_users.id';
+        $bids_sql = 'Select * FROM aw_bids INNER JOIN aw_users ON aw_bids.user_id = aw_users.id INNER JOIN aw_products ON aw_bids.product_id = aw_products.id WHERE aw_bids.bid_id = "' .$id. '" ';
     } else {
         $bids_sql = 'Select * FROM aw_bids INNER JOIN aw_users ON aw_bids.user_id = aw_users.id INNER JOIN aw_products ON aw_bids.product_id = aw_products.id';
     }
