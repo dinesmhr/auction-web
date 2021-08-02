@@ -367,7 +367,7 @@ const ProductSubmit = () => {
 										images.value.map((image, key) => {
 											return (
 												<React.Fragment key={`unique-${key}`}>
-													<div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
+													<div className="h-40 w-40 bg-cover float-left relative mt-2 mr-0.5 overflow-hidden"><span className="rounded-sm bg-red-600 absolute image-delete cursor-pointer" onClick = { () => deleteImage(key) }><AiOutlineDelete/></span>
 														<ModalImage
 															small={image.dataUrl}
 															large={image.dataUrl}

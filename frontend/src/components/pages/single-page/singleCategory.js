@@ -72,7 +72,7 @@ const SingleCategory = () => {
                             </div>
                         </>
                     }
-                    <div className="w-4/6 ml-10 ">
+                    <div className="w-4/5  ml-10 ">
                         <h2 className="ml-10 mt-10 text-gray-800">Products</h2>
                         { !productIds &&
                             <>

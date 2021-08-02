@@ -32,7 +32,7 @@ const Products = () => {
         <div id="auction-web">
             <Header/>
                 <div id="auction-web-shop" className="page--shop main-wrapper h-full">
-                    <div className="product-wrap">                    	                                                  
+                    <div className="product-wrap max-w-6xl ml-8 ">                    	                                                  
                         { Array.isArray(products) &&
                             products.map((product, index) => {
                                 return( <ProductCard key={index} { ...product } /> )

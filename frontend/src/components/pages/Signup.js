@@ -246,7 +246,7 @@ const Signup = () => {
                         { status && 
                             <div className="aweb-success-note">
                                 { message }
-                                <a href="/login">Login now</a>
+                                <a href="/login" className="ml-2 text-red-600">Login now</a>
                             </div>
                         }
                     </div>

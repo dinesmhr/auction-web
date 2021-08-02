@@ -232,7 +232,7 @@ const SingleProduct = () => {
             .then((res) => {
                 if( res.data.status ) {
                     setUserCanBid(!userCanBid)
-                    setBidSuccessMessage( 'Bid successfully placed' )
+                    setBidSuccessMessage(  'Bid successfully placed' )
                 }
             })
         }
@@ -280,32 +280,33 @@ const SingleProduct = () => {
                                 <div className="sm:flex sm:items-start">
                                     { isLoggedIn &&
                                         <div className="singleProductPopUp mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                            <Dialog.Title as="h3" className="text-base leading-6 font-medium text-gray-800 text-sm">
+                                            <Dialog.Title as="h3" className="text-base leading-6 font-semibold text-green-600 text-sm">
                                                 Perform Bid
                                             </Dialog.Title>
                                             <div className="mt-2">
                                                 <h2 className="font-bold mb-1 text-xl">{productData[0].title}</h2>
                                            <table className="table-fixed w-full">
+
                                                 <div>
-                                                    Bid will close in
-                                                </div>
-                                                <Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } />
-                                                <div>
-                                                    <tr className="">
-                                                        <th className="">Opening Bid :</th> 
-                                                        <td className="">{ productData[0].initial_bid}</td>
+                                                   <tr className="">
+                                                       <th className="w-2/5"> Bid will close in : </th>
+                                                        <td className="w-2/5"><Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } /> </td>
                                                     </tr>
                                                     <tr className="">
-                                                        <th className="">Closing Bid :</th> 
-                                                        <td className="">{ productData[0].max_bid}</td>
+                                                        <th className="w-2/5">Opening Bid :</th> 
+                                                        <td className="w-2/5">{ productData[0].initial_bid}</td>
                                                     </tr>
                                                     <tr className="">
-                                                        <th className="">Current Highest Bid : </th>
-                                                        <td className="">{ currentHighestBid ? currentHighestBid : productData[0].initial_bid } </td>
+                                                        <th className="w-2/5">Closing Bid :</th> 
+                                                        <td className="w-2/5">{ productData[0].max_bid}</td>
                                                     </tr>
                                                     <tr className="">
-                                                        <th className="">Valid Bid Raise : </th>
-                                                        <td className="">{ bidRaise ? bidRaise : productData[0].bid_raise } </td>
+                                                        <th className="w-2/5">Current Highest Bid : </th>
+                                                        <td className="w-2/5">{ currentHighestBid ? currentHighestBid : productData[0].initial_bid } </td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <th className="w-2/5">Valid Bid Raise : </th>
+                                                        <td className="w-2/5">{ bidRaise ? bidRaise : productData[0].bid_raise } </td>
                                                     </tr>
                                                     <div>
                                                         { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) > 21600000 ) &&
@@ -327,7 +328,7 @@ const SingleProduct = () => {
                                                             </>
                                                         }
                                                         { bidSuccessMessage &&
-                                                            <div>{ bidSuccessMessage }</div>
+                                                            <div className="text-green-700">{ bidSuccessMessage }</div>
                                                         }
                                                         { recentUserBids &&
                                                             <div>
@@ -337,7 +338,7 @@ const SingleProduct = () => {
                                                                 </tr>
                                                                 { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 21600000 ) &&
                                                                     <tr className="">
-                                                                        <th>Cooldown Timer :</th>
+                                                                        <th className="">Cooldown Timer :</th>
                                                                         <Countdown date={Date.parse(recentUserBids[0].bid_date) + 21600000 } />
                                                                     </tr>
                                                                 }
@@ -347,7 +348,7 @@ const SingleProduct = () => {
                                                 </div>
                                        </table>          
                                                 <div className="">
-                                                    <div className="mt-2">Your Recent Bids </div>
+                                                    <div className="mt-2 font-bold text-green-600 mb-1 text-sm">Your Recent Bids </div>
                                                     { !recentUserBids &&
                                                         <div>
                                                             You have not made bid in this product before
@@ -436,12 +437,12 @@ const SingleProduct = () => {
                                                                 />  
                                                             }
                                                         </div>
-                                                        <div className="singlePage-right ml-12">
+                                                        <div className="singlePage-right ml-12 max-w-sm ">
                                                             <div className="font-bold text-2xl">{product.title.trim()}</div>
 
-                                                            <div className="flex flex-row">
-                                                                <div className="text-sm">{ `Categories` }</div>
-                                                                <div className="ml-3 text-sm">
+                                                            <div className="flex flex-row ">
+                                                                <div className="text-sm w-2/4">{ `Categories` }</div>
+                                                                <div className="ml-3 text-sm w-2/4">
                                                                     { !categories ? (
                                                                             "No categories"
                                                                         ) : categories.length === 0 ? (
@@ -449,7 +450,7 @@ const SingleProduct = () => {
                                                                         ) : (
                                                                             categories.map((cat, catKey) => {
                                                                                 return (
-                                                                                    <div key={catKey} className="">
+                                                                                    <div key={catKey} className="hover:text-gray-600">
                                                                                         <Link to={`/category/${cat.id}`}>{ cat.title }</Link>
                                                                                     </div>
                                                                                 )
@@ -458,9 +459,10 @@ const SingleProduct = () => {
                                                                     }
                                                                 </div>
                                                             </div>
-                                                            <div className="flex flex-row">
-                                                                <div className="text-sm">{ `Tags` }</div>
-                                                                <div className="ml-3 text-sm">
+                                                            <hr/>
+                                                            <div className="flex flex-row ">
+                                                                <div className="text-sm w-2/4">{ `Tags` }</div>
+                                                                <div className="ml-3 text-sm w-2/4 ">
                                                                     { !tags ? (
                                                                             "No tags"
                                                                         ) : tags.length === 0 ? (
@@ -468,7 +470,7 @@ const SingleProduct = () => {
                                                                         ) : ( 
                                                                             tags.map((tag, tagKey) => {
                                                                                 return (
-                                                                                    <div key={tagKey} className="">
+                                                                                    <div key={tagKey} className="hover:text-gray-600">
                                                                                         <Link to={`/tag/${tag.id}`}>{ tag.title }</Link>
                                                                                     </div>
                                                                                 )
@@ -477,9 +479,10 @@ const SingleProduct = () => {
                                                                     }
                                                                 </div> 
                                                             </div>
-                                                            <div className="flex flex-row">
-                                                                <div className="text-sm">{ `Status` }</div>
-                                                                <div className="text-sm ml-3">{product.status}</div>
+                                                            <hr/>
+                                                            <div className="flex flex-row ">
+                                                                <div className="text-sm w-2/4">{ `Status` }</div>
+                                                                <div className="text-sm ml-3 w-2/4 ">{product.status}</div>
                                                             </div>
                                                             <hr/>   
                                                             <div>
@@ -504,22 +507,25 @@ const SingleProduct = () => {
                                                                     <>{ `User must be verified to take part in bidding process` }</>
                                                                 }
                                                             </div>
-                                                            <div>
-                                                                Current Highest Bid : {  currentHighestBid ? currentHighestBid : product.initial_bid }
+                                                            <div className="flex flex-row">
+                                                            <div className="font-bold mr-2 text-sm">
+                                                                Current Highest Bid : </div>
+                                                                <div>{  currentHighestBid ? currentHighestBid : product.initial_bid }</div>
                                                             </div>
-                                                            <div>
-                                                                Bid will close in
-                                                                <Countdown date={ Date.parse(new Date(product.deadline_date) ) } />
+                                                            <div className="flex flex-row">
+                                                            <div className="mr-2 font-bold mr-2 text-sm">
+                                                                Bid will close in :</div>
+                                                                <div><Countdown date={ Date.parse(new Date(product.deadline_date) ) } /></div>
                                                             </div>
                                                             { BidModal() }
                                                         </div>
                                                     </div>
                                                     <hr/>
-                                                    <div className="singleProductRightMargin mt-2 text-sm">
+                                                    <div className="singleProductRightMargin mt-2 text-sm mb-10">
                                                         <div className="text-lg text-yellow-600 font-bold mt-8 mb-2 ml-10">{ `Description ` }</div>
                                                         <div className="ml-12 text-sm mr-1">{product.description.trim()}</div>
                                                     </div>
-                                                    <div className="singleProductRightMargin">
+                                                    <div className="singleProductRightMargin mb-10">
                                                         <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Specifications ` }</div>
                                                         <div className="ml-12 text-sm mr-1 mb-5">
                                                             { product.specifications && 
@@ -533,7 +539,7 @@ const SingleProduct = () => {
                                                         }
                                                         </div>
                                                     </div>
-                                                    <div className="singleProductRightMargin mt-2 text-sm">
+                                                    <div className="singleProductRightMargin mt-2 text-sm mb-10">
                                                         <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Other Details ` }</div>
                                                         <div dangerouslySetInnerHTML =  {{__html: decode(product.details) }} className="ml-12 text-sm mr-1"/>
                                                     </div>
@@ -541,7 +547,7 @@ const SingleProduct = () => {
                                             )
                                         })
                                     }
-                                    <div className="mb-10">
+                                    <div className="mb-12">
                                         <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10"> Seller Information</div>
                                         { sellerData &&
                                             <div className="mb-5">
@@ -565,14 +571,18 @@ const SingleProduct = () => {
                                     </div>
                                     { Array.isArray( similarProductsIds ) &&
                                         <>
-                                            <h1>{ `Similar Products` }</h1>
+                                            <h1 className="ml-8 font-semibold">{ `Similar Products` }</h1>
+                                            <div className="flex flex-wrap">
                                             { 
-                                                similarProductsIds.map((similarProductId) => {
+                                                similarProductsIds.map((similarProductId) => {                                                    
                                                     return (
+                                                    <div className="ml-16">
                                                         <SimilarProducts {...similarProductId}/>
-                                                    )
-                                                })    
+                                                    </div>
+                                                    )    
+                                                })   
                                             }
+                                            </div>
                                         </>
                                     }
                                 </div>

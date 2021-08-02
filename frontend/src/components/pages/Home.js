@@ -28,12 +28,11 @@ const Home = () => {
                         <img src="/assets/auction.jpg"/>
                     </div>
                     <div>
-                        <h2 className="text-center text-2xl font-medium pt-6 mb-6">Top Categories</h2>
-                        <div className="flex flex-wrap ml-8">
+                        <h2 className="text-center text-2xl font-medium pt-6 mb-6 mt-12">Top Categories</h2>
+                        <div className="flex flex-wrap ml-16 mt-10">
                             { Array.isArray(topCategories) &&
                                 topCategories.map((topCategory) => {
-                                    
-                                    return (<div className= "max-h-40 w-40 filter brightness-50 mr-8 ">
+                                    return (<div className= "mr-8 text-center ">
                                         <TopCategoryCard {...topCategory}/>
                                         </div>)
                                     
