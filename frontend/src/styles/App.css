@@ -859,10 +859,46 @@ table th {
 .single-category-page-wrap{
 	scroll-behavior: smooth;
 }
+/*******************************************
+ 			Home top category Css
+********************************************/
 
-.singleProductPopUp table tr{
-	
+
+
+.top-category-item .category-card img{
+	height: 12rem;
+	width: 10rem;	
+	filter: brightness(0.7);
 }
+.top-category-item .category-card:hover{
+	color: black;
+}
+.top-category-item .category-card img:hover{
+  	filter: brightness(1);
+}
+.category-card{
+	position: relative;
+}
+.top-category-item .category-card .category-box h3{
+	  color: white;
+	  font-size: 1rem;
+	  font-weight: bold;
+	  position: absolute;
+	  top: 45%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+}
+.top-category-item .category-card .category-box h3:hover{
+	color: #F0F0F0;
+}
+.top-category-item .category-card .category-box div{
+	margin-top: 9px;
+	margin-bottom: 10px;
+}
+/*******************************************
+ 			ends Home top category 
+********************************************/
+
 /*******************************************
  			Footer Css
 ********************************************/

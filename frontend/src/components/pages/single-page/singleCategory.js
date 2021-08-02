@@ -72,7 +72,7 @@ const SingleCategory = () => {
                             </div>
                         </>
                     }
-                    <div className="w-4/6">
+                    <div className="w-4/5  ml-10 ">
                         <h2 className="ml-10 mt-10 text-gray-800">Products</h2>
                         { !productIds &&
                             <>
@@ -82,11 +82,15 @@ const SingleCategory = () => {
                                 </div>
                             </>
                         }
+                        <div className="flex flex-wrap">
                         { productIds && 
-                            productIds.map(( productId, index ) => {
-                                return( <CatProductCard key={index} {...productId.product_id}/>)
+                            productIds.map(( productId, index ) => {  
+                                return( <div className="mr-6">
+                                <CatProductCard key={index} {...productId.product_id}/>
+                                         </div>)
                             })
                         }
+                        </div>
                     </div>
                 </div>
             <Footer/>

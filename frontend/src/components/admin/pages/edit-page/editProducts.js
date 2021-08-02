@@ -345,7 +345,7 @@ const AdminEditProduct = () => {
                 </div>
                 <div className="mt-4">
                     <div>Description : </div>
-                    <textarea className="text-sm text-sm mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
+                    <textarea className="text-sm mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
                         {description.value}
                     </textarea>
                 </div>
@@ -437,8 +437,8 @@ const AdminEditProduct = () => {
                                 <span className="text-xs text-red-700 flex justify-center">{ deadlineDate.errorMessage }</span>
                             </div>
                         }
-                        <input type="date" onChange ={ (e) => setDeadlineDate({value : e.target.value})} value={deadlineDate.value} min={new Date().toISOString().substring(0,10)}/>
-                        <input type="time" onChange ={ (e) => setDeadlineTime({value : e.target.value})} value={deadlineTime.value}/>
+                        <input type="date" className="text-gray-700" onChange ={ (e) => setDeadlineDate({value : e.target.value})} value={deadlineDate.value} min={new Date().toISOString().substring(0,10)}/>
+                        <input type="time" className="text-gray-700" onChange ={ (e) => setDeadlineTime({value : e.target.value})} value={deadlineTime.value}/>
                 </div>
 
                 <div className="-mx-3 mb-8 p-6 mt-4">
@@ -486,7 +486,7 @@ const AdminEditProduct = () => {
                                     checkedStatus = true
                                 }
                                 return(
-                                    <React.Fragment key={`unique-${index}`}><input key={index} onChange = { (e) => handleCategories(e) } type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-1 ml-1 text-sm">{ category.title }</div></React.Fragment>
+                                    <React.Fragment key={`unique-${index}`}><input key={index} onChange = { (e) => handleCategories(e) } className="mt-1" type="checkbox" value={ category.id } checked={checkedStatus}/><div className="mr-1 ml-1 text-sm">{ category.title }</div></React.Fragment>
                                 )
                             })
                         }

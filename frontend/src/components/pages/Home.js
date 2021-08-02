@@ -22,17 +22,20 @@ const Home = () => {
     return ( 
         <div id="auction-web">
             <Header/>
-                <div id="auction-web-home" className="page--home main-wrapper h-screen">
+                <div id="auction-web-home" className="page--home main-wrapper h-full mb-16">
                     <SearchCard />
                     <div className= "home-banner">
                         <img src="/assets/auction.jpg"/>
                     </div>
                     <div>
-                        <h2 className="text-center text-2xl font-medium pt-6">Top Categories</h2>
-                        <div>
+                        <h2 className="text-center text-2xl font-medium pt-6 mb-6 mt-12">Top Categories</h2>
+                        <div className="flex flex-wrap ml-16 mt-10">
                             { Array.isArray(topCategories) &&
                                 topCategories.map((topCategory) => {
-                                    return (<TopCategoryCard {...topCategory}/>)
+                                    return (<div className= "mr-8 text-center ">
+                                        <TopCategoryCard {...topCategory}/>
+                                        </div>)
+                                    
                                 })
                             }
                         </div>
