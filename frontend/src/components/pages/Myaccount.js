@@ -150,11 +150,46 @@ const Myaccount = () => {
         <div className="h-screen">
             <Header/>
                 <div className="ml-16">
+                    <div> 
+                    { `This is my account page` }
+                   </div>
                     <div>
                         <h2>{ `User information` }</h2>
                         { userData && 
                             userData.map( (userDat, index) => {
-                                //console.log(userDat)
+                                
+                                return(
+                                     <div key={ index } className=" text-base">
+                                            <div className="flex flex-row">   
+                                                <div className="">Full Name : </div>   
+                                                <div className="ml-3">{userDat.fullname }</div>
+                                             </div>
+                                            <div className="flex flex-row" >   
+                                                <div className="">Username : </div>   
+                                                <div className="ml-3">{userDat.username}</div>
+                                            </div>
+                                            <div className="flex flex-row">   
+                                                <div className="">Email : </div>   
+                                                <div className="ml-3">{userDat.email }</div>
+                                             </div>
+
+
+                                             
+                                             { userDat.birthdate && 
+                                                userDat.birthdate.map( (dob, index) => {
+                                                    console.log(dob)
+                                                })
+                                            }
+
+
+
+
+
+
+
+                                     </div>
+
+                                    )
                             })
                         }
                     </div>
@@ -175,9 +210,7 @@ const Myaccount = () => {
                         }
                     </div>
                     
-                   <div> 
-                    { `This is my account page` }
-                   </div>
+
                     <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
                     { 
                     LogoutModal()
