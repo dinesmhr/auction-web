@@ -153,7 +153,7 @@ const Myaccount = () => {
                     <div> 
                     { `This is my account page` }
                    </div>
-                   
+
                     <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
                     { 
                     LogoutModal()
@@ -272,11 +272,11 @@ const Myaccount = () => {
                                         </tr>
                                         <tr className="flex flex-row">   
                                                 <th className="w-1/4">Bid Date : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_amount }</td>
+                                                <td className="w-3/4">{userBidDat.bid_date }</td>
                                         </tr>
                                          <tr className="flex flex-row">   
                                                 <th className="w-1/4">Bid Difference : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_amount }</td>
+                                                <td className="w-3/4">{userBidDat.bid_difference }</td>
                                         </tr>
 
                                           <tr className="flex flex-row">   
