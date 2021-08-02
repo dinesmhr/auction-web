@@ -896,7 +896,23 @@ table th {
 	margin-bottom: 10px;
 }
 /*******************************************
- 			ends Home top category 
+ 			Ends Home top category 
+********************************************/
+/*******************************************
+ 			Single category Search
+********************************************/
+
+.single-category-search .search-card{
+	background-color: white ;
+}
+
+.single-category-search .search-box{
+	margin-left: auto; 
+	
+
+}
+/*******************************************
+ 			Ends Single category Search
 ********************************************/
 
 /*******************************************

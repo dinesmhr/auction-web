@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import Header from '../../header/Header'
 import { ProductCard } from '../cards/productCard'
 import Footer from '../../footer/Footer'
+import { SearchCard } from '../cards/searchCard'
 
 const axios = require('axios')
 
@@ -65,14 +66,17 @@ const SingleCategory = () => {
                             }
                          </div>
                             <div className=""> 
-                              <h1 className="ml-10 text-3xl text-gray-800">{data.title}</h1>
+                              <h1 className="ml-14 text-3xl text-gray-800">{data.title}</h1>
                                 <div className="ml-10 text-gray-700 mt-1">
                                     {data.description}
                                 </div>
                             </div>
                         </>
                     }
-                    <div className="w-4/5  ml-10 ">
+                    <div className="w-4/5  ml-16 ">
+                        <div className="single-category-search">
+                                <SearchCard  className="bg-gray-500"/>
+                        </div>
                         <h2 className="ml-10 mt-10 text-gray-800">Products</h2>
                         { !productIds &&
                             <>
