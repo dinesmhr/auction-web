@@ -40,7 +40,7 @@ const Home = () => {
                         <img src="/assets/auction.jpg"/>
                     </div>
                     <div>
-                        <h2 className="text-center text-2xl font-medium pt-6 mb-6 mt-12">Top Categories</h2>
+                        <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Top Categories</h2>
                         <div className="flex flex-wrap ml-16 mt-10">
                             { Array.isArray(topCategories) &&
                                 topCategories.map((topCategory) => {
@@ -54,11 +54,11 @@ const Home = () => {
                     </div>
 
                     <div>
-                        <h2 className="text-center text-2xl font-medium pt-6 mb-6 mt-12">Recent Feedbacks</h2>
-                        <div className="flex flex-wrap ml-16 mt-10">
+                        <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recent Feedbacks</h2>
+                        <div className="flex flex-wrap ml-16 mt-10 w-3/4     text-gray-700">
                             { Array.isArray(feedbacks) &&
                                 feedbacks.map((feedback) => {
-                                    return (<div className= "mr-8 text-center ">
+                                    return (<div className= "mr-8 text-center w-full mb-6 ">
                                             <FeedbackCard {...feedback}/>
                                         </div>)
                                     
