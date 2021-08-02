@@ -19,7 +19,7 @@ if( is_db_connected() ) {
             $user_status = $user_status[0]['status'];
         }
         if( $user_status !== 'not-verified' ) {
-            $users_sql = 'SELECT * FROM aw_users JOIN aw_users_details ON users.id=users_details.id WHERE users.id="' .$id.'"';
+            $users_sql = 'SELECT * FROM aw_users JOIN aw_users_details ON aw_users.id=aw_users_details.user_id WHERE aw_users.id="' .$id.'"';
         } else {
             $users_sql = 'SELECT * FROM aw_users WHERE id="' .$id. '"';    
         }

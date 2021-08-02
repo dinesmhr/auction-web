@@ -12,6 +12,9 @@ if( is_db_connected() ) {
     if( isset( $_GET['id'] ) ) {
         $product_id = $_GET['id'];
         $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'"';
+    } else if(isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+        $products_sql = 'SELECT * FROM aw_products WHERE user_id="'.$user_id.'"';
     } else {
         $products_sql = 'SELECT * FROM aw_products WHERE 1';
     }

@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState, useContext } from "react";
+import React, { Fragment, useRef, useState, useContext, useEffect } from "react";
 import { Redirect } from 'react-router-dom'
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
@@ -8,7 +8,11 @@ import {appContext} from '../../App'
 const axios = require('axios');
 
 const Myaccount = () => {
-    const [openLogoutConfirmModal, setOpenLogoutConfirmModal] = useState(false)
+    const [ openLogoutConfirmModal, setOpenLogoutConfirmModal] = useState(false)
+    const [ userID, setUserID] = useState()
+    const [ userData, setUserData] = useState() // user full details
+    const [ userProductData, setUserProductData] = useState() // user products
+    const [ userBidData, setUserBidData] = useState() // user bids
 
     const { isLoggedIn, updateLoggedInStatus } = useContext(appContext)
     const cancelButtonRef = useRef(null)
@@ -22,6 +26,43 @@ const Myaccount = () => {
             updateLoggedInStatus();
         })
     }
+
+    useEffect(() => {
+        axios.get( '/sessions.php' )
+        .then(function(res) {
+            setUserID(res.data.userId)
+        })
+    }, [])
+
+    // get user info data
+    useEffect(() => {
+        axios.get( `/user-details.php?id=${userID}` )
+        .then(function(res) {
+            if( res.data.status ) {
+                setUserData(res.data.data)
+            }
+        })
+    }, [userID])
+
+    // get user product data
+    useEffect(() => {
+        axios.get( `/products.php?user_id=${userID}` )
+        .then(function(res) {
+            if( res.data.status ) {
+                setUserProductData(res.data.data)
+            }
+        })
+    }, [userID])
+
+    // get user bid data
+    useEffect(() => {
+        axios.get( `/bids.php?user_id=${userID}` )
+        .then(function(res) {
+            if( res.data.status ) {
+                setUserBidData(res.data.data)
+            }
+        })
+    }, [userID])
 
     const LogoutModal = () => {
         return (
@@ -109,6 +150,31 @@ const Myaccount = () => {
         <div className="h-screen">
             <Header/>
                 <div className="ml-16">
+                    <div>
+                        <h2>{ `User information` }</h2>
+                        { userData && 
+                            userData.map( (userDat, index) => {
+                                //console.log(userDat)
+                            })
+                        }
+                    </div>
+                    <div>
+                        <h2>{ `My products` }</h2>
+                        { userProductData && 
+                            userProductData.map(( userProductDat, index ) => {
+                                // console.log(userProductDat)
+                            })
+                        }
+                    </div>
+                    <div>
+                        <h2>{ `My Bids Record` }</h2>
+                        { userBidData && 
+                            userBidData.map(( userBidDat, index ) => {
+                                // console.log(userBidDat)
+                            })
+                        }
+                    </div>
+                    
                    <div> 
                     { `This is my account page` }
                    </div>
