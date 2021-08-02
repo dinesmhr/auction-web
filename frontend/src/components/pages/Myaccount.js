@@ -150,19 +150,13 @@ const Myaccount = () => {
         <div className="h-full">
             <Header/>
                 <div className="ml-16">
-                    <div> 
-                    { `This is my account page` }
-                   </div>
-
-                    <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
-                    { 
-                    LogoutModal()
-                    }
+                    <h2 class="text-3xl font-medium underline pl-36 pt-8"> 
+                        { `Account page` }
+                   </h2>
                     <div>
                         <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `User Information` }</h2>
                         { userData && 
                             userData.map( (userDat, index) => {
-                                //console.log(userDat)
                                 return(
                                      <div key={ index } className=" text-base w-4/5 ">
                                             <tr className="flex flex-row">   
@@ -193,9 +187,6 @@ const Myaccount = () => {
                                                 <th className="w-1/4">User ID : </th>   
                                                 <td className="w-3/4">{userDat.user_id}</td>
                                             </tr>
-
-
-
                                      </div>
 
                                     )
@@ -206,7 +197,6 @@ const Myaccount = () => {
                         <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My products` }</h2>
                         { userProductData && 
                             userProductData.map(( userProductDat, index ) => {
-                                //console.log(userProductDat)
                                 return(
                                     <div key={ index } className=" text-base mb-8 w-3/4 ">
 
@@ -248,8 +238,7 @@ const Myaccount = () => {
                                         </tr>
                                         <hr/>                                             
                                     </div>
-
-                                    )
+                                )
                             })
                         }
 
@@ -258,8 +247,6 @@ const Myaccount = () => {
                         <h2 className=" text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My Bids Record` }</h2>
                         { userBidData && 
                             userBidData.map(( userBidDat, index ) => {
-                                 console.log(userBidDat)
-
                                  return(
                                     <div key={ index } className=" text-base mb-8 w-3/4 "> 
                                         <tr className="flex flex-row">   
@@ -298,8 +285,12 @@ const Myaccount = () => {
                             })
                         }
                     </div>
-                    
-
+                    <div>{`Log me out`}
+                        <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
+                    </div>
+                    { 
+                        LogoutModal()
+                    }
                 </div>
             </div>
             <Footer/>
