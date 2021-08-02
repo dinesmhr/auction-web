@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../header/Header'
 import {ProductCard} from './cards/productCard'
 import Footer from '../footer/Footer'
+import { SearchCard } from './cards/searchCard'
 
 const axios = require('axios');
 
@@ -31,6 +32,7 @@ const Products = () => {
     return ( 
         <div id="auction-web">
             <Header/>
+            <SearchCard />
                 <div id="auction-web-shop" className="page--shop main-wrapper h-full">
                     <div className="product-wrap max-w-6xl ml-8 ">                    	                                                  
                         { Array.isArray(products) &&

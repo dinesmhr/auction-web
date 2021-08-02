@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Header from "../header/Header"
 import Footer from "../footer/Footer"
+import { SearchCard } from './cards/searchCard'
 
 const axios = require('axios')
 
@@ -55,6 +56,7 @@ const Categories = () => {
     return (
         <>
             <Header/>
+            <SearchCard />
                 <div className="auction-web-categoriesPage h-full ">
                     <div className="categoriesPageWrap flex flex-wrap ">
                     { !data &&

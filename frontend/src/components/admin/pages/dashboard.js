@@ -25,7 +25,7 @@ const AdminDashboard = () => {
                     { bids && 
                         bids.map((bid) => {
                             return ( 
-                                <div class="border-b-2 mt-4 flex flex-row pb-16 pt-10 ">
+                                <div class="border-b-2 mt-4 flex flex-wrap pb-16 pt-10 ">
                                     <div className="mr-16 text-center">
                                         <div>{ bid.fullname }</div>
                                         <div className="mb-2 mt-1 mb-2">{ bid.email }</div>
