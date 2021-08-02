@@ -31,7 +31,7 @@ const Search = () => {
     return ( 
         <div id="auction-web">
             <Header/>
-                <div id="auction-web-shop" className="page--shop main-wrapper h-screen">
+                <div id="auction-web-shop" className="page--shop main-wrapper h-full">
                     <h2 className="ml-10 mt-10 text-xl">Search Results</h2>
                     <div className="product-wrap">
                         { (!error) && (!products) &&
