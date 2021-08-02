@@ -8,7 +8,7 @@ export const FeedbackCard = (prop) => {
 
     return ( 
         <div className="feedback-item">
-            { `${name} writes ${feedback} on ${date}` }
+            { `${name} writes "${feedback}" on ${date}` }
         </div>
     )
 }
