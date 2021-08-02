@@ -52,14 +52,14 @@ const SingleTag = () => {
     return (
         <>
             <Header/>
-                <div>
+                <div className="ml-16">
                     { data &&
                         <>
-                            <h1>{ `Tag : ${data.title}` }</h1>
+                            <h1 className="text-xl mt-8 mb-2">{ `Tag : ${data.title}` }</h1>
                         </>
                     }
-                    <div>
-                        <h2>Products</h2>
+                    <div className="ml-12">
+                        <h2 className="mb-2 mt-4 ml-1">Products</h2>
                         { !productIds &&
                             <>
                                 <div>No products assigned in this tag</div>
@@ -68,11 +68,13 @@ const SingleTag = () => {
                                 </div>
                             </>
                         }
+                        <div className="flex flex-wrap w-4/5    ">
                         { productIds && 
                             productIds.map(( productId, index ) => {
-                                return( <TagProductCard key={index} {...productId.product_id}/>)
+                                return(<div className="mr-8"> <TagProductCard key={index} {...productId.product_id}/></div>)
                             })
                         }
+                        </div>
                     </div>
                 </div>
             <Footer/>

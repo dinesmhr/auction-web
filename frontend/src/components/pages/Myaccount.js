@@ -147,43 +147,52 @@ const Myaccount = () => {
 
     return (
         <div id="auction-web" className="">
-        <div className="h-screen">
+        <div className="h-full">
             <Header/>
                 <div className="ml-16">
                     <div> 
                     { `This is my account page` }
                    </div>
+                   
+                    <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
+                    { 
+                    LogoutModal()
+                    }
                     <div>
-                        <h2>{ `User information` }</h2>
+                        <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `User Information` }</h2>
                         { userData && 
                             userData.map( (userDat, index) => {
-                                
+                                //console.log(userDat)
                                 return(
-                                     <div key={ index } className=" text-base">
-                                            <div className="flex flex-row">   
-                                                <div className="">Full Name : </div>   
-                                                <div className="ml-3">{userDat.fullname }</div>
-                                             </div>
-                                            <div className="flex flex-row" >   
-                                                <div className="">Username : </div>   
-                                                <div className="ml-3">{userDat.username}</div>
-                                            </div>
-                                            <div className="flex flex-row">   
-                                                <div className="">Email : </div>   
-                                                <div className="ml-3">{userDat.email }</div>
-                                             </div>
-
-
-                                             
-                                             { userDat.birthdate && 
-                                                userDat.birthdate.map( (dob, index) => {
-                                                    console.log(dob)
-                                                })
-                                            }
-
-
-
-
+                                     <div key={ index } className=" text-base w-4/5 ">
+                                            <tr className="flex flex-row">   
+                                                <th className="w-1/4 ">Full Name : </th>   
+                                                <td className="w-3/4">{userDat.fullname }</td>
+                                             </tr>
+                                            <tr className="flex flex-row" >   
+                                                <th className="w-1/4 ">Username : </th>   
+                                                <td className="w-3/4">{userDat.username}</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                <th className="w-1/4 ">Email : </th>   
+                                                <td className="w-3/4">{userDat.email }</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                <th className="w-1/4 ">Profession : </th>   
+                                                <td className="w-3/4">{userDat.profession }</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                <th className="w-1/4">role : </th>   
+                                                <td className="w-3/4">{userDat.role }</td>
+                                            </tr>
+                                             <tr className="flex flex-row">   
+                                                <th className="w-1/4">Status : </th>   
+                                                <td className="w-3/4">{userDat.status }</td>
+                                            </tr>
+                                             <tr className="flex flex-row">   
+                                                <th className="w-1/4">User ID : </th>   
+                                                <td className="w-3/4">{userDat.user_id}</td>
+                                            </tr>
 
 
 
@@ -194,27 +203,103 @@ const Myaccount = () => {
                         }
                     </div>
                     <div>
-                        <h2>{ `My products` }</h2>
+                        <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My products` }</h2>
                         { userProductData && 
                             userProductData.map(( userProductDat, index ) => {
-                                // console.log(userProductDat)
+                                //console.log(userProductDat)
+                                return(
+                                    <div key={ index } className=" text-base mb-8 w-3/4 ">
+
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Product ID : </th>   
+                                                <td className="w-3/4w-3/4">{userProductDat.id }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Title: </th>   
+                                                <td className="w-3/4w-3/4">{userProductDat.title }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Deadline Date : </th>   
+                                                <td className="w-3/4w-3/4">{userProductDat.deadline_date }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Description : </th>   
+                                                <td className="w-3/4">{userProductDat.description }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Details : </th>   
+                                                <td className="w-3/4">{userProductDat.details }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Initial Bid : </th>   
+                                                <td className="w-3/4">{userProductDat.initial_bid }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Max bid : </th>   
+                                                <td className="w-3/4">{userProductDat.max_bid }</td>
+                                        </tr> 
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Status : </th>   
+                                                <td className="w-3/4">{userProductDat.status }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Submission Date : </th>   
+                                                <td className="w-3/4">{userProductDat.submission_date }</td>
+                                        </tr>
+                                        <hr/>                                             
+                                    </div>
+
+                                    )
                             })
                         }
+
                     </div>
                     <div>
-                        <h2>{ `My Bids Record` }</h2>
+                        <h2 className=" text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My Bids Record` }</h2>
                         { userBidData && 
                             userBidData.map(( userBidDat, index ) => {
-                                // console.log(userBidDat)
+                                 console.log(userBidDat)
+
+                                 return(
+                                    <div key={ index } className=" text-base mb-8 w-3/4 "> 
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Bid ID : </th>   
+                                                <td className="w-3/4">{userBidDat.bid_id }</td>
+                                        </tr>               
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Bid Amount : </th>   
+                                                <td className="w-3/4">{userBidDat.bid_amount }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">Bid Date : </th>   
+                                                <td className="w-3/4">{userBidDat.bid_amount }</td>
+                                        </tr>
+                                         <tr className="flex flex-row">   
+                                                <th className="w-1/4">Bid Difference : </th>   
+                                                <td className="w-3/4">{userBidDat.bid_amount }</td>
+                                        </tr>
+
+                                          <tr className="flex flex-row">   
+                                                <th className="w-1/4">Product ID : </th>   
+                                                <td className="w-3/4">{userBidDat.product_id }</td>
+                                        </tr>
+                                        <tr className="flex flex-row">   
+                                                <th className="w-1/4">User ID : </th>   
+                                                <td className="w-3/4">{userBidDat.user_id }</td>
+                                        </tr>
+                                           <tr className="flex flex-row">   
+                                                <th className="w-1/4">Status : </th>   
+                                                <td className="w-3/4">{userBidDat.bid_status }</td>
+                                        </tr>                                        
+
+
+                                    </div>
+                                    )
                             })
                         }
                     </div>
                     
 
-                    <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
-                    { 
-                    LogoutModal()
-                    }
                 </div>
             </div>
             <Footer/>
