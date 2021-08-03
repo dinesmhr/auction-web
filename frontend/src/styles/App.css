@@ -916,6 +916,11 @@ table th {
 	margin-left: auto; 
 	margin-left: 2rem;
 }
+
+
+#feedback-line{
+	left: 50%;
+}
 /*******************************************
  			Ends Single category Search
 ********************************************/
