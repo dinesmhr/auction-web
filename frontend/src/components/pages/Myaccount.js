@@ -5,6 +5,9 @@ import Footer from '../footer/Footer'
 import { Dialog, Transition } from '@headlessui/react'
 import {appContext} from '../../App'
 
+import { FaUserAlt, FaProductHunt } from "react-icons/fa";
+import { BiDollar } from "react-icons/bi"
+
 const axios = require('axios');
 
 const Myaccount = () => {
@@ -13,6 +16,7 @@ const Myaccount = () => {
     const [ userData, setUserData] = useState() // user full details
     const [ userProductData, setUserProductData] = useState() // user products
     const [ userBidData, setUserBidData] = useState() // user bids
+    const [openTab, setOpenTab] = React.useState(1);
 
     const { isLoggedIn, updateLoggedInStatus } = useContext(appContext)
     const cancelButtonRef = useRef(null)
@@ -146,239 +150,267 @@ const Myaccount = () => {
     }
 
     return (
-        <div id="auction-web" className="">
-        <div className="h-full">
-            <Header/>
-                <div className="ml-16">
+        <div id="auction-web">
+            <div className="h-full">
+                <Header/>
                     <h2 class="text-3xl font-medium underline pl-36 pt-8"> 
                         { `Account page` }
                    </h2>
+                    <ul className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"role="tablist">
+                        <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                            <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                                (openTab === 1
+                                    ? "text-white bg-" + 'red' + "-600"
+                                    : "text-" + 'red' + "-600 bg-white")
+                                }
+                                onClick={e => {
+                                e.preventDefault();
+                                setOpenTab(1);
+                                }}
+                                data-toggle="tab"
+                                href="#link1"
+                                role="tablist"
+                            >
+                                <FaUserAlt/>User Information
+                            </a>
+                        </li>
+                        <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                            <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                                (openTab === 2
+                                    ? "text-white bg-" + 'red' + "-600"
+                                    : "text-" + 'red' + "-600 bg-white")
+                                }
+                                onClick={e => {
+                                e.preventDefault();
+                                setOpenTab(2);
+                                }}
+                                data-toggle="tab"
+                                href="#link2"
+                                role="tablist"
+                            >
+                                <FaProductHunt/>  My Products
+                            </a>
+                        </li>
+                        <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                            <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                                (openTab === 3
+                                    ? "text-white bg-" + 'red' + "-600"
+                                    : "text-" + 'red' + "-600 bg-white")
+                                }
+                                onClick={e => {
+                                e.preventDefault();
+                                setOpenTab(3);
+                                }}
+                                data-toggle="tab"
+                                href="#link3"
+                                role="tablist"
+                            >
+                                <BiDollar/>My bids
+                            </a>
+                        </li>
+                    </ul>
                     <div>
+                        <div className={openTab === 1 ? "block" : "hidden"} id="link1">
+                            { userData && 
+                                userData.map( (userDat, index) => {
+                                    return(
+                                        <div key={ index } className=" text-base w-4/5 ">
+                                        <table className="table-auto w-full ">
+                                            <tbody>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4 ">Full Name : </th>   
+                                                    <td className="w-3/4">{userDat.fullname }</td>
+                                                </tr>
+                                                <tr className="flex flex-row mb-4" >   
+                                                    <th className="w-1/4 ">Username : </th>   
+                                                    <td className="w-3/4">{userDat.username}</td>
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4 ">Email : </th>   
+                                                    <td className="w-3/4">{userDat.email }</td>
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4 ">Profession : </th>   
+                                                    <td className="w-3/4">{userDat.profession }</td>
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">role : </th>   
+                                                    <td className="w-3/4">{userDat.role }</td>
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">Status : </th>   
+                                                    <td className="w-3/4">{userDat.status }</td>
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">User ID : </th>   
+                                                    <td className="w-3/4">{userDat.user_id}</td>
+                                                </tr>
 
-                    <ul class="flex border-b">
-                  <li class="-mb-px mr-1">
-                  <div>
-                    <a class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" href="#">
-                    <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `User Information` }</h2></a>
-                   </div>     
-                        { userData && 
-                            userData.map( (userDat, index) => {
-                                return(
-                                     <div key={ index } className=" text-base w-4/5 ">
-                                     <table className="table-auto w-full ">
-                                         <tbody>
-                                            <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4 ">Full Name : </th>   
-                                                <td className="w-3/4">{userDat.fullname }</td>
-                                             </tr>
-                                            <tr className="flex flex-row mb-4" >   
-                                                <th className="w-1/4 ">Username : </th>   
-                                                <td className="w-3/4">{userDat.username}</td>
-                                            </tr>
-                                            <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4 ">Email : </th>   
-                                                <td className="w-3/4">{userDat.email }</td>
-                                            </tr>
-                                            <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4 ">Profession : </th>   
-                                                <td className="w-3/4">{userDat.profession }</td>
-                                            </tr>
-                                            <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">role : </th>   
-                                                <td className="w-3/4">{userDat.role }</td>
-                                            </tr>
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">Status : </th>   
-                                                <td className="w-3/4">{userDat.status }</td>
-                                            </tr>
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">User ID : </th>   
-                                                <td className="w-3/4">{userDat.user_id}</td>
-                                            </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">DOB : </th> 
+                                                { userDat.birthdate && 
+                                                        <td>
+                                                        <span className="mr-4">Day : {userDat.birthdate.day}</span>
+                                                        <span className="mr-4">Month :{userDat.birthdate.month}</span>
+                                                        <span className="mr-4">Year : {userDat.birthdate.year}</span>
+                                                        </td>                                            
+                                                }
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">Contact Number : </th> 
+                                                { userDat.contact_num && 
+                                                        <td>
+                                                        <span className="mr-4"> {userDat.contact_num.areaCode}</span>
+                                                        <span className="mr-4">{userDat.contact_num.number}</span>
+                                                        </td>                                            
+                                                }
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">Current Address : </th> 
+                                                { userDat.current_ad && 
+                                                        <td className="flex flex-col">
+                                                        <span className="mr-4 mb-1">City : {userDat.current_ad.city}</span>
+                                                        <span className="mr-4 mb-1">Country :{userDat.current_ad.country}</span>
+                                                        <span className="mr-4 mb-1">Postal Code : {userDat.current_ad.postalCode}</span>
+                                                        <span className="mr-4 mb-1">State Province :{userDat.current_ad.stateProvince}</span>
+                                                        <span className="mr-4 mb-1">Street Address : {userDat.current_ad.streetAddress}</span>                                                    
+                                                        </td>                                            
+                                                }
+                                                </tr>
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">Permanent Address : </th> 
+                                                { userDat.permanent_ad && 
+                                                        <td className="flex flex-col">
+                                                        <span className="mr-4 mb-1">City : {userDat.permanent_ad.city}</span>
+                                                        <span className="mr-4 mb-1">Country :{userDat.permanent_ad.country}</span>
+                                                        <span className="mr-4 mb-1">Postal Code : {userDat.permanent_ad.postalCode}</span>
+                                                        <span className="mr-4 mb-1">State Province :{userDat.permanent_ad.stateProvince}</span>
+                                                        <span className="mr-4 mb-1">Street Address : {userDat.permanent_ad.streetAddress}</span>                                                    
+                                                        </td>                                            
+                                                }
+                                                </tr>
 
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">DOB : </th> 
-                                             { userDat.birthdate && 
-                                                    <td>
-                                                      <span className="mr-4">Day : {userDat.birthdate.day}</span>
-                                                      <span className="mr-4">Month :{userDat.birthdate.month}</span>
-                                                      <span className="mr-4">Year : {userDat.birthdate.year}</span>
-                                                    </td>                                            
-                                            }
+                                            </tbody>
+                                            </table>
+                                        </div>
+
+                                        )
+                                })
+                            }
+                        </div>
+                        <div className={openTab === 2 ? "block" : "hidden"} id="link1">
+                            { userProductData && 
+                                userProductData.map(( userProductDat, index ) => {
+                                    return(
+                                        <table className="table-auto w-full ">
+                                            <tbody>
+                                            <div key={ index } className=" text-base mb-8 w-3/4 ">
+                                                <tr className="flex flex-row mb-4">   
+                                                    <th className="w-1/4">Images : </th>                                         
+                                                { userProductDat.images_path && 
+                                                        <td className="flex flex-col">
+                                                        <span className="mr-4 mb-1"> {userProductDat.images_path.[0]}</span>                                                 
+                                                        </td>                                            
+                                                }
+                                                </tr>
+
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Product ID : </th>   
+                                                    <td className="w-3/4w-3/4">{userProductDat.id }</td>
                                             </tr>
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">Contact Number : </th> 
-                                             { userDat.contact_num && 
-                                                    <td>
-                                                      <span className="mr-4"> {userDat.contact_num.areaCode}</span>
-                                                      <span className="mr-4">{userDat.contact_num.number}</span>
-                                                    </td>                                            
-                                            }
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Title: </th>   
+                                                    <td className="w-3/4w-3/4">{userProductDat.title }</td>
                                             </tr>
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">Current Address : </th> 
-                                             { userDat.current_ad && 
-                                                    <td className="flex flex-col">
-                                                      <span className="mr-4 mb-1">City : {userDat.current_ad.city}</span>
-                                                      <span className="mr-4 mb-1">Country :{userDat.current_ad.country}</span>
-                                                      <span className="mr-4 mb-1">Postal Code : {userDat.current_ad.postalCode}</span>
-                                                      <span className="mr-4 mb-1">State Province :{userDat.current_ad.stateProvince}</span>
-                                                      <span className="mr-4 mb-1">Street Address : {userDat.current_ad.streetAddress}</span>                                                    
-                                                    </td>                                            
-                                            }
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Deadline Date : </th>   
+                                                    <td className="w-3/4w-3/4">{userProductDat.deadline_date }</td>
                                             </tr>
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">Permanent Address : </th> 
-                                             { userDat.permanent_ad && 
-                                                    <td className="flex flex-col">
-                                                      <span className="mr-4 mb-1">City : {userDat.permanent_ad.city}</span>
-                                                      <span className="mr-4 mb-1">Country :{userDat.permanent_ad.country}</span>
-                                                      <span className="mr-4 mb-1">Postal Code : {userDat.permanent_ad.postalCode}</span>
-                                                      <span className="mr-4 mb-1">State Province :{userDat.permanent_ad.stateProvince}</span>
-                                                      <span className="mr-4 mb-1">Street Address : {userDat.permanent_ad.streetAddress}</span>                                                    
-                                                    </td>                                            
-                                            }
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Description : </th>   
+                                                    <td className="w-3/4">{userProductDat.description }</td>
                                             </tr>
-
-                                        </tbody>
-                                        </table>
-                                     </div>
-
-                                    )
-                            })
-                        }
-
-                
-                  </li>
-                  <li class="mr-1">
-                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">
-                    <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My products` }</h2></a>
-                                        <div>
-                        
-                        { userProductData && 
-                            userProductData.map(( userProductDat, index ) => {
-                                return(
-                                     <table className="table-auto w-full ">
-                                         <tbody>
-                                         <div key={ index } className=" text-base mb-8 w-3/4 ">
-                                             <tr className="flex flex-row mb-4">   
-                                                <th className="w-1/4">Images : </th>                                         
-                                             { userProductDat.images_path && 
-                                                    <td className="flex flex-col">
-                                                      <span className="mr-4 mb-1"> {userProductDat.images_path.[0]}</span>                                                 
-                                                    </td>                                            
-                                            }
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Details : </th>   
+                                                    <td className="w-3/4">{userProductDat.details }</td>
                                             </tr>
-
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Product ID : </th>   
-                                                <td className="w-3/4w-3/4">{userProductDat.id }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Title: </th>   
-                                                <td className="w-3/4w-3/4">{userProductDat.title }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Deadline Date : </th>   
-                                                <td className="w-3/4w-3/4">{userProductDat.deadline_date }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Description : </th>   
-                                                <td className="w-3/4">{userProductDat.description }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Details : </th>   
-                                                <td className="w-3/4">{userProductDat.details }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Initial Bid : </th>   
-                                                <td className="w-3/4">{userProductDat.initial_bid }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Max bid : </th>   
-                                                <td className="w-3/4">{userProductDat.max_bid }</td>
-                                        </tr> 
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Status : </th>   
-                                                <td className="w-3/4">{userProductDat.status }</td>
-                                        </tr>
-                                        <tr className="flex flex-row  mb-4">   
-                                                <th className="w-1/4">Submission Date : </th>   
-                                                <td className="w-3/4">{userProductDat.submission_date }</td>
-                                        </tr>
-                                        <hr/>                                             
-                                    </div>
-                                </tbody>
-                                </table>
-                                )
-                            })
-                        }
-
-                    </div>
-                  </li>
-                  <li class="mr-1">
-                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">
-                    <h2 className=" text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My Bids Record` }</h2></a>
-                    <div>
-                        
-                        { userBidData && 
-                            userBidData.map(( userBidDat, index ) => {
-                                 return(
-                                     <table className="table-auto w-full ">
-                                         <tbody>                                     
-                                        <div key={ index } className=" text-base mb-8 w-3/4 "> 
-                                        <tr className="flex flex-row">   
-                                                <th className="w-1/4">Bid ID : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_id }</td>
-                                        </tr>               
-                                        <tr className="flex flex-row">   
-                                                <th className="w-1/4">Bid Amount : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_amount }</td>
-                                        </tr>
-                                        <tr className="flex flex-row">   
-                                                <th className="w-1/4">Bid Date : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_date }</td>
-                                        </tr>
-                                         <tr className="flex flex-row">   
-                                                <th className="w-1/4">Bid Difference : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_difference }</td>
-                                        </tr>
-
-                                          <tr className="flex flex-row">   
-                                                <th className="w-1/4">Product ID : </th>   
-                                                <td className="w-3/4">{userBidDat.product_id }</td>
-                                        </tr>
-                                        <tr className="flex flex-row">   
-                                                <th className="w-1/4">User ID : </th>   
-                                                <td className="w-3/4">{userBidDat.user_id }</td>
-                                        </tr>
-                                           <tr className="flex flex-row">   
-                                                <th className="w-1/4">Status : </th>   
-                                                <td className="w-3/4">{userBidDat.bid_status }</td>
-                                        </tr>                                        
-                                    </div>
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Initial Bid : </th>   
+                                                    <td className="w-3/4">{userProductDat.initial_bid }</td>
+                                            </tr>
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Max bid : </th>   
+                                                    <td className="w-3/4">{userProductDat.max_bid }</td>
+                                            </tr> 
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Status : </th>   
+                                                    <td className="w-3/4">{userProductDat.status }</td>
+                                            </tr>
+                                            <tr className="flex flex-row  mb-4">   
+                                                    <th className="w-1/4">Submission Date : </th>   
+                                                    <td className="w-3/4">{userProductDat.submission_date }</td>
+                                            </tr>
+                                            <hr/>                                             
+                                        </div>
                                     </tbody>
                                     </table>
                                     )
-                            })
-                        }
-                    </div>
-                  </li>
-                  </ul>
+                                })
+                            }
+                        </div>
+                        <div className={openTab === 3 ? "block" : "hidden"} id="link1">
+                            { userBidData && 
+                                userBidData.map(( userBidDat, index ) => {
+                                    return(
+                                        <table className="table-auto w-full ">
+                                            <tbody>                                     
+                                            <div key={ index } className=" text-base mb-8 w-3/4 "> 
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">Bid ID : </th>   
+                                                    <td className="w-3/4">{userBidDat.bid_id }</td>
+                                            </tr>               
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">Bid Amount : </th>   
+                                                    <td className="w-3/4">{userBidDat.bid_amount }</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">Bid Date : </th>   
+                                                    <td className="w-3/4">{userBidDat.bid_date }</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">Bid Difference : </th>   
+                                                    <td className="w-3/4">{userBidDat.bid_difference }</td>
+                                            </tr>
 
-                        
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">Product ID : </th>   
+                                                    <td className="w-3/4">{userBidDat.product_id }</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">User ID : </th>   
+                                                    <td className="w-3/4">{userBidDat.user_id }</td>
+                                            </tr>
+                                            <tr className="flex flex-row">   
+                                                    <th className="w-1/4">Status : </th>   
+                                                    <td className="w-3/4">{userBidDat.bid_status }</td>
+                                            </tr>                                        
+                                        </div>
+                                        </tbody>
+                                        </table>
+                                        )
+                                })
+                            }
+                        </div>
                     </div>
 
-                    
                     <div>{`Log me out`}
                         <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
                     </div>
                     { 
                         LogoutModal()
                     }
-                </div>
+                <Footer/>
             </div>
-            <Footer/>
         </div>
     )
 }

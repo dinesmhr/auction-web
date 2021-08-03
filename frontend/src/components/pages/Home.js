@@ -85,6 +85,8 @@ const Home = () => {
                                     </div>
 
                                     
+
+                                    
                                     <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
                                       <div class="order-1 w-5/12"></div>
                                       <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
