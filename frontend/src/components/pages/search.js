@@ -34,7 +34,7 @@ const Search = () => {
             <Header/>
                 <div id="auction-web-shop" className="page--shop main-wrapper searchResult h-full mb-48">
                     <h2 className="ml-10 mt-10 text-xl">Search Results</h2>
-                        <SearchCard />
+                     <SearchCard />
                     <div className="product-wrap">
                         { (!error) && (!products) &&
                             <div>{ `Loading` }</div>   
