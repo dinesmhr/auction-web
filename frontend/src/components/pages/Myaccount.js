@@ -154,7 +154,13 @@ const Myaccount = () => {
                         { `Account page` }
                    </h2>
                     <div>
-                        <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `User Information` }</h2>
+
+                    <ul class="flex border-b">
+                  <li class="-mb-px mr-1">
+                  <div>
+                    <a class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" href="#">
+                    <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `User Information` }</h2></a>
+                   </div>     
                         { userData && 
                             userData.map( (userDat, index) => {
                                 return(
@@ -241,16 +247,19 @@ const Myaccount = () => {
                                     )
                             })
                         }
-                    </div>
-                    <div>
-                        <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My products` }</h2>
+
+
+                  </li>
+                  <li class="mr-1">
+                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">
+                    <h2 className="text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My products` }</h2></a>
+                                        <div>
+                        
                         { userProductData && 
                             userProductData.map(( userProductDat, index ) => {
                                 return(
                                      <table className="table-auto w-full ">
                                          <tbody>
-
-
                                          <div key={ index } className=" text-base mb-8 w-3/4 ">
                                              <tr className="flex flex-row mb-4">   
                                                 <th className="w-1/4">Images : </th>                                         
@@ -260,8 +269,6 @@ const Myaccount = () => {
                                                     </td>                                            
                                             }
                                             </tr>
-
-
 
                                         <tr className="flex flex-row  mb-4">   
                                                 <th className="w-1/4">Product ID : </th>   
@@ -308,8 +315,12 @@ const Myaccount = () => {
                         }
 
                     </div>
+                  </li>
+                  <li class="mr-1">
+                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#">
+                    <h2 className=" text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My Bids Record` }</h2></a>
                     <div>
-                        <h2 className=" text-center mt-4 mb-6 text-xl font-semibold text-pink-700">{ `My Bids Record` }</h2>
+                        
                         { userBidData && 
                             userBidData.map(( userBidDat, index ) => {
                                  return(
@@ -352,6 +363,26 @@ const Myaccount = () => {
                             })
                         }
                     </div>
+                  </li>
+                  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+                    </div>
+
+                    
                     <div>{`Log me out`}
                         <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
                     </div>
