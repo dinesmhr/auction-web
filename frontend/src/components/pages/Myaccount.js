@@ -151,17 +151,18 @@ const Myaccount = () => {
 
     return (
         <div id="auction-web">
-            <div className="h-full">
+            <div className="h-full ">
                 <Header/>
+                <div className="w-4/5   ">
                     <h2 class="text-3xl font-medium underline pl-36 pt-8"> 
                         { `Account page` }
                    </h2>
-                    <ul className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"role="tablist">
-                        <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                    <ul className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"role="tablist ">
+                        <li className="-mb-px mr-2 last:mr-0 flex-auto text-center ml-16">
                             <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 1
                                     ? "text-white bg-" + 'red' + "-600"
-                                    : "text-" + 'red' + "-600 bg-white")
+                                    : "text-" + 'red' + "-600 bg-gray-100")
                                 }
                                 onClick={e => {
                                 e.preventDefault();
@@ -171,14 +172,14 @@ const Myaccount = () => {
                                 href="#link1"
                                 role="tablist"
                             >
-                                <FaUserAlt/>User Information
+                             <div className="flex justify-center"><FaUserAlt/></div>User Information
                             </a>
                         </li>
                         <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 2
                                     ? "text-white bg-" + 'red' + "-600"
-                                    : "text-" + 'red' + "-600 bg-white")
+                                    : "text-" + 'red' + "-600 bg-gray-100")
                                 }
                                 onClick={e => {
                                 e.preventDefault();
@@ -188,14 +189,14 @@ const Myaccount = () => {
                                 href="#link2"
                                 role="tablist"
                             >
-                                <FaProductHunt/>  My Products
+                                <div className="flex justify-center"><FaProductHunt/></div>  My Products
                             </a>
                         </li>
                         <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
                             <a className={"text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 3
                                     ? "text-white bg-" + 'red' + "-600"
-                                    : "text-" + 'red' + "-600 bg-white")
+                                    : "text-" + 'red' + "-600 bg-gray-100")
                                 }
                                 onClick={e => {
                                 e.preventDefault();
@@ -205,7 +206,7 @@ const Myaccount = () => {
                                 href="#link3"
                                 role="tablist"
                             >
-                                <BiDollar/>My bids
+                                <div className="flex justify-center"><BiDollar/></div>My bids
                             </a>
                         </li>
                     </ul>
@@ -403,12 +404,14 @@ const Myaccount = () => {
                         </div>
                     </div>
 
-                    <div>{`Log me out`}
-                        <button className="logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
+                    <div className="ml-16">{`Log me out`}
+                        <button className=" ml-10 mb-16 logout-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick = { (e) => setOpenLogoutConfirmModal(true) }>Log out</button>
                     </div>
                     { 
                         LogoutModal()
-                    }
+                 
+                   }
+                   </div> 
                 <Footer/>
             </div>
         </div>
