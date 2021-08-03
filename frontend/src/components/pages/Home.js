@@ -40,7 +40,7 @@ const Home = () => {
                         <img src="/assets/auction.jpg"/>
                     </div>
                     <div>
-                        Recommended For You
+                        <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recommended For You</h2>
                     </div>
                     <div>
                         <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Top Categories</h2>
@@ -59,7 +59,7 @@ const Home = () => {
 
                     <div>
                         <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recent Feedbacks</h2>
-                        <div className="flex flex-wrap ml-16 mt-10 w-3/4 text-gray-700">
+                        <div className="flex flex-wrap ml-14 mt-10 w-3/4 text-gray-700">
                             { Array.isArray(feedbacks) &&
                                 feedbacks.map((feedback, index) => {
                                     return (
