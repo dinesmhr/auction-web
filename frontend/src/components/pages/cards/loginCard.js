@@ -12,6 +12,7 @@ export const LoginCard = () => {
     const [ errorMessage, setErrorMessage ] = useState()
     const [ isDisabled ] = useState(false);
     const [ resetLinkBox, setResetLinkBox ] = useState(false)
+    const [ passwordType, setPasswordType ] = useState('password')
 
     const { updateLoggedInStatus } = useContext(appContext)
 
@@ -147,7 +148,8 @@ export const LoginCard = () => {
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                     Password
                 </label>
-                <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" onChange={ (e) => setPassword({ value: e.target.value }) } value={ password.value } placeholder="******************"/>
+                <input className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type={passwordType} name="password" onChange={ (e) => setPassword({ value: e.target.value }) } value={ password.value } placeholder="******************"/>
+                <input type="checkbox" onChange = {(e)=>( passwordType === 'password' ? setPasswordType('text') : setPasswordType('password') )}/> Show password
             </div>
 
             <div className="flex items-center justify-between">

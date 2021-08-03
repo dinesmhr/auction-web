@@ -41,6 +41,9 @@ const Products = () => {
                             })
                         }
                     </div>
+                    <div>
+                        Recommended For You
+                    </div>
                 </div>
             <Footer/>
         </div>

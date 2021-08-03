@@ -12,9 +12,9 @@ if( is_db_connected() ) {
     extract( $GLOBALS );
     if( isset( $_GET['count'] ) ) {
         $count = $_GET['count'];
-        $feedbacks_sql = 'SELECT * FROM aw_feedbacks LIMIT ' . $count;
+        $feedbacks_sql = 'SELECT * FROM aw_feedbacks ORDER BY date DESC LIMIT ' . $count;
     } else {
-        $feedbacks_sql = 'SELECT * FROM aw_feedbacks WHERE 1';
+        $feedbacks_sql = 'SELECT * FROM aw_feedbacks WHERE 1 ORDER BY date DESC';
     }
     $datas = $CONNECTION->query( $feedbacks_sql );
     if( $datas ) {

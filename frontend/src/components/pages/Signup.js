@@ -21,6 +21,9 @@ const Signup = () => {
     const [ status, setStatus ] = useState(false);
     const [ message, setMessage ] = useState();
 
+    const [ passwordType, setPasswordType ] = useState('password')
+    const [ confirmPasswordType, setConfirmPasswordType ] = useState('password')
+
     const { isLoggedIn } = useContext(appContext)
 
     // handle username field on change
@@ -75,7 +78,11 @@ const Signup = () => {
 
     // validate username field
     const validateUsername = () => {
-        if( username.value === '' ) {
+        if( username.value.indexOf(' ') >= 0 ) {
+            username.error = true;
+            username.errorMessage = "Username contains whitspace which is not valid";
+            setUsername( JSON.parse(JSON.stringify( username )) )
+        } else if( username.value === '' ) {
             username.error = true;
             username.errorMessage = "Username must not be empty";
             setUsername( JSON.parse(JSON.stringify( username )) )
@@ -229,7 +236,8 @@ const Signup = () => {
                                         { password.errorMessage }
                                     </div>
                                 }
-                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" onChange = {(e) => setPassword({ value: e.target.value }) } value={ password.value }/>
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={passwordType} name="password" onChange = {(e) => setPassword({ value: e.target.value }) } value={ password.value }/>
+                                <input type="checkbox" onChange = {(e)=>( passwordType === 'password' ? setPasswordType('text') : setPasswordType('password') )}/> Show password 
                             </div>
                             <div className="aweb-password">
                                 <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
@@ -238,7 +246,8 @@ const Signup = () => {
                                         { cpassword.errorMessage }
                                     </div>
                                 }
-                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="cpassword" onChange = {(e) => setCpassword({value: e.target.value}) } value={ cpassword.value }/>
+                                <input className="border-gray-300 mb-2 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={confirmPasswordType} name="cpassword" onChange = {(e) => setCpassword({value: e.target.value}) } value={ cpassword.value }/>
+                                <input type="checkbox" onChange = {(e)=>( confirmPasswordType === 'password' ? setConfirmPasswordType('text') : setConfirmPasswordType('password') )}/> Show confirm password 
                             </div>
                                 <div className="aweb-submit">
                             <input type="submit" name="submit" onClick= { (e) => onSubmit(e) } value={ signUpText } disabled={ isDisabled }/>
