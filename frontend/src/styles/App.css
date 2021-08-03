@@ -908,8 +908,13 @@ table th {
 
 .single-category-search .search-box{
 	margin-left: auto; 
-	
-
+}
+.searchResult .search-card{
+	background-color: white ;
+}
+.searchResult .search-box{
+	margin-left: auto; 
+	margin-left: 2rem;
 }
 /*******************************************
  			Ends Single category Search

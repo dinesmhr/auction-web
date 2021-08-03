@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Header from '../header/Header';
 import {ProductCard} from './cards/productCard'
 import Footer from '../footer/Footer'
+import { SearchCard } from './cards/searchCard'
 
 const axios = require('axios');
 
@@ -31,8 +32,9 @@ const Search = () => {
     return ( 
         <div id="auction-web">
             <Header/>
-                <div id="auction-web-shop" className="page--shop main-wrapper h-full mb-48">
+                <div id="auction-web-shop" className="page--shop main-wrapper searchResult h-full mb-48">
                     <h2 className="ml-10 mt-10 text-xl">Search Results</h2>
+                        <SearchCard />
                     <div className="product-wrap">
                         { (!error) && (!products) &&
                             <div>{ `Loading` }</div>   
