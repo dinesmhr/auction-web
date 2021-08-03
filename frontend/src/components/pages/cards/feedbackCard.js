@@ -8,7 +8,7 @@ export const FeedbackCard = (prop) => {
     return ( 
         <div className="feedback-item">
             { `${name} writes ` }
-            <span class="capitalize font-semibold text-xl">{ `"${feedback}"` }</span>
+            <span class="capitalize font-semibold text-base">{ `"${feedback}"` }</span>
             { `on ${date}` }
         </div>
     )
