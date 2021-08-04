@@ -72,11 +72,17 @@ const ProductSubmit = () => {
 			for( let i = 0; i < files.length; i++ ) {
 				//if( i >=8 ) { break; }
 				if(files[i]) {
-					let reader = new FileReader();
-					reader.readAsDataURL(files[i]);
-					reader.onload = (e) => {
-						images.value.push({dataUrl: e.target.result})
-						setImages(JSON.parse(JSON.stringify(images)))
+					if( files[i].size > 10000000 ) {
+						images.error = true;
+						images.errorMessage = "Image size is bigger than 5MB";
+						setImages( JSON.parse(JSON.stringify( images )) )
+					} else {
+						let reader = new FileReader();
+						reader.readAsDataURL(files[i]);
+						reader.onload = (e) => {
+							images.value.push({dataUrl: e.target.result})
+							setImages(JSON.parse(JSON.stringify(images)))
+						}
 					}
 				}
 			}
@@ -359,6 +365,7 @@ const ProductSubmit = () => {
 									{  (images.value.length < 8 ) &&
 										<div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleImage() }><GrAdd/></div>
 									}
+									{<i>`Upload the images with size less than 10MB`</i>}
 									{  (images.value.length >= 8 ) &&
 										<div>The maximum number of images you can upload is only 8 ( eight )</div>
 									}

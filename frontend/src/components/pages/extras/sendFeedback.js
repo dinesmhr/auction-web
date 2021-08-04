@@ -83,10 +83,10 @@ const SendFeedback = () => {
 							</div>
 
 							<div className="mt-20">
-								<form class="w-full max-w-xl">
-									<div class="md:flex md:items-center mb-6">
-										<div class="md:w-1/3">
-											<label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="Email">
+								<form className="w-full max-w-xl">
+									<div className="md:flex md:items-center mb-6">
+										<div className="md:w-1/3">
+											<label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="Email">
 												Email
 											</label>
 										     { email.error &&
@@ -95,13 +95,13 @@ const SendFeedback = () => {
 												</div>
 											}
 										</div>
-										<div class="md:w-full">
-											<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" onChange={ (e) => setEmail({ value: e.target.value }) } placeholder="Your Email address" value={email.value}/>
+										<div className="md:w-full">
+											<input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" onChange={ (e) => setEmail({ value: e.target.value }) } placeholder="Your Email address" value={email.value}/>
 										</div>
 									</div>
-									<div class="md:flex md:items-center mb-6">
-										<div class="md:w-1/3">
-											<label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="Email">
+									<div className="md:flex md:items-center mb-6">
+										<div className="md:w-1/3">
+											<label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="Email">
 												Name
 											</label>
 										     { name.error &&
@@ -110,13 +110,13 @@ const SendFeedback = () => {
 												</div>
 											}
 										</div>
-										<div class="md:w-full">
-											<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" onChange={ (e) => setName({ value: e.target.value }) } placeholder="Your name" value={name.value}/>
+										<div className="md:w-full">
+											<input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" onChange={ (e) => setName({ value: e.target.value }) } placeholder="Your name" value={name.value}/>
 										</div>
 									</div>
-									<div class="md:flex">
-										<div class="md:w-1/3">
-											<label class=" mb-6 mt-2 block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-feedback">
+									<div className="md:flex">
+										<div className="md:w-1/3">
+											<label className=" mb-6 mt-2 block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-feedback">
 												Feedback
 											</label>
 											{ feedback.error &&
@@ -125,14 +125,14 @@ const SendFeedback = () => {
 												</div>
 											}
 										</div>
-										<div class="md:w-full mt-2">
-											<textarea class="h-64 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" onChange={ (e) => setFeedback({ value: e.target.value }) } placeholder="Your feedback" value={feedback.value}/>
+										<div className="md:w-full mt-2">
+											<textarea className="h-64 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-feedback" type="text" onChange={ (e) => setFeedback({ value: e.target.value }) } placeholder="Your feedback" value={feedback.value}/>
 										</div>
 									</div>
 									
-									<div class="md:flex md:items-center">
-										<div class="md:w-full mt-4">
-											<button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick = { (e) => onSubmit(e) }>
+									<div className="md:flex md:items-center">
+										<div className="md:w-full mt-4">
+											<button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick = { (e) => onSubmit(e) }>
 												{ feedBackText }
 											</button>
 										</div>

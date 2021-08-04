@@ -78,10 +78,16 @@ const UserVerification = () => {
     const handlesetDocumentImage = (file) => {
         setDocumentImage({value: file.target.files[0]})
         if(file.target.files[0]) {
-            let reader = new FileReader();
-            reader.readAsDataURL(file.target.files[0]);
-            reader.onload = (e) => {
-                setDocumentImage({dataUrl: e.target.result})
+            if( file.target.files[0].size > 3000000 ) {
+                documentImage.error = true
+                documentImage.errorMessage = "Exceeds file size"
+                setDocumentImage( JSON.parse(JSON.stringify( documentImage )) )
+            } else {
+                let reader = new FileReader();
+                reader.readAsDataURL(file.target.files[0]);
+                reader.onload = (e) => {
+                    setDocumentImage({dataUrl: e.target.result})
+                }
             }
         } else {
             setDocumentImage({value: '', dataUrl: ''})
@@ -95,10 +101,16 @@ const UserVerification = () => {
     const handlesetDocumentImageOne = (file) => {
         setDocumentImageOne({value: file.target.files[0]})
         if(file.target.files[0]) {
-            let reader = new FileReader();
-            reader.readAsDataURL(file.target.files[0]);
-            reader.onload = (e) => {
-                setDocumentImageOne({dataUrl: e.target.result})
+            if( file.target.files[0].size > 3000000 ) {
+                documentImageOne.error = true
+                documentImageOne.errorMessage = "Exceeds file size"
+                setDocumentImageOne( JSON.parse(JSON.stringify( documentImageOne )) )
+            } else { 
+                let reader = new FileReader();
+                reader.readAsDataURL(file.target.files[0]);
+                reader.onload = (e) => {
+                    setDocumentImageOne({dataUrl: e.target.result})
+                }
             }
         } else {
             setDocumentImageOne({value: '', dataUrl: ''})
@@ -406,6 +418,7 @@ const UserVerification = () => {
                                 ) : (
                                     <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImage() }><GrAdd/></div>
                                 )}
+                                {<i>`Upload the images with size less than 3MB`</i>}
                             </div>
                             <div className="aweb-documentImageOne">
                                 <label>Document Image Two</label>
@@ -417,6 +430,7 @@ const UserVerification = () => {
                                 ) : (
                                     <div className="image-upload cursor-pointer w-16 h-16 p-6 border border-gray-400 border-dashed" onClick = { () => handleDocumentImageOne() }><GrAdd/></div>
                                 )}
+                                {<i>`Upload the images with size less than 3MB`</i>}
                             </div>
                         </div>
                             <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" name="submit" onClick= { (e) => onSubmit(e) }>{ submitText }</button>

@@ -18,13 +18,13 @@ export const TopCategoryCard = (prop) => {
     return ( 
         <div className="top-category-item">
             { Array.isArray(category) &&
-                category.map((cat) => {
+                category.map((cat, key) => {
                     let featureImage = cat.image_path[0]
                     if( !cat.image_path[0].includes('http://localhost/auction-web/') ) {
                         featureImage = `http://localhost/auction-web/${cat.image_path[0].split('../').pop()}`
                     }
                     return (
-                        <div className="category-card">
+                        <div className="category-card" key={key}>
                             <img src={`${featureImage}`} alt={cat.title}/>
                             <div className="category-box">
                                 <h3 title={cat.title}>
