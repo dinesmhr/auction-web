@@ -11,12 +11,12 @@ if( is_db_connected() ) {
     extract( $GLOBALS );
     if( isset( $_GET['id'] ) ) {
         $product_id = $_GET['id'];
-        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'"';
+        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'" && status="available"';
     } else if(isset($_GET['user_id'])) {
         $user_id = $_GET['user_id'];
-        $products_sql = 'SELECT * FROM aw_products WHERE user_id="'.$user_id.'"';
+        $products_sql = 'SELECT * FROM aw_products WHERE user_id="'.$user_id.'" && status="available"';
     } else {
-        $products_sql = 'SELECT * FROM aw_products WHERE 1';
+        $products_sql = 'SELECT * FROM aw_products WHERE status="available"';
     }
     $datas = $CONNECTION->query( $products_sql );
     if( $datas ) {
