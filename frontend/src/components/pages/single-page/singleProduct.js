@@ -20,7 +20,9 @@ const SimilarProducts = (similarProductId) => {
     useEffect(() => {
         axios.get( `/products.php?id=${product_id}` )
         .then((res) => {
-            setProduct(res.data.data[0])
+            if( res.data.status ) {
+                setProduct(res.data.data[0])
+            }
         })
     }, [])
 
@@ -179,7 +181,7 @@ const SingleProduct = () => {
         fetchData()
         return () => { isMounted = false };
     }, [userCanBid])
-
+    
     useEffect(() => {
         let isMounted = true;
         async function fetchBidData() {
