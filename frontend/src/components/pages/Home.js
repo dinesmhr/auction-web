@@ -14,7 +14,9 @@ const HomeProductCard = (prop) => {
     useEffect(() =>{
         axios.get( `/products.php?id=${prop[0]}` )
         .then((res) => {
-            setProduct(res.data.data[0])
+            if( res.data.status ) {
+                setProduct(res.data.data[0])
+            }
         })
     }, [prop[0]]);
 
