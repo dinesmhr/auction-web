@@ -154,11 +154,15 @@ const ProductSubmit = () => {
     const validateMaxBid = () => {
         if( maxBid.value === '' ) {
             maxBid.error = true;
-            maxBid.errorMessage = "Add maximub bid amount";
-            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )	
+            maxBid.errorMessage = "Add maximum bid amount";
+            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )
+        } else if( initialBid.value < maxBid.value ){
+            maxBid.error = true;
+            maxBid.errorMessage = "Maximum bid amount cannot be lesser than Initial Bid";
+            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )
         } else {
-            return true
-        }
+			return true
+		}
         return false
     }
 
