@@ -8,7 +8,8 @@ const axios = require('axios');
 
 const AdminBids = () => {
 	const [ bids, setBids ] = useState(null)
-
+	const [ filterValue, setFilterValue ] = useState('all')
+	
 	useEffect(() => {
         axios.get( '/bids-details.php' )
         .then(function(response) {
@@ -18,11 +19,24 @@ const AdminBids = () => {
         })
 	})
 
+	const handleFilter = (e) => {
+		setFilterValue(e.target.value)
+	}
+
 	return (
 		<>           
 			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
 				<div id="admin-right-content">
+					<div>
+						Filter By: 
+						<select onChange = { (e) => handleFilter(e) }>
+							<option value="all">All</option>
+							<option value="active">Active</option>
+							<option value="beat">Beat</option>
+							<option value="win">Win</option>
+						</select>
+					</div>
 					{
 						bids === null ? (
 							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">Loading datas</span></div>
@@ -40,17 +54,19 @@ const AdminBids = () => {
 								</div>
 								{
 									bids.map( ( bid, index )  => {
-										return (	 
-											<div key={ index } className="admin-content-table-row grid grid-cols-6 flex flex-row text-sm">
-												<span className="py-2 px-6 flex"><BiMoney className="mt-1"/><span className="px-2">{bid.bid_id}</span></span>
-                                                <span className="py-2 px-6">{bid.username}</span>
-												<span className="py-2 px-6">{bid.title}</span>
-												<span className="py-2 px-6">{bid.bid_date}</span>
-												<span className="py-2 px-6">{bid.bid_status}</span>
-												<span className="py-2 px-6">
-													<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-bids/${bid.bid_id}`}>Edit</Link></button>
-												</span>
-											</div>
+										return (
+											( bid.bid_status === filterValue || filterValue === 'all' ) ? 
+												<div key={ index } className="admin-content-table-row grid grid-cols-6 flex flex-row text-sm">
+													<span className="py-2 px-6 flex"><BiMoney className="mt-1"/><span className="px-2">{bid.bid_id}</span></span>
+													<span className="py-2 px-6">{bid.username}</span>
+													<span className="py-2 px-6">{bid.title}</span>
+													<span className="py-2 px-6">{bid.bid_date}</span>
+													<span className="py-2 px-6">{bid.bid_status}</span>
+													<span className="py-2 px-6">
+														<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-bids/${bid.bid_id}`}>Edit</Link></button>
+													</span>
+												</div>
+											: null
 										)
 									})
 								} 
