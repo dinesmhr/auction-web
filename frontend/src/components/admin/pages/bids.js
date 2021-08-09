@@ -28,7 +28,7 @@ const AdminBids = () => {
 							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">Loading datas</span></div>
 						) : bids.length === 0 ? (
 							<div id="admin-content-table" className="tracking-wider"><span className="grid p-4">No products found</span></div>
-						) : (
+						) :  (
 							<div id="admin-content-table" className="tracking-wider">
 								<div className="admin-content-table-row-heading grid grid-cols-6 flex flex-row font-semibold">
 									<span className="py-4 px-6">Bid Id</span>
@@ -53,7 +53,7 @@ const AdminBids = () => {
 											</div>
 										)
 									})
-								}
+								} 
 							</div>
 						)
 					}

@@ -206,6 +206,7 @@ const SingleProduct = () => {
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
         } else if ( currentBid.value > closingBid ) {
+
             currentBid.value = currentBid.value
             currentBid.error = true
             currentBid.errorMessage = `Currrent Bid amount cannot exceed the maximum closing bid`
@@ -311,7 +312,7 @@ const SingleProduct = () => {
                                                         <td className="w-2/5">{ bidRaise ? bidRaise : productData[0].bid_raise } </td>
                                                     </tr>
                                                     <div>
-                                                        { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) > 21600000 ) &&
+                                                        { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) > 120000 ) &&
                                                             <>  
                                                                        <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
                                                                     <button onClick= {() => onBidsubmit()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-1 mb-1 ml-8">Place a Bid</button>
@@ -338,10 +339,10 @@ const SingleProduct = () => {
                                                                     <th className="">Your recent bid was on : </th>
                                                                     <td className="">{ recentUserBids[0].bid_date } </td>
                                                                 </tr>
-                                                                { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 21600000 ) &&
+                                                                { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 120000 ) &&
                                                                     <tr className="">
                                                                         <th className="">Cooldown Timer :</th>
-                                                                        <Countdown date={Date.parse(recentUserBids[0].bid_date) + 21600000 } />
+                                                                        <Countdown date={Date.parse(recentUserBids[0].bid_date) + 120000 } />
                                                                     </tr>
                                                                 }
                                                             </div>
