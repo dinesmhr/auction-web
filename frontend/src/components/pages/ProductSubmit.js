@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Header from '../header/Header';
 import ModalImage from "react-modal-image";
 import { GrAdd } from "react-icons/gr";
@@ -8,6 +8,7 @@ import {appContext} from '../../App'
 import Footer from '../footer/Footer'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Editor } from '@tinymce/tinymce-react';
 const axios = require('axios');
 const imagesRef = React.createRef()
 
@@ -28,7 +29,7 @@ const ProductSubmit = () => {
 	const [submitText, setSubmitText] = useState('Submit My Product');
 
 	const { isLoggedIn } = useContext(appContext)
-	
+	const editorRef = useRef(null);
 	useEffect(() => {
         axios.get( '/sessions.php' )
         .then(function(res) {
@@ -332,8 +333,28 @@ const ProductSubmit = () => {
 									<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Other Details</label>
 									{ details.error &&
 										<span className="text-xs text-red-700">{ details.errorMessage }</span>
+										//setDetails({value:value})
 									}
-									<ReactQuill theme="snow" value={details.value} onChange={(value) => setDetails({value:value})}/>
+									{/* <ReactQuill theme="snow" value={details.value} onChange={(value) => setDetails({value:value})}/> */}
+									<Editor
+										apiKey ="okxxc3w5b7ikidxjqv8noe89wx472yo2iickjcj7fgkhcds8"
+										onInit={(evt, editor) => editorRef.current = editor}
+										initialValue="<p>This is the initial content of the editor.</p>"
+										init={{
+										height: 500,
+										menubar: false,
+										plugins: [
+											'advlist autolink lists link image charmap print preview anchor',
+											'searchreplace visualblocks code fullscreen',
+											'insertdatetime media table paste code help wordcount'
+										],
+										toolbar: 'undo redo | formatselect | ' +
+										'bold italic backcolor | alignleft aligncenter ' +
+										'alignright alignjustify | bullist numlist outdent indent | ' +
+										'removeformat | help',
+										content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+										}}
+									/>
 								</div>
 							</div>
 
