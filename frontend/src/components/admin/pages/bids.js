@@ -28,13 +28,13 @@ const AdminBids = () => {
 			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
 				<div id="admin-right-content">
-					<div>
-						Filter By: 
-						<select onChange = { (e) => handleFilter(e) }>
-							<option value="all">All</option>
-							<option value="active">Active</option>
-							<option value="beat">Beat</option>
-							<option value="win">Win</option>
+					<div className="mb-2">
+						<span className="mr-2"> Filter By</span> 
+						<select onChange = { (e) => handleFilter(e) } className="text-gray-800">
+							<option value="all" className="text-gray-800">All</option>
+							<option value="active" className="text-gray-800">Active</option>
+							<option value="beat" className="text-gray-800">Beat</option>
+							<option value="win" className="text-gray-800">Win</option>
 						</select>
 					</div>
 					{

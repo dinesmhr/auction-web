@@ -133,11 +133,11 @@ const ProductSubmit = () => {
             initialBid.errorMessage = "Add initial bid amount";
             setInitialBid( JSON.parse(JSON.stringify( initialBid )) )
         }
-            else if ( initialBid.value > maxBid.value ) {
-            initialBid.error = true;
-            initialBid.errorMessage = "Initial bid amount is greater than Max bid amount";
-            setInitialBid( JSON.parse(JSON.stringify( initialBid )) )
-		}
+          //  else if ( initialBid.value > maxBid.value ) {
+          //  initialBid.error = true;
+          //  initialBid.errorMessage = "Initial bid amount is greater than Max bid amount";
+          //  setInitialBid( JSON.parse(JSON.stringify( initialBid )) )
+		//}
 
 		    else if ( initialBid.value === maxBid.value ) {
             initialBid.error = true;
@@ -156,11 +156,7 @@ const ProductSubmit = () => {
         if( maxBid.value === '' ) {
             maxBid.error = true;
             maxBid.errorMessage = "Add maximum bid amount";
-            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )
-        } else if( initialBid.value < maxBid.value ){
-            maxBid.error = true;
-            maxBid.errorMessage = "Maximum bid amount cannot be lesser than Initial Bid";
-            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )
+            setMaxBid( JSON.parse(JSON.stringify( maxBid )) )       
         } else {
 			return true
 		}

@@ -27,14 +27,14 @@ const AdminProducts = () => {
 			<div id="auction-web-admin" className="content-wrap">
 				<AdminMainNavigation/>
 				<div id="admin-right-content">
-					<div>
-						Filter By: 
-						<select onChange = { (e) => handleFilter(e) }>
-							<option value="all">All</option>
-							<option value="draft">Draft</option>
-							<option value="available">Available</option>
-							<option value="unavailable">Unavailable</option>
-							<option value="sold-out">Sold Out</option>
+					<div className="mb-3">
+						<span className="mr-2">Filter By</span>
+						<select onChange = { (e) => handleFilter(e) } className="text-gray-800">
+							<option value="all" className="text-gray-800">All</option>
+							<option value="draft" className="text-gray-800">Draft</option>
+							<option value="available" className="text-gray-800">Available</option>
+							<option value="unavailable" className="text-gray-800">Unavailable</option>
+							<option value="sold-out" className="text-gray-800">Sold Out</option>
 						</select>
 					</div>
 					{
