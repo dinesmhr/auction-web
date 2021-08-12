@@ -122,7 +122,6 @@ const Home = () => {
                                                             <h1 className="mx-auto text-white font-semibold text-lg">{index+1}</h1>
                                                         </div>
                                                         <div className={"order-1 " + ( (index%2) === 1 ? "bg-red-400" : "bg-gray-400" ) + " rounded-lg shadow-xl w-5/12 px-6 py-4"}>
-                                                            <h3 className="mb-3 font-bold text-white text-xl">Lorem Ipsum</h3>
                                                             <p className="text-sm font-medium leading-snug tracking-wide text-white text-opacity-100">
                                                                 <div>
                                                                     <FeedbackCard {...feedback}/>

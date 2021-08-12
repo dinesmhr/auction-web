@@ -437,6 +437,7 @@ const SingleProduct = () => {
                                                                 <Carousel images={images} style={{ height: 450, width: 550 }}
                                                                     hasTransition={true}
                                                                     hasMediaButton={false} 
+
                                                                 />  
                                                             }
                                                         </div>

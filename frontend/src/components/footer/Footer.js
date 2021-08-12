@@ -20,7 +20,8 @@ const Footer = () => {
                         <li className="mb-2 text-gray-300 mb-1 hover:text-gray-100"><a href="/careers" target="_blank">Careers</a></li>
                         <li className="mb-2 text-gray-300 mb-1 hover:text-gray-100"><a href="/get-help" target="_blank">Get Help</a></li>
                         <li className="mb-2 text-gray-300 mb-1 hover:text-gray-100"><a href="/send-feedback" target="_blank">Send Feedback</a></li>
-                    </ul>
+                        <li className="mb-2 text-gray-300 mb-1 hover:text-gray-100"><a href="/contact" target="_blank">Contact Us</a></li>
+                        </ul>
                 </div>
 
                <div className="footer-item">  
