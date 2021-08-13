@@ -4,13 +4,13 @@ import { FiUsers } from "react-icons/fi";
 import { GoTasklist } from "react-icons/go";
 import { AiFillTag } from "react-icons/ai";
 import { BiMoney } from "react-icons/bi";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const AdminMainNavigation = () => {
     return ( 
         <>
             <div id="admin-header" className="h-12 w-full text-white fixed">
-                <h1 className="aweb-admin-site-title text-2xl font-normal tracking-wide pt-2 pl-10">Auction<span className="text-base italic">Web</span></h1>
+                <h1 className="aweb-admin-site-title text-2xl font-normal tracking-wide pt-2 pl-10"><Link to="/" target="_blank">Auction<span className="text-base italic">Web</span></Link></h1>
             </div>
             <div id="admin-left-sidebar" className="aweb-admin-wrap text-white float-left w-1/5 h-screen fixed mt-12">
                 <nav id="aweb-admin-navigation" className="pt-4">
