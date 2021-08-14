@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import AdminMainNavigation from '../../navigation/AdminMainNavigation'
 import ModalImage from "react-modal-image";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { GrAdd } from "react-icons/gr";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiDollar } from "react-icons/bi";
@@ -345,8 +343,7 @@ const AdminEditProduct = () => {
                 </div>
                 <div className="mt-4">
                     <div>Description : </div>
-                    <textarea className="text-sm mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" onChange = { (e) => setDescription({value: e.target.value}) }>
-                        {description.value}
+                    <textarea className="text-sm mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" value={description.value} onChange = { (e) => setDescription({value: e.target.value}) }>
                     </textarea>
                 </div>
                 <div className="flex flex-wrap -mx-3 mb-6 mt-4">
@@ -389,11 +386,8 @@ const AdminEditProduct = () => {
                         { details.error &&
                             <span className="text-xs text-red-700">{ details.errorMessage }</span>
                         }
-                        <ReactQuill
-                            theme="snow" 
-                            value ={details.value} 
-                            onChange={(value) => setDetails({value:value})}
-                            />
+                        <textarea className="text-sm mt-2 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="20" value={details.value} onChange = { (e) => setDetails({value: e.target.value}) }>
+                        </textarea>
                     </div>
                 </div>
 
