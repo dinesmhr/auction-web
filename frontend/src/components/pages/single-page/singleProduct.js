@@ -96,7 +96,6 @@ const SingleProduct = () => {
             if( res.data.status ) {
                 setProductData( res.data.data )
                 setSellerID( res.data.data[0].user_id )
-                setCurrentHighestBid(res.data.data[0].initial_bid)
                 setCurrentBid({value:res.data.data[0].initial_bid})
                 setBidRaise(res.data.data[0].bid_raise)
                 setClosingBid(res.data.data[0].max_bid)
@@ -321,7 +320,7 @@ const SingleProduct = () => {
                                                                 }
                                                             </>
                                                         }
-                                                        { !recentUserBids &&
+                                                        { !recentUserBids && 
                                                             <>
                                                                 <input type="number" onChange ={ (e) => setCurrentBid({value:e.target.value}) } value={ currentBid.value ? currentBid.value :productData[0].initial_bid} step={ productData[0].bid_raise } min={productData[0].initial_bid} max={ closingBid ? closingBid :productData[0].initial_bid}/>
                                                                 <button onClick= {() => onBidsubmit()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-1 mb-1 ml-8">Place a Bid</button>
@@ -498,19 +497,25 @@ const SingleProduct = () => {
                                                                 <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
                                                                 {product.submission_date.trim()}
                                                             </div>
-
-                                                            <div>
-                                                                <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5 mb-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
-                                                                { bidNowButtonDisable && bidNowButtonDisableMessage &&
-                                                                    <>
-                                                                        {bidNowButtonDisableMessage}
-                                                                        <Link to="/login" target="_blank">Go to Login</Link>
-                                                                    </>
-                                                                }
-                                                                { userStatus && ( userStatus !== 'verified' ) &&
-                                                                    <>{ `User must be verified to take part in bidding process` }</>
-                                                                }
-                                                            </div>
+                                                            {  ( product.status === 'bid_success' ) &&
+                                                                <div>
+                                                                    Product has been agreed with its current bid
+                                                                </div>
+                                                            }
+                                                            { ( product.status != 'bid_success' ) &&
+                                                                <div>
+                                                                    <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5 mb-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
+                                                                    { bidNowButtonDisable && bidNowButtonDisableMessage &&
+                                                                        <>
+                                                                            {bidNowButtonDisableMessage}
+                                                                            <Link to="/login" target="_blank">Go to Login</Link>
+                                                                        </>
+                                                                    }
+                                                                    { userStatus && ( userStatus !== 'verified' ) &&
+                                                                        <>{ `User must be verified to take part in bidding process` }</>
+                                                                    }
+                                                                </div>
+                                                            }
                                                             <div className="flex flex-row">
                                                             <div className="font-bold mr-2 text-sm">
                                                                 Current Highest Bid : </div>

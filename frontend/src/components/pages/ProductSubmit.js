@@ -128,7 +128,11 @@ const ProductSubmit = () => {
             initialBid.error = true;
             initialBid.errorMessage = "Add initial bid amount";
             setInitialBid( JSON.parse(JSON.stringify( initialBid )) )
-        } else {
+        } else if( initialBid.value.toString().length > 7 ) {
+			initialBid.error = true;
+            initialBid.errorMessage = "Invalid amount";
+            setInitialBid( JSON.parse(JSON.stringify( initialBid )) )
+		} else {
             return true
         }
         return false
@@ -334,7 +338,7 @@ const ProductSubmit = () => {
 									{ initialBid.error &&
 										<span className="text-xs text-red-700">{ initialBid.errorMessage }</span>
 									}
-									<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => setInitialBid({value: e.target.value})} value={initialBid.value} aria-label="Initial Bid" />
+									<input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Add initial bid" onChange={(e) => { setInitialBid({value: e.target.value}) } } value={initialBid.value} aria-label="Initial Bid" />
 									<BiDollar/>
 								</div>
 							</div>
