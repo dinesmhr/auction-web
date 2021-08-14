@@ -25,7 +25,7 @@ if( is_db_connected() ) {
             $bids_sql = 'SELECT * FROM aw_bids WHERE product_id="'.$product_id.'" ORDER BY bid_date DESC';
         }
     } else {
-        $bids_sql = 'SELECT * FROM aw_bids WHERE 1';
+        $bids_sql = 'SELECT * FROM aw_bids WHERE 1 ORDER BY bid_date DESC';
     }
     $datas = $CONNECTION->query( $bids_sql );
     if( $datas ) {

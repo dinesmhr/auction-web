@@ -3,12 +3,15 @@ import Header from '../header/Header'
 import {ProductCard} from './cards/productCard'
 import Footer from '../footer/Footer'
 import { SearchCard } from './cards/searchCard'
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 const axios = require('axios');
 
 const Products = () => {
     const [ products, setProducts ] = useState({})
-
+    const [ paged, setPaged ] = useState(1)
+    let pagedNumber, count = 0
+    
     useEffect(() => {
         axios.get( '/products.php' )
         .then(function(response) {
@@ -37,10 +40,48 @@ const Products = () => {
                     <div className="product-wrap max-w-6xl ml-8 ">                    	                                                  
                         { Array.isArray(products) &&
                             products.map((product, index) => {
-                                return( <ProductCard key={index} { ...product } /> )
+                                if( ( product.status === 'available' ) || ( product.status === 'bid_success' ) ) {
+                                    if( count > 8 ) {
+                                        pagedNumber = 2
+                                    } else if ( count > 17 ) {
+                                        pagedNumber = 3
+                                    } else if ( count > 27 ) {
+                                        pagedNumber = 4
+                                    } else if ( count > 37 ) {
+                                        pagedNumber = 5
+                                    } else {
+                                        pagedNumber = 1
+                                    }
+                                    if( ( pagedNumber === paged ) ) {
+                                        count++
+                                        return( <div key={count}><ProductCard { ...product } /></div> )
+                                    }
+                                }
                             })
                         }
                     </div>
+                    { products.length > 10 &&
+                        <div>
+                            { products.length > 10 &&
+                                <AiOutlineArrowLeft/>
+                            }
+                            { products.length > 10 &&
+                                <button onClick={() => setPaged(1)}>1</button>
+                            }
+                            { products.length > 10 &&
+                                <button onClick={() => setPaged(2)}>2</button>
+                            }
+                            { products.length > 30 &&
+                                <button onClick={() => setPaged(3)}>3</button>
+                            }
+                            { products.length > 40 &&
+                                <button onClick={() => setPaged(4)}>4</button>
+                            }
+                            { products.length > 10 &&
+                                <AiOutlineArrowRight/>
+                            }
+                        </div>
+                    }
                 </div>
             <Footer/>
         </div>
