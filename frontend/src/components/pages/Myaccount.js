@@ -307,10 +307,11 @@ const Myaccount = () => {
                                             <tbody>
                                             <div key={ index } className=" text-base mb-8 w-3/4 ">
                                                 <tr className="flex flex-row mb-4">   
-                                                    <th className="w-1/4">Images : </th>                                         
+                                                    <th className="w-1/4">Image : </th>                                         
                                                 { userProductDat.images_path && 
                                                         <td className="flex flex-col">
-                                                        <span className="mr-4 mb-1"> {userProductDat.images_path.[0]}</span>                                                 
+                                                        <span className="mr-4 mb-1"> <img className="h-48 w-48" src={userProductDat.images_path.[0]}></img>
+                                                        </span>                                                 
                                                         </td>                                            
                                                 }
                                                 </tr>
