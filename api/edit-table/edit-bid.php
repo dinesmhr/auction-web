@@ -23,11 +23,22 @@ if( is_db_connected() ) {
   $bid_amount       = isset( $decoded_data["bid_amount"] ) ? $decoded_data["bid_amount"] : '';
   $bid_difference   = isset( $decoded_data["bid_difference"] ) ? $decoded_data["bid_difference"] : '';
   $bid_status       = isset( $decoded_data["bid_status"] ) ? $decoded_data["bid_status"] : 'active';
-
-  $bid_update_sql = "UPDATE aw_bids SET bid_status = 'beat' WHERE product_id = '" .$productId. "'";
-  $CONNECTION->query( $bid_update_sql );
+  $action           = isset( $decoded_data["action"] ) ? $decoded_data["action"] : '';
+  if( isset( $decoded_data["action"] ) ) {
+    $bid_status = 'win';
+    $product_update_sql = "UPDATE aw_products SET status = 'bid_success' WHERE id = '" .$productId. "'";
+    $CONNECTION->query( $product_update_sql );
+    // update previous bid status
+    $bid_update_sql = "UPDATE aw_bids SET bid_status = 'bid_lose' WHERE product_id = '" .$productId. "'";
+    $CONNECTION->query( $bid_update_sql );
+  } else {
+    // update previous bid status
+    $bid_update_sql = "UPDATE aw_bids SET bid_status = 'beat' WHERE product_id = '" .$productId. "'";
+    $CONNECTION->query( $bid_update_sql );
+  }
 
   $bid_sql = "INSERT INTO aw_bids( user_id, product_id, bid_amount, bid_difference, bid_status) VALUES( '" .$userId. "', '" .$productId. "','" .$bid_amount. "', '" .$bid_difference. "', '" .$bid_status. "')";
+
   if ( $CONNECTION->query( $bid_sql ) === TRUE ) {
     $structure['status'] = true;
     $structure['message'] = 'Your bid is created';

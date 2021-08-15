@@ -47,7 +47,7 @@ const SingleProduct = () => {
     const [ tags, setTags ] = useState('')
     const [ similarProductsIds, setSimilarProductsIds ] = useState('')
     const [ bidNowButtonDisable, setBidNowButtonDisable ] = useState(true)
-    const [ bidNowButtonDisableTitle, setBidNowButtonDisableTitle ] = useState("Can't perform this action right now")
+    const [ bidNowButtonDisableTitle, setBidNowButtonDisableTitle ] = useState( "Not logged In" )
     const [ bidNowButtonDisableMessage, setBidNowButtonDisableMessage ] = useState('')
     const [ userId, setUserId ] = useState()
     const [ userStatus, setUserStatus ] = useState()
@@ -82,7 +82,11 @@ const SingleProduct = () => {
             axios.get( `/users.php?id=${userId}` )
             .then((res) => {
                 setUserStatus(res.data.data[0].status)
-                if( res.data.data[0].status === 'verified' ) {
+                if( sellerID == userId ) {
+                    setBidNowButtonDisable(true)
+                    setBidNowButtonDisableTitle('Owner');
+                    setBidNowButtonDisableMessage('You can only view this product. You are the Ownership of this product')
+                } else if( res.data.data[0].status === 'verified' ) {
                     setBidNowButtonDisable(false)
                     setBidNowButtonDisableTitle("Click to bid")
                 }
@@ -205,7 +209,6 @@ const SingleProduct = () => {
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
         } else if ( currentBid.value > closingBid ) {
-
             currentBid.value = currentBid.value
             currentBid.error = true
             currentBid.errorMessage = `Currrent Bid amount cannot exceed the maximum closing bid`
@@ -217,13 +220,30 @@ const SingleProduct = () => {
             currentBid.errorMessage = `Currrent Bid raised amount is not enough to place a bid. Bid raise is ${bidRaise} from previous bid amount. Your current bid raise is ${currentBid.value - currentHighestBid}`
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
+        } else if ( currentBid.value == productData[0].max_bid ) {
+            return 'win';
         } else {
             return true
         }
     }
 
     const onBidsubmit =  () => {
-        if( validateBid() ) {
+        if( validateBid() == 'win' ) {
+            axios.post( `/edit-table/edit-bid.php`, {
+				submit: 'submit',
+                action: 'win',
+				productId: id,
+                userId: userId,
+                bid_amount: currentBid.value,
+                bid_difference: ( currentBid.value - currentHighestBid )
+			})
+            .then((res) => {
+                if( res.data.status ) {
+                    setUserCanBid(!userCanBid)
+                    setBidSuccessMessage(  'Bid successfully placed' )
+                }
+            })
+        } else if( validateBid() ) {
             axios.post( `/edit-table/edit-bid.php`, {
 				submit: 'submit',
 				productId: id,
@@ -292,7 +312,7 @@ const SingleProduct = () => {
                                                 <div>
                                                    <tr className="">
                                                        <th className="w-2/5"> Bid will close in : </th>
-                                                        <td className="w-2/5"><Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) } /> </td>
+                                                        <td className="w-2/5"><Countdown date={ Date.parse(new Date(productData[0].deadline_date) ) }/> </td>
                                                     </tr>
                                                     <tr className="">
                                                         <th className="w-2/5">Opening Bid :</th> 
@@ -341,7 +361,7 @@ const SingleProduct = () => {
                                                                 { recentUserBids && ( (Date.parse(new Date()) - Date.parse(recentUserBids[0].bid_date) ) < 120000 ) &&
                                                                     <tr className="">
                                                                         <th className="">Cooldown Timer :</th>
-                                                                        <Countdown date={Date.parse(recentUserBids[0].bid_date) + 120000 } />
+                                                                        <Countdown date={Date.parse(recentUserBids[0].bid_date) + 120000 }/>
                                                                     </tr>
                                                                 }
                                                             </div>
@@ -405,6 +425,11 @@ const SingleProduct = () => {
         )
     }
 
+    // on product deadline
+    const onProductDeadline = () => {
+
+    }
+
     return (
         <>  
             <div id="auction-web">
@@ -428,6 +453,9 @@ const SingleProduct = () => {
                                                     
                                                 )
                                             })
+                                            if( Date.parse(new Date(product.deadline_date)) < Date.parse(new Date()) ) {
+                                                onProductDeadline()
+                                            }
                                             return ( 
                                                 <React.Fragment key={index}>
                                                     <div className="flex flex-row m-10">
@@ -508,7 +536,9 @@ const SingleProduct = () => {
                                                                     { bidNowButtonDisable && bidNowButtonDisableMessage &&
                                                                         <>
                                                                             {bidNowButtonDisableMessage}
-                                                                            <Link to="/login" target="_blank">Go to Login</Link>
+                                                                            { bidNowButtonDisableTitle === 'Not logged In' &&
+                                                                                <Link to="/login" target="_blank">Go to Login</Link>
+                                                                            }
                                                                         </>
                                                                     }
                                                                     { userStatus && ( userStatus !== 'verified' ) &&
@@ -524,7 +554,10 @@ const SingleProduct = () => {
                                                             <div className="flex flex-row">
                                                             <div className="mr-2 font-bold mr-2 text-sm">
                                                                 Bid will close in :</div>
-                                                                <div><Countdown date={ Date.parse(new Date(product.deadline_date) ) } /></div>
+                                                                <div>
+                                                                    <Countdown date={ Date.parse(new Date(product.deadline_date) ) }>
+                                                                    </Countdown>
+                                                                </div>
                                                             </div>
                                                             { BidModal() }
                                                         </div>

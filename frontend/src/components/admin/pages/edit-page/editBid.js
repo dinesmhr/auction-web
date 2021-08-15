@@ -6,6 +6,12 @@ const axios = require('axios')
 
 const AdminEditBid = () => {
     const [ bidData, setBidData ] = useState()
+    const [ productId, setProductId ] = useState()
+    const [ userId, setUserId ] = useState()
+    const [ userData, setUserData ] = useState()
+    const [ emailText, setEmailText ] = useState('Send confirmation email to the bid winner')
+    const [ emailError, setEmailError ] = useState(true)
+
     const { id } = useParams()
 
     useEffect(() => {
@@ -13,9 +19,47 @@ const AdminEditBid = () => {
         .then((res) => {
             if( res.data.status ) {
                 setBidData( res.data.data )
+                setProductId( res.data.data[0].product_id )
             }
         })
     }, [])
+
+    useEffect(() => {
+        { userId &&
+            axios.get( `/user-details.php?id=${userId}` )
+            .then(function(res) {
+                setUserData(res.data.data[0])
+            })
+        }
+    }, [userId])
+
+    const handleEmailToOwner = () => {
+        setEmailText('Sending email')
+        let emailParams = {
+            'email': userData.email,
+            'fullname': userData.fullname,
+            'product_id': productId,
+            'sender_email': 'dinesh.mhr2054@gmail.com'
+        }
+        axios.post( '/mail/bidder-confirmation.php', emailParams)
+        .then(function(response) {
+            if( response.data.status ) {
+                setEmailText('Email sent!!')
+                setEmailError(false)
+            } else {
+                setEmailText('Error in email process!!')
+            }
+        })
+        
+        if( ! emailError ) {
+            axios.get( `/edit-table/update-bid-status.php?id=${id}` )
+            .then((res) => {
+                if( res.data.status ) {
+                    setEmailText( 'Bid status updated' )
+                }
+            })
+        }
+    }
 
     return (
         <div id="auction-web-admin" className="content-wrap">
@@ -79,6 +123,12 @@ const AdminEditBid = () => {
                                                  <div className="ml-3">{bid.submission_date}</div>
                                             </div>
 
+                                            { bid.bid_status === "win" &&
+                                                <button onClick={()=>handleEmailToOwner()}>{ emailText }</button>
+                                            }
+                                            { bid.bid_status === "sold_out" &&
+                                                <button>Bidder Confirmation Email Sent</button>
+                                            }
 
                                             <div className="mt-6 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-300 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                                                 <div className="mt-2 text-lg text-purple-900 font-bold">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import AdminMainNavigation from '../../navigation/AdminMainNavigation'
 import ModalImage from "react-modal-image";
 import { GrAdd } from "react-icons/gr";
@@ -36,6 +36,11 @@ const AdminEditProduct = () => {
     const [ initialCategories, setInitialCategories ] = useState([]);
     const [ initialTags, setInitialTags ] = useState([]);
     const [ updateTerm, setUpdateTerm ] = useState(true);
+    const [ emailText, setEmailText ] = useState('Send confirmation email to the owner')
+    const [ emailError, setEmailError ] = useState(true)
+    // bidder info
+    const [ currentHighestBid, setCurrentHighestBid ] = useState()
+    const [ bidderId, setBidderId ] = useState()
 
     const { id } = useParams()
 
@@ -138,6 +143,23 @@ const AdminEditProduct = () => {
         .then(function(res) {
             setTagsData(res.data.data)
         })
+    }, [])
+
+    // set current highest bid
+    useEffect(() => {
+        let isMounted = true;
+        async function fetchData() {
+            let results = await axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
+            if( results.data.status ) {
+                if(isMounted)  {
+                    setBidderId(results.data.data[0].bid_id)
+                    setCurrentHighestBid(results.data.data[0].bid_amount)
+                }
+            }
+        }
+
+        fetchData()
+        return () => { isMounted = false };
     }, [])
     
     // handle categories multi checkbox
@@ -327,6 +349,67 @@ const AdminEditProduct = () => {
 			});
 		}
 	}
+
+    const handleEmailToOwner = () => {
+        setEmailText('Sending email')
+        let emailParams = {
+            'email': userData.email,
+            'fullname': userData.fullname,
+            'bidder_id': bidderId,
+            'product_id': id,
+            'sender_email': 'dinesh.mhr2054@gmail.com'
+        }
+        axios.post( '/mail/seller-confirmation.php', emailParams)
+        .then(function(response) {
+            if( response.data.status ) {
+                setEmailText('Email sent!!')
+                setEmailError(false)
+            } else {
+                setEmailText('Error in email process!!')
+            }
+        })
+
+        if( ! emailError ) {
+            let deadlineFullDate = deadlineDate.value + ' ' + deadlineTime.value
+            const finalCategories = { 
+                delete: getUnmatchedArray(initialCategories, categories),
+                add : getUnmatchedArray(categories, initialCategories)
+            }
+            const finalTags = { 
+                delete: getUnmatchedArray(initialTags, tags),
+                add : getUnmatchedArray(tags, initialTags)
+            }
+            let apiParams = {
+                submit: "update-product",
+                id: id,
+                title: title.value,
+                description: description.value,
+                specifications: specifications.value,
+                details: details.value,
+                initialBid: initialBid.value,
+                maxBid: maxBid.value,
+                bidRaise: bidRaise.value,
+                deadlineDate: deadlineFullDate,
+                images: images.value,
+                tags: finalTags,
+                categories: finalCategories,
+                status: 'sold_out'
+            }
+            setEmailText('Updating product status')
+            axios.post( '/edit-table/update-products.php', apiParams)
+            .then(function(response) {
+                if( response.data.status ) {
+                    setUpdateTerm(!updateTerm)
+                    setStatus(true)
+                    setMessage(response.data.message)
+                    setEmailText('Updated product status')
+                } else {
+                    setStatus(true)
+                    setMessage(response.data.message)
+                }
+            })
+        }
+    }
 
     return (
         <div id="auction-web-admin" className="content-wrap">
@@ -527,6 +610,25 @@ const AdminEditProduct = () => {
                     </div>
                 }
                 <hr/>
+
+                <div>
+                    Highest Bid Information
+                    { currentHighestBid && 
+                        <div>
+                            Highest Bid : {currentHighestBid}
+                            View Bid Detail : <Link to={`/aweb-bids/${bidderId}`} >View</Link>
+                        </div>
+                    }
+                    { productStatus.value === "bid_success" &&
+                        <button onClick={()=>handleEmailToOwner()}>{ emailText }</button>
+                    }
+                    { productStatus.value === "sold_out" &&
+                        <button>Seller Confirmation Email Sent</button>
+                    }
+                    { !currentHighestBid && 
+                       <>Bid is not placed yet</>
+                    }
+                </div>
                 <div className="mt-3 shadow appearance-none border rounded w-full py-2 px-3 bg-gray-300 text-gray-900 leading-tight focus:outline-none focus:shadow-outline">
                 <div className="mt-2 text-lg text-purple-900 font-bold">
                     Seller Information</div>

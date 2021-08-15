@@ -33,7 +33,8 @@ const AdminProducts = () => {
 							<option value="all" className="text-gray-800">All</option>
 							<option value="draft" className="text-gray-800">Draft</option>
 							<option value="available" className="text-gray-800">Available</option>
-							<option value="unavailable" className="text-gray-800">Unavailable</option>
+							<option value="bid_failed" className="text-gray-800">Bid Failed</option>
+							<option value="bid_success" className="text-gray-800">Bid Success</option>
 							<option value="sold-out" className="text-gray-800">Sold Out</option>
 						</select>
 					</div>

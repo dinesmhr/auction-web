@@ -35,6 +35,7 @@ const AdminBids = () => {
 							<option value="active" className="text-gray-800">Active</option>
 							<option value="beat" className="text-gray-800">Beat</option>
 							<option value="win" className="text-gray-800">Win</option>
+							<option value="bid_lose" className="text-gray-800">Bid Lose</option>
 						</select>
 					</div>
 					{
