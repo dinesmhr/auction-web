@@ -182,7 +182,7 @@ const AdminProductCategories = () => {
 										return (	 
 											<div key={ index } className="admin-content-table-row grid grid-cols-3 flex flex-row text-sm">
 												<span className="py-2 px-16 flex"><BsDot className="mt-1"/><span className="px-2">{category.title}</span></span>
-												<span className="py-2 px-24">{category.products_ids.length}</span>
+												<span className="py-2 px-24">{category.id}</span>
 												<span className="py-2 px-20">
 													<button className="bg-transparent py-1 px-4 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent rounded"><Link to={`/aweb-product-category/${category.id}`}>Edit</Link></button>
 												</span>

@@ -58,22 +58,23 @@ const Products = () => {
                             })
                         }
                     </div>
+
                     { count > 7 &&
-                        <div>
+                        <div className="text-center flex content-center">
                             { products.length > 7 &&
                                 <AiOutlineArrowLeft/>
                             }
                             { products.length > 7 &&
-                                <button onClick={() => setPaged(1)} disabled={paged != 1 ? false : true}>1</button>
+                                <button className="bg-red p-2" onClick={() => setPaged(1)} disabled={paged != 1 ? false : true}>1</button>
                             }
                             { products.length > 15 &&
-                                <button onClick={() => setPaged(2)} disabled={paged != 2 ? false : true}>2</button>
+                                <button className="bg-red p-2" onClick={() => setPaged(2)} disabled={paged != 2 ? false : true}>2</button>
                             }
                             { products.length > 21 &&
-                                <button onClick={() => setPaged(3)} disabled={paged != 3 ? false : true}>3</button>
+                                <button className="bg-red p-2" onClick={() => setPaged(3)} disabled={paged != 3 ? false : true}>3</button>
                             }
                             { products.length > 28 &&
-                                <button onClick={() => setPaged(4)} disabled={paged != 4 ? false : true}>4</button>
+                                <button className="bg-red p-2" onClick={() => setPaged(4)} disabled={paged != 4 ? false : true}>4</button>
                             }
                             { products.length > 7 &&
                                 <AiOutlineArrowRight/>

@@ -102,7 +102,7 @@ const ProductSubmit = () => {
     const validateTitle = () => {
         if( title.value === '' ) {
             title.error = true;
-            title.errorMessage = "Tittle must not be empty";
+            title.errorMessage = "Title must not be empty";
             setTitle( JSON.parse(JSON.stringify( title )) )	
         } else {
             return true
