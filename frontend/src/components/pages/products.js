@@ -60,13 +60,19 @@ const Products = () => {
                             })
                         }
                     </div>
+
+
+
+
+
+
                     { products.length > 10 &&
-                        <div>
+                        <div className="text-center flex content-center">
                             { products.length > 10 &&
                                 <AiOutlineArrowLeft/>
                             }
                             { products.length > 10 &&
-                                <button onClick={() => setPaged(1)}>1</button>
+                                <button className="bg-red p-2" onClick={() => setPaged(1)}>1</button>
                             }
                             { products.length > 10 &&
                                 <button onClick={() => setPaged(2)}>2</button>
