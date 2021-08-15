@@ -19,7 +19,7 @@ const Products = () => {
                 setProducts(response.data.data)
             }
         })
-    }, [])
+    }, [paged])
     
     if( !Array.isArray(products) ) {
         return (
@@ -37,47 +37,45 @@ const Products = () => {
             <Header/>
             <SearchCard />
                 <div id="auction-web-shop" className="page--shop main-wrapper h-full">
-                    <div className="product-wrap max-w-6xl ml-8 ">                    	                                                  
+                    <div className="product-wrap max-w-8xl ml-8">                    	                                                  
                         { Array.isArray(products) &&
                             products.map((product, index) => {
                                 if( ( product.status === 'available' ) || ( product.status === 'bid_success' ) ) {
-                                    if( count > 8 ) {
+                                    if( count > 7 ) {
                                         pagedNumber = 2
-                                    } else if ( count > 17 ) {
+                                    } else if ( count > 15 ) {
                                         pagedNumber = 3
-                                    } else if ( count > 27 ) {
+                                    } else if ( count > 21 ) {
                                         pagedNumber = 4
-                                    } else if ( count > 37 ) {
+                                    } else if ( count > 28 ) {
                                         pagedNumber = 5
                                     } else {
                                         pagedNumber = 1
                                     }
-                                    if( ( pagedNumber === paged ) ) {
-                                        count++
-                                        return( <div key={count}><ProductCard { ...product } /></div> )
-                                    }
+                                    count++
+                                    return( <div class={`product-${count}`} key={count} style={{display: ( pagedNumber === paged ) ? '' : 'none' }}><ProductCard { ...product } /></div> )
                                 }
                             })
                         }
                     </div>
-                    { products.length > 10 &&
+                    { count > 7 &&
                         <div>
-                            { products.length > 10 &&
+                            { products.length > 7 &&
                                 <AiOutlineArrowLeft/>
                             }
-                            { products.length > 10 &&
-                                <button onClick={() => setPaged(1)}>1</button>
+                            { products.length > 7 &&
+                                <button onClick={() => setPaged(1)} disabled={paged != 1 ? false : true}>1</button>
                             }
-                            { products.length > 10 &&
-                                <button onClick={() => setPaged(2)}>2</button>
+                            { products.length > 15 &&
+                                <button onClick={() => setPaged(2)} disabled={paged != 2 ? false : true}>2</button>
                             }
-                            { products.length > 30 &&
-                                <button onClick={() => setPaged(3)}>3</button>
+                            { products.length > 21 &&
+                                <button onClick={() => setPaged(3)} disabled={paged != 3 ? false : true}>3</button>
                             }
-                            { products.length > 40 &&
-                                <button onClick={() => setPaged(4)}>4</button>
+                            { products.length > 28 &&
+                                <button onClick={() => setPaged(4)} disabled={paged != 4 ? false : true}>4</button>
                             }
-                            { products.length > 10 &&
+                            { products.length > 7 &&
                                 <AiOutlineArrowRight/>
                             }
                         </div>

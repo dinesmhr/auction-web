@@ -8,7 +8,7 @@
 header("Access-Control-Allow-Origin: *");
 require_once 'functions.php';
 if( is_db_connected() ) {
-    $count = isset( $_GET['count'] ) ? $_GET['count'] : 5;
+    $count = isset( $_GET['count'] ) ? $_GET['count'] : 6;
     $meta_key = isset( $_GET['meta_key'] ) ? $_GET['meta_key'] : 'cat';
     $order = isset( $_GET['order'] ) ? $_GET['order'] : 'DESC';
     $product_meta_sql = "SELECT term_id, meta_key, COUNT(`term_id`) AS value_occurrence FROM `aw_product_meta` WHERE meta_key='" .$meta_key. "' GROUP BY `term_id` ORDER BY `value_occurrence` $order LIMIT $count";
