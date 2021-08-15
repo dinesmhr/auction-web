@@ -64,8 +64,6 @@ const Products = () => {
 
 
 
-
-
                     { products.length > 10 &&
                         <div className="text-center flex content-center">
                             { products.length > 10 &&
