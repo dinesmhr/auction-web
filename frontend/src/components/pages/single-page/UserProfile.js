@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../header/Header';
-import Footer from '../footer/Footer'
+import Header from '../../header/Header'
+import Footer from '../../footer/Footer'
 
 
-
-const UserId = () => {
-
+const UserProfile = () => {
 
     return ( 
         <>
@@ -21,4 +19,4 @@ const UserId = () => {
         </>
     );
 }
-export default UserId;
+export default UserProfile;
