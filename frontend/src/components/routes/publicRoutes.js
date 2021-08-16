@@ -22,6 +22,7 @@ import SendFeedback from '../pages/extras/sendFeedback'
 import SellerResourceCenter from '../pages/extras/sellerResourceCenter'
 import SellerReview from '../pages/extras/sellerReview'
 import Contact from '../pages/extras/contact'
+import UserId from '../pages/UserId'
 
 const axios = require('axios')
 
@@ -80,7 +81,8 @@ export const PublicRoutes = () => {
                 <Route path="/resource-center/" exact component={() => <SellerResourceCenter/>}></Route> 
                 <Route path="/seller-review/" exact component={() => <SellerReview/>}></Route> 
 
-                <Route path="/contact/" exact component={() => <Contact/>}></Route>               
+                <Route path="/contact/" exact component={() => <Contact/>}></Route>   
+                <Route path="/userid" exact component={() => <UserId/>}></Route>            
 
             </Switch>
         </BrowserRouter>
