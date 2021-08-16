@@ -36,7 +36,7 @@ const Products = () => {
         <div id="auction-web">
             <Header/>
             <SearchCard />
-                <div id="auction-web-shop" className="page--shop main-wrapper h-full">
+                <div id="auction-web-shop" className="page--shop main-wrapper h-full w-9/12 ">
                     <div className="product-wrap max-w-8xl ml-8">                    	                                                  
                         { Array.isArray(products) &&
                             products.map((product, index) => {

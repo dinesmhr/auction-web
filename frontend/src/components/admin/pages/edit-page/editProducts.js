@@ -612,15 +612,15 @@ const AdminEditProduct = () => {
                 <hr/>
 
                 <div>
-                    Highest Bid Information
+                   <div className="text-gray-300 text-lg mb-1"> Highest Bid Information</div>
                     { currentHighestBid && 
                         <div>
-                            Highest Bid : {currentHighestBid}
-                            View Bid Detail : <Link to={`/aweb-bids/${bidderId}`} >View</Link>
+                           <div> Highest Bid : {currentHighestBid}</div>
+                            <div>View Bid Detail : <Link className="text-white bg-indigo-900 active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" to={`/aweb-bids/${bidderId}`} >View</Link></div>
                         </div>
                     }
                     { productStatus.value === "bid_success" &&
-                        <button onClick={()=>handleEmailToOwner()}>{ emailText }</button>
+                        <button className="text-white bg-indigo-900 active:bg-pink-600 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" onClick={()=>handleEmailToOwner()}>{ emailText }</button>
                     }
                     { productStatus.value === "sold_out" &&
                         <button>Seller Confirmation Email Sent</button>

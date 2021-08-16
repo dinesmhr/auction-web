@@ -44,6 +44,12 @@ const Search = () => {
                                 <div>{ errorMessage }</div>
                             </>
                         }
+
+
+
+
+
+                        
                         { Array.isArray(products) && (!error) && 
                             products.map((product, index) => {
                                 return( <ProductCard key={index} { ...product } /> )
