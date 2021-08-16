@@ -60,24 +60,24 @@ const Products = () => {
                     </div>
 
                     { count > 7 &&
-                        <div className="text-center flex content-center">
+                        <div className="text-center flex ml-12 mb-6 mt-10">
                             { products.length > 7 &&
-                                <AiOutlineArrowLeft/>
+                                <AiOutlineArrowLeft className="text-lg mt-2"/>
                             }
                             { products.length > 7 &&
-                                <button className="bg-red p-2" onClick={() => setPaged(1)} disabled={paged != 1 ? false : true}>1</button>
+                                <button className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium" onClick={() => setPaged(1)} disabled={paged != 1 ? false : true}>1</button>
                             }
                             { products.length > 15 &&
-                                <button className="bg-red p-2" onClick={() => setPaged(2)} disabled={paged != 2 ? false : true}>2</button>
+                                <button className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium" onClick={() => setPaged(2)} disabled={paged != 2 ? false : true}>2</button>
                             }
                             { products.length > 21 &&
-                                <button className="bg-red p-2" onClick={() => setPaged(3)} disabled={paged != 3 ? false : true}>3</button>
+                                <button className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium" onClick={() => setPaged(3)} disabled={paged != 3 ? false : true}>3</button>
                             }
                             { products.length > 28 &&
-                                <button className="bg-red p-2" onClick={() => setPaged(4)} disabled={paged != 4 ? false : true}>4</button>
+                                <button className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium" onClick={() => setPaged(4)} disabled={paged != 4 ? false : true}>4</button>
                             }
                             { products.length > 7 &&
-                                <AiOutlineArrowRight/>
+                                <AiOutlineArrowRight className="text-lg mt-2"/>
                             }
                         </div>
                     }
