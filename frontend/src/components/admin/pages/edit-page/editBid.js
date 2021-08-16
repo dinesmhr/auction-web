@@ -124,7 +124,7 @@ const AdminEditBid = () => {
                                             </div>
 
                                             { bid.bid_status === "win" &&
-                                                <button onClick={()=>handleEmailToOwner()}>{ emailText }</button>
+                                                <button className="text-white bg-indigo-900 active:bg-pink-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" onClick={()=>handleEmailToOwner()}>{ emailText }</button>
                                             }
                                             { bid.bid_status === "sold_out" &&
                                                 <button>Bidder Confirmation Email Sent</button>
