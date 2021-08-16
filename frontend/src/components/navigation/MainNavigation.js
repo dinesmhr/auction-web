@@ -22,6 +22,7 @@ const MainNavigation = () => {
         userId &&
         axios.get( `/users.php?id=${userId}`)
         .then(function(res) {
+            console.log(res.data)
             if(res.data.status) {
                 setUserStatus(res.data.data[0].status)
             }

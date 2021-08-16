@@ -361,54 +361,58 @@ const AdminEditProduct = () => {
         }
         axios.post( '/mail/seller-confirmation.php', emailParams)
         .then(function(response) {
+            console.log(response)
             if( response.data.status ) {
                 setEmailText('Email sent!!')
-                setEmailError(false)
+                updateProductStatus()
             } else {
                 setEmailText('Error in email process!!')
             }
         })
+    }
 
-        if( ! emailError ) {
-            let deadlineFullDate = deadlineDate.value + ' ' + deadlineTime.value
-            const finalCategories = { 
-                delete: getUnmatchedArray(initialCategories, categories),
-                add : getUnmatchedArray(categories, initialCategories)
-            }
-            const finalTags = { 
-                delete: getUnmatchedArray(initialTags, tags),
-                add : getUnmatchedArray(tags, initialTags)
-            }
-            let apiParams = {
-                submit: "update-product",
-                id: id,
-                title: title.value,
-                description: description.value,
-                specifications: specifications.value,
-                details: details.value,
-                initialBid: initialBid.value,
-                maxBid: maxBid.value,
-                bidRaise: bidRaise.value,
-                deadlineDate: deadlineFullDate,
-                images: images.value,
-                tags: finalTags,
-                categories: finalCategories,
-                status: 'sold_out'
-            }
-            setEmailText('Updating product status')
-            axios.post( '/edit-table/update-products.php', apiParams)
-            .then(function(response) {
-                if( response.data.status ) {
-                    setUpdateTerm(!updateTerm)
-                    setStatus(true)
-                    setMessage(response.data.message)
-                    setEmailText('Updated product status')
-                } else {
-                    setStatus(true)
-                    setMessage(response.data.message)
-                }
-            })
+    const updateProductStatus = () => {
+        setEmailText( 'Updating Post Status' )
+        let deadlineFullDate = deadlineDate.value + ' ' + deadlineTime.value
+        const finalCategories = { 
+            delete: getUnmatchedArray(initialCategories, categories),
+            add : getUnmatchedArray(categories, initialCategories)
         }
+        const finalTags = { 
+            delete: getUnmatchedArray(initialTags, tags),
+            add : getUnmatchedArray(tags, initialTags)
+        }
+        let apiParams = {
+            submit: "update-product",
+            id: id,
+            title: title.value,
+            description: description.value,
+            specifications: specifications.value,
+            details: details.value,
+            initialBid: initialBid.value,
+            maxBid: maxBid.value,
+            bidRaise: bidRaise.value,
+            deadlineDate: deadlineFullDate,
+            images: images.value,
+            tags: finalTags,
+            categories: finalCategories,
+            status: 'sold_out'
+        }
+        setEmailText('Updating product status')
+        axios.post( '/edit-table/update-products.php', apiParams)
+        .then(function(response) {
+            if( response.data.status ) {
+                setEmailText('Post Status Updated')
+                setUpdateTerm(!updateTerm)
+                setStatus(true)
+                setMessage(response.data.message)
+                setEmailText('Updated product status')
+                window.location.reload()
+            } else {
+                setStatus(true)
+                setMessage(response.data.message)
+            }
+        })
     }
 
     return (

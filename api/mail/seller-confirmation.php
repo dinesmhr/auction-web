@@ -16,7 +16,7 @@ $product_id     = $decoded_data["product_id"];
 $subject = "AuctionWeb - Product Sell Confirmation";
 $txt = 'Dear Seller,
             Congratulations! Your product has been bid to the highest price. You can contact him/her or AuctionWeb to deliver the product. 
-            Product Link : http://localhost:3000/products/' .$product_id. ',
+            Product Link : http://localhost:3000/product/' .$product_id. ',
             Buyer Link: http://localhost:3000/user/' .$bidder_id. '
 
         Sincerely yours,

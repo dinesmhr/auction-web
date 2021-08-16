@@ -12,10 +12,11 @@ $fullname       = $decoded_data["fullname"];
 $sender_email   = $decoded_data["sender_email"];
 $product_id     = $decoded_data["product_id"];
 
-$subject = "AuctionWeb - Product Sell Confirmation";
+$subject = "AuctionWeb - Product Bid Confirmation";
 $txt = 'Dear Bidder,
             Congratulations! You are the highest bidder. You can contact the seller or AuctionWeb to deliver the product.
-            Product Link : http://localhost:3000/products/' .$product_id. '
+            Product Link : http://localhost:3000/product/' .$product_id. '
+            Seller Information can be found at the product page.
         Sincerely yours,
         AuctionWeb Team';
 $headers = "From: auctionweb@auction.com" . "\r\n" . "CC: $sender_email";
