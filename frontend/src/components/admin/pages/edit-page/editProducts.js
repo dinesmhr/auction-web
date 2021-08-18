@@ -38,6 +38,7 @@ const AdminEditProduct = () => {
     const [ updateTerm, setUpdateTerm ] = useState(true);
     const [ emailText, setEmailText ] = useState('Send confirmation email to the owner')
     const [ emailError, setEmailError ] = useState(true)
+    const [readStatus, writeStatus] = useState("");
     // bidder info
     const [ currentHighestBid, setCurrentHighestBid ] = useState()
     const [ bidderId, setBidderId ] = useState()
@@ -374,9 +375,17 @@ const AdminEditProduct = () => {
     }
 
 
-        const onDelete = (index) => {
-
+    const onDelete = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`/delete-record/delete-product.php`);
+      writeStatus("successfully deleted");
+      setTimeout(() => writeStatus(""), 3000);
+    } catch (err) {
+      writeStatus("deletion failed");
     }
+  };
+
 
     const updateProductStatus = () => {
         setEmailText( 'Updating Post Status' )

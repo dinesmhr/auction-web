@@ -11,6 +11,7 @@ const AdminEditBid = () => {
     const [ userData, setUserData ] = useState()
     const [ emailText, setEmailText ] = useState('Send confirmation email to the bid winner')
     const [ emailError, setEmailError ] = useState(true)
+    const [readStatus, writeStatus] = useState("");
 
     const { id } = useParams()
 
@@ -63,9 +64,17 @@ const AdminEditBid = () => {
         })
     }
 
-        const onDelete = (index) => {
-
+  const onDelete = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`/delete-record/delete-bid.php`);
+      writeStatus("successfully deleted");
+      setTimeout(() => writeStatus(""), 3000);
+    } catch (err) {
+      writeStatus("deletion failed");
     }
+  };
+
 
 
     return (

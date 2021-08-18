@@ -8,6 +8,7 @@ const axios = require('axios');
 const AdminEditUser = () =>  {
     const [ user, setUser ] = useState()
     const [ userStatus, setUserStatus ] = useState()
+    const [readStatus, writeStatus] = useState("");
     const { id } = useParams()
 
     useEffect(() => {
@@ -30,9 +31,16 @@ const AdminEditUser = () =>  {
     }
 
         // handle delete 
-    const onDelete = (index) => {
-
+    const onDelete = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`/delete-record/delete-user.php`);
+      writeStatus("successfully deleted");
+      setTimeout(() => writeStatus(""), 3000);
+    } catch (err) {
+      writeStatus("deletion failed");
     }
+  };
 
     return (
         <>
