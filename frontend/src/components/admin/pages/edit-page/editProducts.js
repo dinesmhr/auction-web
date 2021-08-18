@@ -618,7 +618,7 @@ const AdminEditProduct = () => {
 
                 <div className="aweb-Product-form-button mt-3 mb-4">
                     <button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
-                    <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-2 px-4 mt-1 border border-gray-400 shadow-md rounded shadow">Delete Product</button>
+                    <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-2 px-4 mt-1 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete Product</button>
                 </div>
                 { status && 
                     <div className="aweb-success-note mb-2">
