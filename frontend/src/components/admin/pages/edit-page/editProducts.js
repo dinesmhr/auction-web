@@ -364,7 +364,6 @@ const AdminEditProduct = () => {
         }
         axios.post( '/mail/seller-confirmation.php', emailParams)
         .then(function(response) {
-            console.log(response)
             if( response.data.status ) {
                 setEmailText('Email sent!!')
                 updateProductStatus()

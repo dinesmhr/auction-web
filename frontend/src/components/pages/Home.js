@@ -36,6 +36,9 @@ const Home = () => {
     const [ feedbacks, setFeedbacks ] = useState({})
     const [ userCache, setUserCache ] = useState()
     const [ products, setProducts ] = useState({})
+    const [ recommendProducts, setRecommendProducts ] = useState({})
+    const [ userId, setUserId ] = useState()
+    const [ userBirthDate, setUserBirthDate ] = useState()
     const { isLoggedIn } = useContext(appContext)
 
     useEffect(() => {
@@ -51,6 +54,7 @@ const Home = () => {
         if( isLoggedIn ) {
             axios.get( `/sessions.php` )
             .then((res) => {
+                setUserId(res.data.userId)
                 axios.get( `/edit-table/edit-cache.php?id=${res.data.userId}` )
                 .then((res)=>{
                     if( res.data.status ) {
@@ -60,6 +64,28 @@ const Home = () => {
             })
         }
     }, [isLoggedIn])
+
+    useEffect(() => {
+        { userId &&
+            axios.get( `/user-details.php?id=${userId}` )
+            .then(function(res) {
+                if(res.data.status) {
+                    setUserBirthDate(res.data.data[0].birthdate.year + '-' + res.data.data[0].birthdate.month + '-' + res.data.data[0].birthdate.day)
+                }
+            })
+        }
+    }, [userId])
+
+    useEffect(()=>{
+        if(userBirthDate) { 
+            axios.get( `/recommend-products.php` )
+            .then((res)=>{
+                if( res.data.status ) {
+                    setRecommendProducts(res.data.data)
+                }
+            })
+        }
+    }, [userBirthDate])
 
     useEffect(() => {
         let isMounted = true;
@@ -89,7 +115,7 @@ const Home = () => {
                     <div className= "home-banner">
                         <img src="/assets/auction.jpg"/>
                     </div>
-                    { userCache &&
+                    {/* { userCache &&
                         <div>
                             <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Previously You Viewed</h2>
                             { userCache &&
@@ -100,7 +126,17 @@ const Home = () => {
                                 })
                             }
                         </div>
-                    }
+                    } */}
+                    <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recommended For You</h2>
+                    <div className="flex flex-wrap ml-16 mt-10">
+                        { Array.isArray(recommendProducts) &&
+                            recommendProducts.map((recommendProduct, index) => {
+                                if(( Date.parse( new Date(userBirthDate) ) - Date.parse(new Date( recommendProduct.age_limit) ) ) < 315569260000 ) {
+                                    return( <div class={`product-${index}`} key={index}><ProductCard { ...recommendProduct } /></div> )
+                                }
+                            })
+                        }
+                    </div>
                     <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recent Products</h2>
                     <div className="flex flex-wrap ml-16 mt-10">
                         { Array.isArray(products) &&

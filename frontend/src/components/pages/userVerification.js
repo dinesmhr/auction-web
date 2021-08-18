@@ -215,7 +215,6 @@ const UserVerification = () => {
                 documentImageOne: documentImageOne
             })
             .then(function (response) {
-                console.log(response)
                 if( response.data.status ) {
                     setStatus(true)
                     setMessage( 'Verification form submitted successfully' )

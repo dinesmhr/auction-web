@@ -5,8 +5,6 @@
  */
 $structure['status'] = false;
 $structure['message'] = 'No data';
-return var_dump($_GET['id']);
-return;
 if( isset( $_GET['id'] ) ) {
     $id = $_GET['id'];
     if( isset($_GET['product_id']) ) {

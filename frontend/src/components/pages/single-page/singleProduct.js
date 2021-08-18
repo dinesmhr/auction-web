@@ -78,6 +78,17 @@ const SingleProduct = () => {
     }, [isLoggedIn])
     
     useEffect(() => {
+        if( userId ) {
+            axios.get( `/edit-table/edit-cache.php?id=${userId}&product_id=${id}` )
+            .then((res)=>{
+                if( res.data.status ) {
+                    console.log( 'Cache created for user' )
+                }
+            })
+        }
+    }, [userId])
+
+    useEffect(() => {
         { userId &&
             axios.get( `/users.php?id=${userId}` )
             .then((res) => {
