@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AdminRoutes } from './components/routes/adminRoutes'
 import { PublicRoutes } from './components/routes/publicRoutes'
 import './styles/App.css'
@@ -9,7 +9,7 @@ export const appContext = React.createContext()
 
 const App = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-  
+
   // 
   const updateLoggedInStatus = () => {
     setIsLoggedIn(!isLoggedIn)

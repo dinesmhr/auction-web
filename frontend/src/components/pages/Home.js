@@ -35,8 +35,17 @@ const Home = () => {
     const [ topCategories, setTopCategories ] = useState({})
     const [ feedbacks, setFeedbacks ] = useState({})
     const [ userCache, setUserCache ] = useState()
-
+    const [ products, setProducts ] = useState({})
     const { isLoggedIn } = useContext(appContext)
+
+    useEffect(() => {
+        axios.get( '/products.php' )
+        .then(function(response) {
+            if( response.data.status === true ) {
+                setProducts(response.data.data.slice(0,8))
+            }
+        })
+    }, [])
 
     useEffect(() => {
         if( isLoggedIn ) {
@@ -92,6 +101,16 @@ const Home = () => {
                             }
                         </div>
                     }
+                    <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recent Products</h2>
+                    <div className="flex flex-wrap ml-16 mt-10">
+                        { Array.isArray(products) &&
+                            products.map((product, index) => {
+                                if( ( product.status === 'available' ) || ( product.status === 'bid_success' ) ) {
+                                    return( <div class={`product-${index}`} key={index}><ProductCard { ...product } /></div> )
+                                }
+                            })
+                        }
+                    </div>
                     <div>
                         <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Top Categories</h2>
                         <div className="flex flex-wrap ml-16 mt-10">

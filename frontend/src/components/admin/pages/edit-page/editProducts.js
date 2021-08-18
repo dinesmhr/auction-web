@@ -32,7 +32,7 @@ const AdminEditProduct = () => {
     const [ status, setStatus ] = useState(false);
 	const [ message, setMessage ] = useState('');
 	const [ submitText, setSubmitText]  = useState('Update Product');
-
+    const [ ageLimit, setAgeLimit ] = useState({value:''})
     const [ initialCategories, setInitialCategories ] = useState([]);
     const [ initialTags, setInitialTags ] = useState([]);
     const [ updateTerm, setUpdateTerm ] = useState(true);
@@ -65,6 +65,7 @@ const AdminEditProduct = () => {
             setDeadlineDate({value: res.data.data[0].deadline_date.substring(0,10)})
             setDeadlineTime({value: res.data.data[0].deadline_date.substring(11)})
             setProductStatus({value: res.data.data[0].status})
+            setAgeLimit({value: res.data.data[0].age_limit})
         })
     }, [])
 
@@ -327,7 +328,8 @@ const AdminEditProduct = () => {
 				images: images.value,
                 tags: finalTags,
                 categories: finalCategories,
-                status: productStatus.value
+                status: productStatus.value,
+                age_limit: ageLimit.value
 			}
 			axios.post( '/edit-table/update-products.php', apiParams)
 			.then(function(response) {
@@ -602,6 +604,11 @@ const AdminEditProduct = () => {
                             <option value="unavailable">Unavailable</option>
                         </select>
                     </div>
+                </div>
+
+                <div>
+                    <div className="mt-4">Recommend this product for birthdate of around : </div>
+                    <input type="date" className="text-gray-700" onChange ={ (e) => setAgeLimit({value : e.target.value})} value={ageLimit.value} max={new Date( '1997' ).toISOString().substring(0,10)}/>
                 </div>
 
                 <div className="aweb-Product-form-button mt-3 mb-4">

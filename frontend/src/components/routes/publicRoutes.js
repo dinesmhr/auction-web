@@ -82,7 +82,7 @@ export const PublicRoutes = () => {
                 <Route path="/seller-review/" exact component={() => <SellerReview/>}></Route> 
 
                 <Route path="/contact/" exact component={() => <Contact/>}></Route>   
-                <Route path="/user-profile/" exact component={() => <UserProfile/>}></Route>            
+                <Route path="/user-profile/:id" exact component={() => <UserProfile/>}></Route>            
 
             </Switch>
         </BrowserRouter>

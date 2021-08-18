@@ -31,6 +31,7 @@ if( is_db_connected() ) {
   $tags = ( isset( $decoded_data["tags"] ) && !empty($decoded_data["tags"]) ) ? $decoded_data["tags"] : '';
   $categories = ( isset( $decoded_data["categories"] ) && !empty($decoded_data["categories"]) ) ? $decoded_data["categories"] : '';
   $status         = isset( $decoded_data["status"] ) ? $decoded_data["status"] : 'draft';
+  $age_limit      = isset( $decoded_data["age_limit"] ) ? $decoded_data["age_limit"] : '';
 
   foreach( $images as $image ) :
     if( isset( $image['dataUrl'] ) ) {
@@ -60,7 +61,7 @@ if( is_db_connected() ) {
       $images_path[] = '';
     }
   endforeach;
-  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', details = '" .$details. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', bid_raise = '" .$bidRaise. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "' WHERE id = '" .$id. "'";
+  $product_sql = "UPDATE aw_products SET title = '" .$title. "', description = '" .$description. "', specifications = '" .$specifications. "', details = '" .$details. "', initial_bid = '" .$initialBid. "', max_bid = '" .$maxBid. "', bid_raise = '" .$bidRaise. "', deadline_date = '" .$deadlineDate. "', images_path = '" .serialize($images_path). "', status = '" .$status. "', age_limit = '" .$age_limit. "' WHERE id = '" .$id. "'";
   if ( $CONNECTION->query( $product_sql ) === TRUE ) {
         // add new selected categories 
         if(!empty($decoded_data["categories"]["add"])) {
