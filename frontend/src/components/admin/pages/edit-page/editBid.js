@@ -63,6 +63,11 @@ const AdminEditBid = () => {
         })
     }
 
+        const onDelete = (index) => {
+
+    }
+
+
     return (
         <div id="auction-web-admin" className="content-wrap">
             <AdminMainNavigation/>
@@ -154,7 +159,7 @@ const AdminEditBid = () => {
                         )       
                     })
                 }
-                 <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-4 mt-4 border border-gray-400 shadow-md rounded shadow">Delete Bid</button>
+                 <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-4 mt-4 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete Bid</button>
             </div>
         </div>
     )

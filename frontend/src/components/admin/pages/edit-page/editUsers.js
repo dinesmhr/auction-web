@@ -29,6 +29,11 @@ const AdminEditUser = () =>  {
         })
     }
 
+        // handle delete 
+    const onDelete = (index) => {
+
+    }
+
     return (
         <>
             <div id="auction-web-admin" className="content-wrap">
@@ -219,7 +224,7 @@ const AdminEditUser = () =>  {
                         { ( userStatus === 'verified' ) &&
                                 <button className="bg-white hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 mr-3 border border-gray-400 rounded shadow">Verified User</button>
                         }
-                        <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-2 border border-gray-400 shadow-md rounded shadow">Delete the User</button>
+                        <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-2 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete the User</button>
                     </div>
                 </div>
             </div>
