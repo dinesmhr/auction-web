@@ -25,14 +25,14 @@ const CategoryCard=(category)=>{
     return(
         <>
             <div className="category-card ml-14 mt-10">
-            <div className="">
-            <a href={ `category/${id}` } className="">
-                <img src={`${featureImage}`} alt={title} className="h-44 w-40 filter brightness-50 "/>
-                    <h3 title={title} className=" relative break-all text-center bottom-24 text-white text-lg font-bold hover:text-gray-400 ">
-                        <a href={ `category/${id}`} className="">{title}</a>
-                    </h3>
-            </a>
-            </div>
+                <div>
+                    <a href={ `category/${id}` } className="">
+                        <img src={`${featureImage}`} alt={title} className="h-44 w-40 filter brightness-50 "/>
+                            <h3 title={title} className=" relative break-all text-center bottom-24 text-white text-lg font-bold hover:text-gray-400 ">
+                                <a href={ `category/${id}`} className="">{title}</a>
+                            </h3>
+                    </a>
+                </div>
                 <div className="category-box">
                     { productCount &&
                         <div className="text-center">{ `${productCount} products` }</div>
@@ -58,6 +58,7 @@ const Categories = () => {
             <Header/>
             <SearchCard />
                 <div className="auction-web-categoriesPage h-full ">
+                    <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Product Categories</h2>
                     <div className="categoriesPageWrap flex flex-wrap ">
                     { !data &&
                         <div>{`Loading categories`}</div>

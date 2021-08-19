@@ -12,6 +12,8 @@ const AdminEditBid = () => {
     const [ emailText, setEmailText ] = useState('Send confirmation email to the bid winner')
     const [ emailError, setEmailError ] = useState(true)
     const [readStatus, writeStatus] = useState("");
+    const [deleteBidText, setDeleteBidText] = useState( "Delete Bid" );
+    const [productEmpty, setProductEmpty] = useState(false);
 
     const { id } = useParams()
 
@@ -21,6 +23,8 @@ const AdminEditBid = () => {
             if( res.data.status ) {
                 setBidData( res.data.data )
                 setProductId( res.data.data[0].product_id )
+            } else {
+                setBidData('deleted')
             }
         })
     }, [])
@@ -64,23 +68,32 @@ const AdminEditBid = () => {
         })
     }
 
-  const onDelete = async (e) => {
+  const onDelete = (e) => {
     e.preventDefault();
-    try {
-      await axios.delete(`/delete-record/delete-bid.php`);
-      writeStatus("successfully deleted");
-      setTimeout(() => writeStatus(""), 3000);
-    } catch (err) {
-      writeStatus("deletion failed");
-    }
+    setDeleteBidText( "Deleting Bid" )
+      axios.get(`/delete-table/delete-bid.php`)
+      .then((res) => {
+          if( res.data.status ) {
+            setDeleteBidText( "Deleted" )
+            setProductEmpty(true)
+          }
+      })
   };
 
-
+    { productEmpty &&
+        <div id="auction-web-admin" className="content-wrap">
+            <AdminMainNavigation/>
+            { `Bid Not Found` }
+        </div>
+    }
 
     return (
         <div id="auction-web-admin" className="content-wrap">
             <AdminMainNavigation/>
             <div id="admin-right-content">
+                { ( bidData === 'deleted' ) && 
+                    <>{`User not found`}</>
+                }
                 { bidData &&
                     bidData.map( ( bid, index ) => {
                         return (
@@ -168,7 +181,7 @@ const AdminEditBid = () => {
                         )       
                     })
                 }
-                 <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-4 mt-4 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete Bid</button>
+                 <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-4 mt-4 border border-gray-400 shadow-md rounded shadow" onClick ={(e) => onDelete(e) }>{deleteBidText}</button>
             </div>
         </div>
     )

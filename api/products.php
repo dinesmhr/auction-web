@@ -11,12 +11,12 @@ if( is_db_connected() ) {
     extract( $GLOBALS );
     if( isset( $_GET['id'] ) ) {
         $product_id = $_GET['id'];
-        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'" ORDER BY submission_date DESC';
+        $products_sql = 'SELECT * FROM aw_products WHERE id="'.$product_id.'" AND status != "temp_del" ORDER BY submission_date DESC';
     } else if(isset($_GET['user_id'])) {
         $user_id = $_GET['user_id'];
-        $products_sql = 'SELECT * FROM aw_products WHERE user_id="'.$user_id.'" ORDER BY submission_date DESC';
+        $products_sql = 'SELECT * FROM aw_products WHERE user_id="'.$user_id.'" AND status != "temp_del" ORDER BY submission_date DESC';
     } else {
-        $products_sql = 'SELECT * FROM aw_products ORDER BY submission_date DESC';
+        $products_sql = 'SELECT * FROM aw_products WHERE status != "temp_del" ORDER BY submission_date DESC';
     }
     $datas = $CONNECTION->query( $products_sql );
     if( $datas ) {

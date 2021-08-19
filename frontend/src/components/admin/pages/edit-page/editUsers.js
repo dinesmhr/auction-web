@@ -9,6 +9,8 @@ const AdminEditUser = () =>  {
     const [ user, setUser ] = useState()
     const [ userStatus, setUserStatus ] = useState()
     const [readStatus, writeStatus] = useState("");
+    const [productEmpty, setProductEmpty] = useState(false);
+    const [deleteBidText, setDeleteBidText] = useState("Delete User");
     const { id } = useParams()
 
     useEffect(() => {
@@ -31,16 +33,25 @@ const AdminEditUser = () =>  {
     }
 
         // handle delete 
-    const onDelete = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.delete(`/delete-record/delete-user.php`);
-      writeStatus("successfully deleted");
-      setTimeout(() => writeStatus(""), 3000);
-    } catch (err) {
-      writeStatus("deletion failed");
+    const onDelete = (e) => {
+        e.preventDefault();
+        setDeleteBidText( "Deleting User" )
+          axios.get(`/delete-table/delete-user.php?id=${id}`)
+          .then((res) => {
+              console.log(res)
+              if( res.data.status ) {
+                setDeleteBidText( "Deleted" )
+                setProductEmpty(true)
+              }
+          })
+    };
+
+    { productEmpty &&
+        <div id="auction-web-admin" className="content-wrap">
+            <AdminMainNavigation/>
+            { `User Not Found` }
+        </div>
     }
-  };
 
     return (
         <>
@@ -232,7 +243,7 @@ const AdminEditUser = () =>  {
                         { ( userStatus === 'verified' ) &&
                                 <button className="bg-white hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 mr-3 border border-gray-400 rounded shadow">Verified User</button>
                         }
-                        <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-2 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete the User</button>
+                        <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-1 px-2 border border-gray-400 shadow-md rounded shadow" onClick ={(e) => onDelete(e) }>{`${deleteBidText}`}</button>
                     </div>
                 </div>
             </div>

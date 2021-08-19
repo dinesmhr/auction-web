@@ -46,6 +46,7 @@ const SingleProduct = () => {
     const [ categories, setCategories ] = useState('')
     const [ tags, setTags ] = useState('')
     const [ similarProductsIds, setSimilarProductsIds ] = useState('')
+    const [ tagSimilarProductsIds, setSimilarTagProductsIds ] = useState('')
     const [ bidNowButtonDisable, setBidNowButtonDisable ] = useState(true)
     const [ bidNowButtonDisableTitle, setBidNowButtonDisableTitle ] = useState( "Not logged In" )
     const [ bidNowButtonDisableMessage, setBidNowButtonDisableMessage ] = useState('')
@@ -158,7 +159,7 @@ const SingleProduct = () => {
         catids &&
             axios.get( `/product-meta-bulk.php?term_id=${catids}&product_id=${id}` )
             .then(function(res) {
-                setSimilarProductsIds(res.data.data)
+                setSimilarProductsIds(res.data.data.splice(0,4))
             })
     }, [catids])
 
@@ -167,6 +168,14 @@ const SingleProduct = () => {
             axios.get( `/product-bulkTags.php?id=${tagIds}` )
             .then(function(res){
                 setTags(res.data.data)
+            })
+    }, [tagIds])
+
+    useEffect(() => {
+        tagIds &&
+            axios.get( `/product-meta-bulk.php?term_id=${tagIds}&product_id=${id}&meta_key=tag` )
+            .then(function(res) {
+                setSimilarTagProductsIds(res.data.data)
             })
     }, [tagIds])
 
@@ -453,191 +462,216 @@ const SingleProduct = () => {
                                 <div id="singlePage" className="tracking-wider"><div className="">No products found</div></div>
                             ) : (
                                 <div id="singlePage flex flex-row" className="tracking-wider">
-                                    {
-                                        productData.map( ( product, index )  => {
-                                            const images = product.images_path.map((image, index) => {
-                                                if(!image.includes('http://localhost/auction-web/')) {
-                                                    image = `http://localhost/auction-web/${image.split('../').pop()}`
-                                                }
-                                                return (
-                                                    { src: image }
-                                                    
-                                                )
-                                            })
-                                            if( Date.parse(new Date(product.deadline_date)) < Date.parse(new Date()) ) {
-                                                onProductDeadline()
-                                            }
-                                            return ( 
-                                                <React.Fragment key={index}>
-                                                    <div className="flex flex-row m-10">
-                                                        <div className="singlePage-imageWrap">
-                                                            { images &&
-                                                                <Carousel images={images} style={{ height: 450, width: 550 }}
-                                                                    hasTransition={true}
-                                                                    hasMediaButton={false} 
-
-                                                                />  
-                                                            }
-                                                        </div>
-                                                        <div className="singlePage-right ml-12 max-w-sm ">
-                                                            <div className="font-bold text-2xl">{product.title.trim()}</div>
-
-                                                            <div className="flex flex-row ">
-                                                                <div className="text-sm w-2/4">{ `Categories` }</div>
-                                                                <div className="ml-3 text-sm w-2/4">
-                                                                    { !categories ? (
-                                                                            "No categories"
-                                                                        ) : categories.length === 0 ? (
-                                                                            "Loading categories"
-                                                                        ) : (
-                                                                            categories.map((cat, catKey) => {
-                                                                                return (
-                                                                                    <div key={catKey} className="hover:text-gray-600">
-                                                                                        <Link to={`/category/${cat.id}`}>{ cat.title }</Link>
-                                                                                    </div>
-                                                                                )
-                                                                            })
-                                                                        )
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-                                                            <div className="flex flex-row ">
-                                                                <div className="text-sm w-2/4">{ `Tags` }</div>
-                                                                <div className="ml-3 text-sm w-2/4 ">
-                                                                    { !tags ? (
-                                                                            "No tags"
-                                                                        ) : tags.length === 0 ? (
-                                                                            "Loading tags"
-                                                                        ) : ( 
-                                                                            tags.map((tag, tagKey) => {
-                                                                                return (
-                                                                                    <div key={tagKey} className="hover:text-gray-600">
-                                                                                        <Link to={`/tag/${tag.id}`}>{ tag.title }</Link>
-                                                                                    </div>
-                                                                                )
-                                                                            })
-                                                                        )
-                                                                    }
-                                                                </div> 
-                                                            </div>
-                                                            <hr/>
-                                                            <div className="flex flex-row ">
-                                                                <div className="text-sm w-2/4">{ `Status` }</div>
-                                                                <div className="text-sm ml-3 w-2/4 ">{product.status}</div>
-                                                            </div>
-                                                            <hr/>   
-                                                            <div>
-                                                                <div className="singlePage_RightData font-bold mr-2 text-base">{ `Opening Bid ` }</div>
-                                                                {product.initial_bid.trim()}
-                                                            </div>
-
-                                                            <div>
-                                                                <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
-                                                                {product.submission_date.trim()}
-                                                            </div>
-                                                            {  ( product.status === 'bid_success' ) &&
-                                                                <div>
-                                                                    Product has been agreed with its current bid
-                                                                </div>
-                                                            }
-                                                            { ( product.status != 'bid_success' ) &&
-                                                                <div>
-                                                                    <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5 mb-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
-                                                                    { bidNowButtonDisable && bidNowButtonDisableMessage &&
-                                                                        <>
-                                                                            {bidNowButtonDisableMessage}
-                                                                            { bidNowButtonDisableTitle === 'Not logged In' &&
-                                                                                <Link to="/login" target="_blank">Go to Login</Link>
-                                                                            }
-                                                                        </>
-                                                                    }
-                                                                    { userStatus && ( userStatus !== 'verified' ) &&
-                                                                        <>{ `User must be verified to take part in bidding process` }</>
-                                                                    }
-                                                                </div>
-                                                            }
-                                                            <div className="flex flex-row">
-                                                            <div className="font-bold mr-2 text-sm">
-                                                                Current Highest Bid : </div>
-                                                                <div>{  currentHighestBid ? currentHighestBid : product.initial_bid }</div>
-                                                            </div>
-                                                            <div className="flex flex-row">
-                                                            <div className="mr-2 font-bold mr-2 text-sm">
-                                                                Bid will close in :</div>
-                                                                <div>
-                                                                    <Countdown date={ Date.parse(new Date(product.deadline_date) ) }>
-                                                                    </Countdown>
-                                                                </div>
-                                                            </div>
-                                                            { BidModal() }
-                                                        </div>
-                                                    </div>
-                                                    <hr/>
-                                                    <div className="singleProductRightMargin mt-2 text-sm mb-10">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-8 mb-2 ml-10">{ `Description ` }</div>
-                                                        <div className="ml-12 text-sm mr-1">{product.description.trim()}</div>
-                                                    </div>
-                                                    <div className="singleProductRightMargin mb-10">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Specifications ` }</div>
-                                                        <div className="ml-12 text-sm mr-1 mb-5">
-                                                            { product.specifications && 
-                                                                product.specifications.map((spec, specKey) => {
-                                                                return (
-                                                                    <div key={specKey} className="">
-                                                                            { spec.value.trim() }
-                                                                    </div>
-                                                                )
-                                                                })
+                                    <div className="content-wrapper flex">
+                                        <div className="left-wrapper">
+                                            {
+                                                productData.map( ( product, index )  => {
+                                                    const images = product.images_path.map((image, index) => {
+                                                        if(!image.includes('http://localhost/auction-web/')) {
+                                                            image = `http://localhost/auction-web/${image.split('../').pop()}`
                                                         }
+                                                        return (
+                                                            { src: image }
+                                                        )
+                                                    })
+                                                    if( Date.parse(new Date(product.deadline_date)) < Date.parse(new Date()) ) {
+                                                        onProductDeadline()
+                                                    }
+                                                    return ( 
+                                                        <React.Fragment key={index}>
+                                                            <div className="flex flex-row m-10">
+                                                                <div className="singlePage-imageWrap">
+                                                                    { images &&
+                                                                        <Carousel images={images} style={{ height: 450, width: 550 }}
+                                                                            hasTransition={true}
+                                                                            hasMediaButton={false} 
+
+                                                                        />  
+                                                                    }
+                                                                </div>
+                                                                <div className="singlePage-right ml-12 max-w-sm ">
+                                                                    <div className="font-bold text-2xl">{product.title.trim()}</div>
+
+                                                                    <div className="flex flex-row ">
+                                                                        <div className="text-sm w-2/4">{ `Categories` }</div>
+                                                                        <div className="ml-3 text-sm w-2/4">
+                                                                            { !categories ? (
+                                                                                    "No categories"
+                                                                                ) : categories.length === 0 ? (
+                                                                                    "Loading categories"
+                                                                                ) : (
+                                                                                    categories.map((cat, catKey) => {
+                                                                                        return (
+                                                                                            <div key={catKey} className="hover:text-gray-600">
+                                                                                                <Link to={`/category/${cat.id}`}>{ cat.title }</Link>
+                                                                                            </div>
+                                                                                        )
+                                                                                    })
+                                                                                )
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    <hr/>
+                                                                    <div className="flex flex-row ">
+                                                                        <div className="text-sm w-2/4">{ `Tags` }</div>
+                                                                        <div className="ml-3 text-sm w-2/4 ">
+                                                                            { !tags ? (
+                                                                                    "No tags"
+                                                                                ) : tags.length === 0 ? (
+                                                                                    "Loading tags"
+                                                                                ) : ( 
+                                                                                    tags.map((tag, tagKey) => {
+                                                                                        return (
+                                                                                            <div key={tagKey} className="hover:text-gray-600">
+                                                                                                <Link to={`/tag/${tag.id}`}>{ tag.title }</Link>
+                                                                                            </div>
+                                                                                        )
+                                                                                    })
+                                                                                )
+                                                                            }
+                                                                        </div> 
+                                                                    </div>
+                                                                    <hr/>
+                                                                    <div className="flex flex-row ">
+                                                                        <div className="text-sm w-2/4">{ `Status` }</div>
+                                                                        <div className="text-sm ml-3 w-2/4 ">{product.status}</div>
+                                                                    </div>
+                                                                    <hr/>   
+                                                                    <div>
+                                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Opening Bid ` }</div>
+                                                                        {product.initial_bid.trim()}
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <div className="singlePage_RightData font-bold mr-2 text-base">{ `Submission Date ` }</div>
+                                                                        {product.submission_date.trim()}
+                                                                    </div>
+                                                                    {  ( product.status === 'bid_success' ) &&
+                                                                        <div>
+                                                                            Product has been agreed with its current bid
+                                                                        </div>
+                                                                    }
+                                                                    { ( product.status != 'bid_success' ) &&
+                                                                        <div>
+                                                                            <button className="bg-purple-800 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded mt-5 mb-5" onClick = { (e) => setOpenBidModal(true) } title={bidNowButtonDisableTitle} disabled={bidNowButtonDisable}>Bid Now</button>
+                                                                            { bidNowButtonDisable && bidNowButtonDisableMessage &&
+                                                                                <>
+                                                                                    {bidNowButtonDisableMessage}
+                                                                                    { bidNowButtonDisableTitle === 'Not logged In' &&
+                                                                                        <Link to="/login" target="_blank">Go to Login</Link>
+                                                                                    }
+                                                                                </>
+                                                                            }
+                                                                            { userStatus && ( userStatus !== 'verified' ) &&
+                                                                                <>{ `User must be verified to take part in bidding process` }</>
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                    <div className="flex flex-row">
+                                                                    <div className="font-bold mr-2 text-sm">
+                                                                        Current Highest Bid : </div>
+                                                                        <div>{  currentHighestBid ? currentHighestBid : product.initial_bid }</div>
+                                                                    </div>
+                                                                    <div className="flex flex-row">
+                                                                    <div className="mr-2 font-bold mr-2 text-sm">
+                                                                        Bid will close in :</div>
+                                                                        <div>
+                                                                            <Countdown date={ Date.parse(new Date(product.deadline_date) ) }>
+                                                                            </Countdown>
+                                                                        </div>
+                                                                    </div>
+                                                                    { BidModal() }
+                                                                </div>
+                                                            </div>
+                                                            <hr/>
+                                                            <div className="singleProductRightMargin mt-2 text-sm mb-10">
+                                                                <div className="text-lg text-yellow-600 font-bold mt-8 mb-2 ml-10">{ `Description ` }</div>
+                                                                <div className="ml-12 text-sm mr-1">{product.description.trim()}</div>
+                                                            </div>
+                                                            <div className="singleProductRightMargin mb-10">
+                                                                <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Specifications ` }</div>
+                                                                <div className="ml-12 text-sm mr-1 mb-5">
+                                                                    { product.specifications && 
+                                                                        product.specifications.map((spec, specKey) => {
+                                                                        return (
+                                                                            <div key={specKey} className="">
+                                                                                    { spec.value.trim() }
+                                                                            </div>
+                                                                        )
+                                                                        })
+                                                                }
+                                                                </div>
+                                                            </div>
+                                                            <div className="singleProductRightMargin mt-2 text-sm mb-10">
+                                                                <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Other Details ` }</div>
+                                                                <div dangerouslySetInnerHTML =  {{__html: decode(product.details) }} className="ml-12 text-sm mr-1"/>
+                                                            </div>
+                                                        </React.Fragment>
+                                                    )
+                                                })
+                                            }
+                                            <div className="mb-12">
+                                                <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10"> Seller Information</div>
+                                                { sellerData &&
+                                                    <div className="mb-5">
+                                                        <div className="flex flex-row">
+                                                            <div className="ml-12 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
+                                                        </div>
+                                                        <div className="flex flex-row">
+                                                            <div className="ml-12 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
+                                                        </div>
+                                                        <div className="flex flex-row">
+                                                            <div className="ml-12 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
+                                                        </div>
+                                                        <div className="flex flex-row">   
+                                                        <div className="ml-12 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
+                                                        </div>
+                                                        <div className="flex flex-row">
+                                                        <div className="ml-12 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
                                                         </div>
                                                     </div>
-                                                    <div className="singleProductRightMargin mt-2 text-sm mb-10">
-                                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10">{ `Other Details ` }</div>
-                                                        <div dangerouslySetInnerHTML =  {{__html: decode(product.details) }} className="ml-12 text-sm mr-1"/>
-                                                    </div>
-                                                </React.Fragment>
-                                            )
-                                        })
-                                    }
-                                    <div className="mb-12">
-                                        <div className="text-lg text-yellow-600 font-bold mt-2 mb-2 ml-10"> Seller Information</div>
-                                        { sellerData &&
-                                            <div className="mb-5">
-                                                <div className="flex flex-row">
-                                                    <div className="ml-12 font-bold text-sm mr-1">Full Name : </div><div className="text-sm">{ sellerData.fullname }</div>
-                                                </div>
-                                                <div className="flex flex-row">
-                                                    <div className="ml-12 font-bold text-sm mr-1">Email Address : </div><div className="text-sm">{ sellerData.email }</div>
-                                                </div>
-                                                <div className="flex flex-row">
-                                                    <div className="ml-12 font-bold text-sm mr-1">Contact Number : </div><div className="text-sm">{ sellerData.contact_num.areaCode + sellerData.contact_num.number }</div>
-                                                </div>
-                                                <div className="flex flex-row">   
-                                                <div className="ml-12 font-bold text-sm mr-1">Profession : </div><div className="text-sm">{ sellerData.profession }</div>
-                                                </div>
-                                                <div className="flex flex-row">
-                                                <div className="ml-12 font-bold text-sm mr-1">Status : </div><div className="text-sm">{ sellerData.status }</div>
-                                                </div>
+                                                }
                                             </div>
+                                        </div>{ /* left-wrapper */ }
+                                        <div className="right-sidebar">
+                                            { Array.isArray( tagSimilarProductsIds ) &&
+                                                <>
+                                                    <h1 className="ml-8 font-semibold">{ `Similar Products` }</h1>
+                                                    <div className="flex flex-wrap">
+                                                    { 
+                                                        tagSimilarProductsIds.map((tagSimilarProductId, index) =>
+                                                        {                                                    
+                                                            return (
+                                                                <div key={index} className="ml-8">
+                                                                    <SimilarProducts {...tagSimilarProductId}/>
+                                                                </div>
+                                                            )    
+                                                        })   
+                                                    }
+                                                    </div>
+                                                </>
+                                            }
+                                        </div> { /* right-sidebar */ }
+                                    </div>{ /* content-wrapper */ }
+                                    <div>
+                                        { Array.isArray( similarProductsIds ) &&
+                                            <>
+                                                <h1 className="ml-8 font-semibold">{ `Similar Products` }</h1>
+                                                <div className="flex flex-wrap">
+                                                { 
+                                                    similarProductsIds.map((similarProductId, index) =>
+                                                    {                                                    
+                                                        return (
+                                                            <div key={index} className="ml-8">
+                                                                <SimilarProducts {...similarProductId}/>
+                                                            </div>
+                                                        )    
+                                                    })   
+                                                }
+                                                </div>
+                                            </>
                                         }
                                     </div>
-                                    { Array.isArray( similarProductsIds ) &&
-                                        <>
-                                            <h1 className="ml-8 font-semibold">{ `Similar Products` }</h1>
-                                            <div className="flex flex-wrap">
-                                            { 
-                                                similarProductsIds.map((similarProductId) => {                                                    
-                                                    return (
-                                                    <div className="ml-16">
-                                                        <SimilarProducts {...similarProductId}/>
-                                                    </div>
-                                                    )    
-                                                })   
-                                            }
-                                            </div>
-                                        </>
-                                    }
                                 </div>
                             )
                         }

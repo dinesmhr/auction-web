@@ -38,11 +38,12 @@ const AdminEditProduct = () => {
     const [ updateTerm, setUpdateTerm ] = useState(true);
     const [ emailText, setEmailText ] = useState('Send confirmation email to the owner')
     const [ emailError, setEmailError ] = useState(true)
-    const [readStatus, writeStatus] = useState("");
     // bidder info
     const [ currentHighestBid, setCurrentHighestBid ] = useState()
     const [ bidderId, setBidderId ] = useState()
 
+    const [deleteBidText, setDeleteBidText] = useState( "Delete Product" );
+    const [productEmpty, setProductEmpty] = useState(false);
     const { id } = useParams()
 
     useEffect(() => {
@@ -374,15 +375,16 @@ const AdminEditProduct = () => {
     }
 
 
-    const onDelete = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.delete(`/delete-record/delete-product.php`);
-      writeStatus("successfully deleted");
-      setTimeout(() => writeStatus(""), 3000);
-    } catch (err) {
-      writeStatus("deletion failed");
-    }
+    const onDelete = (e) => {
+        e.preventDefault();
+        setDeleteBidText( "Deleting Product" )
+          axios.get(`/delete-table/delete-product.php`)
+          .then((res) => {
+              if( res.data.status ) {
+                setDeleteBidText( "Deleted" )
+                setProductEmpty('deleted')
+              }
+          })
   };
 
 
@@ -429,6 +431,13 @@ const AdminEditProduct = () => {
             }
         })
     }
+    
+    { productEmpty &&
+        <div id="auction-web-admin" className="content-wrap">
+            <AdminMainNavigation/>
+            { `Product Not Found` }
+        </div>
+    }
 
     return (
         <div id="auction-web-admin" className="content-wrap">
@@ -436,7 +445,7 @@ const AdminEditProduct = () => {
             <div id="admin-right-content">
                 <div className="aweb-Product-form-button">
                     <button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
-                    <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-2 px-4 mt-1 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete Product</button>
+                    <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-2 px-4 mt-1 border border-gray-400 shadow-md rounded shadow" onClick ={(e) => onDelete(e) }>{deleteBidText}</button>
                 </div>
                 <div>
                     { title.error &&
@@ -626,7 +635,7 @@ const AdminEditProduct = () => {
 
                 <div className="aweb-Product-form-button mt-3 mb-4">
                     <button id="admin-action-trigger-button" className="text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mt-1 mb-6 ease-linear transition-all duration-150" type="button" onClick={(e) => onsubmit(e) }>{submitText}</button>
-                    <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-2 px-4 mt-1 border border-gray-400 shadow-md rounded shadow" onClick ={() => onDelete() }>Delete Product</button>
+                    <button className="bg-red-600 hover:bg-red-700 text-gray-900 font-semibold py-2 px-4 mt-1 border border-gray-400 shadow-md rounded shadow" onClick ={(e) => onDelete(e) }>{deleteBidText}</button>
                 </div>
                 { status && 
                     <div className="aweb-success-note mb-2">

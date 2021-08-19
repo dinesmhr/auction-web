@@ -45,7 +45,7 @@ const Home = () => {
         axios.get( '/products.php' )
         .then(function(response) {
             if( response.data.status === true ) {
-                setProducts(response.data.data.slice(0,8))
+                setProducts(response.data.data.slice(0,12))
             }
         })
     }, [])
@@ -127,16 +127,20 @@ const Home = () => {
                             }
                         </div>
                     } */}
-                    <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recommended For You</h2>
-                    <div className="flex flex-wrap ml-16 mt-10">
-                        { Array.isArray(recommendProducts) &&
-                            recommendProducts.map((recommendProduct, index) => {
-                                if(( Date.parse( new Date(userBirthDate) ) - Date.parse(new Date( recommendProduct.age_limit) ) ) < 315569260000 ) {
-                                    return( <div class={`product-${index}`} key={index}><ProductCard { ...recommendProduct } /></div> )
+                    { Array.isArray(recommendProducts) &&
+                        <>
+                            <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recommended For You</h2>
+                            <div className="flex flex-wrap ml-16 mt-10">
+                                { 
+                                    recommendProducts.map((recommendProduct, index) => {
+                                        if(( Date.parse( new Date(userBirthDate) ) - Date.parse(new Date( recommendProduct.age_limit) ) ) < 315569260000 ) {
+                                            return( <div class={`product-${index}`} key={index}><ProductCard { ...recommendProduct } /></div> )
+                                        }
+                                    })
                                 }
-                            })
-                        }
-                    </div>
+                            </div>
+                        </>
+                    }
                     <h2 className="ml-16 text-2xl font-medium pt-6 mb-6 mt-12">Recent Products</h2>
                     <div className="flex flex-wrap ml-16 mt-10">
                         { Array.isArray(products) &&
