@@ -70,7 +70,9 @@ const Home = () => {
             axios.get( `/user-details.php?id=${userId}` )
             .then(function(res) {
                 if(res.data.status) {
-                    setUserBirthDate(res.data.data[0].birthdate.year + '-' + res.data.data[0].birthdate.month + '-' + res.data.data[0].birthdate.day)
+                    if( res.data.data[0].status === 'verified'  ) {
+                        setUserBirthDate(res.data.data[0].birthdate.year + '-' + res.data.data[0].birthdate.month + '-' + res.data.data[0].birthdate.day)
+                    }
                 }
             })
         }

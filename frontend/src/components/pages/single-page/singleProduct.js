@@ -111,6 +111,7 @@ const SingleProduct = () => {
         .then(function(res) {
             if( res.data.status ) {
                 setProductData( res.data.data )
+                setCurrentHighestBid(res.data.data[0].initial_bid)
                 setSellerID( res.data.data[0].user_id )
                 setCurrentBid({value:res.data.data[0].initial_bid})
                 setBidRaise(res.data.data[0].bid_raise)
@@ -190,19 +191,14 @@ const SingleProduct = () => {
 
     // set current highest bid
     useEffect(() => {
-        let isMounted = true;
-        async function fetchData() {
-            let results = await axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
+        axios.get( `/bids.php?return_type=highest_bid&product_id=${id}` )
+        .then((results) => {
+            //console.log(results.data)
             if( results.data.status ) {
-                if(isMounted)  {
-                    setCurrentHighestBid(results.data.data[0].bid_amount)
-                    setCurrentBid({value:results.data.data[0].bid_amount})
-                }
+                setCurrentHighestBid(results.data.data[0].bid_amount)
+                setCurrentBid({value:results.data.data[0].bid_amount})
             }
-        }
-
-        fetchData()
-        return () => { isMounted = false };
+        })
     }, [userCanBid])
     
     useEffect(() => {
@@ -222,25 +218,25 @@ const SingleProduct = () => {
     }, [userId, userCanBid])
 
     const validateBid = () => {
-        if( currentBid.value <= currentHighestBid ) {
-            currentBid.value = currentBid.value
+        if( parseInt( currentBid.value ) <= currentHighestBid ) {
+            currentBid.value = parseInt( currentBid.value )
             currentBid.error = true
             currentBid.errorMessage = `Currrent Bid must be geater than previous highest bid. Previous bid was ${currentHighestBid}`
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
-        } else if ( currentBid.value > closingBid ) {
+        } else if ( parseInt( currentBid.value ) > closingBid ) {
             currentBid.value = currentBid.value
             currentBid.error = true
             currentBid.errorMessage = `Currrent Bid amount cannot exceed the maximum closing bid`
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
-        } else if ( ( currentBid.value - currentHighestBid ) < bidRaise ) {
+        } else if ( ( parseInt( currentBid.value ) - currentHighestBid ) < bidRaise ) {
             currentBid.value = currentBid.value
             currentBid.error = true
             currentBid.errorMessage = `Currrent Bid raised amount is not enough to place a bid. Bid raise is ${bidRaise} from previous bid amount. Your current bid raise is ${currentBid.value - currentHighestBid}`
             setCurrentBid(JSON.parse(JSON.stringify(currentBid)))
             return;
-        } else if ( currentBid.value == productData[0].max_bid ) {
+        } else if ( parseInt( currentBid.value ) == productData[0].max_bid ) {
             return 'win';
         } else {
             return true
@@ -636,7 +632,7 @@ const SingleProduct = () => {
                                         <div className="right-sidebar">
                                             { Array.isArray( tagSimilarProductsIds ) &&
                                                 <>
-                                                    <h1 className="ml-8 font-semibold">{ `Similar Products` }</h1>
+                                                    <h1 className="ml-8 font-semibold">{ `Similar Products : By tags` }</h1>
                                                     <div className="flex flex-wrap">
                                                     { 
                                                         tagSimilarProductsIds.map((tagSimilarProductId, index) =>

@@ -17,7 +17,7 @@ export const ProductCard = (product) => {
                 <hr/>
                 <div className="product-box">
                     <h3 title={title} className="font-semibold">
-                        <a href={ `product/${id}` }>{title}</a>
+                        <a href={ `/product/${id}` }>{title}</a>
                     </h3>
                     <div className="bid-amount">
                         {`${initial_bid}USD`}
